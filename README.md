@@ -6,6 +6,9 @@ A travel app that offers all in one place: Discovering, planning and remembering
 No special prerequisites required. You just need an IDE (preferably Xcode) and clone the source code:
 `git clone https://github.com/sjaindl/TravelCompanion.git`
 
+Then install dependencies via command line:
+`pod install`
+
 ## Contributions
 
 You are welcome to contribute to this project. Just open a Pull Request, if you want to provide a new feature or fix any issue, and it will be reviewed.
