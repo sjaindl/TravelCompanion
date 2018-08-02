@@ -12,8 +12,8 @@
 		9A1AD4CD21121A4D001D2517 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */; };
 		9A1AD4D021121B55001D2517 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
 		9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D1211245AF001D2517 /* SecretConstants.swift */; };
-		9A5B699F21117A7B00060790 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B699E21117A7B00060790 /* ViewController.swift */; };
-		9A5B69A721117A7C00060790 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B69A621117A7C00060790 /* Assets.xcassets */; };
+		9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D32112D1C6001D2517 /* Assets.xcassets */; };
+		9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */; };
 		9A5B69B521117A7C00060790 /* Travel_CompanionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69B421117A7C00060790 /* Travel_CompanionTests.swift */; };
 		9A5B69C021117A7C00060790 /* Travel_CompanionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* Travel_CompanionUITests.swift */; };
 		9A5B69E621117E4700060790 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
@@ -57,9 +57,9 @@
 		9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9A1AD4CF21121B55001D2517 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		9A1AD4D1211245AF001D2517 /* SecretConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretConstants.swift; sourceTree = "<group>"; };
+		9A1AD4D32112D1C6001D2517 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = "/Users/stefanjaindl/udacity/ios/TravelCompanion/Travel Companion/Controller/MainMenuViewController.swift"; sourceTree = "<absolute>"; };
 		9A5B699921117A7B00060790 /* Travel Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A5B699E21117A7B00060790 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		9A5B69A621117A7C00060790 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A5B69B021117A7C00060790 /* Travel CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A5B69B421117A7C00060790 /* Travel_CompanionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Travel_CompanionTests.swift; sourceTree = "<group>"; };
 		9A5B69B621117A7C00060790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				9A5B6A3421117EFD00060790 /* Supporting Files */,
-				9A5B699E21117A7B00060790 /* ViewController.swift */,
 				9A5B69D321117E4600060790 /* Constants.swift */,
 				9A1AD4D1211245AF001D2517 /* SecretConstants.swift */,
 				9A5B69D621117E4600060790 /* Controller */,
@@ -195,6 +194,7 @@
 		9A5B69D621117E4600060790 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
 			);
 			path = Controller;
@@ -226,10 +226,10 @@
 		9A5B6A3421117EFD00060790 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9A1AD4D32112D1C6001D2517 /* Assets.xcassets */,
 				9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */,
 				9A1AD4CA21121A4D001D2517 /* Info.plist */,
 				9A5B6A3B2112137100060790 /* Base.lproj */,
-				9A5B69A621117A7C00060790 /* Assets.xcassets */,
 				9A5B6A3521117EFD00060790 /* AppDelegate.swift */,
 			);
 			path = "Supporting Files";
@@ -350,11 +350,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A5B69A721117A7C00060790 /* Assets.xcassets in Resources */,
 				9A5B6A3121117EC500060790 /* LICENSE in Resources */,
 				9A5B6A3021117EC500060790 /* Podfile in Resources */,
 				9A1AD4CC21121A4D001D2517 /* Info.plist in Resources */,
 				9A5B6A2F21117EC500060790 /* README.md in Resources */,
+				9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */,
 				9A1AD4D021121B55001D2517 /* Main.storyboard in Resources */,
 				9A1AD4CD21121A4D001D2517 /* GoogleService-Info.plist in Resources */,
 			);
@@ -470,11 +470,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A5B699F21117A7B00060790 /* ViewController.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
 				9A5B69E921117E4700060790 /* Pin+Extensions.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
+				9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
