@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E081B795F0630B092A92F58 /* Pods_Travel_Companion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */; };
+		791ABE5F588D7517CD67B41B /* Pods_Travel_CompanionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A28507DB762DEA476FC155 /* Pods_Travel_CompanionTests.framework */; };
 		9A1AD4CC21121A4D001D2517 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CA21121A4D001D2517 /* Info.plist */; };
 		9A1AD4CD21121A4D001D2517 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */; };
 		9A1AD4D021121B55001D2517 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
@@ -15,7 +16,7 @@
 		9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D32112D1C6001D2517 /* Assets.xcassets */; };
 		9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */; };
 		9A5B69B521117A7C00060790 /* Travel_CompanionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69B421117A7C00060790 /* Travel_CompanionTests.swift */; };
-		9A5B69C021117A7C00060790 /* Travel_CompanionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* Travel_CompanionUITests.swift */; };
+		9A5B69C021117A7C00060790 /* MainMenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* MainMenuUITests.swift */; };
 		9A5B69E621117E4700060790 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
 		9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */; };
 		9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D721117E4600060790 /* GenericListDataSource.swift */; };
@@ -51,8 +52,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0028757DDAD8A6A87B3F3985 /* Pods-Travel CompanionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel CompanionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests.release.xcconfig"; sourceTree = "<group>"; };
 		020359D8308D5FD959D210B7 /* Pods-Travel Companion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Companion.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel Companion/Pods-Travel Companion.debug.xcconfig"; sourceTree = "<group>"; };
+		1A0046AADB658B1D6FCF4406 /* Pods-Travel CompanionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel CompanionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		556521488D60726204CA7778 /* Pods-Travel Companion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Companion.release.xcconfig"; path = "Pods/Target Support Files/Pods-Travel Companion/Pods-Travel Companion.release.xcconfig"; sourceTree = "<group>"; };
+		91A28507DB762DEA476FC155 /* Pods_Travel_CompanionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_CompanionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1AD4CA21121A4D001D2517 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9A1AD4CF21121B55001D2517 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
@@ -64,7 +68,7 @@
 		9A5B69B421117A7C00060790 /* Travel_CompanionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Travel_CompanionTests.swift; sourceTree = "<group>"; };
 		9A5B69B621117A7C00060790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A5B69BB21117A7C00060790 /* Travel CompanionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel CompanionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A5B69BF21117A7C00060790 /* Travel_CompanionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Travel_CompanionUITests.swift; sourceTree = "<group>"; };
+		9A5B69BF21117A7C00060790 /* MainMenuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuUITests.swift; sourceTree = "<group>"; };
 		9A5B69C121117A7C00060790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A5B69D321117E4600060790 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791ABE5F588D7517CD67B41B /* Pods_Travel_CompanionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +120,8 @@
 			children = (
 				020359D8308D5FD959D210B7 /* Pods-Travel Companion.debug.xcconfig */,
 				556521488D60726204CA7778 /* Pods-Travel Companion.release.xcconfig */,
+				1A0046AADB658B1D6FCF4406 /* Pods-Travel CompanionTests.debug.xcconfig */,
+				0028757DDAD8A6A87B3F3985 /* Pods-Travel CompanionTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -123,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */,
+				91A28507DB762DEA476FC155 /* Pods_Travel_CompanionTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,7 +185,7 @@
 		9A5B69BE21117A7C00060790 /* Travel CompanionUITests */ = {
 			isa = PBXGroup;
 			children = (
-				9A5B69BF21117A7C00060790 /* Travel_CompanionUITests.swift */,
+				9A5B69BF21117A7C00060790 /* MainMenuUITests.swift */,
 				9A5B69C121117A7C00060790 /* Info.plist */,
 			);
 			path = "Travel CompanionUITests";
@@ -270,9 +278,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A5B69C721117A7C00060790 /* Build configuration list for PBXNativeTarget "Travel CompanionTests" */;
 			buildPhases = (
+				5819B64A3C16074F4AE15899 /* [CP] Check Pods Manifest.lock */,
 				9A5B69AC21117A7C00060790 /* Sources */,
 				9A5B69AD21117A7C00060790 /* Frameworks */,
 				9A5B69AE21117A7C00060790 /* Resources */,
+				D3021A4167F3D880C6C98EBE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -377,6 +387,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5819B64A3C16074F4AE15899 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Travel CompanionTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5FAC9302BCE257C9538F9301 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,6 +439,26 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel Companion/Pods-Travel Companion-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D3021A4167F3D880C6C98EBE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-Defines-NSData+zlib/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DCC1779C5BB29163C8C9A980 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -441,7 +489,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-f0850809/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -499,7 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A5B69C021117A7C00060790 /* Travel_CompanionUITests.swift in Sources */,
+				9A5B69C021117A7C00060790 /* MainMenuUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +582,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -594,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -684,11 +734,13 @@
 		};
 		9A5B69C821117A7C00060790 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A0046AADB658B1D6FCF4406 /* Pods-Travel CompanionTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MAJ9QA679A;
+				"HEADER_SEARCH_PATHS[arch=*]" = "${PODS_ROOT}/Firebase/CoreOnly/Sources";
 				INFOPLIST_FILE = "Travel CompanionTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -705,6 +757,7 @@
 		};
 		9A5B69C921117A7C00060790 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0028757DDAD8A6A87B3F3985 /* Pods-Travel CompanionTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -730,6 +783,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MAJ9QA679A;
+				"HEADER_SEARCH_PATHS[arch=*]" = "${PODS_ROOT}/Firebase/CoreOnly/Sources";
 				INFOPLIST_FILE = "Travel CompanionUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

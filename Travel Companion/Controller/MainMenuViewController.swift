@@ -27,9 +27,9 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
 
         configureAuth()
-        // Do any additional setup after loading the view.
         configureGestureRecognizers()
     }
     
@@ -90,8 +90,7 @@ class MainMenuViewController: UIViewController {
     */
     
     func configureAuth() {
-        let provider: [FUIAuthProvider] = [FUIGoogleAuth(), FUIFacebookAuth()] 
-        FUIAuth.defaultAuthUI()?.providers = provider
+        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth()]
         
         // listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in

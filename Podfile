@@ -12,4 +12,9 @@ target 'Travel Companion' do
     
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    
+    target 'Travel CompanionTests' do
+        inherit! :search_paths
+        pod 'Firebase'
+    end
 end
