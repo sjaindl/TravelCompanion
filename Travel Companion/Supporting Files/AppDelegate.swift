@@ -11,26 +11,36 @@ import CoreData
 import Firebase
 import FirebaseAuthUI
 import GoogleMaps
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-//    let dataController: DataController = DataController(modelName: "VirtualTourist")
+    let dataController: DataController = DataController(modelName: "TravelCompanion")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        GMSServices.provideAPIKey(SecretConstants.GOOGLE_MAPS_API_KEY)
+        initApis()
         checkIfFirstLaunch()
-//        dataController.load()
-        
-        FirebaseApp.configure()
-        
-//        let navigationController = window?.rootViewController as! UINavigationController
-//        let travelLocationsListViewController = navigationController.topViewController as! TravelLocationsMapViewController
-//        travelLocationsListViewController.dataController = dataController
+        initDataController()
         
         return true
+    }
+    
+    func initApis() {
+        GMSServices.provideAPIKey(SecretConstants.GOOGLE_MAPS_API_KEY) //Google Maps
+        GMSPlacesClient.provideAPIKey(SecretConstants.GOOGLE_PLACES_API_KEY) //Google Places
+        GMSServices.provideAPIKey(SecretConstants.GOOGLE_PLACES_API_KEY) //Google PlacePicker
+        FirebaseApp.configure() //Firebase
+    }
+    
+    func initDataController() {
+        dataController.load()
+        
+        let navigationController = window?.rootViewController as! UINavigationController
+        let mainMenuViewController = navigationController.topViewController as! MainMenuViewController
+        mainMenuViewController.dataController = dataController
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -59,6 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func save() {
-//        try? dataController.save()
+        try? dataController.save()
     }
 }

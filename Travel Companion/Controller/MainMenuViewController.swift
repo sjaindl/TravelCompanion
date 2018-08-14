@@ -10,9 +10,11 @@ import Firebase
 import FirebaseAuthUI
 import FirebaseFacebookAuthUI
 import FirebaseGoogleAuthUI
+import GooglePlaces
+import GooglePlacePicker
 
 class MainMenuViewController: UIViewController {
-
+    
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var user: User?
     var displayName = "Anonymous"
@@ -24,6 +26,8 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var exploreLabel: UILabel!
     @IBOutlet weak var planLabel: UILabel!
     @IBOutlet weak var rememberLabel: UILabel!
+    
+    var dataController: DataController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +55,7 @@ class MainMenuViewController: UIViewController {
     @objc
     func explore() {
         print("explore")
+        performSegue(withIdentifier: Constants.EXPLORE_SEGUE_ID, sender: nil)
     }
     
     @objc
@@ -79,15 +84,12 @@ class MainMenuViewController: UIViewController {
         loginSession()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == Constants.EXPLORE_SEGUE_ID {
+            let controller = segue.destination as! ExploreViewController
+            controller.dataController = dataController
+        }
     }
-    */
     
     func configureAuth() {
         FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth()]
@@ -106,6 +108,14 @@ class MainMenuViewController: UIViewController {
 //                    self.signedInStatus(isSignedIn: true)
                     let name = user!.email!.components(separatedBy: "@")[0]
                     self.displayName = name
+                    
+                    let firestoreDbReference = FirestoreClient.userReference()
+                    firestoreDbReference.setData([FirestoreConstants.Ids.User.UID : user?.uid ?? "",
+                                                  FirestoreConstants.Ids.User.EMAIL: user?.email ?? "",
+                                                  FirestoreConstants.Ids.User.NAME: user?.displayName ?? "",
+                                                  FirestoreConstants.Ids.User.PROVIDER: user?.providerID ?? "",
+                                                  FirestoreConstants.Ids.User.PHOTO_URL: user?.photoURL ?? "",
+                                                  FirestoreConstants.Ids.User.PHONE: user?.phoneNumber ?? ""])
                 }
             } else {
                 // user must sign in

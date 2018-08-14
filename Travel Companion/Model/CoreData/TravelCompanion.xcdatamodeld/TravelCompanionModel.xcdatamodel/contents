@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Photos" representedClassName="Photos" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin" syncable="YES"/>
+    </entity>
+    <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="URI" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos" syncable="YES"/>
+        <relationship name="placetypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlaceType" inverseName="pin" inverseEntity="PlaceType" syncable="YES"/>
+    </entity>
+    <entity name="PlaceType" representedClassName="PlaceType" syncable="YES" codeGenerationType="class">
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="placetypes" inverseEntity="Pin" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Photos" positionX="-360" positionY="954" width="128" height="118"/>
+        <element name="Pin" positionX="-621" positionY="909" width="128" height="223"/>
+        <element name="PlaceType" positionX="-821" positionY="909" width="128" height="73"/>
+    </elements>
+</model>

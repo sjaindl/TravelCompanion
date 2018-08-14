@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Travel Companion uses your location to explore travel opportunities</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -14,10 +16,10 @@
 			</array>
 		</dict>
 	</array>
-    <key>FacebookAppID</key>
-    <string>267588824024616</string>
-    <key>FacebookDisplayName</key>
-    <string>Travel Companion</string>
+	<key>FacebookAppID</key>
+	<string>267588824024616</string>
+	<key>FacebookDisplayName</key>
+	<string>Travel Companion</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

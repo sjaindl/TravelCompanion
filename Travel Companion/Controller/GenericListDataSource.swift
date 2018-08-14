@@ -64,15 +64,17 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
             if let newIndexPath = newIndexPath {
                 collectionView.insertItems(at: [newIndexPath])
             }
+        
         case .delete:
             if let indexPath = indexPath {
                 collectionView.deleteItems(at: [indexPath])
             }
+        
         case .move:
             if let indexPath = indexPath, let newIndexPath = newIndexPath {
                 collectionView.moveItem(at: indexPath, to: newIndexPath)
             }
-            
+        
         case .update:
             if let indexPath = indexPath {
                 collectionView.reloadItems(at: [indexPath])

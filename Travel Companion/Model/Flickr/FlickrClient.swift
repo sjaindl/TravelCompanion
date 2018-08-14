@@ -108,7 +108,6 @@ class FlickrClient {
             if downloadError != nil {
                 completionHandler(nil, "Could not download image \(imagePath)")
             } else {
-                
                 completionHandler(data, nil)
             }
         }

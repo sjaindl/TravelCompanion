@@ -31,7 +31,14 @@
 		9A5B6A3021117EC500060790 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1421117EC400060790 /* Podfile */; };
 		9A5B6A3121117EC500060790 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1521117EC400060790 /* LICENSE */; };
 		9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B6A3521117EFD00060790 /* AppDelegate.swift */; };
-		9A5B6A3A211211AD00060790 /* TravelCompanionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B6A38211211AD00060790 /* TravelCompanionModel.xcdatamodeld */; };
+		9A5B6A3A211211AD00060790 /* TravelCompanion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B6A38211211AD00060790 /* TravelCompanion.xcdatamodeld */; };
+		9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */; };
+		9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */; };
+		9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A42122C37500EE0F5C /* FirestoreClient.swift */; };
+		9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A82122C3A800EE0F5C /* GoogleClient.swift */; };
+		9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */; };
+		9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */; };
+		9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +92,13 @@
 		9A5B6A1521117EC400060790 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9A5B6A3521117EFD00060790 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A5B6A39211211AD00060790 /* TravelCompanionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TravelCompanionModel.xcdatamodel; sourceTree = "<group>"; };
+		9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreViewController.swift; path = "Travel Companion/Controller/ExploreViewController.swift"; sourceTree = SOURCE_ROOT; };
+		9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailViewController.swift; sourceTree = "<group>"; };
+		9AA266A42122C37500EE0F5C /* FirestoreClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreClient.swift; sourceTree = "<group>"; };
+		9AA266A82122C3A800EE0F5C /* GoogleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
+		9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleConstants.swift; sourceTree = "<group>"; };
+		9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreConstants.swift; sourceTree = "<group>"; };
+		9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -202,8 +216,10 @@
 		9A5B69D621117E4600060790 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */,
 				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
+				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -211,13 +227,11 @@
 		9A5B69D821117E4600060790 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9A5B69D921117E4600060790 /* Pin+Extensions.swift */,
-				9A5B69DA21117E4600060790 /* DataController.swift */,
+				9AA266AF2122C62100EE0F5C /* Web */,
+				9AA266AE2122C5FD00EE0F5C /* CoreData */,
+				9AA266A62122C37D00EE0F5C /* Firestore */,
 				9A5B69DB21117E4600060790 /* Flickr */,
-				9A5B69DE21117E4600060790 /* WebConstants.swift */,
-				9A5B69E121117E4600060790 /* Photos+Extensions.swift */,
-				9A5B69E221117E4600060790 /* WebClient.swift */,
-				9A5B6A38211211AD00060790 /* TravelCompanionModel.xcdatamodeld */,
+				9AA266A72122C38D00EE0F5C /* Google */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +263,45 @@
 				9A1AD4CE21121B55001D2517 /* Main.storyboard */,
 			);
 			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		9AA266A62122C37D00EE0F5C /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				9AA266A42122C37500EE0F5C /* FirestoreClient.swift */,
+				9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */,
+			);
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		9AA266A72122C38D00EE0F5C /* Google */ = {
+			isa = PBXGroup;
+			children = (
+				9AA266A82122C3A800EE0F5C /* GoogleClient.swift */,
+				9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */,
+			);
+			path = Google;
+			sourceTree = "<group>";
+		};
+		9AA266AE2122C5FD00EE0F5C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				9A5B6A38211211AD00060790 /* TravelCompanion.xcdatamodeld */,
+				9A5B69DA21117E4600060790 /* DataController.swift */,
+				9A5B69D921117E4600060790 /* Pin+Extensions.swift */,
+				9A5B69E121117E4600060790 /* Photos+Extensions.swift */,
+				9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		9AA266AF2122C62100EE0F5C /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				9A5B69DE21117E4600060790 /* WebConstants.swift */,
+				9A5B69E221117E4600060790 /* WebClient.swift */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +471,7 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebasePhoneAuthUI.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseTwitterAuthUI.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle",
@@ -430,6 +484,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebasePhoneAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseTwitterAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
@@ -446,12 +501,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-Defines-NSData+zlib/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,24 +540,38 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Travel Companion/Pods-Travel Companion-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-f0850809/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -518,16 +587,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
+				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
+				9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */,
 				9A5B69E921117E4700060790 /* Pin+Extensions.swift in Sources */,
+				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
+				9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */,
+				9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
 				9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
+				9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,
-				9A5B6A3A211211AD00060790 /* TravelCompanionModel.xcdatamodeld in Sources */,
+				9A5B6A3A211211AD00060790 /* TravelCompanion.xcdatamodeld in Sources */,
 				9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */,
 				9A5B69F021117E4700060790 /* WebClient.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
@@ -860,13 +936,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9A5B6A38211211AD00060790 /* TravelCompanionModel.xcdatamodeld */ = {
+		9A5B6A38211211AD00060790 /* TravelCompanion.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				9A5B6A39211211AD00060790 /* TravelCompanionModel.xcdatamodel */,
 			);
 			currentVersion = 9A5B6A39211211AD00060790 /* TravelCompanionModel.xcdatamodel */;
-			path = TravelCompanionModel.xcdatamodeld;
+			path = TravelCompanion.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

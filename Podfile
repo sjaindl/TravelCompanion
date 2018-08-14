@@ -6,12 +6,13 @@ target 'Travel Companion' do
     
     pod 'Firebase/Auth'
     pod 'Firebase/Core'
-    pod 'Firebase/Database'
+    pod 'Firebase/Firestore'
     pod 'Firebase/Storage'
     pod 'FirebaseUI'
     
     pod 'GoogleMaps'
     pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
     
     target 'Travel CompanionTests' do
         inherit! :search_paths
