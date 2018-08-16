@@ -11,7 +11,7 @@ import Foundation
 struct Constants {
     
     static let ALBUM_CELL_REUSE_ID = "photoCell"
-    static let ALBUM_SEGUE_ID = "showAlbum"
+    static let EXPLORE_PHOTOS_SEGUE_ID = "explorePhotos"
     static let EXPLORE_SEGUE_ID = "explore"
     static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
     static let PLAN_SEGUE_ID = "plan"
@@ -22,6 +22,7 @@ struct Constants {
         static let SORT_KEY = "creationDate"
         static let CACHE_NAME_PINS = "pin"
         static let CACHE_NAME_PHOTOS = "photos"
+        static let CACHE_NAME_COUNTRIES = "countries"
         
         static let PHOTO_LIMIT = 40
     }
@@ -35,5 +36,11 @@ struct Constants {
         static let STANDARD_ZOOM_LEVEL = 6.0
         static let STANDARD_LATITUDE = 47.0
         static let STANDARD_LONGITUDE = 15.5
+    }
+    
+    enum FetchType: Int {
+        case Country = 1
+        case Place = 2
+        case LatLong = 3
     }
 }

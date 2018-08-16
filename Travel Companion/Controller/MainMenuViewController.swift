@@ -110,12 +110,14 @@ class MainMenuViewController: UIViewController {
                     self.displayName = name
                     
                     let firestoreDbReference = FirestoreClient.userReference()
-                    firestoreDbReference.setData([FirestoreConstants.Ids.User.UID : user?.uid ?? "",
-                                                  FirestoreConstants.Ids.User.EMAIL: user?.email ?? "",
-                                                  FirestoreConstants.Ids.User.NAME: user?.displayName ?? "",
-                                                  FirestoreConstants.Ids.User.PROVIDER: user?.providerID ?? "",
-                                                  FirestoreConstants.Ids.User.PHOTO_URL: user?.photoURL ?? "",
-                                                  FirestoreConstants.Ids.User.PHONE: user?.phoneNumber ?? ""])
+                    let data: [String: String] = [FirestoreConstants.Ids.User.UID: activeUser.uid,
+                                                  FirestoreConstants.Ids.User.EMAIL: activeUser.email ?? "",
+                                                  FirestoreConstants.Ids.User.NAME: activeUser.displayName ?? "",
+                                                  FirestoreConstants.Ids.User.PROVIDER: activeUser.providerID,
+                                                  FirestoreConstants.Ids.User.PHOTO_URL: activeUser.photoURL?.absoluteString ?? "",
+                                                  FirestoreConstants.Ids.User.PHONE: activeUser.phoneNumber ?? ""]
+                    
+                    firestoreDbReference.setData(data)
                 }
             } else {
                 // user must sign in

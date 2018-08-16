@@ -17,8 +17,8 @@ struct FlickrConstants {
     }
     
     struct Flickr {
-        static let SearchBBoxHalfWidth = 0.025
-        static let SearchBBoxHalfHeight = 0.025
+        static let SearchBBoxHalfWidth = 0.01
+        static let SearchBBoxHalfHeight = 0.01
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
     }
@@ -29,6 +29,7 @@ struct FlickrConstants {
         static let Extras = "extras"
         static let Format = "format"
         static let NoJSONCallback = "nojsoncallback"
+        static let SortOrder = "sort"
         static let SafeSearch = "safe_search"
         static let Text = "text"
         static let BoundingBox = "bbox"
@@ -41,6 +42,7 @@ struct FlickrConstants {
         static let DisableJSONCallback = "1" /* 1 means "yes" */
         static let ImageSize = "url_l"
         static let UseSafeSearch = "1"
+        static let SortOrder = "relevance"
     }
     
     struct FlickrResponseKeys {

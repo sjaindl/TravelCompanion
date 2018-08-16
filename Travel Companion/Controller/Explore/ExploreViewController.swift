@@ -114,10 +114,14 @@ class ExploreViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.ALBUM_SEGUE_ID { //TODO: change segue id to detail.. (tab bar controller)
-            let controller = segue.destination as! ExploreDetailViewController
-            controller.pin = sender as! Pin
-            controller.dataController = dataController
+        if segue.identifier == Constants.EXPLORE_DETAIL_SEGUE_ID || segue.identifier == Constants.EXPLORE_PHOTOS_SEGUE_ID {
+            let controller = segue.destination as! UITabBarController
+            let detailTtargetController = controller.viewControllers![0] as! ExploreDetailViewController
+            let photosTtargetController = controller.viewControllers![1] as! ExplorePhotosViewController
+            detailTtargetController.pin = sender as! Pin
+            detailTtargetController.dataController = dataController
+            photosTtargetController.pin = sender as! Pin
+            photosTtargetController.dataController = dataController
         }
     }
     
