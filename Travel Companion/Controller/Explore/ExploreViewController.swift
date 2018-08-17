@@ -22,7 +22,6 @@ class ExploreViewController: UIViewController {
     var deleteMode = false
     var mapCenter: CLLocationCoordinate2D? = nil
     
-    //TODO: watch tut @ https://codelabs.developers.google.com/codelabs/firestore-ios/#0   https://firebase.google.com/docs/firestore/quickstart
     var firestoreDbReference: CollectionReference!
     
     override func viewDidLoad() {
@@ -145,8 +144,8 @@ class ExploreViewController: UIViewController {
         return marker
     }
     
-    func persistPin(of place: GMSPlace) -> Pin {
-        let pin = CoreDataClient.storePin(dataController, place: place)
+    func persistPin(of place: GMSPlace, countryCode: String?) -> Pin {
+        let pin = CoreDataClient.storePin(dataController, place: place, countryCode: countryCode)
         
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
             FirestoreConstants.Ids.Place.PLACE_ID: place.placeID,
@@ -236,8 +235,15 @@ extension ExploreViewController: GMSMapViewDelegate {
 extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
     func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
         let marker = addPinToMap(with: place.coordinate)
-        let pin = persistPin(of: place)
-        store(pin, in: marker)
+        
+        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude) { (error, code) in
+            var countryCode: String?
+            if let code = code as? String {
+                countryCode = code
+            }
+            let pin = self.persistPin(of: place, countryCode: countryCode)
+            self.store(pin, in: marker)
+        }
         
         // Dismiss the place picker.
         viewController.dismiss(animated: true, completion: nil)

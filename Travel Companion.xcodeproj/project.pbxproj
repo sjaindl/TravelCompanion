@@ -41,6 +41,11 @@
 		9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
 		9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
+		9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
+		9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
+		9AF39BE82125B22D00D85DF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */; };
+		9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
+		9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +108,11 @@
 		9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
 		9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TravelCompanion.xcdatamodel; path = TravelCompanion.xcdatamodeld/TravelCompanion.xcdatamodel; sourceTree = "<group>"; };
+		9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
+		9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
+		9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
+		9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesClient.swift; sourceTree = "<group>"; };
+		9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesConstants.swift; sourceTree = "<group>"; };
 		BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -213,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
+				9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -230,6 +241,8 @@
 		9A5B69D821117E4600060790 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9AF39BE92126CA3500D85DF2 /* GeoNames */,
+				9AF39BE6212564C100D85DF2 /* RestCountries */,
 				9AA266AF2122C62100EE0F5C /* Web */,
 				9AA266AE2122C5FD00EE0F5C /* CoreData */,
 				9AA266A62122C37D00EE0F5C /* Firestore */,
@@ -316,6 +329,24 @@
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
 			);
 			path = Explore;
+			sourceTree = "<group>";
+		};
+		9AF39BE6212564C100D85DF2 /* RestCountries */ = {
+			isa = PBXGroup;
+			children = (
+				9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */,
+				9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */,
+			);
+			path = RestCountries;
+			sourceTree = "<group>";
+		};
+		9AF39BE92126CA3500D85DF2 /* GeoNames */ = {
+			isa = PBXGroup;
+			children = (
+				9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */,
+				9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */,
+			);
+			path = GeoNames;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -602,12 +633,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
+				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
 				9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */,
+				9AF39BE82125B22D00D85DF2 /* SVGImageView.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
+				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
 				9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */,
 				9A5B69E921117E4700060790 /* Pin+Extensions.swift in Sources */,
 				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
+				9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */,
 				9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */,
 				9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
@@ -622,6 +657,7 @@
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,
 				9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */,
 				9A5B69F021117E4700060790 /* WebClient.swift in Sources */,
+				9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
 				9A5B69EF21117E4700060790 /* Photos+Extensions.swift in Sources */,
 			);

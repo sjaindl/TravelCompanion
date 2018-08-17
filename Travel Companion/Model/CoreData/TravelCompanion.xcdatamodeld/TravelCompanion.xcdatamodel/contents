@@ -2,15 +2,19 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Country" representedClassName="Country" syncable="YES" codeGenerationType="class">
         <attribute name="area" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="callingCodes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="capital" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="flag" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="currencies" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="domains" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="isoCode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="languages" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nativeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="population" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regionalBlocks" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timezones" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="pins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pin" inverseName="countryOfPin" inverseEntity="Pin" syncable="YES"/>
     </entity>
@@ -42,7 +46,7 @@
         <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="placetypes" inverseEntity="Pin" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Country" positionX="-947" positionY="782" width="128" height="223"/>
+        <element name="Country" positionX="-947" positionY="782" width="128" height="285"/>
         <element name="Photos" positionX="-360" positionY="954" width="128" height="135"/>
         <element name="Pin" positionX="-684" positionY="909" width="128" height="238"/>
         <element name="PlaceType" positionX="-983" positionY="1053" width="128" height="73"/>

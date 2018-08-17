@@ -160,6 +160,7 @@ class ExplorePhotosViewController: UIViewController {
             } catch {
                 DispatchQueue.main.async {
                     self.enableUi(true)
+                    self.noPhotoLabel.isHidden = false
                     self.showError("Could not fetch data \(error.localizedDescription)")
                 }
             }
@@ -195,6 +196,13 @@ class ExplorePhotosViewController: UIViewController {
         DispatchQueue.global().async {
             var queryItems = FlickrClient.sharedInstance.buildQueryItems()
             if self.fetchType == Constants.FetchType.Country.rawValue {
+                guard let country = country else {
+                    debugPrint("This location is not in a country. Can't fetch country photos.")
+                    self.noPhotoLabel.isHidden = false
+                    self.enableUi(true)
+                    return
+                }
+                
                 queryItems[FlickrConstants.FlickrParameterKeys.Text] = country
             } else if self.fetchType == Constants.FetchType.LatLong.rawValue {
                 queryItems[FlickrConstants.FlickrParameterKeys.BoundingBox] = FlickrClient.sharedInstance.bboxString(latitude: latitude, longitude: longitude)
@@ -203,6 +211,7 @@ class ExplorePhotosViewController: UIViewController {
             FlickrClient.sharedInstance.fetchPhotos(with: queryItems) { (error, isEmpty, photos) in
                 if let error = error {
                     self.showError(error)
+                    self.noPhotoLabel.isHidden = false
                     self.enableUi(true)
                 } else {
                     DispatchQueue.main.async {
@@ -227,13 +236,15 @@ class ExplorePhotosViewController: UIViewController {
         GMSPlacesClient.shared().lookUpPhotos(forPlaceID: placeID) { (photos, error) -> Void in
             if let error = error {
                 self.showError(error.localizedDescription)
+                self.noPhotoLabel.isHidden = false
                 self.enableUi(true)
             } else {
-                if let photos = photos?.results {
+                if let photos = photos?.results, photos.count > 0 {
                     for photo in photos {
                         self.persistPhoto(placePhoto: photo)
                     }
-                    
+                } else {
+                    self.noPhotoLabel.isHidden = false
                 }
             }
             self.enableUi(true)
@@ -253,7 +264,6 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func persistPhoto(placePhoto: GMSPlacePhotoMetadata) {
-        
         GMSPlacesClient.shared().loadPlacePhoto(placePhoto, callback: {
             (placePhoto, error) -> Void in
             if let error = error {
@@ -379,7 +389,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
             
             if let imagePath = dataSource.object(at: indexPath).imageUrl {
                 
-                FlickrClient.sharedInstance.downloadImage(imagePath: imagePath) { (imageData, error) in
+                WebClient.sharedInstance.downloadImage(imagePath: imagePath) { (imageData, error) in
                     if let error = error {
                         self.showError(error)
                     } else {

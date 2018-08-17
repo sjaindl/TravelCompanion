@@ -30,11 +30,15 @@ class FlickrClient {
                     
                     var flickrPhotos: [[String: AnyObject]] = []
                     
-                    while photoNumber < Constants.CoreData.PHOTO_LIMIT && photoNumber < photos.count {
-                        let photoDictionary = photos[photoNumber] as [String: AnyObject]
-                        flickrPhotos.append(photoDictionary)
-                        photoNumber = photoNumber + 1
+                    for photo in photos.reversed() {
+                        flickrPhotos.append(photo)
                     }
+//
+//                    while photoNumber < Constants.CoreData.PHOTO_LIMIT && photoNumber < photos.count {
+//                        let photoDictionary = photos[photoNumber] as [String: AnyObject]
+//                        flickrPhotos.append(photoDictionary)
+//                        photoNumber = photoNumber + 1
+//                    }
                     
                     completionHandler(nil, false, flickrPhotos)
                 }
@@ -67,23 +71,6 @@ class FlickrClient {
         }
     }
     
-    func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
-        let session = URLSession.shared
-        let imgURL = NSURL(string: imagePath)
-        let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, downloadError in
-            
-            if downloadError != nil {
-                completionHandler(nil, "Could not download image \(imagePath)")
-            } else {
-                completionHandler(data, nil)
-            }
-        }
-        
-        task.resume()
-    }
-    
     func buildQueryItems() -> [String: String] {
         return [
             FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
@@ -93,6 +80,7 @@ class FlickrClient {
             FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
             FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback,
             FlickrConstants.FlickrParameterKeys.SortOrder: FlickrConstants.FlickrParameterValues.SortOrder
+            //"tags": "1025fav" //wow
         ]
     }
     

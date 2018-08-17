@@ -12,21 +12,22 @@ class WebClient {
     
     static let sharedInstance = WebClient()
     
-    func createUrl(forScheme scheme: String, forHost host: String, forMethod method: String, withQueryItems queryItems: [String: String]?) -> URL {
+    func createUrl(forScheme scheme: String, forHost host: String, forMethod method: String, withQueryItems queryItems: [String: String]? = nil) -> URL {
         var urlComponent = URLComponents()
         
         urlComponent.scheme = scheme
         urlComponent.host = host
         urlComponent.path = method
         
-        urlComponent.queryItems = [URLQueryItem]()
-        
         if let queryItems = queryItems {
+            urlComponent.queryItems = [URLQueryItem]()
+            
             for (key, value) in queryItems {
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
                 urlComponent.queryItems!.append(queryItem)
             }
         }
+        
         
         return urlComponent.url!
     }
@@ -78,14 +79,23 @@ class WebClient {
     func convertDataWithCompletionHandler(_ data: Data, withOffset offset: Int, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         var parsedResult: AnyObject! = nil
+        
         do {
             let range = Range(offset ..< data.count)
             let newData = data.subdata(in: range) /* subset response data! */
             
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         } catch {
+            
+            //is a single string value returned?
+            if let stringValue = String(data: data, encoding: String.Encoding.utf8)?.replacingOccurrences(of: "\r\n", with: "") as AnyObject? {
+                completionHandlerForConvertData(stringValue, nil)
+                return
+            }
+            
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            return
         }
         
         completionHandlerForConvertData(parsedResult, nil)
@@ -138,6 +148,23 @@ class WebClient {
         }
         
         /* Start request */
+        task.resume()
+    }
+    
+    func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
+        let session = URLSession.shared
+        let imgURL = NSURL(string: imagePath)
+        let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
+        
+        let task = session.dataTask(with: request as URLRequest) {data, response, downloadError in
+            
+            if downloadError != nil {
+                completionHandler(nil, "Could not download image \(imagePath)")
+            } else {
+                completionHandler(data, nil)
+            }
+        }
+        
         task.resume()
     }
 }
