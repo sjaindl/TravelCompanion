@@ -25,20 +25,16 @@ class ExplorePhotosViewController: UIViewController {
     var pin: Pin!
     var dataController: DataController!
     var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>!
-    var itemsToDelete: [IndexPath] = []
     var fetchType: Int = Constants.FetchType.Country.rawValue
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         dataSource.fetchedResultsController = nil
-        itemsToDelete.removeAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteCheckedPhotos))
-        navigationItem.rightBarButtonItem?.isEnabled = false
         
         initMap()
         initResultsController()
@@ -91,23 +87,6 @@ class ExplorePhotosViewController: UIViewController {
         NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
         dataSource.fetchedResultsController = nil
         collectionView.reloadData()
-    }
-    
-    func deletePhotos() {
-        guard let fetchedObjects = dataSource.fetchedObjects() else {
-            debugPrint("no fetched objects to delete!")
-            return
-        }
-
-        for object in fetchedObjects {
-            dataController.viewContext.delete(object)
-            try? dataController.save()
-        }
-
-        itemsToDelete.removeAll()
-        navigationItem.rightBarButtonItem?.isEnabled = false
-
-        resetAlpha()
     }
     
     func setupFlowLayout() {
@@ -198,8 +177,11 @@ class ExplorePhotosViewController: UIViewController {
             if self.fetchType == Constants.FetchType.Country.rawValue {
                 guard let country = country else {
                     debugPrint("This location is not in a country. Can't fetch country photos.")
-                    self.noPhotoLabel.isHidden = false
-                    self.enableUi(true)
+                    
+                    DispatchQueue.main.async {
+                        self.noPhotoLabel.isHidden = false
+                        self.enableUi(true)
+                    }
                     return
                 }
                 
@@ -274,21 +256,11 @@ class ExplorePhotosViewController: UIViewController {
                 
                 photo.pin = self.pin
                 photo.type = Int16(self.fetchType)
-                //        photo.metadata = placePhoto
+                photo.title = self.pin.name
                 photo.imageData = UIImagePNGRepresentation(placePhoto!)
                 try? self.dataController.save()
             }
         })
-        
-//        let photoId = photo.objectID
-        
-//        if  let backgroundContext:NSManagedObjectContext = dataController?.backgroundContext {
-//            backgroundContext.perform {
-//                let backgroundPhoto = backgroundContext.object(with: photoId) as! Photos
-//                try? backgroundPhoto.imageData = Data(contentsOf: url)
-//                try? backgroundContext.save()
-//            }
-//        }
     }
     
     func persistPhoto(photo: [String: AnyObject]) {
@@ -312,52 +284,16 @@ class ExplorePhotosViewController: UIViewController {
                     let backgroundPhoto = backgroundContext.object(with: photoId) as! Photos
                     try? backgroundPhoto.imageData = Data(contentsOf: url)
                     try? backgroundContext.save()
-                    
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
                 }
             }
         }
     }
     
-    @objc func deleteCheckedPhotos() {
-        enableUi(false)
-        
-        for item in itemsToDelete {
-            let object = dataSource.object(at: item)
-            dataController.viewContext.delete(object)
-            try? dataController.save()
-        }
-        itemsToDelete.removeAll()
-        
-        try? dataController.save()
-        
-        resetAlpha()
-        collectionView.reloadData()
-        enableUi(true)
-        navigationItem.rightBarButtonItem?.isEnabled = false
-    }
-    
     func enableUi(_ enable: Bool) {
-        navigationItem.rightBarButtonItem?.isEnabled = enable && itemsToDelete.count > 0
-        
         if enable {
             activityIndicator.stopAnimating()
         } else {
             activityIndicator.startAnimating()
-        }
-    }
-    
-    func setAlphaValue(at indexPath: IndexPath, to alpha: Double) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? AlbumCollectionViewCell {
-            cell.locationImage.alpha = CGFloat(alpha)
-        }
-    }
-    
-    func resetAlpha() {
-        for row in 0 ... dataSource.count() {
-            setAlphaValue(at: IndexPath(row: row, section: 0), to: 1.0)
         }
     }
     
@@ -410,17 +346,41 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let index = itemsToDelete.index(of: indexPath) {
-            itemsToDelete.remove(at: index)
-            setAlphaValue(at: indexPath, to: 1.0)
-        } else {
-            itemsToDelete.append(indexPath)
+        let photo = dataSource.fetchedResultsController.object(at: indexPath)
+        
+        guard photo.imageData != nil else {
+            debugPrint("No image data to display")
+            showToast(message: "Please wait for photo downloads to finish")
+            return
         }
         
-        for itemIndexPath in itemsToDelete {
-            setAlphaValue(at: itemIndexPath, to: 0.5)
+        performSegue(withIdentifier: Constants.PHOTO_DETAIL_SEGUE_ID, sender: photo)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.PHOTO_DETAIL_SEGUE_ID {
+            let destinationViewController = segue.destination as! ExplorePhotosDetailViewController
+            destinationViewController.photo = sender as! Photos
         }
-        
-        navigationItem.rightBarButtonItem?.isEnabled = itemsToDelete.count > 0
     }
 }
+
+extension ExplorePhotosViewController {
+    
+    func showToast(message : String) {
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 200, y: self.view.frame.size.height-100, width: 400, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    } }

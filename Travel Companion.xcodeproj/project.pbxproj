@@ -46,6 +46,7 @@
 		9AF39BE82125B22D00D85DF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */; };
 		9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
 		9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
+		9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesClient.swift; sourceTree = "<group>"; };
 		9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesConstants.swift; sourceTree = "<group>"; };
+		9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosDetailViewController.swift; sourceTree = "<group>"; };
 		BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -327,6 +329,7 @@
 				9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */,
 				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
+				9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				9A5B69F021117E4700060790 /* WebClient.swift in Sources */,
 				9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
+				9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */,
 				9A5B69EF21117E4700060790 /* Photos+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

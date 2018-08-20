@@ -86,19 +86,22 @@ class WebClient {
             
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         } catch {
-            
-            //is a single string value returned?
-            if let stringValue = String(data: data, encoding: String.Encoding.utf8)?.replacingOccurrences(of: "\r\n", with: "") as AnyObject? {
-                completionHandlerForConvertData(stringValue, nil)
-                return
-            }
-            
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
             return
         }
         
         completionHandlerForConvertData(parsedResult, nil)
+    }
+    
+    func returnSingleStringResponse(_ data: Data, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        //is a single string value returned?
+        if let stringValue = String(data: data, encoding: String.Encoding.utf8)?.replacingOccurrences(of: "\r\n", with: "") as AnyObject? {
+            completionHandler(stringValue, nil)
+            return
+        }
+        let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as string: '\(data)'"]
+        completionHandler(nil, NSError(domain: "returnSingleStringResponse", code: 1, userInfo: userInfo))
     }
     
     func performBasicWebResponseChecks(data: Data?, response: URLResponse?, error: Error?, errorDomain: String, withOffset offset: Int) -> NSError? {
@@ -133,7 +136,7 @@ class WebClient {
         return nil
     }
     
-    func taskForWebRequest(_ request: URLRequest, errorDomain: String, withOffset offset: Int = 0, completionHandlerForRequest: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> Void {
+    func taskForWebRequest(_ request: URLRequest, errorDomain: String, withOffset offset: Int = 0, stringResponse: Bool = false, completionHandlerForRequest: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> Void {
         
         /* Perform Web request */
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -143,8 +146,20 @@ class WebClient {
                 return
             }
             
-            /* Parse and use data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data!, withOffset: offset, completionHandlerForConvertData: completionHandlerForRequest)
+            if stringResponse {
+                if let stringValue = String(data: data!, encoding: String.Encoding.utf8)?.replacingOccurrences(of: "\r\n", with: "") as AnyObject? {
+                    if stringValue.contains("ERR") {
+                        completionHandlerForRequest(nil, NSError(domain: errorDomain, code: 3, userInfo: [NSLocalizedDescriptionKey: stringValue]))
+                    } else {
+                        completionHandlerForRequest(stringValue, nil)
+                    }
+                } else {
+                    completionHandlerForRequest(nil, NSError(domain: errorDomain, code: 3, userInfo: [NSLocalizedDescriptionKey: "Can't convert to string response"]))
+                }
+            } else {
+                /* Parse and use data (happens in completion handler) */
+                self.convertDataWithCompletionHandler(data!, withOffset: offset, completionHandlerForConvertData: completionHandlerForRequest)
+            }
         }
         
         /* Start request */

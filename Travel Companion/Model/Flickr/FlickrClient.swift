@@ -33,7 +33,7 @@ class FlickrClient {
                     for photo in photos.reversed() {
                         flickrPhotos.append(photo)
                     }
-//
+
 //                    while photoNumber < Constants.CoreData.PHOTO_LIMIT && photoNumber < photos.count {
 //                        let photoDictionary = photos[photoNumber] as [String: AnyObject]
 //                        flickrPhotos.append(photoDictionary)

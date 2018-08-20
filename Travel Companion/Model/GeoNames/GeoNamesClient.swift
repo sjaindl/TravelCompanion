@@ -23,7 +23,7 @@ class GeoNamesClient {
         
         let request = buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
         
-        WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchCountryCode") { (result, error) in
+        WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchCountryCode", stringResponse: true) { (result, error) in
             
             /* Send the desired value(s) to completion handler */
             if let error = error {

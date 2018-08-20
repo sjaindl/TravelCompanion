@@ -20,16 +20,16 @@ class CoreDataClient {
         pin.rating = place.rating
         pin.address = place.formattedAddress
         
-        pin.country = countryCode
+        pin.countryCode = countryCode
         
-//        if let addressComponents = place.addressComponents {
-//            for component in addressComponents {
-//                if component.type == "country" {
-//                    pin.country = component.name
-//                    break
-//                }
-//            }
-//        }
+        if let addressComponents = place.addressComponents {
+            for component in addressComponents {
+                if component.type == "country" {
+                    pin.country = component.name
+                    break
+                }
+            }
+        }
         
         pin.placeId = place.placeID
         pin.url = place.website
@@ -69,10 +69,6 @@ class CoreDataClient {
             country.country = countryName
         }
         
-        if let flag = result[RestCountriesConstants.ResponseKeys.FLAG] as? String {
-            country.flag = flag
-        }
-        
         if let capital = result[RestCountriesConstants.ResponseKeys.CAPITAL] as? String {
             country.capital = capital
         }
@@ -87,6 +83,11 @@ class CoreDataClient {
         
         if let alphaCode = result[RestCountriesConstants.ResponseKeys.ALPHA_CODE] as? String {
             country.isoCode = alphaCode
+            
+            let flag = "https://www.countryflags.io/\(alphaCode)/flat/64.png"
+            if let url = URL(string: flag) {
+                try? country.flag = Data(contentsOf: url)
+            }
         }
         
         if let nativeName = result[RestCountriesConstants.ResponseKeys.NATIVE_NAME] as? String {
@@ -144,7 +145,7 @@ class CoreDataClient {
             var countrCallingCodes = ""
             
             for callingCode in callingCodes {
-                countrCallingCodes.append(callingCode + ", ")
+                countrCallingCodes.append("+" + callingCode + ", ")
             }
             country.callingCodes = countrCallingCodes.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }

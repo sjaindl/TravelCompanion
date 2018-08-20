@@ -8,9 +8,8 @@
 
 import CoreData
 import UIKit
-import WebKit
 
-class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
+class ExploreDetailViewController: UIViewController {
     
     var pin: Pin!
     var dataController: DataController!
@@ -19,12 +18,15 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet weak var placeName: UILabel!
     @IBOutlet weak var placeType: UILabel!
+    @IBOutlet weak var phoneTitle: UILabel!
     @IBOutlet weak var phone: UILabel!
+    @IBOutlet weak var urlTitle: UILabel!
     @IBOutlet weak var url: UILabel!
-//    @IBOutlet weak var rating: UIProgressView!
+    @IBOutlet weak var latitudeLongitude: UILabel!
+    //    @IBOutlet weak var rating: UIProgressView!
     
     @IBOutlet weak var countryName: UILabel!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var capital: UILabel!
     @IBOutlet weak var language: UILabel!
     @IBOutlet weak var currency: UILabel!
@@ -52,10 +54,25 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
         
         if let phoneNumber = pin.phoneNumber {
             phone.text = phoneNumber
+        } else {
+            phone.isHidden = true
+            phoneTitle.isHidden = true
         }
         
+        let latitudePostfix = pin.latitude < 0 ? "S" : "N"
+        let longitudePostfix = pin.longitude < 0 ? "W" : "E"
+        latitudeLongitude.text = "\(pin.latitude)° \(latitudePostfix), \(pin.longitude)° \(longitudePostfix)"
+        
         if let website = pin.url?.absoluteString {
-            url.text = website
+            let linkString = NSMutableAttributedString(string: website)
+            linkString.addAttribute(.link, value: URL(string: website) ?? website, range: NSMakeRange(0, website.count))
+            url.attributedText = linkString
+            
+            url.isUserInteractionEnabled = true
+            url.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openLink)))
+        } else {
+            url.isHidden = true
+            urlTitle.isHidden = true
         }
         
 //        rating.progress = pin.rating / 5 //max rating is 5 --> divide by 5 to get a value between 0.0 and 1.0
@@ -63,14 +80,18 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
         countryName.text = pin.country
     }
     
+    @objc
+    func openLink() {
+        if let link = url.text, let url = URL(string: link) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
     func setCountryData(_ country: Country) {
         countryName.text = country.country
         
-        if let flag = country.flag, let svgURL = URL(string: flag) {
-            if var svgString = try? String(contentsOf: svgURL) {
-//                svgString += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\">"
-                webView.loadHTMLString(svgString, baseURL: nil)
-            }
+        if let flag = country.flag {
+            imageView.image = UIImage(data: flag)
         }
         
         if let capital = country.capital, !capital.isEmpty {
@@ -85,7 +106,7 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
             self.currency.text = currency
         }
         
-        self.area.text = String(country.area) + " km²"
+        self.area.text = (country.area as NSNumber).description(withLocale: Locale.current) + " km²"
         self.population.text = (country.population as NSNumber).description(withLocale: Locale.current)
         
         if let timezones = country.timezones, !timezones.isEmpty {
@@ -120,7 +141,6 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        webView.navigationDelegate = self
         
         enableTabs(false)
         initResultsController()
@@ -150,14 +170,14 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
     
     func initResultsController() {
         var cacheName: String? = nil
-        if let country = pin.country {
-            cacheName = Constants.CoreData.CACHE_NAME_COUNTRIES + country
+        if let countryCode = pin.countryCode {
+            cacheName = Constants.CoreData.CACHE_NAME_COUNTRIES + countryCode
         }
         
         let fetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.SORT_KEY, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.predicate = NSPredicate(format: "country == %@", pin.country ?? "")
+        fetchRequest.predicate = NSPredicate(format: "country == %@", pin.countryCode ?? "")
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: cacheName)
     }
 
@@ -182,7 +202,7 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
     }
     
     func fetchNewCountryData() {
-        guard let newCountry = pin.country else {
+        guard let newCountry = pin.countryCode else {
             debugPrint("This location is not in a country. Can't fetch country details.")
             self.enableTabs(true)
             return
@@ -214,31 +234,5 @@ class ExploreDetailViewController: UIViewController, WKNavigationDelegate {
         let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
-    }
-}
-
-extension ExploreDetailViewController {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        self.webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
-            if complete != nil {
-                
-                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
-                                           completionHandler: { (html: Any?, error: Error?) in
-                                            print(html)
-                })
-                
-                self.webView.evaluateJavaScript("document.body.offsetHeight", completionHandler: { (height, error) in
-                    let webViewheight = height as! CGFloat
-//                    webView.heightAnchor.constraint(equalToConstant: webViewheight).isActive = true
-                })
-                
-//                self.webView.evaluateJavaScript("document.body.offsetWidth", completionHandler: { (width, error) in
-//                    let webViewWidth = width as! CGFloat
-//                    webView.widthAnchor.constraint(equalToConstant: webViewWidth).isActive = true
-//                })
-            }
-            
-        })
     }
 }

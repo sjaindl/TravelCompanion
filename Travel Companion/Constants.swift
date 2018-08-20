@@ -16,6 +16,7 @@ struct Constants {
     static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
     static let PLAN_SEGUE_ID = "plan"
     static let REMEMBER_SEGUE_ID = "remember"
+    static let PHOTO_DETAIL_SEGUE_ID = "photoDetail"
     
     struct CoreData {
         static let PLACEHOLDER_IMAGE = "placeholder"

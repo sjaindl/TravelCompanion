@@ -8,7 +8,7 @@
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="currencies" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="domains" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="flag" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="isoCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="languages" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nativeName" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +29,7 @@
     <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -48,7 +49,7 @@
     <elements>
         <element name="Country" positionX="-947" positionY="782" width="128" height="285"/>
         <element name="Photos" positionX="-360" positionY="954" width="128" height="135"/>
-        <element name="Pin" positionX="-684" positionY="909" width="128" height="238"/>
+        <element name="Pin" positionX="-684" positionY="909" width="128" height="255"/>
         <element name="PlaceType" positionX="-983" positionY="1053" width="128" height="73"/>
     </elements>
 </model>
