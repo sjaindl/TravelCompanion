@@ -12,6 +12,8 @@ class WebClient {
     
     static let sharedInstance = WebClient()
     
+    private init() {}
+    
     func createUrl(forScheme scheme: String, forHost host: String, forMethod method: String, withQueryItems queryItems: [String: String]? = nil) -> URL {
         var urlComponent = URLComponents()
         

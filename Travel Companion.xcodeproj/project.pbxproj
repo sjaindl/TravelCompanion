@@ -40,10 +40,30 @@
 		9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */; };
 		9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
+		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
+		9AE4C26F212A8CE80056CD0D /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
+		9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
+		9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
+		9AE4C272212A8D0B0056CD0D /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
+		9AE4C273212A8D1E0056CD0D /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DE21117E4600060790 /* WebConstants.swift */; };
+		9AE4C274212A8D200056CD0D /* WebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E221117E4600060790 /* WebClient.swift */; };
+		9AE4C27B212B7CA70056CD0D /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
+		9AE4C27C212B822A0056CD0D /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
+		9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D921117E4600060790 /* Pin+Extensions.swift */; };
+		9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E121117E4600060790 /* Photos+Extensions.swift */; };
+		9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C27F212BD95B0056CD0D /* FetchType.swift */; };
+		9AE4C281212BDE610056CD0D /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
+		9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DA21117E4600060790 /* DataController.swift */; };
+		9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DD21117E4600060790 /* FlickrConstants.swift */; };
+		9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */; };
+		9AE4C287212F5EF50056CD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
+		9AE4C288212F5EF70056CD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
+		9AE4C28B212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
+		9AE4C28C212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
+		9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C28D212F6DC50056CD0D /* UiUtils.swift */; };
 		9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
 		9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
 		9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
-		9AF39BE82125B22D00D85DF2 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */; };
 		9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
 		9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
 		9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */; };
@@ -108,10 +128,13 @@
 		9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreConstants.swift; sourceTree = "<group>"; };
 		9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
+		9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTests.swift; sourceTree = "<group>"; };
+		9AE4C27F212BD95B0056CD0D /* FetchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchType.swift; sourceTree = "<group>"; };
+		9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreUiTests.swift; path = "Travel CompanionUITests/ExploreUiTests.swift"; sourceTree = SOURCE_ROOT; };
+		9AE4C28D212F6DC50056CD0D /* UiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiUtils.swift; sourceTree = "<group>"; };
 		9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TravelCompanion.xcdatamodel; path = TravelCompanion.xcdatamodeld/TravelCompanion.xcdatamodel; sourceTree = "<group>"; };
 		9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
 		9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
-		9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesClient.swift; sourceTree = "<group>"; };
 		9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesConstants.swift; sourceTree = "<group>"; };
 		9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosDetailViewController.swift; sourceTree = "<group>"; };
@@ -196,9 +219,9 @@
 				9A5B6A3421117EFD00060790 /* Supporting Files */,
 				9A5B69D321117E4600060790 /* Constants.swift */,
 				9A1AD4D1211245AF001D2517 /* SecretConstants.swift */,
-				9A5B69D621117E4600060790 /* Controller */,
 				9A5B69D821117E4600060790 /* Model */,
 				9A5B69D421117E4600060790 /* View */,
+				9A5B69D621117E4600060790 /* Controller */,
 			);
 			path = "Travel Companion";
 			sourceTree = "<group>";
@@ -206,6 +229,7 @@
 		9A5B69B321117A7C00060790 /* Travel CompanionTests */ = {
 			isa = PBXGroup;
 			children = (
+				9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */,
 				9A5B69B421117A7C00060790 /* Travel_CompanionTests.swift */,
 				9A5B69B621117A7C00060790 /* Info.plist */,
 			);
@@ -215,6 +239,7 @@
 		9A5B69BE21117A7C00060790 /* Travel CompanionUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */,
 				9A5B69BF21117A7C00060790 /* MainMenuUITests.swift */,
 				9A5B69C121117A7C00060790 /* Info.plist */,
 			);
@@ -225,7 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
-				9AF39BE72125B22D00D85DF2 /* SVGImageView.swift */,
+				9AE4C28D212F6DC50056CD0D /* UiUtils.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -236,6 +261,7 @@
 				9AA266B42123558600EE0F5C /* Explore */,
 				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
+				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -243,13 +269,13 @@
 		9A5B69D821117E4600060790 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9AF39BE92126CA3500D85DF2 /* GeoNames */,
-				9AF39BE6212564C100D85DF2 /* RestCountries */,
-				9AA266AF2122C62100EE0F5C /* Web */,
 				9AA266AE2122C5FD00EE0F5C /* CoreData */,
 				9AA266A62122C37D00EE0F5C /* Firestore */,
 				9A5B69DB21117E4600060790 /* Flickr */,
+				9AF39BE92126CA3500D85DF2 /* GeoNames */,
 				9AA266A72122C38D00EE0F5C /* Google */,
+				9AF39BE6212564C100D85DF2 /* RestCountries */,
+				9AA266AF2122C62100EE0F5C /* Web */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -475,6 +501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE4C288212F5EF70056CD0D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE4C287212F5EF50056CD0D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,7 +666,6 @@
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
 				9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */,
-				9AF39BE82125B22D00D85DF2 /* SVGImageView.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
 				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
@@ -646,6 +673,7 @@
 				9A5B69E921117E4700060790 /* Pin+Extensions.swift in Sources */,
 				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
 				9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */,
+				9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */,
 				9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */,
 				9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
@@ -654,6 +682,7 @@
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
 				9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */,
 				9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */,
+				9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */,
 				9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
@@ -671,7 +700,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */,
+				9AE4C28B212F6A9B0056CD0D /* Constants.swift in Sources */,
+				9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */,
+				9AE4C27C212B822A0056CD0D /* Country+Extensions.swift in Sources */,
+				9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */,
+				9AE4C26F212A8CE80056CD0D /* RestCountriesClient.swift in Sources */,
 				9A5B69B521117A7C00060790 /* Travel_CompanionTests.swift in Sources */,
+				9AE4C272212A8D0B0056CD0D /* GeoNamesConstants.swift in Sources */,
+				9AE4C27B212B7CA70056CD0D /* TravelCompanion.xcdatamodel in Sources */,
+				9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */,
+				9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */,
+				9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */,
+				9AE4C281212BDE610056CD0D /* CoreDataClient.swift in Sources */,
+				9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */,
+				9AE4C273212A8D1E0056CD0D /* WebConstants.swift in Sources */,
+				9AE4C274212A8D200056CD0D /* WebClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +724,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A5B69C021117A7C00060790 /* MainMenuUITests.swift in Sources */,
+				9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */,
+				9AE4C28C212F6A9B0056CD0D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

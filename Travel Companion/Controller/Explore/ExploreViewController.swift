@@ -102,7 +102,7 @@ class ExploreViewController: UIViewController {
                     let longitude = document.data()[FirestoreConstants.Ids.Place.LONGITUDE] as? Double
                     
                     if let placeId = placeId, let latitude = latitude, let longitude = longitude {
-                        let pin = CoreDataClient.storePin(self.dataController, placeId: placeId, latitude: latitude, longitude: longitude)
+                        let pin = CoreDataClient.sharedInstance.storePin(self.dataController, placeId: placeId, latitude: latitude, longitude: longitude)
                         let coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
                         let marker = self.addPinToMap(with: coordinate)
                         self.store(pin, in: marker)
@@ -145,7 +145,7 @@ class ExploreViewController: UIViewController {
     }
     
     func persistPin(of place: GMSPlace, countryCode: String?) -> Pin {
-        let pin = CoreDataClient.storePin(dataController, place: place, countryCode: countryCode)
+        let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, countryCode: countryCode)
         
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
             FirestoreConstants.Ids.Place.PLACE_ID: place.placeID,

@@ -10,4 +10,7 @@ import Foundation
 
 class GoogleClient {
     
+    static let sharedInstance = GoogleClient()
+    
+    private init() {}
 }

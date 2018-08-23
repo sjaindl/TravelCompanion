@@ -16,8 +16,8 @@ class DataController {
         return persistentContainer.viewContext
     }
     
-    init(modelName: String) {
-        persistentContainer = NSPersistentContainer(name: modelName)
+    init(persistentContainer: NSPersistentContainer) {
+        self.persistentContainer = persistentContainer
     }
     
     func load(completion: (() -> Void)? = nil) {

@@ -9,7 +9,7 @@
 import CoreData
 import UIKit
 
-class ExploreDetailViewController: UIViewController {
+public class ExploreDetailViewController: UIViewController {
     
     var pin: Pin!
     var dataController: DataController!
@@ -138,7 +138,7 @@ class ExploreDetailViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
@@ -161,11 +161,6 @@ class ExploreDetailViewController: UIViewController {
             let tabBarItem = barItems[0]
             tabBarItem.isEnabled = enable
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initResultsController() {
@@ -220,7 +215,7 @@ class ExploreDetailViewController: UIViewController {
                         return
                     }
                     
-                    let country = CoreDataClient.storeCountry(self.dataController, pin: self.pin, result: result)
+                    let country = CoreDataClient.sharedInstance.storeCountry(self.dataController, pin: self.pin, result: result)
                     self.setCountryData(country)
                 }
                 

@@ -12,6 +12,8 @@ class RestCountriesClient {
     
     static let sharedInstance = RestCountriesClient()
     
+    private init() { }
+    
     func fetchCountryDetails(of country: String, completionHandler: @escaping (_ errorString: String?, _ isEmtpy: Bool, _ result: [String: AnyObject]?) -> Void) {
         
         let url = WebClient.sharedInstance.createUrl(forScheme: RestCountriesConstants.UrlComponents.PROTOCOL, forHost: RestCountriesConstants.UrlComponents.DOMAIN, forMethod: RestCountriesConstants.UrlComponents.PATH + country)

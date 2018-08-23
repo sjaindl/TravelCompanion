@@ -9,7 +9,10 @@
 import Foundation
 
 class GeoNamesClient {
+    
     static let sharedInstance = GeoNamesClient()
+    
+    private init() { }
     
     func fetchCountryCode(latitude: Double, longitude: Double, completionHandler: @escaping (_ errorString: String?, _ result: AnyObject?) -> Void) {
         

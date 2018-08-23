@@ -25,7 +25,7 @@ class ExplorePhotosViewController: UIViewController {
     var pin: Pin!
     var dataController: DataController!
     var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>!
-    var fetchType: Int = Constants.FetchType.Country.rawValue
+    var fetchType: Int = FetchType.Country.rawValue
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -50,7 +50,7 @@ class ExplorePhotosViewController: UIViewController {
     @IBAction func fetchByCountry(_ sender: Any) {
         resetFetchedResultsController()
         
-        fetchType = Constants.FetchType.Country.rawValue
+        fetchType = FetchType.Country.rawValue
         initResultsController()
         setButtonState()
         
@@ -60,7 +60,7 @@ class ExplorePhotosViewController: UIViewController {
     @IBAction func fetchByPlace(_ sender: Any) {
         resetFetchedResultsController()
         
-        fetchType = Constants.FetchType.Place.rawValue
+        fetchType = FetchType.Place.rawValue
         initResultsController()
         setButtonState()
         
@@ -70,7 +70,7 @@ class ExplorePhotosViewController: UIViewController {
     @IBAction func fetchByLatLong(_ sender: Any) {
         resetFetchedResultsController()
         
-        fetchType = Constants.FetchType.LatLong.rawValue
+        fetchType = FetchType.LatLong.rawValue
         initResultsController()
         setButtonState()
         
@@ -78,9 +78,9 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func setButtonState() {
-        countryButton.isEnabled = fetchType != Constants.FetchType.Country.rawValue ? true : false
-        placeButton.isEnabled = fetchType != Constants.FetchType.Place.rawValue ? true : false
-        latlongButton.isEnabled = fetchType != Constants.FetchType.LatLong.rawValue ? true : false
+        countryButton.isEnabled = fetchType != FetchType.Country.rawValue ? true : false
+        placeButton.isEnabled = fetchType != FetchType.Place.rawValue ? true : false
+        latlongButton.isEnabled = fetchType != FetchType.LatLong.rawValue ? true : false
     }
     
     func resetFetchedResultsController() {
@@ -154,7 +154,7 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func fetchRemoteData() {
-        if fetchType == Constants.FetchType.Place.rawValue {
+        if fetchType == FetchType.Place.rawValue {
             fetchDataFromGooglePlacePhotos()
         } else {
             fetchDataFromFlickr()
@@ -174,7 +174,7 @@ class ExplorePhotosViewController: UIViewController {
         
         DispatchQueue.global().async {
             var queryItems = FlickrClient.sharedInstance.buildQueryItems()
-            if self.fetchType == Constants.FetchType.Country.rawValue {
+            if self.fetchType == FetchType.Country.rawValue {
                 guard let country = country else {
                     debugPrint("This location is not in a country. Can't fetch country photos.")
                     
@@ -186,7 +186,7 @@ class ExplorePhotosViewController: UIViewController {
                 }
                 
                 queryItems[FlickrConstants.FlickrParameterKeys.Text] = country
-            } else if self.fetchType == Constants.FetchType.LatLong.rawValue {
+            } else if self.fetchType == FetchType.LatLong.rawValue {
                 queryItems[FlickrConstants.FlickrParameterKeys.BoundingBox] = FlickrClient.sharedInstance.bboxString(latitude: latitude, longitude: longitude)
             }
             
@@ -204,7 +204,7 @@ class ExplorePhotosViewController: UIViewController {
                         }
                         
                         for photo in photos {
-                            self.persistPhoto(photo: photo)
+                            _ = CoreDataClient.sharedInstance.storePhoto(self.dataController, photo: photo, pin: self.pin, fetchType: self.fetchType)
                         }
                         
                         self.enableUi(true)
@@ -223,7 +223,7 @@ class ExplorePhotosViewController: UIViewController {
             } else {
                 if let photos = photos?.results, photos.count > 0 {
                     for photo in photos {
-                        self.persistPhoto(placePhoto: photo)
+                        CoreDataClient.sharedInstance.storePhoto(self.dataController, placePhoto: photo, pin: self.pin, fetchType: self.fetchType)
                     }
                 } else {
                     self.noPhotoLabel.isHidden = false
@@ -243,50 +243,6 @@ class ExplorePhotosViewController: UIViewController {
         map.camera = camera
         
         addPinToMap(with: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude))
-    }
-    
-    func persistPhoto(placePhoto: GMSPlacePhotoMetadata) {
-        GMSPlacesClient.shared().loadPlacePhoto(placePhoto, callback: {
-            (placePhoto, error) -> Void in
-            if let error = error {
-                // TODO: handle the error.
-                print("Error: \(error.localizedDescription)")
-            } else {
-                let photo = Photos(context: self.dataController.viewContext)
-                
-                photo.pin = self.pin
-                photo.type = Int16(self.fetchType)
-                photo.title = self.pin.name
-                photo.imageData = UIImagePNGRepresentation(placePhoto!)
-                try? self.dataController.save()
-            }
-        })
-    }
-    
-    func persistPhoto(photo: [String: AnyObject]) {
-        if let title = photo[FlickrConstants.FlickrResponseKeys.Title] as? String,
-            /* Does the photo have a key for 'url_l'? */
-            let imageUrlString = photo[FlickrConstants.FlickrResponseKeys.ImageSize] as? String {
-            
-            let photo = Photos(context: dataController.viewContext)
-            
-            photo.pin = self.pin
-            photo.type = Int16(fetchType)
-            photo.title = title
-            photo.imageUrl = imageUrlString
-            
-            try? dataController.save()
-            
-            let photoId = photo.objectID
-            
-            if let url = URL(string: imageUrlString), let backgroundContext:NSManagedObjectContext = dataController?.backgroundContext {
-                backgroundContext.perform {
-                    let backgroundPhoto = backgroundContext.object(with: photoId) as! Photos
-                    try? backgroundPhoto.imageData = Data(contentsOf: url)
-                    try? backgroundContext.save()
-                }
-            }
-        }
     }
     
     func enableUi(_ enable: Bool) {
@@ -350,7 +306,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
         
         guard photo.imageData != nil else {
             debugPrint("No image data to display")
-            showToast(message: "Please wait for photo downloads to finish")
+            UiUtils.showToast(message: "Please wait for photo downloads to finish", view: self.view) {_ in }
             return
         }
         
@@ -364,23 +320,3 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
         }
     }
 }
-
-extension ExplorePhotosViewController {
-    
-    func showToast(message : String) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 200, y: self.view.frame.size.height-100, width: 400, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-    } }

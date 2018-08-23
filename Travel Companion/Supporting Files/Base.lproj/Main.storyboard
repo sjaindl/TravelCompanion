@@ -220,6 +220,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEg-MM-MUU" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="72" width="480" height="248"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="gMap">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -761,7 +764,7 @@
         <!--Explore Photos Detail View Controller-->
         <scene sceneID="h9G-h1-uWL">
             <objects>
-                <viewController id="Iq3-wv-qnR" customClass="ExplorePhotosDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExploreDetail" id="Iq3-wv-qnR" customClass="ExplorePhotosDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a9a-bd-10p">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

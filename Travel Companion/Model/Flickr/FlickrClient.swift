@@ -13,6 +13,8 @@ class FlickrClient {
     
     static let sharedInstance = FlickrClient()
     
+    private init() {}
+    
     func fetchPhotos(with queryItems: [String: String], completionHandler: @escaping (_ errorString: String?, _ isEmtpy: Bool, _ photos: [[String: AnyObject]]?) -> Void) {
         
         self.fetchPhotosOfLocation(with: queryItems, withPageNumber: 1) { (error, _, photos) in
@@ -46,7 +48,7 @@ class FlickrClient {
         }
     }
     
-    func fetchPhotosOfLocation(with queryItems: [String: String], withPageNumber pageNumber: Int? = nil, completionHandler: @escaping (_ errorString: String?, _ randomPage: Int, _ photos: [[String: AnyObject]]?) -> Void) {
+    private func fetchPhotosOfLocation(with queryItems: [String: String], withPageNumber pageNumber: Int? = nil, completionHandler: @escaping (_ errorString: String?, _ randomPage: Int, _ photos: [[String: AnyObject]]?) -> Void) {
         
         let url = WebClient.sharedInstance.createUrl(forScheme: FlickrConstants.UrlComponents.PROTOCOL, forHost: FlickrConstants.UrlComponents.DOMAIN, forMethod: FlickrConstants.UrlComponents.PATH, withQueryItems: queryItems)
         

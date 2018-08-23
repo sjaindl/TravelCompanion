@@ -38,10 +38,4 @@ struct Constants {
         static let STANDARD_LATITUDE = 47.0
         static let STANDARD_LONGITUDE = 15.5
     }
-    
-    enum FetchType: Int {
-        case Country = 1
-        case Place = 2
-        case LatLong = 3
-    }
 }

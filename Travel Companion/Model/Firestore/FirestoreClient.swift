@@ -11,6 +11,10 @@ import Foundation
 
 class FirestoreClient {
     
+    static let sharedInstance = FirestoreClient()
+    
+    private init() {}
+    
     static func newDatabaseInstance() -> Firestore {
         let firestoreDb = Firestore.firestore()
         let settings = firestoreDb.settings
