@@ -26,7 +26,7 @@ class ExploreViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         map.delegate = self
         firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLACES)
@@ -106,6 +106,8 @@ class ExploreViewController: UIViewController {
                         let coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitude)
                         let marker = self.addPinToMap(with: coordinate)
                         self.store(pin, in: marker)
+                        
+                        try? self.dataController.save()
                     }
                 }
             }
@@ -113,14 +115,16 @@ class ExploreViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.EXPLORE_DETAIL_SEGUE_ID || segue.identifier == Constants.EXPLORE_PHOTOS_SEGUE_ID {
+        if segue.identifier == Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID || segue.identifier == Constants.SEGUES.EXPLORE_PHOTOS_SEGUE_ID || segue.identifier == Constants.SEGUES.EXPLORE_WIKI_SEGUE_ID {
             let controller = segue.destination as! UITabBarController
-            let detailTtargetController = controller.viewControllers![0] as! ExploreDetailViewController
-            let photosTtargetController = controller.viewControllers![1] as! ExplorePhotosViewController
-            detailTtargetController.pin = sender as! Pin
-            detailTtargetController.dataController = dataController
-            photosTtargetController.pin = sender as! Pin
-            photosTtargetController.dataController = dataController
+            let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
+            let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
+            let wikitargetController = controller.viewControllers![2] as! WikiViewController
+            detailTargetController.pin = sender as! Pin
+            detailTargetController.dataController = dataController
+            photosTargetController.pin = sender as! Pin
+            photosTargetController.dataController = dataController
+            wikitargetController.pin = sender as! Pin
         }
     }
     
@@ -149,6 +153,7 @@ class ExploreViewController: UIViewController {
         
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
             FirestoreConstants.Ids.Place.PLACE_ID: place.placeID,
+            FirestoreConstants.Ids.Place.NAME: place.name,
             FirestoreConstants.Ids.Place.LATITUDE: place.coordinate.latitude,
             FirestoreConstants.Ids.Place.LONGITUDE: place.coordinate.longitude
         ]) { (error) in
@@ -225,7 +230,7 @@ extension ExploreViewController: GMSMapViewDelegate {
             
             marker.map = nil
         } else {
-            performSegue(withIdentifier: Constants.EXPLORE_DETAIL_SEGUE_ID, sender: marker.userData)
+            performSegue(withIdentifier: Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID, sender: marker.userData)
         }
         
         return true

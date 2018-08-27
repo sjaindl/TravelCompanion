@@ -184,6 +184,7 @@
                         <outlet property="rememberImage" destination="c2i-Ab-fxi" id="99P-Pc-4rC"/>
                         <outlet property="rememberLabel" destination="5CZ-0s-lcp" id="Zas-Df-KYF"/>
                         <segue destination="1mH-cT-4Yu" kind="show" identifier="explore" id="fjZ-xd-BmB"/>
+                        <segue destination="wuO-ZT-hdO" kind="show" identifier="plan" id="785-gA-QXn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUM-7W-Yy5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -246,6 +247,239 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ppU-Zx-Vas" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1321.875" y="35.57833089311859"/>
+        </scene>
+        <!--Plan View Controller-->
+        <scene sceneID="B5H-hg-0UZ">
+            <objects>
+                <viewController id="wuO-ZT-hdO" customClass="PlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BxB-pT-gzJ">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ps-Rq-WXG">
+                                <rect key="frame" x="0.0" y="52" width="480" height="32"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="jTJ-u1-ULo"/>
+                                    <barButtonItem title="Delete" id="bW9-fS-siE">
+                                        <connections>
+                                            <action selector="deletePlan:" destination="wuO-ZT-hdO" id="xIR-tU-Zcp"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Add" id="bbB-XD-b1p">
+                                        <connections>
+                                            <action selector="addPlan:" destination="wuO-ZT-hdO" id="NZ1-xH-A4z"/>
+                                            <segue destination="xdo-RK-LXN" kind="presentation" identifier="addPlan" id="gyg-rT-ark"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NIm-7E-Ni3">
+                                <rect key="frame" x="0.0" y="84" width="480" height="904"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="JsV-Vf-weF" detailTextLabel="tfX-rD-jiP" imageView="Zc6-ra-oES" style="IBUITableViewCellStyleSubtitle" id="diK-L6-sUc">
+                                        <rect key="frame" x="0.0" y="28" width="480" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="diK-L6-sUc" id="BFU-Nh-FD4">
+                                            <rect key="frame" x="0.0" y="0.0" width="480" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JsV-Vf-weF">
+                                                    <rect key="frame" x="74" y="5" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tfX-rD-jiP">
+                                                    <rect key="frame" x="74" y="25.5" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="placeholder" id="Zc6-ra-oES">
+                                                    <rect key="frame" x="15" y="0.0" width="44" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Gcm-E4-bKI" firstAttribute="trailing" secondItem="NIm-7E-Ni3" secondAttribute="trailing" id="2CR-Hb-Q29"/>
+                            <constraint firstItem="3ps-Rq-WXG" firstAttribute="trailing" secondItem="Gcm-E4-bKI" secondAttribute="trailing" id="UmL-UL-FUQ"/>
+                            <constraint firstItem="NIm-7E-Ni3" firstAttribute="top" secondItem="3ps-Rq-WXG" secondAttribute="bottom" id="cZs-Yf-UGW"/>
+                            <constraint firstItem="3ps-Rq-WXG" firstAttribute="leading" secondItem="Gcm-E4-bKI" secondAttribute="leading" id="gvU-S8-hal"/>
+                            <constraint firstItem="Gcm-E4-bKI" firstAttribute="bottom" secondItem="NIm-7E-Ni3" secondAttribute="bottom" id="gzy-O3-4Yp"/>
+                            <constraint firstItem="3ps-Rq-WXG" firstAttribute="top" secondItem="Gcm-E4-bKI" secondAttribute="top" id="hON-qn-Ly9"/>
+                            <constraint firstItem="NIm-7E-Ni3" firstAttribute="leading" secondItem="Gcm-E4-bKI" secondAttribute="leading" id="nQg-ja-bMG"/>
+                            <constraint firstItem="NIm-7E-Ni3" firstAttribute="top" secondItem="Gcm-E4-bKI" secondAttribute="top" constant="32" id="sYT-D1-UJ1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gcm-E4-bKI"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="480" height="1020"/>
+                    <connections>
+                        <outlet property="delete" destination="bW9-fS-siE" id="fzZ-lJ-H7C"/>
+                        <outlet property="tableView" destination="NIm-7E-Ni3" id="fcr-4S-6g1"/>
+                        <segue destination="9bi-5Y-lDi" kind="show" identifier="planDetail" id="xRl-LZ-wCJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R6N-3U-HzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1276" y="4097"/>
+        </scene>
+        <!--Plan Detail View Controller-->
+        <scene sceneID="9nX-hZ-qa0">
+            <objects>
+                <viewController id="9bi-5Y-lDi" customClass="PlanDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c9W-cS-2YM">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="dLJ-W1-Qcb"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dtz-Xf-sJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2455" y="4703"/>
+        </scene>
+        <!--Add Plan View Controller-->
+        <scene sceneID="Vmf-LY-gzL">
+            <objects>
+                <viewController id="xdo-RK-LXN" customClass="AddPlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZXw-MH-fX9">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fcb-gI-sfI">
+                                <rect key="frame" x="8" y="28" width="464" height="984"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="top" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="xBf-hi-chB">
+                                        <rect key="frame" x="8" y="8" width="464" height="1600.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Destination:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2K-eW-r9w" userLabel="Destination:">
+                                                <rect key="frame" x="0.0" y="0.0" width="464" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qcf-6M-tXL" userLabel="destinationPickerView">
+                                                <rect key="frame" x="0.0" y="36.5" width="464" height="216"/>
+                                            </pickerView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Display name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RT-y1-G3x" userLabel="Display name:">
+                                                <rect key="frame" x="0.0" y="268.5" width="464" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="destination name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F3u-f4-8ar" userLabel="destination">
+                                                <rect key="frame" x="0.0" y="305" width="464" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Start Date: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYM-Va-9vG" userLabel="Start Date:">
+                                                <rect key="frame" x="0.0" y="351" width="464" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ogF-ns-zaL" userLabel="startDate">
+                                                <rect key="frame" x="0.0" y="387.5" width="464" height="216"/>
+                                                <date key="date" timeIntervalSinceReferenceDate="556974153.51550198">
+                                                    <!--2018-08-26 11:02:33 +0000-->
+                                                </date>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" red="0.36862745098039218" green="0.75294117647058822" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </datePicker>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="End Date: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdV-U4-2SE" userLabel="End Date:">
+                                                <rect key="frame" x="0.0" y="619.5" width="464" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PXL-yB-mfv" userLabel="endDate">
+                                                <rect key="frame" x="0.0" y="656" width="464" height="216"/>
+                                                <date key="date" timeIntervalSinceReferenceDate="556974153.51550198">
+                                                    <!--2018-08-26 11:02:33 +0000-->
+                                                </date>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" red="0.36862745098039218" green="0.75294117647058822" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </datePicker>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="I0P-3S-SFo">
+                                                <rect key="frame" x="0.0" y="888" width="464" height="36"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZz-qn-ib7">
+                                                        <rect key="frame" x="0.0" y="0.0" width="248.5" height="36"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <state key="normal" title="Add trip">
+                                                            <color key="titleColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addPlan:" destination="xdo-RK-LXN" eventType="touchUpInside" id="1gL-XA-x65"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36B-VI-zJN" userLabel="Cancel">
+                                                        <rect key="frame" x="248.5" y="0.0" width="215.5" height="36"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <state key="normal" title="Cancel">
+                                                            <color key="titleColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addPlan:" destination="xdo-RK-LXN" eventType="touchUpInside" id="VzU-2M-VZ9"/>
+                                                            <action selector="cancel:" destination="xdo-RK-LXN" eventType="touchUpInside" id="L51-Bc-Ofl"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Bl-fA-OzX">
+                                                <rect key="frame" x="0.0" y="940" width="464" height="660.5"/>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="xBf-hi-chB" secondAttribute="bottom" constant="8" id="7WJ-Xn-8jZ"/>
+                                    <constraint firstItem="xBf-hi-chB" firstAttribute="width" secondItem="Fcb-gI-sfI" secondAttribute="width" id="Ddo-Px-2Xr"/>
+                                    <constraint firstItem="xBf-hi-chB" firstAttribute="leading" secondItem="Fcb-gI-sfI" secondAttribute="leading" constant="8" id="aQA-GO-rwk"/>
+                                    <constraint firstItem="xBf-hi-chB" firstAttribute="top" secondItem="Fcb-gI-sfI" secondAttribute="top" constant="8" id="n19-eO-fwB"/>
+                                    <constraint firstAttribute="trailing" secondItem="xBf-hi-chB" secondAttribute="trailing" constant="8" id="sa2-g0-N7u"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Fcb-gI-sfI" firstAttribute="top" secondItem="ivg-LQ-BoA" secondAttribute="top" constant="8" id="4WV-8K-yNd"/>
+                            <constraint firstItem="Fcb-gI-sfI" firstAttribute="leading" secondItem="ivg-LQ-BoA" secondAttribute="leading" constant="8" id="PQL-68-Mmd"/>
+                            <constraint firstItem="ivg-LQ-BoA" firstAttribute="trailing" secondItem="Fcb-gI-sfI" secondAttribute="trailing" constant="8" id="X9d-aa-m0o"/>
+                            <constraint firstItem="ivg-LQ-BoA" firstAttribute="bottom" secondItem="Fcb-gI-sfI" secondAttribute="bottom" constant="8" id="zzq-P7-mgF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ivg-LQ-BoA"/>
+                    </view>
+                    <size key="freeformSize" width="480" height="1020"/>
+                    <connections>
+                        <outlet property="addTripButton" destination="eZz-qn-ib7" id="cNe-YR-G1x"/>
+                        <outlet property="destinationPicker" destination="qcf-6M-tXL" id="mkP-yr-3WK"/>
+                        <outlet property="destinationText" destination="F3u-f4-8ar" id="7JW-3d-Jzl"/>
+                        <outlet property="endDate" destination="PXL-yB-mfv" id="qGQ-ez-Byl"/>
+                        <outlet property="startDate" destination="ogF-ns-zaL" id="OjV-Bv-isF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mhO-L1-1tK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2161" y="2599"/>
         </scene>
         <!--ExploreDetail-->
         <scene sceneID="uC0-IN-jPZ">
@@ -598,7 +832,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUr-F2-HMm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2904" y="-743"/>
+            <point key="canvasLocation" x="3481" y="-1506"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zX9-mP-FL4">
@@ -618,6 +852,39 @@
             </objects>
             <point key="canvasLocation" x="-170.5078125" y="36.017569546120058"/>
         </scene>
+        <!--WikiVoyage-->
+        <scene sceneID="oyU-Ob-Hrx">
+            <objects>
+                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2an-2B-Mm1">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7sq-1r-WlT">
+                                <rect key="frame" x="0.0" y="32" width="480" height="256"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="7sq-1r-WlT" firstAttribute="top" secondItem="6VP-jJ-9JN" secondAttribute="top" id="CCa-eX-3zj"/>
+                            <constraint firstItem="6VP-jJ-9JN" firstAttribute="trailing" secondItem="7sq-1r-WlT" secondAttribute="trailing" id="IfI-AA-JNc"/>
+                            <constraint firstItem="7sq-1r-WlT" firstAttribute="leading" secondItem="6VP-jJ-9JN" secondAttribute="leading" id="JmM-RB-daz"/>
+                            <constraint firstItem="6VP-jJ-9JN" firstAttribute="bottom" secondItem="7sq-1r-WlT" secondAttribute="bottom" id="wvx-o3-KRt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6VP-jJ-9JN"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="WikiVoyage" id="ehw-xb-7kV"/>
+                    <connections>
+                        <outlet property="webView" destination="7sq-1r-WlT" id="4Hy-mr-UN4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gyE-5Z-UxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3353" y="-3354"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Yih-9I-e7H">
             <objects>
@@ -631,6 +898,7 @@
                     <connections>
                         <segue destination="ikQ-Nq-vzn" kind="relationship" relationship="viewControllers" id="eSH-AC-jqQ"/>
                         <segue destination="QqY-JT-Kne" kind="relationship" relationship="viewControllers" id="5Ik-Ud-dR6"/>
+                        <segue destination="jTs-pH-xZb" kind="relationship" relationship="viewControllers" id="WHQ-6c-CHP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e46-qO-X3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -759,7 +1027,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2k-Tb-eRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2565" y="1187"/>
+            <point key="canvasLocation" x="3139" y="414"/>
         </scene>
         <!--Explore Photos Detail View Controller-->
         <scene sceneID="h9G-h1-uWL">
@@ -797,13 +1065,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rRW-Ka-6ED" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3733" y="986"/>
+            <point key="canvasLocation" x="4165" y="413"/>
         </scene>
     </scenes>
     <resources>
         <image name="austria" width="127" height="85"/>
         <image name="explore-1" width="250" height="250"/>
         <image name="pin" width="500" height="500"/>
+        <image name="placeholder" width="512" height="512"/>
         <image name="plan-1" width="500" height="477"/>
         <image name="remember" width="56" height="56"/>
     </resources>

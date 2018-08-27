@@ -12,6 +12,13 @@ class FirestoreConstants {
     struct Collections {
         static let USERS = "users"
         static let PLACES = "places"
+        static let PLANS = "plans"
+        
+        static let FLIGTHS = "fligths"
+        static let PUBLIC_TRANSPORT = "publicTransport"
+        static let HOTELS = "hotels"
+        static let RESTAURANTS = "restaurants"
+        static let ATTRACTIONS = "attractions"
     }
     
     struct Ids {
@@ -19,6 +26,14 @@ class FirestoreConstants {
             static let PLACE_ID = "placeId"
             static let LATITUDE = "latitude"
             static let LONGITUDE = "longitude"
+            static let NAME = "name"
+        }
+        
+        struct Plan {
+            static let NAME = "name"
+            static let START_DATE = "startDate"
+            static let END_DATE = "endDate"
+            static let IMAGE_REFERENCE = "image"
         }
         
         struct User {

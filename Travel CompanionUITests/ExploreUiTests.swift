@@ -10,7 +10,6 @@ import XCTest
 
 class ExploreUiTests: XCTestCase {
     
-    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -67,7 +66,7 @@ class ExploreUiTests: XCTestCase {
     func testExploreDetail() {
         // Use recording to get started writing UI tests.
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil) //TODO: check storyboard reference
         let controller = storyboard.instantiateViewController(withIdentifier: "ExploreDetail")
 //        let controller = ExploreDetailViewController()
         UIApplication.shared.keyWindow?.rootViewController = controller

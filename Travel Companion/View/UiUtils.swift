@@ -11,7 +11,7 @@ import UIKit
 
 class UiUtils {
     
-    static func showToast(message : String, view: UIView, completionHandler: @escaping (_ isCompleted: Bool) -> Void) {
+    static func showToast(message : String, view: UIView) {
         let toastLabel = UILabel(frame: CGRect(x: view.frame.size.width/2 - 200, y: view.frame.size.height-100, width: 400, height: 35))
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         toastLabel.textColor = UIColor.white
@@ -27,7 +27,13 @@ class UiUtils {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()
-            completionHandler(isCompleted)
         })
+    }
+    
+    static func setImage(_ imageName: String, for item: UIBarButtonItem) {
+        let imageSetting = UIImageView(image: UIImage(named: imageName))
+        imageSetting.image = imageSetting.image!.withRenderingMode(.alwaysOriginal)
+        imageSetting.tintColor = UIColor.clear
+        item.image = imageSetting.image
     }
 }

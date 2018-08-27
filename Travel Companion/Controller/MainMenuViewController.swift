@@ -55,17 +55,19 @@ class MainMenuViewController: UIViewController {
     @objc
     func explore() {
         print("explore")
-        performSegue(withIdentifier: Constants.EXPLORE_SEGUE_ID, sender: nil)
+        performSegue(withIdentifier: Constants.SEGUES.EXPLORE_SEGUE_ID, sender: nil)
     }
     
     @objc
     func plan() {
         print("plan")
+        performSegue(withIdentifier: Constants.SEGUES.PLAN_SEGUE_ID, sender: nil)
     }
     
     @objc
     func remember() {
         print("remember")
+        performSegue(withIdentifier: Constants.SEGUES.REMEMBER_SEGUE_ID, sender: nil)
     }
     
     deinit {
@@ -85,8 +87,11 @@ class MainMenuViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.EXPLORE_SEGUE_ID {
+        if segue.identifier == Constants.SEGUES.EXPLORE_SEGUE_ID {
             let controller = segue.destination as! ExploreViewController
+            controller.dataController = dataController
+        } else if segue.identifier == Constants.SEGUES.PLAN_SEGUE_ID {
+            let controller = segue.destination as! PlanViewController
             controller.dataController = dataController
         }
     }

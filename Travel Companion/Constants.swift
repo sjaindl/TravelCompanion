@@ -10,13 +10,23 @@ import Foundation
 
 struct Constants {
     
-    static let ALBUM_CELL_REUSE_ID = "photoCell"
-    static let EXPLORE_PHOTOS_SEGUE_ID = "explorePhotos"
-    static let EXPLORE_SEGUE_ID = "explore"
-    static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
-    static let PLAN_SEGUE_ID = "plan"
-    static let REMEMBER_SEGUE_ID = "remember"
-    static let PHOTO_DETAIL_SEGUE_ID = "photoDetail"
+    struct REUSE_IDS {
+        static let PLAN_CELL_REUSE_ID = "planReuseCellId"
+        static let PLAN_DETAIL_CELL_REUSE_ID = "planDetailReuseCellId"
+        static let ALBUM_CELL_REUSE_ID = "photoCell"
+    }
+    
+    struct SEGUES {
+        static let EXPLORE_PHOTOS_SEGUE_ID = "explorePhotos"
+        static let EXPLORE_WIKI_SEGUE_ID = "wiki"
+        static let EXPLORE_SEGUE_ID = "explore"
+        static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
+        static let PLAN_SEGUE_ID = "plan"
+        static let REMEMBER_SEGUE_ID = "remember"
+        static let PHOTO_DETAIL_SEGUE_ID = "photoDetail"
+        static let ADD_PLAN_SEGUE_ID = "addPlan"
+        static let PLAN_DETAIL_SEGUE_ID = "planDetail"
+    }
     
     struct CoreData {
         static let PLACEHOLDER_IMAGE = "placeholder"

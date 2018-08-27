@@ -32,6 +32,10 @@
 		9A5B6A3021117EC500060790 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1421117EC400060790 /* Podfile */; };
 		9A5B6A3121117EC500060790 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1521117EC400060790 /* LICENSE */; };
 		9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B6A3521117EFD00060790 /* AppDelegate.swift */; };
+		9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */; };
+		9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D6BFA2133C60500B98447 /* PlanConstants.swift */; };
+		9A94014021334F0400178105 /* WikiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A94013F21334F0400178105 /* WikiClient.swift */; };
+		9A94014221334F0D00178105 /* WikiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A94014121334F0D00178105 /* WikiConstants.swift */; };
 		9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */; };
 		9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */; };
 		9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A42122C37500EE0F5C /* FirestoreClient.swift */; };
@@ -61,6 +65,10 @@
 		9AE4C28B212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
 		9AE4C28C212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
 		9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C28D212F6DC50056CD0D /* UiUtils.swift */; };
+		9AE4C2912131CBE10056CD0D /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2902131CBE10056CD0D /* PlanViewController.swift */; };
+		9AE4C2942132A4110056CD0D /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2932132A4110056CD0D /* Plan.swift */; };
+		9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */; };
+		9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C297213318F20056CD0D /* WikiViewController.swift */; };
 		9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
 		9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
 		9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
@@ -120,6 +128,10 @@
 		9A5B6A1421117EC400060790 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9A5B6A1521117EC400060790 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9A5B6A3521117EFD00060790 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
+		9A6D6BFA2133C60500B98447 /* PlanConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanConstants.swift; sourceTree = "<group>"; };
+		9A94013F21334F0400178105 /* WikiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiClient.swift; sourceTree = "<group>"; };
+		9A94014121334F0D00178105 /* WikiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiConstants.swift; sourceTree = "<group>"; };
 		9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreViewController.swift; path = "Travel Companion/Controller/Explore/ExploreViewController.swift"; sourceTree = SOURCE_ROOT; };
 		9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailViewController.swift; sourceTree = "<group>"; };
 		9AA266A42122C37500EE0F5C /* FirestoreClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreClient.swift; sourceTree = "<group>"; };
@@ -132,6 +144,10 @@
 		9AE4C27F212BD95B0056CD0D /* FetchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchType.swift; sourceTree = "<group>"; };
 		9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreUiTests.swift; path = "Travel CompanionUITests/ExploreUiTests.swift"; sourceTree = SOURCE_ROOT; };
 		9AE4C28D212F6DC50056CD0D /* UiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiUtils.swift; sourceTree = "<group>"; };
+		9AE4C2902131CBE10056CD0D /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
+		9AE4C2932132A4110056CD0D /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
+		9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanViewController.swift; sourceTree = "<group>"; };
+		9AE4C297213318F20056CD0D /* WikiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiViewController.swift; sourceTree = "<group>"; };
 		9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TravelCompanion.xcdatamodel; path = TravelCompanion.xcdatamodeld/TravelCompanion.xcdatamodel; sourceTree = "<group>"; };
 		9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
 		9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
@@ -258,10 +274,10 @@
 		9A5B69D621117E4600060790 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9AE4C28F2131CB3F0056CD0D /* Plan */,
 				9AA266B42123558600EE0F5C /* Explore */,
 				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
-				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,6 +285,7 @@
 		9A5B69D821117E4600060790 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9A94013E21334EF100178105 /* Wiki */,
 				9AA266AE2122C5FD00EE0F5C /* CoreData */,
 				9AA266A62122C37D00EE0F5C /* Firestore */,
 				9A5B69DB21117E4600060790 /* Flickr */,
@@ -309,11 +326,21 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
+		9A94013E21334EF100178105 /* Wiki */ = {
+			isa = PBXGroup;
+			children = (
+				9A94013F21334F0400178105 /* WikiClient.swift */,
+				9A94014121334F0D00178105 /* WikiConstants.swift */,
+			);
+			path = Wiki;
+			sourceTree = "<group>";
+		};
 		9AA266A62122C37D00EE0F5C /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
 				9AA266A42122C37500EE0F5C /* FirestoreClient.swift */,
 				9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */,
+				9AE4C2932132A4110056CD0D /* Plan.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -356,8 +383,21 @@
 				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
 				9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */,
+				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
+				9AE4C297213318F20056CD0D /* WikiViewController.swift */,
 			);
 			path = Explore;
+			sourceTree = "<group>";
+		};
+		9AE4C28F2131CB3F0056CD0D /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				9AE4C2902131CBE10056CD0D /* PlanViewController.swift */,
+				9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */,
+				9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */,
+				9A6D6BFA2133C60500B98447 /* PlanConstants.swift */,
+			);
+			path = Plan;
 			sourceTree = "<group>";
 		};
 		9AF39BE6212564C100D85DF2 /* RestCountries */ = {
@@ -665,8 +705,11 @@
 			files = (
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
+				9A94014021334F0400178105 /* WikiClient.swift in Sources */,
+				9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */,
 				9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
+				9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */,
 				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
 				9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */,
@@ -676,9 +719,12 @@
 				9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */,
 				9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */,
 				9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */,
+				9A94014221334F0D00178105 /* WikiConstants.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
+				9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
 				9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */,
+				9AE4C2942132A4110056CD0D /* Plan.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
 				9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */,
 				9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */,
@@ -687,9 +733,11 @@
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,
+				9AE4C2912131CBE10056CD0D /* PlanViewController.swift in Sources */,
 				9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */,
 				9A5B69F021117E4700060790 /* WebClient.swift in Sources */,
 				9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */,
+				9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
 				9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */,
 				9A5B69EF21117E4700060790 /* Photos+Extensions.swift in Sources */,

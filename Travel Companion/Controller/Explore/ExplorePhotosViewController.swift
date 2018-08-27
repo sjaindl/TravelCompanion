@@ -114,7 +114,7 @@ class ExplorePhotosViewController: UIViewController {
         
         fetchRequest.predicate = predicate
         
-        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.ALBUM_CELL_REUSE_ID, cacheName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
+        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.REUSE_IDS.ALBUM_CELL_REUSE_ID, cacheName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
     }
     
     func fetchData() {
@@ -271,7 +271,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.ALBUM_CELL_REUSE_ID, for: indexPath) as! AlbumCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.REUSE_IDS.ALBUM_CELL_REUSE_ID, for: indexPath) as! AlbumCollectionViewCell
         
         cell.locationImage.image = UIImage(named: Constants.CoreData.PLACEHOLDER_IMAGE)
         
@@ -306,15 +306,15 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
         
         guard photo.imageData != nil else {
             debugPrint("No image data to display")
-            UiUtils.showToast(message: "Please wait for photo downloads to finish", view: self.view) {_ in }
+            UiUtils.showToast(message: "Please wait for photo downloads to finish", view: self.view)
             return
         }
         
-        performSegue(withIdentifier: Constants.PHOTO_DETAIL_SEGUE_ID, sender: photo)
+        performSegue(withIdentifier: Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID, sender: photo)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.PHOTO_DETAIL_SEGUE_ID {
+        if segue.identifier == Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID {
             let destinationViewController = segue.destination as! ExplorePhotosDetailViewController
             destinationViewController.photo = sender as! Photos
         }

@@ -7,12 +7,12 @@
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>geonames.org</key>
-            <dict>
-                <key>NSExceptionRequiresForwardSecrecy</key>
-                <false/>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-            </dict>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 		</dict>
 	</dict>
 	<key>LSApplicationCategoryType</key>
