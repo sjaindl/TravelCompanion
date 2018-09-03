@@ -119,5 +119,15 @@ class CoreDataClient {
         
         return nil
     }
+    
+    func findPinByName(_ name: String, pins: [Pin]) -> Pin? {
+        for pin in pins {
+            if pin.name == name {
+                return pin
+            }
+        }
+        
+        return nil
+    }
 }
 

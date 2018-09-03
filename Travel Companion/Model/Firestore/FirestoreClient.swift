@@ -34,4 +34,19 @@ class FirestoreClient {
         }
     }
     
+    static func storageByPath(path: String, fileName: String) -> String {
+        let uid = Auth.auth().currentUser?.uid ?? "anonymous"
+        let path = path + "/" + uid + "/" + fileName + ".jpg" //String(Double(Date.timeIntervalSinceReferenceDate * 1000))
+        return path
+    }
+    
+    static func storePhoto(storageRef: StorageReference, path: String, photoData: Data, completionHandler: @escaping (_ metadata: StorageMetadata?, _ error: Error?) -> Void) {
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        storageRef.child(path).putData(photoData, metadata: metadata) { (metadata: StorageMetadata?, error: Error?) in
+            completionHandler(metadata, error)
+        }
+    }
+    
 }

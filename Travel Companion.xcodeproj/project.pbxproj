@@ -56,7 +56,6 @@
 		9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D921117E4600060790 /* Pin+Extensions.swift */; };
 		9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E121117E4600060790 /* Photos+Extensions.swift */; };
 		9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C27F212BD95B0056CD0D /* FetchType.swift */; };
-		9AE4C281212BDE610056CD0D /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 		9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DA21117E4600060790 /* DataController.swift */; };
 		9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DD21117E4600060790 /* FlickrConstants.swift */; };
 		9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */; };
@@ -760,7 +759,6 @@
 				9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */,
 				9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */,
 				9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */,
-				9AE4C281212BDE610056CD0D /* CoreDataClient.swift in Sources */,
 				9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */,
 				9AE4C273212A8D1E0056CD0D /* WebConstants.swift in Sources */,
 				9AE4C274212A8D200056CD0D /* WebClient.swift in Sources */,

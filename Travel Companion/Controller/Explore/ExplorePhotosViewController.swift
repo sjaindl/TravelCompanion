@@ -27,6 +27,9 @@ class ExplorePhotosViewController: UIViewController {
     var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>!
     var fetchType: Int = FetchType.Country.rawValue
     
+    var choosePhoto: Bool = false //TODO: enum refactor
+    var plan: Plan!
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -310,7 +313,12 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
             return
         }
         
-        performSegue(withIdentifier: Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID, sender: photo)
+        if choosePhoto {
+            plan.imageData = photo.imageData
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            performSegue(withIdentifier: Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID, sender: photo)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

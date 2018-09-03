@@ -31,6 +31,7 @@ class FirestoreConstants {
         
         struct Plan {
             static let NAME = "name"
+            static let PIN_NAME = "pinName"
             static let START_DATE = "startDate"
             static let END_DATE = "endDate"
             static let IMAGE_REFERENCE = "image"

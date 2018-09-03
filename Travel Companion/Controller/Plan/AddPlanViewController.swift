@@ -16,8 +16,10 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var addTripButton: UIButton!
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var endDate: UIDatePicker!
+    @IBOutlet weak var addTrip: UIButton!
     
     var pins: [Pin] = []
+    var selectedOriginalPinName: String?
     var firestoreDbReference: CollectionReference!
     
     override func viewDidLoad() {
@@ -27,11 +29,30 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         destinationPicker.dataSource = self
         destinationText.delegate = self
         
+        if pins.count > 0 {
+            destinationText.text = pins[0].name
+            selectedOriginalPinName = pins[0].name
+        }
+        
+        setButtonEnabledState()
+        
         firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
     }
     
+    func setButtonEnabledState() {
+        if let text = destinationText.text, !text.isEmpty {
+            addTrip.isEnabled = true
+        } else {
+            addTrip.isEnabled = false
+        }
+    }
+     
     @IBAction func addPlan(_ sender: Any) {
-        let plan = Plan(name: destinationText.text!, startDate: Timestamp(date: startDate.date), endDate: Timestamp(date: endDate.date), imageRef: "")
+        let originalName = selectedOriginalPinName ?? destinationText.text!
+        
+        let plan = Plan(name: destinationText.text!, originalName: originalName, startDate: Timestamp(date: startDate.date), endDate: Timestamp(date: endDate.date))
+        
+        //TODO: check whether plan already exists and ask if user wants to override
         persistPlan(of: plan)
         
         dismiss(animated: true, completion: nil)
@@ -44,6 +65,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func persistPlan(of plan: Plan) {
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: plan.name, data: [
             FirestoreConstants.Ids.Plan.NAME: plan.name,
+            FirestoreConstants.Ids.Plan.PIN_NAME: plan.pinName,
             FirestoreConstants.Ids.Plan.START_DATE: plan.startDate,
             FirestoreConstants.Ids.Plan.END_DATE: plan.endDate
         ]) { (error) in
@@ -68,21 +90,21 @@ extension AddPlanViewController {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        self.view.endEditing(true)
+        view.endEditing(true)
         return pins[row].name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        self.destinationText.text = self.pins[row].name
-//        self.destinationPicker.isHidden = true
+        destinationText.text = self.pins[row].name
+        selectedOriginalPinName = self.pins[row].name
+        setButtonEnabledState()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         if textField == self.destinationText {
-            self.destinationPicker.isHidden = false
-            //if you don't want the users to se the keyboard type:
+            destinationPicker.isHidden = false
+            //if you don't want the users to see the keyboard type:
             
             textField.endEditing(true)
         }
@@ -90,6 +112,7 @@ extension AddPlanViewController {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         //TODO: check whether pin with name exists -> if so, grey out add button + toast
-        
+        setButtonEnabledState()
+        UiUtils.showToast(message: "Please enter a destination name", view: self.view)
     }
 }

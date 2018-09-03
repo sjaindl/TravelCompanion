@@ -14,12 +14,13 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
+    var dataController: DataController!
+    
     var firestoreDbReference: CollectionReference!
     var upcomingTrips: [Plan] = []
     var pastTrips: [Plan] = []
     var pins: [Pin] = []
     
-    var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<Pin>!
     
     @IBOutlet weak var add: UIBarButtonItem! {
@@ -92,13 +93,20 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
                     print("\(document.documentID) => \(document.data())")
                     
                     let name = document.data()[FirestoreConstants.Ids.Plan.NAME] as? String
+                    let pinName = document.data()[FirestoreConstants.Ids.Plan.PIN_NAME] as? String
                     let startDate = document.data()[FirestoreConstants.Ids.Plan.START_DATE] as? Timestamp
                     let endDate = document.data()[FirestoreConstants.Ids.Plan.END_DATE] as? Timestamp
+                    let imageRef = document.data()[FirestoreConstants.Ids.Plan.IMAGE_REFERENCE] as? String
                     
-                    if let name = name, let startDate = startDate, let endDate = endDate {
-                        let plan = Plan(name: name, startDate: startDate, endDate: endDate)
+                    if let name = name, let pinName = pinName, let startDate = startDate, let endDate = endDate {
+                        var imagePath = ""
+                        if let imageRef = imageRef {
+                            imagePath = imageRef
+                        }
                         
-                        if endDate.dateValue() > Date() {
+                        let plan = Plan(name: name, originalName: pinName, startDate: startDate, endDate: endDate, imageRef: imagePath)
+                        
+                        if endDate.compare(Timestamp(date: Date())).rawValue > 0 {
                             self.upcomingTrips.append(plan)
                         } else {
                             self.pastTrips.append(plan)
@@ -122,6 +130,9 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
             let indexPath = sender as! IndexPath
             let plan = getSectionArray(for: indexPath.section)[indexPath.row]
             controller.plan = plan
+            controller.pins = pins
+            controller.dataController = dataController
+            controller.firestorePlanDbReference = firestoreDbReference
         }
     }
 }
@@ -139,11 +150,26 @@ extension PlanViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_CELL_REUSE_ID)!
         
         let plan = getSectionArray(for: indexPath.section)[indexPath.row]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.mm.yyyy"
         
         cell.textLabel?.text = plan.name
-        cell.detailTextLabel?.text = dateFormatter.string(from: plan.startDate.dateValue()) + " - " + dateFormatter.string(from: plan.endDate.dateValue())
+        cell.detailTextLabel?.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
+        
+        if !plan.imageRef.isEmpty { //Is an image available in storage?
+            let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
+            storageImageRef.getData(maxSize: 1 * 1024 * 512) { (data, error) in //max 0.5 MB for thumbnail
+                if let error = error {
+                    UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                    return
+                }
+                
+                guard let data = data else {
+                    UiUtils.showToast(message: "No image data available", view: self.view)
+                    return
+                }
+                
+                cell.imageView?.image = UIImage(data: data)
+            }
+        }
         
         return cell
     }
