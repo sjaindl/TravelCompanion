@@ -239,11 +239,14 @@ class ExplorePhotosViewController: UIViewController {
     
     func initMap() {
         let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
-        let camera = GMSCameraPosition.camera(withLatitude: pin.latitude,
-                                              longitude: pin.longitude,
-                                              zoom: zoom)
         
-        map.camera = camera
+        if let pin = pin {
+            let camera = GMSCameraPosition.camera(withLatitude: pin.latitude,
+                                                  longitude: pin.longitude,
+                                                  zoom: zoom)
+            
+            map.camera = camera
+        }
         
         addPinToMap(with: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude))
     }

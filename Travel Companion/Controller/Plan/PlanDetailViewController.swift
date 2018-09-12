@@ -6,6 +6,7 @@
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
 //
 
+import CodableFirebase
 import Firebase
 import UIKit
 
@@ -32,37 +33,67 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var storageRef: StorageReference!
     
-    var fligths: [Plan] = []
-    var publicTransport: [Plan] = []
-    var hotels: [Plan] = []
-    var restaurants: [Plan] = []
-    var attractions: [Plan] = []
+    var fligths: [Plannable] = []
+    var publicTransport: [Plannable] = []
+    var hotels: [Plannable] = []
+    var restaurants: [Plannable] = []
+    var attractions: [Plannable] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tripName.text = plan.name
         date.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
-        
-        //test:
-        fligths.append(plan)
-        publicTransport.append(plan)
-        restaurants.append(plan)
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Do any additional setup after loading the view.
         addGestureRecognizer(selector: #selector(chooseImage), view: image)
         
         configureDatabase()
         configureStorage()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        loadPlannables()
+    }
+    
+    func loadPlannables() {
+        loadPlannable(\PlanDetailViewController.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         loadImageIfAvailable()
+    }
+    
+    func loadPlannable(_ plannables: WritableKeyPath<PlanDetailViewController, [Plannable]>, collectionReference: CollectionReference, plannableType: String) {
+        
+        collectionReference.getDocuments() { (querySnapshot, error) in
+            if let error = error {
+                UiUtils.showToast(message: "Error getting documents: \(error)", view: self.view)
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    
+                    let plannable = try? PlannableFactory.createPlannable(of: plannableType, data: document.data())
+                    
+                    if let plannable = plannable {
+                        DispatchQueue.main.async {
+                            // Use weak to avoid retain cycle
+                            [weak self] in
+                                self?[keyPath: plannables].append(plannable)
+                            
+                            self?.tableView.reloadData()
+                        }
+                    }
+                    
+                }
+            }
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -143,19 +174,21 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         firestoreAttractionDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.ATTRACTIONS)
     }
 
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == Constants.SEGUES.PLAN_CHOOSE_PHOTO_SEGUE_ID {
-                let controller = segue.destination as! ExplorePhotosViewController
-                let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
-                controller.pin = pin
-                controller.dataController = dataController
-                controller.choosePhoto = true
-                controller.plan = plan
-            }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.SEGUES.PLAN_CHOOSE_PHOTO_SEGUE_ID {
+            let controller = segue.destination as! ExplorePhotosViewController
+            let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
+            controller.pin = pin
+            controller.dataController = dataController
+            controller.choosePhoto = true
+            controller.plan = plan
+        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_FLIGHT {
+            let controller = segue.destination as! AddFlightViewController
+            controller.firestoreFligthDbReference = firestoreFligthDbReference
+            controller.planDetailController = self
+        }
     }
-
+    
     func persistPhoto(photoData: Data) {
         let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.PLANS, fileName: plan.pinName)
         FirestoreClient.storePhoto(storageRef: storageRef, path: path, photoData: photoData) { (metadata, error) in
@@ -202,12 +235,13 @@ extension PlanDetailViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_CELL_REUSE_ID)!
         
-        let plan = getSectionArray(for: indexPath.section)[indexPath.row]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.mm.yyyy"
+        let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
         
-        cell.textLabel?.text = plan.name
-        cell.detailTextLabel?.text = dateFormatter.string(from: plan.startDate.dateValue()) + " - " + dateFormatter.string(from: plan.endDate.dateValue())
+        cell.textLabel?.text = plannable.description()
+        cell.detailTextLabel?.text = plannable.details()
+        if let imageUrl = plannable.imageUrl(), let url = URL(string: imageUrl) {
+            try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
+        }
         
         return cell
     }
@@ -216,8 +250,7 @@ extension PlanDetailViewController {
         //TODO segue
     }
     
-    func getSectionArray(for section: Int) -> [Plan] {
-        //TODO: Interface mit func title/subtitle
+    func getSectionArray(for section: Int) -> [Plannable] {
         if section == 0 {
             return fligths
         } else if section == 1 {

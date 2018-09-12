@@ -39,10 +39,14 @@ class UiUtils {
     }
     
     static func formatTimestampRangeForDisplay(begin: Timestamp, end: Timestamp) -> String {
+        return "\(formatTimestampForDisplay(timestamp: begin)) - \(formatTimestampForDisplay(timestamp: end))"
+    }
+    
+    static func formatTimestampForDisplay(timestamp: Timestamp) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.mm.yyyy"
+        dateFormatter.dateFormat = "dd.MM.yyyy"
         
-        let formattedDate = dateFormatter.string(from: begin.dateValue()) + " - " + dateFormatter.string(from: end.dateValue())
+        let formattedDate = dateFormatter.string(from: timestamp.dateValue())
         return formattedDate
     }
 }

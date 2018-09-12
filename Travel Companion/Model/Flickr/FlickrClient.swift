@@ -76,7 +76,7 @@ class FlickrClient {
     func buildQueryItems() -> [String: String] {
         return [
             FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
-            FlickrConstants.FlickrParameterKeys.APIKey: SecretConstants.FLICKR_KEY,
+            FlickrConstants.FlickrParameterKeys.APIKey: SecretConstants.FLICKR_API_KEY,
             FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
             FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.ImageSize,
             FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,

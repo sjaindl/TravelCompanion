@@ -168,6 +168,22 @@ class WebClient {
         task.resume()
     }
     
+    func taskForDataWebRequest(_ request: URLRequest, errorDomain: String, withOffset offset: Int = 0, completionHandlerForRequest: @escaping (_ result: Data?, _ error: NSError?) -> Void) -> Void {
+        
+        /* Perform Web request */
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            if let basicError = self.performBasicWebResponseChecks(data: data, response: response, error: error, errorDomain: errorDomain, withOffset: offset) {
+                completionHandlerForRequest(nil, basicError)
+            } else {
+                completionHandlerForRequest(data, nil)
+            }
+        }
+        
+        /* Start request */
+        task.resume()
+    }
+    
     func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
         let session = URLSession.shared
         let imgURL = NSURL(string: imagePath)

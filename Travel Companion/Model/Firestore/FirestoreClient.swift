@@ -6,6 +6,7 @@
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
 //
 
+import CodableFirebase
 import Firebase
 import Foundation
 
@@ -34,6 +35,12 @@ class FirestoreClient {
         }
     }
     
+    static func addData(collectionReference: CollectionReference, data: [String: Any], completion: @escaping (Error?) -> ()) {
+        collectionReference.document().setData(data) { err in
+            completion(err)
+        }
+    }
+    
     static func storageByPath(path: String, fileName: String) -> String {
         let uid = Auth.auth().currentUser?.uid ?? "anonymous"
         let path = path + "/" + uid + "/" + fileName + ".jpg" //String(Double(Date.timeIntervalSinceReferenceDate * 1000))
@@ -50,3 +57,5 @@ class FirestoreClient {
     }
     
 }
+
+extension Timestamp: TimestampType {} //make Timestamp codable

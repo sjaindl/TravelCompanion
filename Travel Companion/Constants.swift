@@ -10,10 +10,20 @@ import Foundation
 
 struct Constants {
     
+    struct PLANNABLES {
+        static let FLIGHT = "flight"
+        static let PUBLIC_TRANSPORT = "publicTransport"
+        static let HOTEL = "hotel"
+        static let RESTAURANT = "restaurant"
+        static let ATTRACTION = "attraction"
+    }
+    
     struct REUSE_IDS {
         static let PLAN_CELL_REUSE_ID = "planReuseCellId"
         static let PLAN_DETAIL_CELL_REUSE_ID = "planDetailReuseCellId"
         static let ALBUM_CELL_REUSE_ID = "photoCell"
+        static let FLIGHT_DETAIL_CELL_REUSE_ID = "flightDetail"
+        static let FLIGHT_DETAIL_SECTION_CELL_REUSE_ID = "flightDetailSection"
     }
     
     struct SEGUES {
@@ -27,7 +37,8 @@ struct Constants {
         static let ADD_PLAN_SEGUE_ID = "addPlan"
         static let PLAN_DETAIL_SEGUE_ID = "planDetail"
         static let PLAN_CHOOSE_PHOTO_SEGUE_ID = "choosePlanPhoto"
-        
+        static let PLAN_ADD_FLIGHT = "addFlight"
+        static let PLAN_ADD_FLIGHT_DETAIL = "addFlightDetail"
     }
     
     struct CoreData {
