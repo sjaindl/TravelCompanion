@@ -119,12 +119,16 @@ class ExploreViewController: UIViewController {
             let controller = segue.destination as! UITabBarController
             let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
             let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
-            let wikitargetController = controller.viewControllers![2] as! WikiViewController
+            let wikivoyagetargetController = controller.viewControllers![2] as! WikiViewController
+            let wikitargetController = controller.viewControllers![3] as! WikiViewController
             detailTargetController.pin = sender as! Pin
             detailTargetController.dataController = dataController
             photosTargetController.pin = sender as! Pin
             photosTargetController.dataController = dataController
             wikitargetController.pin = sender as! Pin
+            wikitargetController.domain = WikiConstants.UrlComponents.DOMAIN_WIKIPEDIA
+            wikivoyagetargetController.pin = sender as! Pin
+            wikivoyagetargetController.domain = WikiConstants.UrlComponents.DOMAIN_WIKIVOYAGE
         }
     }
     

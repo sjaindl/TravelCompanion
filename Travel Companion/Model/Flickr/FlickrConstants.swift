@@ -40,7 +40,7 @@ struct FlickrConstants {
         static let SearchMethod = "flickr.photos.search"
         static let ResponseFormat = "json"
         static let DisableJSONCallback = "1" /* 1 means "yes" */
-        static let ImageSize = "url_l"
+        static let ImageSize = "url_m"
         static let UseSafeSearch = "1"
         static let SortOrder = "relevance"
     }
@@ -50,7 +50,7 @@ struct FlickrConstants {
         static let Photos = "photos"
         static let Photo = "photo"
         static let Title = "title"
-        static let ImageSize = "url_l"
+        static let ImageSize = "url_m"
         static let Pages = "pages"
         static let PerPage = "perpage"
         static let Total = "total"

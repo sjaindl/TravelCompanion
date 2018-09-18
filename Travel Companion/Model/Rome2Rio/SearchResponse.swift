@@ -140,13 +140,13 @@ struct Alternative: Codable {
 }
 
 struct SurfaceStop: Codable {
-    var place: Int?
+    var place: Int
     var transitDuration: Double?
     var stopDuration: Double?
 }
 
 struct SurfaceAgency: Codable {
-    var agency: Int?
+    var agency: Int
     var frequency: Float?
     var duration: Float?
     var operatingDays: Int? //DayFlag (hex)

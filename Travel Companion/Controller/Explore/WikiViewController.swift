@@ -15,6 +15,7 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     var pin: Pin!
+    var domain: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,7 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
             return
         }
         
-        WikiClient.sharedInstance.fetchWikiLink(country: name) { (error, wikiLink) in
+        WikiClient.sharedInstance.fetchWikiLink(country: name, domain: domain) { (error, wikiLink) in
             if let error = error {
                 debugPrint(error.debugDescription)
             } else {

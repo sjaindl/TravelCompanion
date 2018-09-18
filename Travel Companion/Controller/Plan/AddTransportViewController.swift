@@ -9,10 +9,11 @@
 import Firebase
 import UIKit
 
-class AddFlightViewController: UIViewController, UITextFieldDelegate {
+class AddTransportViewController: UIViewController, UITextFieldDelegate {
 
-    var firestoreFligthDbReference: CollectionReference!
+    var firestoreDbReference: CollectionReference!
     var planDetailController: PlanDetailViewController!
+    var transportDelegate: AddTransportDelegate!
     
     @IBOutlet weak var origin: SearchTextField!
     @IBOutlet weak var destination: SearchTextField!
@@ -28,40 +29,41 @@ class AddFlightViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func search(_ sender: Any) {
-        searchFlight()
+        searchForTransport()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.PLAN_ADD_FLIGHT_DETAIL {
-            let controller = segue.destination as! AddFlightDetailViewController
+        if segue.identifier == Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL {
+            let controller = segue.destination as! AddTransportDetailViewController
             controller.searchResponse = sender as! SearchResponse
+            controller.transportDelegate = transportDelegate
             controller.date = date.date
-            controller.firestoreFligthDbReference = firestoreFligthDbReference
+            controller.firestoreDbReference = firestoreDbReference
             controller.planDetailController = planDetailController
         }
     }
     
-    func searchFlight() {
-        Rome2RioClient.sharedInstance.search(origin: origin.text!, destination: destination.text!, flight: true) { (error, searchResponse) in
+    func searchForTransport() {
+        Rome2RioClient.sharedInstance.search(origin: origin.text!, destination: destination.text!, with: transportDelegate) { (error, searchResponse) in
             if let error = error {
                 UiUtils.showToast(message: error, view: self.view)
                 return
             }
             
             guard let searchResponse = searchResponse else {
-                UiUtils.showToast(message: "No flights available", view: self.view)
+                UiUtils.showToast(message: "No transport data available", view: self.view)
                 return
             }
             
             print(searchResponse)
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_FLIGHT_DETAIL, sender: searchResponse)
+                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL, sender: searchResponse)
             }
         }
     }
 }
 
-extension AddFlightViewController {
+extension AddTransportViewController {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         Rome2RioClient.sharedInstance.autocomplete(with: textField.text! + string) { (error, autoCompleteResponse) in
             

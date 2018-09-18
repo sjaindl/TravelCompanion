@@ -46,9 +46,9 @@ class Rome2RioClient {
         }
     }
     
-    func search(origin: String, destination: String, flight: Bool, completionHandler: @escaping (_ errorString: String?, _ searchResponse: SearchResponse?) -> Void) {
+    func search(origin: String, destination: String, with delegate: AddTransportDelegate, completionHandler: @escaping (_ errorString: String?, _ searchResponse: SearchResponse?) -> Void) {
         
-        let queryItems = buildSearchQueryItems(origin: origin, destination: destination, flight: flight)
+        let queryItems = delegate.buildSearchQueryItems(origin: origin, destination: destination)
         
         let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.PROTOCOL, forHost: Rome2RioConstants.UrlComponents.DOMAIN, forMethod:
             Rome2RioConstants.UrlComponents.PATH_SEARCH, withQueryItems: queryItems)
@@ -83,26 +83,6 @@ class Rome2RioClient {
         return [
             Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
             Rome2RioConstants.ParameterKeys.Query: query
-        ]
-    }
-    
-    func buildSearchQueryItems(origin: String, destination: String, flight: Bool) -> [String: String] {
-        return [
-            Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
-            Rome2RioConstants.ParameterKeys.OriginName: origin,
-            Rome2RioConstants.ParameterKeys.DestinationName: destination,
-            Rome2RioConstants.ParameterKeys.noRail: String(flight),
-            Rome2RioConstants.ParameterKeys.noBus: String(flight),
-            Rome2RioConstants.ParameterKeys.noFerry: String(flight),
-            Rome2RioConstants.ParameterKeys.noCar: String(flight),
-            Rome2RioConstants.ParameterKeys.noBikeshare: String(flight),
-            Rome2RioConstants.ParameterKeys.noRideshare: String(flight),
-            Rome2RioConstants.ParameterKeys.noTowncar: String(flight),
-            Rome2RioConstants.ParameterKeys.noCommuter: String(flight),
-            Rome2RioConstants.ParameterKeys.noSpecial: String(flight),
-            Rome2RioConstants.ParameterKeys.noMinorStart: String(flight),
-            Rome2RioConstants.ParameterKeys.noMinorEnd: String(flight),
-            Rome2RioConstants.ParameterKeys.noPath: String(flight)
         ]
     }
 }

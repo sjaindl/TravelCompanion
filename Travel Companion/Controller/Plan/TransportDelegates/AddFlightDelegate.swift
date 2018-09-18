@@ -1,16 +1,25 @@
 //
-//  AddFlightDetailViewController.swift
+//  AddFlightDelegate.swift
 //  Travel Companion
 //
-//  Created by Stefan Jaindl on 10.09.18.
+//  Created by Stefan Jaindl on 17.09.18.
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
 //
 
 import CodableFirebase
 import Firebase
+import Foundation
 import UIKit
 
-class AddFlightDetailViewController: UITableViewController {
+class AddFlightDelegate: NSObject, AddTransportDelegate {
+    
+    var weekDayToDayFlagMap: [Int: Int] =  [1: 0x01, /* Sunday */
+        2: 0x02, /* Monday */
+        3: 0x04, /* Tuesday */
+        4: 0x08, /* Wednesday */
+        5: 0x10, /* Thursday */
+        6: 0x20, /* Friday */
+        7: 0x40] /* Saturday */
     
     struct CellData {
         var opened = Bool()
@@ -20,28 +29,9 @@ class AddFlightDetailViewController: UITableViewController {
         var segment: Segment?
     }
     
-    var weekDayToDayFlagMap: [Int: Int] =  [1: 0x01, /* Sunday */
-                                2: 0x02, /* Monday */
-                                3: 0x04, /* Tuesday */
-                                4: 0x08, /* Wednesday */
-                                5: 0x10, /* Thursday */
-                                6: 0x20, /* Friday */
-                                7: 0x40] /* Saturday */
-    
-    var firestoreFligthDbReference: CollectionReference!
-    var searchResponse: SearchResponse!
-    var planDetailController: PlanDetailViewController!
-    
-    var date = Date()
     var cellData = [CellData]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        initCellData()
-    }
-    
-    func initCellData() {
+    func initCellData(searchResponse: SearchResponse, date: Date) {
         for route in searchResponse.routes {
             for segment in route.segments {
                 if let legs = segment.outbound {
@@ -55,27 +45,17 @@ class AddFlightDetailViewController: UITableViewController {
         }
     }
     
-    func dateIsRelevant(_ date: Date, in leg: AirLeg) -> Bool {
-        let weekdayToTravel = Calendar.current.component(.weekday, from: date)
-        
-        guard let operatingDays = leg.operatingDays, let weekdayBitMask = weekDayToDayFlagMap[weekdayToTravel] else {
-            return false //no operating day data available?
-        }
-        
-        return weekdayBitMask & operatingDays > 0
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return cellData.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData[section].opened ? cellData[section].airHop.count + 1 : 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, searchResponse: SearchResponse) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.FLIGHT_DETAIL_SECTION_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID) else {
                 return UITableViewCell()
             }
             
@@ -114,7 +94,7 @@ class AddFlightDetailViewController: UITableViewController {
             
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.FLIGHT_DETAIL_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID) else {
                 return UITableViewCell()
             }
             
@@ -142,8 +122,8 @@ class AddFlightDetailViewController: UITableViewController {
             return cell
         }
     }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, controller: UIViewController, popToController: UIViewController) {
         if indexPath.row == 0 {
             let sections = IndexSet.init(integer: indexPath.section)
             cellData[indexPath.section].opened = !cellData[indexPath.section].opened
@@ -151,48 +131,58 @@ class AddFlightDetailViewController: UITableViewController {
         } else {
             
             let leg = cellData[indexPath.section].airLeg!
-  
+            
             //choose single flight or whole leg?
             let alert = UIAlertController(title: "Add Flight", message: "Do you want to add the tapped flight or whole leg?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Single flight", comment: "Add single flight"), style: .default, handler: { _ in
                 
                 let hop = self.cellData[indexPath.section].airHop[indexPath.row - 1]
-                let airline = self.searchResponse.airlines[hop.airline]
+                let airline = searchResponse.airlines[hop.airline]
                 var aircraft: Aircraft?
                 if let aircraftIndex = hop.aircraft {
-                    aircraft = self.searchResponse.aircrafts[aircraftIndex]
+                    aircraft = searchResponse.aircrafts[aircraftIndex]
                 }
                 
-                self.persistFlight(hop, aircraft: aircraft, airline: airline)
-                self.navigationController?.popToViewController(self.planDetailController, animated: true)
+                self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                controller.navigationController?.popToViewController(popToController, animated: true)
             }))
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Whole leg", comment: "Add whole leg"), style: .default, handler: { _ in
                 
                 if let hops = leg.hops {
                     for hop in hops {
-                        let airline = self.searchResponse.airlines[hop.airline]
+                        let airline = searchResponse.airlines[hop.airline]
                         var aircraft: Aircraft?
                         if let aircraftIndex = hop.aircraft {
-                            aircraft = self.searchResponse.aircrafts[aircraftIndex]
+                            aircraft = searchResponse.aircrafts[aircraftIndex]
                         }
-                        self.persistFlight(hop, aircraft: aircraft, airline: airline)
+                        self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
                     }
                 }
                 
-                self.navigationController?.popToViewController(self.planDetailController, animated: true)
+                controller.navigationController?.popToViewController(popToController, animated: true)
             }))
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
-                self.dismiss(animated: true, completion: nil)
+                controller.dismiss(animated: true, completion: nil)
             }))
             
-            self.present(alert, animated: true, completion: nil)
+            controller.present(alert, animated: true, completion: nil)
         }
     }
     
-    func persistFlight(_ hop: AirHop, aircraft: Aircraft?, airline: Airline) {
+    func dateIsRelevant(_ date: Date, in leg: AirLeg) -> Bool {
+        let weekdayToTravel = Calendar.current.component(.weekday, from: date)
+        
+        guard let operatingDays = leg.operatingDays, let weekdayBitMask = weekDayToDayFlagMap[weekdayToTravel] else {
+            return false //no operating day data available?
+        }
+        
+        return weekdayBitMask & operatingDays > 0
+    }
+    
+    func persistFlight(_ hop: AirHop, aircraft: Aircraft?, airline: Airline, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference) {
         let arrPlace = searchResponse.places[hop.arrPlace].shortName
         let depPlace = searchResponse.places[hop.depPlace].shortName
         
@@ -212,14 +202,32 @@ class AddFlightDetailViewController: UITableViewController {
         }
         
         let docData = try! FirestoreEncoder().encode(flight)
-        
-        FirestoreClient.addData(collectionReference: firestoreFligthDbReference,
-                                data: docData) { (error) in
+        FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: flight.id, data: docData) { (error) in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added")
             }
         }
+    }
+    
+    func buildSearchQueryItems(origin: String, destination: String) -> [String: String] {
+        return [
+            Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
+            Rome2RioConstants.ParameterKeys.OriginName: origin,
+            Rome2RioConstants.ParameterKeys.DestinationName: destination,
+            Rome2RioConstants.ParameterKeys.noRail: "true",
+            Rome2RioConstants.ParameterKeys.noBus: "true",
+            Rome2RioConstants.ParameterKeys.noFerry: "true",
+            Rome2RioConstants.ParameterKeys.noCar: "true",
+            Rome2RioConstants.ParameterKeys.noBikeshare: "true",
+            Rome2RioConstants.ParameterKeys.noRideshare: "true",
+            Rome2RioConstants.ParameterKeys.noTowncar: "true",
+            Rome2RioConstants.ParameterKeys.noCommuter: "true",
+            Rome2RioConstants.ParameterKeys.noSpecial: "true",
+            Rome2RioConstants.ParameterKeys.noMinorStart: "true",
+            Rome2RioConstants.ParameterKeys.noMinorEnd: "true",
+            Rome2RioConstants.ParameterKeys.noPath: "true"
+        ]
     }
 }

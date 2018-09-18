@@ -12,7 +12,8 @@ struct WikiConstants {
     
     struct UrlComponents {
         static let PROTOCOL = "https"
-        static let DOMAIN = "en.wikipedia.org"
+        static let DOMAIN_WIKIPEDIA = "en.wikipedia.org"
+        static let DOMAIN_WIKIVOYAGE = "en.wikivoyage.org"
         static let PATH = "/w/api.php"
     }
     

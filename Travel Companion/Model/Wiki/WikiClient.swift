@@ -13,7 +13,7 @@ class WikiClient {
     
     private init() { }
     
-    func fetchWikiLink(country: String, completionHandler: @escaping (_ errorString: String?, _ result: String?) -> Void) {
+    func fetchWikiLink(country: String, domain: String, completionHandler: @escaping (_ errorString: String?, _ result: String?) -> Void) {
         
         let queryItems: [String: String] = [WikiConstants.ParameterKeys.Action: WikiConstants.ParameterValues.QUERY,
                                             WikiConstants.ParameterKeys.Inprop: WikiConstants.ParameterValues.Inprop,
@@ -21,7 +21,7 @@ class WikiClient {
                                             WikiConstants.ParameterKeys.Format: WikiConstants.ParameterValues.ResponseFormat,
                                             WikiConstants.ParameterKeys.Titles: country]
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: WikiConstants.UrlComponents.PROTOCOL, forHost: WikiConstants.UrlComponents.DOMAIN, forMethod: WikiConstants.UrlComponents.PATH, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: WikiConstants.UrlComponents.PROTOCOL, forHost: domain, forMethod: WikiConstants.UrlComponents.PATH, withQueryItems: queryItems)
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
         

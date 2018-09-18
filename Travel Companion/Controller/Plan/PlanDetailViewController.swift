@@ -61,7 +61,18 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func loadPlannables() {
-        loadPlannable(\PlanDetailViewController.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT)
+        reset()
+        loadPlannables(\PlanDetailViewController.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT)
+        loadPlannables(\PlanDetailViewController.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.PLANNABLES.PUBLIC_TRANSPORT)
+        //TODO: add plannables
+    }
+    
+    func reset() {
+        fligths.removeAll()
+        publicTransport.removeAll()
+        hotels.removeAll()
+        restaurants.removeAll()
+        attractions.removeAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +81,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         loadImageIfAvailable()
     }
     
-    func loadPlannable(_ plannables: WritableKeyPath<PlanDetailViewController, [Plannable]>, collectionReference: CollectionReference, plannableType: String) {
+    func loadPlannables(_ plannables: WritableKeyPath<PlanDetailViewController, [Plannable]>, collectionReference: CollectionReference, plannableType: String) {
         
         collectionReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
@@ -90,7 +101,6 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                             self?.tableView.reloadData()
                         }
                     }
-                    
                 }
             }
         }
@@ -163,15 +173,13 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func configureDatabase() {
-        firestoreFligthDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.FLIGTHS)
+        let planReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name)
         
-        firestorePublicTransportDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT)
-        
-        firestoreHotelDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.HOTELS)
-        
-        firestoreRestaurantDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.RESTAURANTS)
-        
-        firestoreAttractionDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.ATTRACTIONS)
+        firestoreFligthDbReference = planReference.collection(FirestoreConstants.Collections.FLIGTHS)
+        firestorePublicTransportDbReference = planReference.collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT)
+        firestoreHotelDbReference = planReference.collection(FirestoreConstants.Collections.HOTELS)
+        firestoreRestaurantDbReference = planReference.collection(FirestoreConstants.Collections.RESTAURANTS)
+        firestoreAttractionDbReference = planReference.collection(FirestoreConstants.Collections.ATTRACTIONS)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -183,9 +191,23 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             controller.choosePhoto = true
             controller.plan = plan
         } else if segue.identifier == Constants.SEGUES.PLAN_ADD_FLIGHT {
-            let controller = segue.destination as! AddFlightViewController
-            controller.firestoreFligthDbReference = firestoreFligthDbReference
+            let controller = segue.destination as! AddTransportViewController
+            controller.firestoreDbReference = firestoreFligthDbReference
+            controller.transportDelegate = AddFlightDelegate()
             controller.planDetailController = self
+        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_PUBLIC_TRANSPORT {
+            let controller = segue.destination as! AddTransportViewController
+            controller.firestoreDbReference = firestorePublicTransportDbReference
+            controller.transportDelegate = AddPublicTransportDelegate()
+            controller.planDetailController = self
+        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_NOTES {
+            let indexPath = sender as! IndexPath
+            let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
+            let collectionReference = getSectionReference(for: indexPath.section)
+            
+            let controller = segue.destination as! NotesViewController
+            controller.plannable = plannable
+            controller.plannableCollectionReference = collectionReference
         }
     }
     
@@ -233,21 +255,54 @@ extension PlanDetailViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_CELL_REUSE_ID)!
-        
+        var cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_CELL_REUSE_ID)!
         let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
         
-        cell.textLabel?.text = plannable.description()
-        cell.detailTextLabel?.text = plannable.details()
         if let imageUrl = plannable.imageUrl(), let url = URL(string: imageUrl) {
+            cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_WITH_IMAGE_CELL_REUSE_ID)!
             try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
         }
+
+        cell.textLabel?.text = plannable.description()
+        cell.detailTextLabel?.text = plannable.details()
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO segue
+        let plannables = getSectionArray(for: indexPath.section)
+        
+        //only show notes, if load of plannables has finished
+        if plannables.count - 1 >= indexPath.row {
+            
+            //choose single flight or whole leg?
+            let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Add note", comment: "Add note"), style: .default, handler: { _ in
+                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_NOTES, sender: indexPath)
+            }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+                let plannable = self.getSectionArray(for: indexPath.section)[indexPath.row]
+                let collectionReference = self.getSectionReference(for: indexPath.section)
+                
+                collectionReference.document(plannable.getId()).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                        self.removeElement(at: indexPath)
+                        self.tableView.reloadData()
+                    }
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func getSectionArray(for section: Int) -> [Plannable] {
@@ -264,6 +319,35 @@ extension PlanDetailViewController {
         } 
     }
     
+    func removeElement(at indexPath: IndexPath) {
+        let section = indexPath.section
+        if section == 0 {
+            fligths.remove(at: indexPath.row)
+        } else if section == 1 {
+            publicTransport.remove(at: indexPath.row)
+        } else if section == 2 {
+            hotels.remove(at: indexPath.row)
+        } else if section == 3 {
+            restaurants.remove(at: indexPath.row)
+        } else {
+            attractions.remove(at: indexPath.row)
+        }
+    }
+    
+    func getSectionReference(for section: Int) -> CollectionReference {
+        if section == 0 {
+            return firestoreFligthDbReference
+        } else if section == 1 {
+            return firestorePublicTransportDbReference
+        } else if section == 2 {
+            return firestoreHotelDbReference
+        } else if section == 3 {
+            return firestoreRestaurantDbReference
+        } else {
+            return firestoreAttractionDbReference
+        }
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return PlanConstants.TripDetails.TripTitles.FLIGHTS.rawValue
@@ -276,5 +360,9 @@ extension PlanDetailViewController {
         } else {
             return PlanConstants.TripDetails.TripTitles.ATTRACTIONS.rawValue
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }

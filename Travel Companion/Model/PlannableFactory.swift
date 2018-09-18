@@ -15,13 +15,14 @@ class PlannableFactory {
         case Constants.PLANNABLES.FLIGHT:
             return try FirestoreDecoder().decode(Flight.self, from: data)
         case Constants.PLANNABLES.PUBLIC_TRANSPORT:
-            return try FirestoreDecoder().decode(Flight.self, from: data)
-        case Constants.PLANNABLES.ATTRACTION:
-            return try FirestoreDecoder().decode(Flight.self, from: data)
-        case Constants.PLANNABLES.HOTEL:
-            return try FirestoreDecoder().decode(Flight.self, from: data)
-        case Constants.PLANNABLES.RESTAURANT:
-            return try FirestoreDecoder().decode(Flight.self, from: data)
+            return try FirestoreDecoder().decode(PublicTransport.self, from: data)
+        //TODO
+//        case Constants.PLANNABLES.ATTRACTION:
+//            return try FirestoreDecoder().decode(Flight.self, from: data)
+//        case Constants.PLANNABLES.HOTEL:
+//            return try FirestoreDecoder().decode(Flight.self, from: data)
+//        case Constants.PLANNABLES.RESTAURANT:
+//            return try FirestoreDecoder().decode(Flight.self, from: data)
         default:
             throw NSError(domain: "Plannable type not supported", code: -1, userInfo: [:])
         }

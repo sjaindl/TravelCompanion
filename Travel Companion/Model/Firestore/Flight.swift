@@ -6,11 +6,13 @@
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
 //
 
+import CodableFirebase
 import Firebase
 import Foundation
 
-class Flight: NSObject, Plannable, Codable {
+class Flight: NSObject, Plannable {
     
+    public var id: String
     public var date: Timestamp
     public var depPlace: String
     public var arrPlace: String
@@ -26,6 +28,8 @@ class Flight: NSObject, Plannable, Codable {
     public var aircraft: String?
     public var airlineUrl: String?
     
+    public var notes: String?
+    
     init(date: Timestamp, depPlace: String, arrPlace: String, depTime: String, arrTime: String, flight: String, duration: Int, airline: String) {
         self.date = date
         self.depPlace = depPlace
@@ -35,14 +39,26 @@ class Flight: NSObject, Plannable, Codable {
         self.flight = flight
         self.duration = duration
         self.airline = airline
+        self.id = "\(self.flight)-\(self.depPlace)-\(self.depTime)-\(self.date)" //this should be unique
+    }
+    
+    func getId() -> String {
+        return id
     }
     
     func description() -> String {
-        return "\(airline): \(flight)"
+        return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
     }
     
     func details() -> String {
-        return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depTime): \(depPlace) - \(arrPlace)"
+        var durationInfo = ""
+        
+        if let duration = duration {
+            durationInfo = "\(duration / 60)h \(duration % 60) min"
+        }
+        
+        return "\(airline) \(flight): \(depTime)-\(arrTime)\n"
+            + "\(aircraft ?? ""), \(durationInfo)"
     }
     
     func imageUrl() -> String? {
@@ -50,5 +66,17 @@ class Flight: NSObject, Plannable, Codable {
             return "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(airlineUrl)"
         }
         return ""
+    }
+    
+    func getNotes() -> String {
+        return notes ?? ""
+    }
+    
+    func setNotes(notes: String) {
+        self.notes = notes
+    }
+    
+    func encode() -> [String: Any] {
+        return try! FirestoreEncoder().encode(self)
     }
 }

@@ -8,8 +8,12 @@
 
 import Foundation
 
-protocol Plannable {
+protocol Plannable: Codable {
     func description() -> String
     func details() -> String
     func imageUrl() -> String?
+    func getId() -> String
+    func getNotes() -> String
+    func setNotes(notes: String)
+    func encode() -> [String: Any]
 }

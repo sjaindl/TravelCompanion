@@ -21,9 +21,10 @@ struct Constants {
     struct REUSE_IDS {
         static let PLAN_CELL_REUSE_ID = "planReuseCellId"
         static let PLAN_DETAIL_CELL_REUSE_ID = "planDetailReuseCellId"
+        static let PLAN_DETAIL_WITH_IMAGE_CELL_REUSE_ID = "planDetailWithImageReuseCellId"
         static let ALBUM_CELL_REUSE_ID = "photoCell"
-        static let FLIGHT_DETAIL_CELL_REUSE_ID = "flightDetail"
-        static let FLIGHT_DETAIL_SECTION_CELL_REUSE_ID = "flightDetailSection"
+        static let TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID = "transportDetail"
+        static let TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID = "transportDetailSection"
     }
     
     struct SEGUES {
@@ -38,7 +39,9 @@ struct Constants {
         static let PLAN_DETAIL_SEGUE_ID = "planDetail"
         static let PLAN_CHOOSE_PHOTO_SEGUE_ID = "choosePlanPhoto"
         static let PLAN_ADD_FLIGHT = "addFlight"
-        static let PLAN_ADD_FLIGHT_DETAIL = "addFlightDetail"
+        static let PLAN_ADD_PUBLIC_TRANSPORT = "addPublicTransport"
+        static let PLAN_ADD_TRANSPORT_DETAIL = "addTransportDetail"
+        static let PLAN_ADD_NOTES = "addNotes"
     }
     
     struct CoreData {
