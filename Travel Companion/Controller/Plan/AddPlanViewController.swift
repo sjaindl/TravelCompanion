@@ -63,7 +63,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func persistPlan(of plan: Plan) {
-        FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: plan.name, data: [
+        FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: plan.pinName, data: [
             FirestoreConstants.Ids.Plan.NAME: plan.name,
             FirestoreConstants.Ids.Plan.PIN_NAME: plan.pinName,
             FirestoreConstants.Ids.Plan.START_DATE: plan.startDate,
@@ -89,7 +89,6 @@ extension AddPlanViewController {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
         view.endEditing(true)
         return pins[row].name
     }

@@ -19,6 +19,8 @@
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Travel Companion uses your location to explore travel opportunities</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take photos with your camera to remember your travels</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

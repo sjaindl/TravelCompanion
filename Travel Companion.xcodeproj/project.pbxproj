@@ -46,6 +46,9 @@
 		9A882257214F6E7A00C333D4 /* AddFlightDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A882256214F6E7A00C333D4 /* AddFlightDelegate.swift */; };
 		9A882259214F6E8B00C333D4 /* AddPublicTransportDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A882258214F6E8B00C333D4 /* AddPublicTransportDelegate.swift */; };
 		9A88225C215151B300C333D4 /* PublicTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88225B215151B300C333D4 /* PublicTransport.swift */; };
+		9A88225F21536B6500C333D4 /* RememberDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88225E21536B6500C333D4 /* RememberDetailViewController.swift */; };
+		9A8822612154008800C333D4 /* RememberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8822602154008800C333D4 /* RememberViewController.swift */; };
+		9A88226521563A3800C333D4 /* RememberPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88226421563A3800C333D4 /* RememberPhotos.swift */; };
 		9A91D9DB213E4E4800249E83 /* Rome2RioClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DA213E4E4800249E83 /* Rome2RioClient.swift */; };
 		9A91D9DD213E4E5500249E83 /* Rome2RioConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DC213E4E5500249E83 /* Rome2RioConstants.swift */; };
 		9A91D9DF213E50F400249E83 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DE213E50F400249E83 /* SearchResponse.swift */; };
@@ -88,7 +91,7 @@
 		9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
 		9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
 		9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
-		9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */; };
+		9AF39BF12128CAA600D85DF2 /* PhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BF02128CAA600D85DF2 /* PhotosDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +159,9 @@
 		9A882256214F6E7A00C333D4 /* AddFlightDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlightDelegate.swift; sourceTree = "<group>"; };
 		9A882258214F6E8B00C333D4 /* AddPublicTransportDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPublicTransportDelegate.swift; sourceTree = "<group>"; };
 		9A88225B215151B300C333D4 /* PublicTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransport.swift; sourceTree = "<group>"; };
+		9A88225E21536B6500C333D4 /* RememberDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberDetailViewController.swift; sourceTree = "<group>"; };
+		9A8822602154008800C333D4 /* RememberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberViewController.swift; sourceTree = "<group>"; };
+		9A88226421563A3800C333D4 /* RememberPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberPhotos.swift; sourceTree = "<group>"; };
 		9A91D9DA213E4E4800249E83 /* Rome2RioClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rome2RioClient.swift; sourceTree = "<group>"; };
 		9A91D9DC213E4E5500249E83 /* Rome2RioConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rome2RioConstants.swift; sourceTree = "<group>"; };
 		9A91D9DE213E50F400249E83 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
@@ -182,7 +188,7 @@
 		9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
 		9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesClient.swift; sourceTree = "<group>"; };
 		9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamesConstants.swift; sourceTree = "<group>"; };
-		9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosDetailViewController.swift; sourceTree = "<group>"; };
+		9AF39BF02128CAA600D85DF2 /* PhotosDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosDetailViewController.swift; sourceTree = "<group>"; };
 		BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -304,10 +310,12 @@
 		9A5B69D621117E4600060790 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9AE4C28F2131CB3F0056CD0D /* Plan */,
 				9AA266B42123558600EE0F5C /* Explore */,
+				9AE4C28F2131CB3F0056CD0D /* Plan */,
+				9A88225D2151A0A500C333D4 /* Remember */,
 				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
+				9AF39BF02128CAA600D85DF2 /* PhotosDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -366,6 +374,16 @@
 				9A882258214F6E8B00C333D4 /* AddPublicTransportDelegate.swift */,
 			);
 			path = TransportDelegates;
+			sourceTree = "<group>";
+		};
+		9A88225D2151A0A500C333D4 /* Remember */ = {
+			isa = PBXGroup;
+			children = (
+				9A88225E21536B6500C333D4 /* RememberDetailViewController.swift */,
+				9A8822602154008800C333D4 /* RememberViewController.swift */,
+				9A88226421563A3800C333D4 /* RememberPhotos.swift */,
+			);
+			path = Remember;
 			sourceTree = "<group>";
 		};
 		9A91D9D9213E4CC700249E83 /* Rome2Rio */ = {
@@ -438,7 +456,6 @@
 				9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */,
 				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
-				9AF39BF02128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift */,
 				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
 				9AE4C297213318F20056CD0D /* WikiViewController.swift */,
 			);
@@ -793,6 +810,7 @@
 				9A88223521463B0E00C333D4 /* AddTransportDetailViewController.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
 				9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */,
+				9A8822612154008800C333D4 /* RememberViewController.swift in Sources */,
 				9AE4C2942132A4110056CD0D /* Plan.swift in Sources */,
 				9A882255214F6E5C00C333D4 /* AddTransportDelegate.swift in Sources */,
 				9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */,
@@ -806,8 +824,10 @@
 				9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */,
 				9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */,
 				9A8822312140845B00C333D4 /* AddTransportViewController.swift in Sources */,
+				9A88225F21536B6500C333D4 /* RememberDetailViewController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A91D9DF213E50F400249E83 /* SearchResponse.swift in Sources */,
+				9A88226521563A3800C333D4 /* RememberPhotos.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,
 				9A88224D21496D6800C333D4 /* PlannableFactory.swift in Sources */,
@@ -818,7 +838,7 @@
 				9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */,
 				9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
-				9AF39BF12128CAA600D85DF2 /* ExplorePhotosDetailViewController.swift in Sources */,
+				9AF39BF12128CAA600D85DF2 /* PhotosDetailViewController.swift in Sources */,
 				9A5B69EF21117E4700060790 /* Photos+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

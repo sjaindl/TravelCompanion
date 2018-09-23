@@ -34,6 +34,7 @@ struct Constants {
         static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
         static let PLAN_SEGUE_ID = "plan"
         static let REMEMBER_SEGUE_ID = "remember"
+        static let REMEMBER_DETAIL_SEGUE_ID = "rememberDetail"
         static let PHOTO_DETAIL_SEGUE_ID = "photoDetail"
         static let ADD_PLAN_SEGUE_ID = "addPlan"
         static let PLAN_DETAIL_SEGUE_ID = "planDetail"

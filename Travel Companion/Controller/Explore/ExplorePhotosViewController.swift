@@ -326,8 +326,10 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID {
-            let destinationViewController = segue.destination as! ExplorePhotosDetailViewController
-            destinationViewController.photo = sender as! Photos
+            let destinationViewController = segue.destination as! PhotosDetailViewController
+            let photo = sender as! Photos
+            destinationViewController.data = photo.imageData
+            destinationViewController.text = photo.title
         }
     }
 }

@@ -8,20 +8,18 @@
 
 import UIKit
 
-class ExplorePhotosDetailViewController: UIViewController {
+class PhotosDetailViewController: UIViewController {
 
     @IBOutlet weak var photoImage: UIImageView!
     @IBOutlet weak var photoTitle: UILabel!
     
-    var photo: Photos!
+    var data: Data!
+    var text: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let data = photo.imageData {
-            photoImage.image = UIImage(data: data)
-        }
-        
-        photoTitle.text = photo.title
+        photoImage.image = UIImage(data: data)
+        photoTitle.text = text
     }
 }
