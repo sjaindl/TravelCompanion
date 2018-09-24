@@ -81,7 +81,7 @@ class CoreDataClient {
                 photo.pin = pin
                 photo.type = Int16(fetchType)
                 photo.title = pin.name
-                photo.imageData = UIImagePNGRepresentation(placePhoto!)
+                photo.imageData = placePhoto!.pngData()
                 try? dataController.save()
             }
         })

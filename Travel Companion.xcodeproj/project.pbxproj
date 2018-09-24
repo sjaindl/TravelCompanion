@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3E081B795F0630B092A92F58 /* Pods_Travel_Companion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE423F1800DC014DF66F1A0C /* Pods_Travel_Companion.framework */; };
 		791ABE5F588D7517CD67B41B /* Pods_Travel_CompanionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A28507DB762DEA476FC155 /* Pods_Travel_CompanionTests.framework */; };
-		9A1AD4CC21121A4D001D2517 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CA21121A4D001D2517 /* Info.plist */; };
 		9A1AD4CD21121A4D001D2517 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CB21121A4D001D2517 /* GoogleService-Info.plist */; };
 		9A1AD4D021121B55001D2517 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
 		9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D1211245AF001D2517 /* SecretConstants.swift */; };
@@ -74,7 +73,6 @@
 		9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D921117E4600060790 /* Pin+Extensions.swift */; };
 		9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E121117E4600060790 /* Photos+Extensions.swift */; };
 		9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C27F212BD95B0056CD0D /* FetchType.swift */; };
-		9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DA21117E4600060790 /* DataController.swift */; };
 		9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DD21117E4600060790 /* FlickrConstants.swift */; };
 		9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */; };
 		9AE4C287212F5EF50056CD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
@@ -568,13 +566,16 @@
 				TargetAttributes = {
 					9A5B699821117A7B00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					9A5B69AF21117A7C00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 9A5B699821117A7B00060790;
 					};
 					9A5B69BA21117A7C00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 9A5B699821117A7B00060790;
 					};
 				};
@@ -606,7 +607,6 @@
 			files = (
 				9A5B6A3121117EC500060790 /* LICENSE in Resources */,
 				9A5B6A3021117EC500060790 /* Podfile in Resources */,
-				9A1AD4CC21121A4D001D2517 /* Info.plist in Resources */,
 				9A5B6A2F21117EC500060790 /* README.md in Resources */,
 				9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */,
 				9A1AD4D021121B55001D2517 /* Main.storyboard in Resources */,
@@ -856,7 +856,6 @@
 				9A5B69B521117A7C00060790 /* Travel_CompanionTests.swift in Sources */,
 				9AE4C272212A8D0B0056CD0D /* GeoNamesConstants.swift in Sources */,
 				9AE4C27B212B7CA70056CD0D /* TravelCompanion.xcdatamodel in Sources */,
-				9AE4C282212BDE6B0056CD0D /* DataController.swift in Sources */,
 				9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */,
 				9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */,
 				9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */,
@@ -957,6 +956,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1011,6 +1011,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1032,7 +1033,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-Companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1051,7 +1052,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-Companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1073,7 +1074,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Companion.app/Travel Companion";
 			};
@@ -1095,7 +1096,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Companion.app/Travel Companion";
 			};
@@ -1116,7 +1117,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Travel Companion";
 			};
@@ -1136,7 +1137,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Travel Companion";
 			};

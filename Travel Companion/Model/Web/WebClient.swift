@@ -83,8 +83,7 @@ class WebClient {
         var parsedResult: AnyObject! = nil
         
         do {
-            let range = Range(offset ..< data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
+            let newData = data.subdata(in: offset ..< data.count) /* subset response data! */
             
             parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
         } catch {

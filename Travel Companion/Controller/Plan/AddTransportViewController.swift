@@ -35,7 +35,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL {
             let controller = segue.destination as! AddTransportDetailViewController
-            controller.searchResponse = sender as! SearchResponse
+            controller.searchResponse = sender as? SearchResponse
             controller.transportDelegate = transportDelegate
             controller.date = date.date
             controller.firestoreDbReference = firestoreDbReference

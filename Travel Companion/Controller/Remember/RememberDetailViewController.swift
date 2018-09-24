@@ -110,7 +110,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
         showPicker(withType: .photoLibrary)
     }
 
-    func showPicker(withType: UIImagePickerControllerSourceType) {
+    func showPicker(withType: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = withType
@@ -198,7 +198,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! AlbumCollectionViewCell
         
-        if let image = cell.locationImage.image, let data = UIImagePNGRepresentation(image) {
+        if let image = cell.locationImage.image, let data = image.pngData() {
             
             let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
             
@@ -242,16 +242,19 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID {
             let controller = segue.destination as! PhotosDetailViewController
-            controller.data = sender as! Data
+            controller.data = sender as? Data
         }
     }
 }
 
 extension RememberDetailViewController {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         picker.dismiss(animated: true, completion: nil)
         
-        if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage, let data = UIImagePNGRepresentation(originalImage) {
+        if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage, let data = originalImage.pngData() {
             persistPhoto(photoData: data)
             collectionView.reloadData()
         }
@@ -262,4 +265,9 @@ extension RememberDetailViewController {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
