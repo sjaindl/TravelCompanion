@@ -39,6 +39,40 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var restaurants: [Plannable] = []
     var attractions: [Plannable] = []
     
+    var supportedPlaceTypes: [GooglePlaceType] = [
+        GooglePlaceType.point_of_interest,
+        GooglePlaceType.amusement_park,
+        GooglePlaceType.aquarium,
+        GooglePlaceType.art_gallery,
+        GooglePlaceType.atm,
+        GooglePlaceType.bank,
+        GooglePlaceType.bar,
+        GooglePlaceType.beauty_salon,
+        GooglePlaceType.bowling_alley,
+        GooglePlaceType.cafe,
+        GooglePlaceType.casino,
+        GooglePlaceType.church,
+        GooglePlaceType.city_hall,
+        GooglePlaceType.embassy,
+        GooglePlaceType.gym,
+        GooglePlaceType.hindu_temple,
+        GooglePlaceType.library,
+        GooglePlaceType.mosque,
+        GooglePlaceType.movie_theater,
+        GooglePlaceType.museum,
+        GooglePlaceType.night_club,
+        GooglePlaceType.post_office,
+        GooglePlaceType.rv_park,
+        GooglePlaceType.shopping_mall,
+        GooglePlaceType.spa,
+        GooglePlaceType.stadium,
+        GooglePlaceType.synagogue,
+        GooglePlaceType.travel_agency,
+        GooglePlaceType.zoo
+    ]
+    
+    var selectedPlaceType = GooglePlaceType.point_of_interest
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,9 +96,16 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func loadPlannables() {
         reset()
+        
         loadPlannables(\PlanDetailViewController.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT)
+        
         loadPlannables(\PlanDetailViewController.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.PLANNABLES.PUBLIC_TRANSPORT)
-        //TODO: add plannables
+        
+        loadPlannables(\PlanDetailViewController.hotels, collectionReference: firestoreHotelDbReference, plannableType: Constants.PLANNABLES.HOTEL)
+        
+        loadPlannables(\PlanDetailViewController.restaurants, collectionReference: firestoreRestaurantDbReference, plannableType: Constants.PLANNABLES.RESTAURANT)
+        
+        loadPlannables(\PlanDetailViewController.attractions, collectionReference: firestoreAttractionDbReference, plannableType: Constants.PLANNABLES.ATTRACTION)
     }
     
     func reset() {
@@ -167,6 +208,36 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         firestorePlanDbReference = nil
     }
     
+    @IBAction func addHotel(_ sender: Any) {
+        performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: GooglePlaceType.lodging)
+    }
+    
+    @IBAction func addRestaurant(_ sender: Any) {
+        performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: GooglePlaceType.restaurant)
+    }
+    
+    @IBAction func addAttraction(_ sender: Any) {
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: 250,height: 300)
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 300))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        vc.view.addSubview(pickerView)
+        let editRadiusAlert = UIAlertController(title: "Choose place type", message: "", preferredStyle: UIAlertController.Style.alert)
+        editRadiusAlert.setValue(vc, forKey: "contentViewController")
+        
+        editRadiusAlert.addAction(UIAlertAction(title: "Search", style: .default) { (action)  in
+            self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: self.selectedPlaceType)
+        })
+        
+        editRadiusAlert.addAction(UIAlertAction(title: "Cancel", style: .default) { (action)  in
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        self.present(editRadiusAlert, animated: true)
+
+    }
+    
     @objc
     func chooseImage() {
         performSegue(withIdentifier: Constants.SEGUES.PLAN_CHOOSE_PHOTO_SEGUE_ID, sender: nil)
@@ -208,6 +279,17 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let controller = segue.destination as! NotesViewController
             controller.plannable = plannable
             controller.plannableCollectionReference = collectionReference
+        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_PLACE {
+            let controller = segue.destination as! AddPlaceViewController
+            
+            let placetype = sender as! GooglePlaceType
+            controller.placeType = placetype
+            
+            let collectionReference = getPlaceTypeReference(for: placetype)
+            controller.firestoreDbReference = collectionReference
+            
+            let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
+            controller.pin = pin
         }
     }
     
@@ -348,6 +430,16 @@ extension PlanDetailViewController {
         }
     }
     
+    func getPlaceTypeReference(for placeType: GooglePlaceType) -> CollectionReference {
+        if placeType == GooglePlaceType.lodging {
+            return firestoreHotelDbReference
+        } else if placeType == GooglePlaceType.restaurant {
+            return firestoreRestaurantDbReference
+        } else {
+            return firestoreAttractionDbReference
+        }
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return PlanConstants.TripDetails.TripTitles.FLIGHTS.rawValue
@@ -364,5 +456,25 @@ extension PlanDetailViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+}
+
+extension PlanDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return supportedPlaceTypes.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return supportedPlaceTypes[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedPlaceType = supportedPlaceTypes[row]
     }
 }

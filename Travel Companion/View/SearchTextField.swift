@@ -489,7 +489,9 @@ open class SearchTextField: UITextField {
     // Clean filtered results
     fileprivate func clearResults() {
         filteredResults.removeAll()
-        tableView?.removeFromSuperview()
+        DispatchQueue.main.async {
+            self.tableView?.removeFromSuperview()
+        }
     }
     
     // Look for Font attribute, and if it exists, adapt to the subtitle font size

@@ -43,6 +43,7 @@ struct Constants {
         static let PLAN_ADD_PUBLIC_TRANSPORT = "addPublicTransport"
         static let PLAN_ADD_TRANSPORT_DETAIL = "addTransportDetail"
         static let PLAN_ADD_NOTES = "addNotes"
+        static let PLAN_ADD_PLACE = "addPlace"
     }
     
     struct CoreData {
@@ -65,4 +66,6 @@ struct Constants {
         static let STANDARD_LATITUDE = 47.0
         static let STANDARD_LONGITUDE = 15.5
     }
+    
+    static let ZOOM_LEVEL_DETAIL = 10.0
 }

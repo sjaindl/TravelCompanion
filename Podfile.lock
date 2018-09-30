@@ -12,6 +12,8 @@ PODS:
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
   - CodableFirebase (0.2.0)
+  - Crashlytics (3.10.2):
+    - Fabric (~> 1.7.7)
   - Fabric (1.7.7)
   - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
@@ -188,7 +190,6 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
-  - SearchTextField (1.0.0)
   - TwitterCore (2.8.0):
     - Fabric
   - TwitterKit (2.8.1):
@@ -196,6 +197,8 @@ PODS:
 
 DEPENDENCIES:
   - CodableFirebase
+  - Crashlytics
+  - Fabric
   - Firebase
   - Firebase/Auth
   - Firebase/Core
@@ -205,13 +208,13 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
-  - SearchTextField
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - BoringSSL
     - CodableFirebase
+    - Crashlytics
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -242,7 +245,6 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - SDWebImage
-    - SearchTextField
     - TwitterCore
     - TwitterKit
 
@@ -250,6 +252,7 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   CodableFirebase: 4b865f58c583a6c0ef8c81c6b12c6bf15ebd9181
+  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
   Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
@@ -280,10 +283,9 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
-  SearchTextField: 630857ed61e8fbe5a2bb5239b3098decbfec9250
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: cc4d9c48d857a9efdf1f79cb17fc7845ccc7f93b
+PODFILE CHECKSUM: 5959e24281493abe072911d4d4b94539d45dbd07
 
 COCOAPODS: 1.5.2

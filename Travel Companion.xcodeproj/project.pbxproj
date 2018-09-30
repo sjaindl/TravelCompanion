@@ -61,6 +61,10 @@
 		9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */; };
 		9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
+		9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
+		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
+		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
+		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
 		9AE4C26F212A8CE80056CD0D /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
 		9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
@@ -173,6 +177,10 @@
 		9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreConstants.swift; sourceTree = "<group>"; };
 		9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
+		9AC023CD215ACE010076A3C2 /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
+		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
+		9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearchViewController.swift; sourceTree = "<group>"; };
+		9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 		9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTests.swift; sourceTree = "<group>"; };
 		9AE4C27F212BD95B0056CD0D /* FetchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchType.swift; sourceTree = "<group>"; };
 		9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreUiTests.swift; path = "Travel CompanionUITests/ExploreUiTests.swift"; sourceTree = SOURCE_ROOT; };
@@ -413,6 +421,8 @@
 				9AE4C2932132A4110056CD0D /* Plan.swift */,
 				9A88224A2148ED7100C333D4 /* Plannable.swift */,
 				9A88225B215151B300C333D4 /* PublicTransport.swift */,
+				9AC023CD215ACE010076A3C2 /* GooglePlace.swift */,
+				9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -471,6 +481,8 @@
 				9A8822302140845B00C333D4 /* AddTransportViewController.swift */,
 				9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */,
 				9A882250214A2DCD00C333D4 /* NotesViewController.swift */,
+				9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */,
+				9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */,
 			);
 			path = Plan;
 			sourceTree = "<group>";
@@ -506,6 +518,7 @@
 				9A5B699721117A7B00060790 /* Resources */,
 				5FAC9302BCE257C9538F9301 /* [CP] Copy Pods Resources */,
 				E4554318694A82862D51DDCD /* [CP] Embed Pods Frameworks */,
+				9AD67E6C2159813A004B077A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -687,6 +700,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Travel Companion/Pods-Travel Companion-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9AD67E6C2159813A004B077A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+		};
 		D3021A4167F3D880C6C98EBE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,7 +770,6 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
@@ -764,7 +790,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
@@ -786,6 +811,7 @@
 			files = (
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
+				9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */,
 				9A882259214F6E8B00C333D4 /* AddPublicTransportDelegate.swift in Sources */,
 				9A94014021334F0400178105 /* WikiClient.swift in Sources */,
 				9A88225C215151B300C333D4 /* PublicTransport.swift in Sources */,
@@ -801,9 +827,11 @@
 				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
 				9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */,
 				9A8822492148EAB300C333D4 /* Flight.swift in Sources */,
+				9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */,
 				9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */,
 				9AA266A1211B93C700EE0F5C /* ExploreViewController.swift in Sources */,
 				9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */,
+				9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */,
 				9A94014221334F0D00178105 /* WikiConstants.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
 				9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */,
@@ -816,6 +844,7 @@
 				9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */,
 				9A91D9DD213E4E5500249E83 /* Rome2RioConstants.swift in Sources */,
 				9A882233214087A400C333D4 /* SearchTextField.swift in Sources */,
+				9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
 				9A88222F21407CFF00C333D4 /* AutoCompleteResponse.swift in Sources */,
 				9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */,
@@ -1025,6 +1054,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MAJ9QA679A;
 				INFOPLIST_FILE = "Travel Companion/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

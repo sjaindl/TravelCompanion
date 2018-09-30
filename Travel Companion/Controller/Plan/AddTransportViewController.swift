@@ -78,8 +78,8 @@ extension AddTransportViewController {
                 filterStrings.append(place.longName)
             }
             
-            if filterStrings.count > 0 {
-                self.origin.filterStrings(filterStrings)
+            if filterStrings.count > 0, let searchTextField = textField as? SearchTextField {
+                searchTextField.filterStrings(filterStrings)
             }
         }
         return true

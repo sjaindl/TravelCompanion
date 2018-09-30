@@ -29,7 +29,8 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.name).collection(FirestoreConstants.Collections.PHOTOS)
+        firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.pinName).collection(FirestoreConstants.Collections.PHOTOS)
+        
         configureStorage()
         loadPhotos()
     }
@@ -249,8 +250,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
 
 extension RememberDetailViewController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
         picker.dismiss(animated: true, completion: nil)
         

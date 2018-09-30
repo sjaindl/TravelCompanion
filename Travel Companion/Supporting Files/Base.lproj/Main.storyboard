@@ -260,7 +260,7 @@
                                 <rect key="frame" x="0.0" y="64" width="480" height="868"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="JsV-Vf-weF" detailTextLabel="tfX-rD-jiP" imageView="Zc6-ra-oES" style="IBUITableViewCellStyleSubtitle" id="diK-L6-sUc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="JsV-Vf-weF" detailTextLabel="tfX-rD-jiP" imageView="Zc6-ra-oES" style="IBUITableViewCellStyleSubtitle" id="diK-L6-sUc">
                                         <rect key="frame" x="0.0" y="28" width="480" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="diK-L6-sUc" id="BFU-Nh-FD4">
@@ -450,11 +450,23 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YDu-TG-dom"/>
-                                    <barButtonItem title="Hotel" image="hotel" id="Fmi-dN-1n8"/>
+                                    <barButtonItem title="Hotel" image="hotel" id="Fmi-dN-1n8">
+                                        <connections>
+                                            <action selector="addHotel:" destination="9bi-5Y-lDi" id="GCl-7D-7vT"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ces-Sf-jdE"/>
-                                    <barButtonItem title="Restaurant" image="restaurant" id="CVa-h4-q6Y"/>
+                                    <barButtonItem title="Restaurant" image="restaurant" id="CVa-h4-q6Y">
+                                        <connections>
+                                            <action selector="addRestaurant:" destination="9bi-5Y-lDi" id="CUn-Na-F3n"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="jWH-9c-eKh"/>
-                                    <barButtonItem title="Attraction" image="attraction" id="U3w-jZ-wxQ"/>
+                                    <barButtonItem title="Attraction" image="attraction" id="U3w-jZ-wxQ">
+                                        <connections>
+                                            <action selector="addAttraction:" destination="9bi-5Y-lDi" id="CBr-DQ-0p1"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Y3d-JK-dS8"/>
                                 </items>
                             </toolbar>
@@ -486,6 +498,7 @@
                         <outlet property="tripName" destination="DXa-To-mMA" id="l5l-z3-3Ps"/>
                         <segue destination="QqY-JT-Kne" kind="show" identifier="choosePlanPhoto" id="JAe-Zd-6u7"/>
                         <segue destination="T8Z-NN-EKh" kind="presentation" identifier="addNotes" id="eV8-eN-LhI"/>
+                        <segue destination="o8d-NG-NUT" kind="show" identifier="addPlace" id="88v-U8-RSj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dtz-Xf-sJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -549,7 +562,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXa-R3-kTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4144" y="3152"/>
+            <point key="canvasLocation" x="6204" y="3146"/>
         </scene>
         <!--Add Transport View Controller-->
         <scene sceneID="XKc-Y8-CbE">
@@ -635,7 +648,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fTY-KM-Tfs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4448" y="4417"/>
+            <point key="canvasLocation" x="6204" y="4361"/>
         </scene>
         <!--Add Transport Detail View Controller-->
         <scene sceneID="qbf-L7-DAT">
@@ -707,7 +720,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="caH-El-qwS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5933" y="4417"/>
+            <point key="canvasLocation" x="7689" y="4361"/>
         </scene>
         <!--Add Plan View Controller-->
         <scene sceneID="Vmf-LY-gzL">
@@ -1558,7 +1571,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qOY-sW-V7r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2745" y="5640"/>
+            <point key="canvasLocation" x="2516" y="5613"/>
         </scene>
         <!--Remember View Controller-->
         <scene sceneID="ext-IP-Twv">
@@ -1623,6 +1636,36 @@
             </objects>
             <point key="canvasLocation" x="1423" y="5614"/>
         </scene>
+        <!--Add Place View Controller-->
+        <scene sceneID="VdX-qs-TsJ">
+            <objects>
+                <viewController id="o8d-NG-NUT" customClass="AddPlaceViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oZZ-1J-fQh">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpf-eT-Yke" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="64" width="480" height="912"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="AYp-rR-1i8" firstAttribute="bottom" secondItem="dpf-eT-Yke" secondAttribute="bottom" id="HTJ-Jv-JqH"/>
+                            <constraint firstItem="AYp-rR-1i8" firstAttribute="trailing" secondItem="dpf-eT-Yke" secondAttribute="trailing" id="d0h-V8-3gj"/>
+                            <constraint firstItem="dpf-eT-Yke" firstAttribute="leading" secondItem="AYp-rR-1i8" secondAttribute="leading" id="enr-b7-o3F"/>
+                            <constraint firstItem="dpf-eT-Yke" firstAttribute="top" secondItem="AYp-rR-1i8" secondAttribute="top" id="kJu-bP-262"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="AYp-rR-1i8"/>
+                    </view>
+                    <connections>
+                        <outlet property="map" destination="dpf-eT-Yke" id="e8E-df-aUD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UNk-jn-8nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5633" y="5720"/>
+        </scene>
     </scenes>
     <resources>
         <image name="attraction" width="50" height="50"/>
@@ -1640,7 +1683,7 @@
         <image name="restaurant" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="v0l-Vg-UdY"/>
+        <segue reference="9b4-KA-uEe"/>
         <segue reference="JAe-Zd-6u7"/>
         <segue reference="ogx-ac-6aS"/>
     </inferredMetricsTieBreakers>

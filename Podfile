@@ -10,13 +10,13 @@ target 'Travel Companion' do
     pod 'Firebase/Storage'
     pod 'FirebaseUI'
     pod 'CodableFirebase'
+    pod 'Fabric'
+    pod 'Crashlytics'
     
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'GooglePlacePicker'
-    
-    pod 'SearchTextField'
-    
+
     target 'Travel CompanionTests' do
         inherit! :search_paths
         pod 'Firebase'
