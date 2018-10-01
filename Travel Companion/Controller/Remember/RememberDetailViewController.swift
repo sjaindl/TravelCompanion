@@ -119,7 +119,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     }
     
     func persistPhoto(photoData: Data) {
-        let fileName = plan.pinName + String(Double(Date.timeIntervalSinceReferenceDate * 1000))
+        let fileName = plan.pinName + String(Int(Date.timeIntervalSinceReferenceDate * 10000000))
         let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.PLANS + "/" + plan.pinName + "/" + FirestoreConstants.Collections.PHOTOS, fileName: fileName)
         
         FirestoreClient.storePhoto(storageRef: storageRef, path: path, photoData: photoData) { (metadata, error) in
@@ -148,6 +148,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             }
             
             self.photos.append(RememberPhotos(url: path, documentId: documentId))
+            self.collectionView.reloadData()
         }
     }
 }
@@ -176,7 +177,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
             cell.locationImage.image = UIImage(named: Constants.CoreData.PLACEHOLDER_IMAGE)
             
             let storageImageRef = Storage.storage().reference(forURL: url)
-            storageImageRef.getData(maxSize: 36 * 1024 * 1024) { (imageData, error) in //TODO: scale image upload
+            storageImageRef.getData(maxSize: 2 * 1024 * 1024) { (imageData, error) in
                 if let error = error {
                     UiUtils.showToast(message: error.localizedDescription, view: self.view)
                     return
@@ -256,7 +257,6 @@ extension RememberDetailViewController {
         
         if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage, let data = originalImage.pngData() {
             persistPhoto(photoData: data)
-            collectionView.reloadData()
         }
         
 //        setShareButtonEnabledState()
