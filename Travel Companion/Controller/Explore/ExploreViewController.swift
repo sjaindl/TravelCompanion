@@ -19,7 +19,6 @@ class ExploreViewController: UIViewController {
     
     var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<Pin>!
-    var deleteMode = false
     var mapCenter: CLLocationCoordinate2D? = nil
     
     var firestoreDbReference: CollectionReference!
@@ -39,30 +38,6 @@ class ExploreViewController: UIViewController {
     deinit {
         firestoreDbReference = nil
     }
-    
-    @IBAction func deletePressed(_ sender: UIBarButtonItem) {
-        deleteMode = !deleteMode
-        sender.title = deleteMode ? "Tap pin to delete" : "Delete location"
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Find new location", style: .plain, target: self, action: #selector(addPlace))
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete location", style: .plain, target: self, action: #selector(setDeleteMode))
-    }
-    
-    
-//    @objc
-//    func setDeleteMode() {
-//        deleteMode = !deleteMode
-//        navigationItem.rightBarButtonItem?.title = deleteMode ? "Tap pin to delete" : "Delete location"
-//    }
-    
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
     
     func initResultsController() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
@@ -211,12 +186,20 @@ extension ExploreViewController: GMSMapViewDelegate {
 //    }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        if deleteMode {
+        
+        let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Show details", comment: "Show details"), style: .default, handler: { _ in
+            self.performSegue(withIdentifier: Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID, sender: marker.userData)
+            
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
             if let pin = marker.userData as? Pin {
-                
                 //delete from Firestore
                 if let placeId = pin.placeId {
-                    firestoreDbReference.document(placeId).delete() { err in
+                    self.firestoreDbReference.document(placeId).delete() { err in
                         if let err = err {
                             print("Error removing document: \(err)")
                         } else {
@@ -225,17 +208,23 @@ extension ExploreViewController: GMSMapViewDelegate {
                     }
                 }
                 
-                if let index = fetchedResultsController.indexPath(forObject: pin) {
-                    let object = fetchedResultsController.object(at: index)
-                    dataController.viewContext.delete(object)
-                    try? dataController.save()
+                if let index = self.fetchedResultsController.indexPath(forObject: pin) {
+                    let object = self.fetchedResultsController.object(at: index)
+                    self.dataController.viewContext.delete(object)
+                    try? self.dataController.save()
                 }
             }
             
             marker.map = nil
-        } else {
-            performSegue(withIdentifier: Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID, sender: marker.userData)
-        }
+            
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(alert, animated: true, completion: nil)
         
         return true
     }
