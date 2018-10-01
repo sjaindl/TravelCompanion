@@ -29,16 +29,6 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    @IBOutlet weak var delete: UIBarButtonItem! {
-        didSet {
-            UiUtils.setImage("trash", for: delete)
-        }
-    }
-    
-    @IBAction func deletePlan(_ sender: Any) {
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -120,7 +110,7 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.SEGUES.ADD_PLAN_SEGUE_ID {
             let controller = segue.destination as! AddPlanViewController
@@ -175,7 +165,44 @@ extension PlanViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Constants.SEGUES.PLAN_DETAIL_SEGUE_ID, sender: indexPath)
+        let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Show", comment: "Show"), style: .default, handler: { _ in
+            self.performSegue(withIdentifier: Constants.SEGUES.PLAN_DETAIL_SEGUE_ID, sender: indexPath)
+            
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+            let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
+            
+            //delete from Firestore
+            self.firestoreDbReference.document(plan.pinName).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                    self.remove(at: indexPath)
+                    self.tableView.reloadData()
+                }
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func remove(at indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            upcomingTrips.remove(at: indexPath.row)
+        } else {
+            pastTrips.remove(at: indexPath.row)
+        }
     }
     
     func getSectionArray(for section: Int) -> [Plan] {
