@@ -18,6 +18,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var toolbar: UIToolbar!
     
     var plan: Plan!
     var pins: [Pin]!
@@ -73,10 +74,12 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var selectedPlaceType = GooglePlaceType.point_of_interest
     
+    var lastScrollPos: CGFloat = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = plan.name
+        navigationItem.title = plan.name
         
         tripName.text = plan.name
         date.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
@@ -84,10 +87,31 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         
+        addSwipeGestureRecognizers()
         addGestureRecognizer(selector: #selector(chooseImage), view: image)
         
         configureDatabase()
         configureStorage()
+    }
+    
+    func addSwipeGestureRecognizers() {
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeUp.direction = .up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+    }
+    
+    @objc
+    func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizer.Direction.up {
+            self.toolbar.isHidden = true
+        }
+        else if gesture.direction == UISwipeGestureRecognizer.Direction.down {
+            self.toolbar.isHidden = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -472,10 +496,29 @@ extension PlanDetailViewController {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let isBouncing = scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) //bottom bounce
+            || scrollView.contentOffset.y < 0 //top bounce
+        
+        if isBouncing {
+            return
+        }
+        
+        let scrollPos = scrollView.contentOffset.y
+        
+        var hidden = false
+        if scrollPos > lastScrollPos {
+            hidden = true
+        }
+        
+        self.toolbar.isHidden = hidden
+        
+        lastScrollPos = scrollPos
+    }
 }
 
 extension PlanDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
