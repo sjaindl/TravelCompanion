@@ -479,7 +479,9 @@ open class SearchTextField: UITextField {
             }
         }
         
-        tableView?.reloadData()
+        DispatchQueue.main.async {
+            self.tableView?.reloadData()
+        }
         
         if inlineMode {
             handleInlineFiltering()

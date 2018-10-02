@@ -246,9 +246,9 @@ class ExplorePhotosViewController: UIViewController {
                                                   zoom: zoom)
             
             map.camera = camera
+            
+            addPinToMap(with: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude))
         }
-        
-        addPinToMap(with: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude))
     }
     
     func enableUi(_ enable: Bool) {

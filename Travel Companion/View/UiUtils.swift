@@ -49,4 +49,47 @@ class UiUtils {
         let formattedDate = dateFormatter.string(from: timestamp.dateValue())
         return formattedDate
     }
+    
+    static func getLink(_ text: String) -> String? {
+        
+        let linkBeginIndex = text.range(of: "<a href=\"",
+                                        options: NSString.CompareOptions.literal,
+                                        range: text.startIndex..<text.endIndex,
+                                        locale: nil)
+        
+        let linkEndIndex = text.range(of: "\">",
+                                      options: NSString.CompareOptions.literal,
+                                      range: text.startIndex..<text.endIndex,
+                                      locale: nil)
+        
+        if let linkBeginIndex = linkBeginIndex, let linkEndIndex = linkEndIndex {
+            return String(text[(linkBeginIndex.upperBound)..<(linkEndIndex.lowerBound)])
+        }
+        
+        
+        return nil
+    }
+    
+    static func getLinkAttributedText(_ text: String) -> NSMutableAttributedString? {
+        let attributionBeginIndex = text.range(of: "\">",
+                                               options: NSString.CompareOptions.literal,
+                                               range: text.startIndex..<text.endIndex,
+                                               locale: nil)
+        
+        let attributionEndIndex = text.range(of: "</a>",
+                                             options: NSString.CompareOptions.literal,
+                                             range: text.startIndex..<text.endIndex,
+                                             locale: nil)
+        
+        if let attributionBeginIndex = attributionBeginIndex, let attributionEndIndex = attributionEndIndex {
+            let attributionString = NSMutableAttributedString(string: "\n" + String(text[(attributionBeginIndex.upperBound)..<(attributionEndIndex.lowerBound)]))
+            
+            if let linkString = getLink(text), let url = URL(string: linkString) {
+                attributionString.addAttribute(.link, value: url, range: NSMakeRange(0, attributionString.string.count))
+                return attributionString
+            }
+        }
+        
+        return nil
+    }
 }

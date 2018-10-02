@@ -45,12 +45,11 @@ public enum GooglePlaceType: String {
     case synagogue
     case travel_agency
     case zoo
-    
 }
 
 open class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     
-    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "Enter Address") {
+    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "Enter Place") {
         
         let gpaViewController = GooglePlacesAutocompleteContainer(
             apiKey: apiKey,
@@ -115,7 +114,12 @@ extension GooglePlacesAutocompleteContainer {
         let place = places[indexPath.row]
         
         cell.textLabel?.text = place.description()
-        cell.detailTextLabel?.text = place.details()
+        let detailText = place.details()
+        if let attributions = place.html_attributions, attributions.count > 0, let attribution = UiUtils.getLinkAttributedText(attributions[0]) {
+            detailText.append(NSAttributedString(string: "\n"))
+            detailText.append(attribution)
+        }
+        cell.detailTextLabel?.attributedText = detailText
         cell.accessoryType = .disclosureIndicator
         
         return cell

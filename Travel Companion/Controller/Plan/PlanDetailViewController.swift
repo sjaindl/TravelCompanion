@@ -91,7 +91,9 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadPlannables()
+        DispatchQueue.main.async {
+            self.loadPlannables()
+        }
     }
     
     func loadPlannables() {
@@ -346,7 +348,14 @@ extension PlanDetailViewController {
         }
 
         cell.textLabel?.text = plannable.description()
-        cell.detailTextLabel?.text = plannable.details()
+        cell.detailTextLabel?.attributedText = plannable.details()
+        cell.detailTextLabel?.isUserInteractionEnabled = true
+
+        cell.detailTextLabel?.addTapGestureRecognizer {
+            if let link = plannable.getLink(), let url = URL(string: link) {
+                UIApplication.shared.open(url, options: self.convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            }
+        }
         
         return cell
     }
@@ -385,6 +394,10 @@ extension PlanDetailViewController {
             
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+        return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
     }
     
     func getSectionArray(for section: Int) -> [Plannable] {

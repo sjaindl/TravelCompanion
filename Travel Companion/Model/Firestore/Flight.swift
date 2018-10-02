@@ -50,15 +50,15 @@ class Flight: NSObject, Plannable {
         return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
     }
     
-    func details() -> String {
+    func details() -> NSMutableAttributedString {
         var durationInfo = ""
         
         if let duration = duration {
             durationInfo = "\(duration / 60)h \(duration % 60) min"
         }
         
-        return "\(airline) \(flight): \(depTime)-\(arrTime)\n"
-            + "\(aircraft ?? ""), \(durationInfo)"
+        return NSMutableAttributedString(string: "\(airline) \(flight): \(depTime)-\(arrTime)\n"
+            + "\(aircraft ?? ""), \(durationInfo)")
     }
     
     func imageUrl() -> String? {

@@ -10,10 +10,22 @@ import Foundation
 
 protocol Plannable: Codable {
     func description() -> String
-    func details() -> String
+    func details() -> NSMutableAttributedString
     func imageUrl() -> String?
     func getId() -> String
+    func getLink() -> String?
+    func getLinkText() -> NSMutableAttributedString?
     func getNotes() -> String
     func setNotes(notes: String)
     func encode() -> [String: Any]
+}
+
+extension Plannable {
+    func getLink() -> String? {
+        return nil
+    }
+    
+    func getLinkText() -> NSMutableAttributedString? {
+        return nil
+    }
 }

@@ -180,6 +180,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.15)
   - GTMSessionFetcher/Full (1.1.15):
     - GTMSessionFetcher/Core (= 1.1.15)
+  - HTMLEntities (3.0.10)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -208,6 +209,7 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
+  - HTMLEntities (from `https://github.com/IBM-Swift/swift-html-entities.git`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -248,6 +250,15 @@ SPEC REPOS:
     - TwitterCore
     - TwitterKit
 
+EXTERNAL SOURCES:
+  HTMLEntities:
+    :git: https://github.com/IBM-Swift/swift-html-entities.git
+
+CHECKOUT OPTIONS:
+  HTMLEntities:
+    :commit: 2f582d1f927824045cbbcc5d72614799a8e7f35a
+    :git: https://github.com/IBM-Swift/swift-html-entities.git
+
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
@@ -279,6 +290,7 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: c4c826507ad3c8c8fab6887f153938eb04b86d59
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  HTMLEntities: 3d89d72a9aa3b6ad095c584bc2f1383bbed4581c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
@@ -286,6 +298,6 @@ SPEC CHECKSUMS:
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: 5959e24281493abe072911d4d4b94539d45dbd07
+PODFILE CHECKSUM: 19ef7390f9b1a13c7d29ea93b6f7dd54d5dd493d
 
 COCOAPODS: 1.5.2

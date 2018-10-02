@@ -47,7 +47,7 @@ class PublicTransport: NSObject, Plannable {
         return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
     }
     
-    func details() -> String {
+    func details() -> NSMutableAttributedString {
         var durationInfo = ""
         
         if let stopDuration = stopDuration {
@@ -68,7 +68,7 @@ class PublicTransport: NSObject, Plannable {
             detailText += "\(stopPlace), "
         }
         
-        return "\(vehicle), \(detailText), \(durationInfo)".trimmingCharacters(in: CharacterSet(charactersIn: ", "))
+        return NSMutableAttributedString(string: "\(vehicle), \(detailText), \(durationInfo)".trimmingCharacters(in: CharacterSet(charactersIn: ", ")))
     }
     
     func imageUrl() -> String? {

@@ -8,6 +8,7 @@
 
 import CodableFirebase
 import Foundation
+import HTMLEntities
 
 class GooglePlace: NSObject, Plannable {
     var id: String
@@ -22,7 +23,9 @@ class GooglePlace: NSObject, Plannable {
     var geometry: Geometry?
     var photos: [Photo]?
     var plus_code: PlusCode?
-    //var html_attributions: [String] //TODO
+    var price_level: Int? // 0: free, 1: inexpensive, 2: moderate, 3: expensive, 4: very Expensive
+    var permanently_closed: Bool?
+    var html_attributions: [String]? = []
     
     public var notes: String?
     
@@ -40,20 +43,41 @@ class GooglePlace: NSObject, Plannable {
     }
     
     func description() -> String {
-        return "\(name), \(vicinity)"
+        return "\(name)"
     }
     
-    func details() -> String {
+    func details() -> NSMutableAttributedString {
+        var details = NSMutableAttributedString(string: vicinity)
+        
         if let rating = rating {
-            return "Rating: \(rating)"
+            details = NSMutableAttributedString(string: "\(details.string). \(rating)/5 *")
         }
-        return "No rating available"
+        
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0].htmlUnescape(), let linkText = UiUtils.getLinkAttributedText(photoAttribution) {
+            details.append(linkText)
+        }
+        
+        return details
+    }
+    
+    func getLink() -> String? {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0].htmlUnescape() {
+            return UiUtils.getLink(photoAttribution)
+        }
+        
+        return nil
+    }
+    
+    func getLinkText() -> NSMutableAttributedString? {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0] {
+            return UiUtils.getLinkAttributedText(photoAttribution)
+        }
+        
+        return nil
     }
     
     func imageUrl() -> String? {
         if let photos = photos, photos.count > 0, let photoReference = photos[0].photo_reference {
-            //TODO: fetch from google
-            //return "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(agencyUrl)"
             return "\(GoogleConstants.UrlComponents.PATH_PHOTOS)?\(GoogleConstants.ParameterKeys.MaxWidth)=\(GoogleConstants.ParameterValues.MaxWidth)&\(GoogleConstants.ParameterKeys.PhotoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys.Key)=\(SecretConstants.GOOGLE_PLACES_API_KEY)"
         }
         return ""
@@ -84,6 +108,8 @@ struct Location: Codable {
 struct Photo: Codable {
     var photo_reference: String?
     var html_attributions: [String]?
+    var height: Int?
+    var width: Int?
 }
 
 struct PlusCode: Codable {

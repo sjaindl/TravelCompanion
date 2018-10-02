@@ -35,6 +35,11 @@ class GoogleClient {
                     do {
                         let placesSearchResponse = try decoder.decode(PlacesNearbySearchResponse.self, from: data)
                         let places = placesSearchResponse.results
+                        
+                        for place in places {
+                            place.html_attributions = placesSearchResponse.html_attributions
+                        }
+                        
                         completionHandler(nil, places)
                     } catch {
                         debugPrint(error)

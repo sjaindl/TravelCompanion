@@ -63,6 +63,7 @@
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
 		9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
 		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
+		9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */; };
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
@@ -179,6 +180,7 @@
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
 		9AC023CD215ACE010076A3C2 /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
+		9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViewGestureAction.swift; sourceTree = "<group>"; };
 		9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearchViewController.swift; sourceTree = "<group>"; };
 		9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 		9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTests.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				9A882232214087A400C333D4 /* SearchTextField.swift */,
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
 				9AE4C28D212F6DC50056CD0D /* UiUtils.swift */,
+				9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/HTMLEntities/HTMLEntities.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
@@ -788,6 +792,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLEntities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
@@ -834,6 +839,7 @@
 				9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */,
 				9A94014221334F0D00178105 /* WikiConstants.swift in Sources */,
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
+				9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */,
 				9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */,
 				9A88223521463B0E00C333D4 /* AddTransportDetailViewController.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
