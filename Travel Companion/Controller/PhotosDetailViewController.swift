@@ -19,6 +19,8 @@ class PhotosDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Photo Detail"
+        
         photoImage.image = UIImage(data: data)
         photoTitle.text = text
     }

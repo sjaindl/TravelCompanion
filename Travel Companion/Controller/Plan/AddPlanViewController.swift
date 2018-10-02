@@ -25,6 +25,8 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Add Plan"
+        
         destinationPicker.delegate = self
         destinationPicker.dataSource = self
         destinationText.delegate = self

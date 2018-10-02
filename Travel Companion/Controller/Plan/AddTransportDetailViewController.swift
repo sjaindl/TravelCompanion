@@ -30,6 +30,8 @@ class AddTransportDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Add \(transportDelegate.description())"
+        
         initCellData()
     }
     

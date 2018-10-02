@@ -32,6 +32,8 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Plan"
+        
         tableView.delegate = self
         tableView.dataSource = self
         

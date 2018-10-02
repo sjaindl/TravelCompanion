@@ -141,6 +141,7 @@ public class ExploreDetailViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.tabBarController?.navigationItem.title = pin.name
         
         enableTabs(false)
         initResultsController()

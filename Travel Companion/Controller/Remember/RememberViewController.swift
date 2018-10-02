@@ -20,6 +20,8 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Remember"
+        
         tableView.delegate = self
         tableView.dataSource = self
         

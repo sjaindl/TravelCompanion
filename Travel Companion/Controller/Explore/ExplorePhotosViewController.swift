@@ -45,6 +45,12 @@ class ExplorePhotosViewController: UIViewController {
         setButtonState()
     }
     
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        self.tabBarController?.navigationItem.title = pin.name
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupFlowLayout()

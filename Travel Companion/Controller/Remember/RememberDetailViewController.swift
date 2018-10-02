@@ -28,6 +28,8 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = plan.name
+        
         // Do any additional setup after loading the view.
         firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.pinName).collection(FirestoreConstants.Collections.PHOTOS)
         

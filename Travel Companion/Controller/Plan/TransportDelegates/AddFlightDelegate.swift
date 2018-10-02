@@ -12,7 +12,6 @@ import Foundation
 import UIKit
 
 class AddFlightDelegate: NSObject, AddTransportDelegate {
-    
     var weekDayToDayFlagMap: [Int: Int] =  [1: 0x01, /* Sunday */
         2: 0x02, /* Monday */
         3: 0x04, /* Tuesday */
@@ -229,5 +228,9 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             Rome2RioConstants.ParameterKeys.noMinorEnd: "true",
             Rome2RioConstants.ParameterKeys.noPath: "true"
         ]
+    }
+    
+    func description() -> String {
+        return "Flight"
     }
 }

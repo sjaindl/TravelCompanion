@@ -22,6 +22,8 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Add \(transportDelegate.description())"
+        
         origin.delegate = self
         destination.delegate = self
         

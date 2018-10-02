@@ -25,6 +25,8 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
             return
         }
         
+        self.tabBarController?.navigationItem.title = name
+        
         WikiClient.sharedInstance.fetchWikiLink(country: name, domain: domain) { (error, wikiLink) in
             if let error = error {
                 debugPrint(error.debugDescription)

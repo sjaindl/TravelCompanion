@@ -45,6 +45,8 @@ class AddPlaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Add \(placeType.rawValue) Place"
+        
         map.delegate = self
         initCamera()
     }

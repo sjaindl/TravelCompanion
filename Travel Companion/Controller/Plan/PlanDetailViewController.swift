@@ -76,9 +76,11 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = plan.name
+        
         tripName.text = plan.name
         date.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         

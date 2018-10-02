@@ -252,4 +252,8 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             Rome2RioConstants.ParameterKeys.noAirLeg: "true"
         ]
     }
+    
+    func description() -> String {
+        return "Public Transport"
+    }
 }

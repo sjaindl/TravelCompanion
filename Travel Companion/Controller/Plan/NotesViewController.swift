@@ -20,6 +20,8 @@ class NotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Add Note"
+        
         notes.text = plannable.getNotes()
     }
 

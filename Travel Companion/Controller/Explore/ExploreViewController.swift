@@ -27,6 +27,8 @@ class ExploreViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.navigationItem.title = "Explore"
+        
         map.delegate = self
         firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLACES)
         
@@ -178,12 +180,6 @@ extension ExploreViewController: GMSMapViewDelegate {
         
         mapCenter = position.target
     }
-    
-//    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-//        let marker = addPinToMap(with: coordinate)
-//        let pin = persistPin(with: coordinate)
-//        store(pin, in: marker)
-//    }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
