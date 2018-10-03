@@ -64,6 +64,7 @@
 		9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
 		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
 		9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */; };
+		9AC023D421651D760076A3C2 /* GlobalCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D321651D760076A3C2 /* GlobalCache.swift */; };
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
@@ -181,6 +182,7 @@
 		9AC023CD215ACE010076A3C2 /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
 		9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViewGestureAction.swift; sourceTree = "<group>"; };
+		9AC023D321651D760076A3C2 /* GlobalCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalCache.swift; sourceTree = "<group>"; };
 		9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearchViewController.swift; sourceTree = "<group>"; };
 		9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 		9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTests.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */,
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
 				9AF39BF02128CAA600D85DF2 /* PhotosDetailViewController.swift */,
+				9AC023D321651D760076A3C2 /* GlobalCache.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
 				9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */,
 				9A5B69E921117E4700060790 /* Pin+Extensions.swift in Sources */,
+				9AC023D421651D760076A3C2 /* GlobalCache.swift in Sources */,
 				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
 				9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */,
 				9A8822492148EAB300C333D4 /* Flight.swift in Sources */,

@@ -50,7 +50,7 @@ class GooglePlace: NSObject, Plannable {
         var details = NSMutableAttributedString(string: vicinity)
         
         if let rating = rating {
-            details = NSMutableAttributedString(string: "\(details.string). \(rating)/5 *")
+            details = NSMutableAttributedString(string: "\(details.string). \(rating)/5*")
         }
         
         if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0].htmlUnescape(), let linkText = UiUtils.getLinkAttributedText(photoAttribution) {

@@ -16,7 +16,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noPhotoLabel: UILabel!
     
-    let imageCache = NSCache<NSString, UIImage>()
+    let imageCache = GlobalCache.imageCache
     var plan: Plan!
     
     var storageRef: StorageReference!
@@ -190,7 +190,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
                     return
                 }
                 
-                self.imageCache.setObject(image, forKey: url as NSString as NSString)
+                self.imageCache.setObject(image, forKey: url as NSString)
                 cell.locationImage.image = image
                 cell.setNeedsLayout()
             }
@@ -220,18 +220,19 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
                     storageImageRef.delete() { err in
                         if let err = err {
                             print("Error removing document from storage: \(err)")
+                        } else {
+                            self.firestorePhotoDbReference.document(documentId).delete() { err in
+                                if let err = err {
+                                    print("Error removing document: \(err)")
+                                } else {
+                                    print("Document successfully removed!")
+                                    self.photos.remove(at: indexPath.row)
+                                    self.collectionView.reloadData()
+                                }
+                            }
                         }
                     }
                     
-                    self.firestorePhotoDbReference.document(documentId).delete() { err in
-                        if let err = err {
-                            print("Error removing document: \(err)")
-                        } else {
-                            print("Document successfully removed!")
-                            self.photos.remove(at: indexPath.row)
-                            self.collectionView.reloadData()
-                        }
-                    }
                 }))
             }
             

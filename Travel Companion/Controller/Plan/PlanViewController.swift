@@ -22,6 +22,7 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     var pins: [Pin] = []
     
     var fetchedResultsController: NSFetchedResultsController<Pin>!
+    let imageCache = GlobalCache.imageCache
     
     @IBOutlet weak var add: UIBarButtonItem! {
         didSet {
@@ -98,6 +99,11 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         let plan = Plan(name: name, originalName: pinName, startDate: startDate, endDate: endDate, imageRef: imagePath)
                         
+                        //load subdocuments of plan:
+                        DispatchQueue.main.async {
+                            plan.loadPlannables()
+                        }
+                        
                         if endDate.compare(Timestamp(date: Date())).rawValue > 0 {
                             self.upcomingTrips.append(plan)
                         } else {
@@ -147,19 +153,27 @@ extension PlanViewController {
         cell.detailTextLabel?.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
         
         if !plan.imageRef.isEmpty { //Is an image available in storage?
-            let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
-            storageImageRef.getData(maxSize: 1 * 1024 * 512) { (data, error) in //max 0.5 MB for thumbnail
-                if let error = error {
-                    UiUtils.showToast(message: error.localizedDescription, view: self.view)
-                    return
-                }
+            
+            if let cachedImage = imageCache.object(forKey: plan.imageRef as NSString) {
+                cell.imageView?.image = cachedImage
+                cell.setNeedsLayout()
+            } else {
+                let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
                 
-                guard let data = data else {
-                    UiUtils.showToast(message: "No image data available", view: self.view)
-                    return
+                storageImageRef.getData(maxSize: 1 * 1024 * 512) { (data, error) in //max 0.5 MB for thumbnail
+                    if let error = error {
+                        UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                        return
+                    }
+                    
+                    guard let data = data, let image = UIImage(data: data) else {
+                        UiUtils.showToast(message: "No image data available", view: self.view)
+                        return
+                    }
+                    
+                    self.imageCache.setObject(image, forKey: plan.imageRef as NSString)
+                    cell.imageView?.image = image
                 }
-                
-                cell.imageView?.image = UIImage(data: data)
             }
         }
         
@@ -177,8 +191,8 @@ extension PlanViewController {
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
             let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
+            let imageRef = plan.imageRef
             
-            //delete from Firestore
             self.firestoreDbReference.document(plan.pinName).delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
@@ -186,6 +200,20 @@ extension PlanViewController {
                     print("Document successfully removed!")
                     self.remove(at: indexPath)
                     self.tableView.reloadData()
+                    
+                    //delete plan photo in firebase storage
+                    if !imageRef.isEmpty {
+                        let storageImageRef = Storage.storage().reference(forURL: imageRef)
+                        storageImageRef.delete(completion: { (error) in
+                            if let error = error {
+                                UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                            }
+                        })
+                    }
+                    
+                    //delete from Firestore
+                    //subdocuments are not delete automatically, so we have to do that too in case of success
+                    plan.deleteSubDocuments()
                 }
             }
             

@@ -203,9 +203,10 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
         let docData = try! FirestoreEncoder().encode(flight)
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: flight.id, data: docData) { (error) in
             if let error = error {
-                print("Error adding document: \(error)")
+                debugPrint("Error adding document: \(error)")
+//                UiUtils.showToast(message: error.localizedDescription, view: )
             } else {
-                print("Document added")
+                debugPrint("Document added")
             }
         }
     }

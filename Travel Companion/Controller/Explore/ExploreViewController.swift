@@ -192,26 +192,38 @@ extension ExploreViewController: GMSMapViewDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
-            if let pin = marker.userData as? Pin {
-                //delete from Firestore
-                if let placeId = pin.placeId {
-                    self.firestoreDbReference.document(placeId).delete() { err in
-                        if let err = err {
-                            print("Error removing document: \(err)")
-                        } else {
-                            print("Document successfully removed!")
+            if let pin = marker.userData as? Pin, let pinName = pin.name {
+                
+                //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
+                let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+                
+                let documentReference = firestorePlanDbReference.document(pinName)
+                
+                documentReference.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        UiUtils.showError("Plan \(pinName) exists. Can't delete pin.", controller: self)
+                    } else {
+                        //delete from Firestore
+                        if let placeId = pin.placeId {
+                            self.firestoreDbReference.document(placeId).delete() { err in
+                                if let err = err {
+                                    print("Error removing document: \(err)")
+                                } else {
+                                    print("Document successfully removed!")
+                                }
+                            }
                         }
+                        
+                        if let index = self.fetchedResultsController.indexPath(forObject: pin) {
+                            let object = self.fetchedResultsController.object(at: index)
+                            self.dataController.viewContext.delete(object)
+                            try? self.dataController.save()
+                        }
+                        
+                        marker.map = nil
                     }
                 }
-                
-                if let index = self.fetchedResultsController.indexPath(forObject: pin) {
-                    let object = self.fetchedResultsController.object(at: index)
-                    self.dataController.viewContext.delete(object)
-                    try? self.dataController.save()
-                }
             }
-            
-            marker.map = nil
             
             self.dismiss(animated: true, completion: nil)
         }))

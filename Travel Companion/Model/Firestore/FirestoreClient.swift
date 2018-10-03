@@ -42,6 +42,12 @@ class FirestoreClient {
         }
     }
     
+    static func storageByPath(path: String) -> String {
+        let uid = Auth.auth().currentUser?.uid ?? "anonymous"
+        let path = uid + "/" + path
+        return path
+    }
+    
     static func storageByPath(path: String, fileName: String) -> String {
         let uid = Auth.auth().currentUser?.uid ?? "anonymous"
         let path = uid + "/" + path + "/" + fileName + ".jpg"

@@ -111,6 +111,10 @@ extension GooglePlacesAutocompleteContainer {
     override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         
+        guard indexPath.row < places.count else {
+            return cell
+        }
+        
         let place = places[indexPath.row]
         
         cell.textLabel?.text = place.description()

@@ -92,4 +92,11 @@ class UiUtils {
         
         return nil
     }
+    
+    static func showError(_ error: String, controller: UIViewController) {
+        //show alertview with error message
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: true)
+    }
 }
