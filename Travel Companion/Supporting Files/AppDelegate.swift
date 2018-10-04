@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initApis()
         checkIfFirstLaunch()
         initDataController()
+        FirestoreRemoteConfig.sharedInstance.activateFetched()
         
         return true
     }

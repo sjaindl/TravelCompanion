@@ -29,8 +29,21 @@ class FirestoreRemoteConfig {
     private init() {
         //Set in-app default values
         RemoteConfig.remoteConfig().setDefaults(inAppDefaults)
-        
-        //Fetch remote config values
+    }
+    
+    func activateFetched() {
+        RemoteConfig.remoteConfig().fetch { (remoteConfigFetchStatus, error) in
+            guard error == nil else {
+                debugPrint("Couldn't fetch RemoteConfig. Applying default values.")
+                return
+            }
+            
+            self.fetchRemoteConfigValues()
+            RemoteConfig.remoteConfig().activateFetched()
+        }
+    }
+    
+    func fetchRemoteConfigValues() {
         if let numberOfPhotosToDownload = RemoteConfig.remoteConfig().configValue(forKey: Constants.RemoteConfig.Keys.PHOTOS_TO_DOWNLOAD).numberValue as? Int {
             self.numberOfPhotosToDownload = numberOfPhotosToDownload
         }

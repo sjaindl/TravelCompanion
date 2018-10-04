@@ -35,7 +35,7 @@ class FlickrClient {
                     for photo in photos.reversed() {
                         flickrPhotos.append(photo)
                         photoNumber = photoNumber + 1
-                        if photoNumber > FirestoreRemoteConfig.sharedInstance.numberOfPhotosToDownload {
+                        if photoNumber >= FirestoreRemoteConfig.sharedInstance.numberOfPhotosToDownload {
                             break
                         }
                     }
