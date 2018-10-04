@@ -119,7 +119,7 @@ extension GooglePlacesAutocompleteContainer {
         
         cell.textLabel?.text = place.description()
         let detailText = place.details()
-        if let attributions = place.html_attributions, attributions.count > 0, let attribution = UiUtils.getLinkAttributedText(attributions[0]) {
+        if let attributions = place.htmlAttributions, attributions.count > 0, let attribution = UiUtils.getLinkAttributedText(attributions[0]) {
             detailText.append(NSAttributedString(string: "\n"))
             detailText.append(attribution)
         }

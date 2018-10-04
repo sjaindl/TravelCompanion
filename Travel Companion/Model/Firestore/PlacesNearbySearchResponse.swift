@@ -9,8 +9,15 @@
 import Foundation
 
 class PlacesNearbySearchResponse: Codable {
-    var html_attributions: [String]
-    var next_page_token: String?
+    var htmlAttributions: [String]
+    var nextPageToken: String?
     var results: [GooglePlace]
     var status: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case htmlAttributions = "html_attributions"
+        case nextPageToken = "next_page_token"
+        case results
+        case status
+    }
 }

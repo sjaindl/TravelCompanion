@@ -14,7 +14,7 @@ class GooglePlace: NSObject, Plannable {
     var id: String
     var icon: String?
     var name: String
-    var place_id: String
+    var placeId: String
     var rating: Double?
     var reference: String
     var scope: String
@@ -22,24 +22,43 @@ class GooglePlace: NSObject, Plannable {
     var vicinity: String
     var geometry: Geometry?
     var photos: [Photo]?
-    var plus_code: PlusCode?
-    var price_level: Int? // 0: free, 1: inexpensive, 2: moderate, 3: expensive, 4: very Expensive
-    var permanently_closed: Bool?
-    var html_attributions: [String]? = []
+    var plusCode: PlusCode?
+    var priceLevel: Int? // 0: free, 1: inexpensive, 2: moderate, 3: expensive, 4: very Expensive
+    var permanentlyClosed: Bool?
+    var htmlAttributions: [String]? = []
     
     public var notes: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case icon
+        case name
+        case placeId = "place_id"
+        case rating
+        case reference
+        case scope
+        case types
+        case vicinity
+        case geometry
+        case photos
+        case plusCode = "plus_code"
+        case priceLevel = "price_level"
+        case permanentlyClosed = "permanently_closed"
+        case htmlAttributions = "html_attributions"
+        case notes
+    }
     
     init(id: String, name: String, placeId: String, reference: String, scope: String, vicinity: String) {
         self.id = id
         self.name = name
-        self.place_id = placeId
+        self.placeId = placeId
         self.reference = reference
         self.scope = scope
         self.vicinity = vicinity
     }
     
     func getId() -> String {
-        return place_id
+        return placeId
     }
     
     func description() -> String {
@@ -53,7 +72,7 @@ class GooglePlace: NSObject, Plannable {
             details = NSMutableAttributedString(string: "\(details.string). \(rating)/5*")
         }
         
-        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0].htmlUnescape(), let linkText = UiUtils.getLinkAttributedText(photoAttribution) {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0].htmlUnescape(), let linkText = UiUtils.getLinkAttributedText(photoAttribution) {
             details.append(linkText)
         }
         
@@ -61,7 +80,7 @@ class GooglePlace: NSObject, Plannable {
     }
     
     func getLink() -> String? {
-        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0].htmlUnescape() {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0].htmlUnescape() {
             return UiUtils.getLink(photoAttribution)
         }
         
@@ -69,7 +88,7 @@ class GooglePlace: NSObject, Plannable {
     }
     
     func getLinkText() -> NSMutableAttributedString? {
-        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].html_attributions?[0] {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0] {
             return UiUtils.getLinkAttributedText(photoAttribution)
         }
         
@@ -77,7 +96,7 @@ class GooglePlace: NSObject, Plannable {
     }
     
     func imageUrl() -> String? {
-        if let photos = photos, photos.count > 0, let photoReference = photos[0].photo_reference {
+        if let photos = photos, photos.count > 0, let photoReference = photos[0].photoReference {
             return "\(GoogleConstants.UrlComponents.PATH_PHOTOS)?\(GoogleConstants.ParameterKeys.MaxWidth)=\(GoogleConstants.ParameterValues.MaxWidth)&\(GoogleConstants.ParameterKeys.PhotoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys.Key)=\(SecretConstants.GOOGLE_PLACES_API_KEY)"
         }
         return ""
@@ -106,15 +125,27 @@ struct Location: Codable {
 }
 
 struct Photo: Codable {
-    var photo_reference: String?
-    var html_attributions: [String]?
+    var photoReference: String?
+    var htmlAttributions: [String]?
     var height: Int?
     var width: Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case photoReference = "photo_reference"
+        case htmlAttributions = "html_attributions"
+        case height
+        case width
+    }
 }
 
 struct PlusCode: Codable {
-    var compound_code: String
-    var global_code: String
+    var compoundCode: String
+    var globalCode: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case compoundCode = "compound_code"
+        case globalCode = "global_code"
+    }
 }
 
 /*
