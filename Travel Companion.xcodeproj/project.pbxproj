@@ -61,6 +61,7 @@
 		9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */; };
 		9AA266B12122DF7200EE0F5C /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
+		9ABA83BC2165DE0B00CDE128 /* FirestoreRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */; };
 		9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
 		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
 		9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */; };
@@ -179,6 +180,7 @@
 		9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreConstants.swift; sourceTree = "<group>"; };
 		9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
+		9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRemoteConfig.swift; sourceTree = "<group>"; };
 		9AC023CD215ACE010076A3C2 /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
 		9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViewGestureAction.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				9A5B69D721117E4600060790 /* GenericListDataSource.swift */,
 				9AF39BF02128CAA600D85DF2 /* PhotosDetailViewController.swift */,
 				9AC023D321651D760076A3C2 /* GlobalCache.swift */,
+				9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 			files = (
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
+				9ABA83BC2165DE0B00CDE128 /* FirestoreRemoteConfig.swift in Sources */,
 				9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */,
 				9A882259214F6E8B00C333D4 /* AddPublicTransportDelegate.swift in Sources */,
 				9A94014021334F0400178105 /* WikiClient.swift in Sources */,

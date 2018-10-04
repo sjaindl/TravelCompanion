@@ -8,6 +8,7 @@ target 'Travel Companion' do
     pod 'Firebase/Core'
     pod 'Firebase/Firestore'
     pod 'Firebase/Storage'
+    pod 'Firebase/RemoteConfig'
     pod 'FirebaseUI'
     pod 'CodableFirebase'
     pod 'Fabric'

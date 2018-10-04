@@ -65,7 +65,7 @@ class FirestoreClient {
             return
         }
         
-        let resizedImage = resizeImage(image: image, targetSize: CGSize(width: 800, height: 800))
+        let resizedImage = resizeImage(image: image, targetSize: CGSize(width: FirestoreRemoteConfig.sharedInstance.photoResizingWidth, height: FirestoreRemoteConfig.sharedInstance.photoResizingHeight))
         
         guard let resizedImageData = resizedImage.pngData() else {
             completionHandler(nil, error)
@@ -81,12 +81,12 @@ class FirestoreClient {
         let size = image.size
         
         let widthRatio = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
+        let heigthRatio = targetSize.height / size.height
         
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        if(widthRatio > heigthRatio) {
+            newSize = CGSize(width: size.width * heigthRatio, height: size.height * heigthRatio)
         } else {
             newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }

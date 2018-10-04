@@ -37,7 +37,7 @@ class GoogleClient {
                         let places = placesSearchResponse.results
                         
                         for place in places {
-                            place.html_attributions = placesSearchResponse.html_attributions
+                            place.htmlAttributions = placesSearchResponse.htmlAttributions
                         }
                         
                         completionHandler(nil, places)

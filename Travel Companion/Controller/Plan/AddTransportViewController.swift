@@ -67,6 +67,12 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
 
 extension AddTransportViewController {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard FirestoreRemoteConfig.sharedInstance.transportSearchAutocomplete else {
+            debugPrint("Autocompletion is disabled.")
+            return true
+        }
+        
         Rome2RioClient.sharedInstance.autocomplete(with: textField.text! + string) { (error, autoCompleteResponse) in
             
             guard error == nil else {
@@ -84,6 +90,7 @@ extension AddTransportViewController {
                 searchTextField.filterStrings(filterStrings)
             }
         }
+        
         return true
     }
 }

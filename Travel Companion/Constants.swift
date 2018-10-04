@@ -68,4 +68,20 @@ struct Constants {
     }
     
     static let ZOOM_LEVEL_DETAIL = 10.0
+    
+    struct RemoteConfig {
+        struct Keys {
+            static let PHOTO_RESIZING_HEIGHT = "firestorePhotoResizingHeight"
+            static let PHOTO_RESIZING_WIDTH = "firestorePhotoResizingWidth"
+            static let TRANSPORT_SEARCH_AUTOCOMPLETE = "transportSearchAutocomplete"
+            static let PHOTOS_TO_DOWNLOAD = "numberOfPhotosToDownload"
+        }
+        
+        struct LocalDefaultValues {
+            static let PHOTO_RESIZING_HEIGHT = 800
+            static let PHOTO_RESIZING_WIDTH = 800
+            static let TRANSPORT_SEARCH_AUTOCOMPLETE = true
+        }
+        
+    }
 }
