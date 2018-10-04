@@ -166,7 +166,7 @@ extension PlanViewController {
             } else {
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
                 
-                storageImageRef.getData(maxSize: 1 * 1024 * 512) { (data, error) in //max 0.5 MB for thumbnail
+                storageImageRef.getData(maxSize: 2 * 1024 * 1024) { (data, error) in //max 2MB
                     if let error = error {
                         UiUtils.showToast(message: error.localizedDescription, view: self.view)
                         return

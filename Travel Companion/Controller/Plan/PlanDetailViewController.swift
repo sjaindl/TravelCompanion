@@ -141,7 +141,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             } else {
             
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
-                storageImageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                storageImageRef.getData(maxSize: 2 * 1024 * 1024) { (data, error) in
                     if let error = error {
                         UiUtils.showToast(message: error.localizedDescription, view: self.view)
                         return
