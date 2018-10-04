@@ -114,6 +114,10 @@ class ExploreViewController: UIViewController {
         let latitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LATITUDE)
         let longitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LONGITUDE)
         
+        setCamera(with: latitude, longitude: longitude, zoom: zoom)
+    }
+    
+    func setCamera(with latitude: Double, longitude: Double, zoom: Float) {
         let camera = GMSCameraPosition.camera(withLatitude: latitude,
                                               longitude: longitude,
                                               zoom: zoom)
@@ -241,6 +245,10 @@ extension ExploreViewController: GMSMapViewDelegate {
 extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
     func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
         let marker = addPinToMap(with: place.coordinate)
+        
+        //center map at newly added pin
+        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
+        setCamera(with: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: zoom)
         
         GeoNamesClient.sharedInstance.fetchCountryCode(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude) { (error, code) in
             var countryCode: String?
