@@ -27,6 +27,8 @@ class AddTransportDetailViewController: UITableViewController {
     
     var date = Date()
     
+    var plan: Plan!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +54,6 @@ class AddTransportDetailViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        transportDelegate.tableView(tableView, didSelectRowAt: indexPath, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, controller: self, popToController: self.planDetailController)
+        transportDelegate.tableView(tableView, didSelectRowAt: indexPath, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: self, popToController: self.planDetailController)
     }
 }

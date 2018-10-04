@@ -108,6 +108,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(animated)
         
         loadImageIfAvailable()
+        tableView.reloadData()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -227,11 +228,13 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             controller.firestoreDbReference = plan.firestoreFligthDbReference
             controller.transportDelegate = AddFlightDelegate()
             controller.planDetailController = self
+            controller.plan = plan
         } else if segue.identifier == Constants.SEGUES.PLAN_ADD_PUBLIC_TRANSPORT {
             let controller = segue.destination as! AddTransportViewController
             controller.firestoreDbReference = plan.firestorePublicTransportDbReference
             controller.transportDelegate = AddPublicTransportDelegate()
             controller.planDetailController = self
+            controller.plan = plan
         } else if segue.identifier == Constants.SEGUES.PLAN_ADD_NOTES {
             let indexPath = sender as! IndexPath
             let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
@@ -251,6 +254,8 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             
             let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
             controller.pin = pin
+            
+            controller.plan = plan
         }
     }
     

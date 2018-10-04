@@ -101,7 +101,13 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         //load subdocuments of plan:
                         DispatchQueue.main.async {
-                            plan.loadPlannables()
+                            plan.loadPlannables() { (error) in
+                                if let error = error {
+                                    UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                                } else {
+                                    self.tableView.reloadData()
+                                }
+                            }
                         }
                         
                         if endDate.compare(Timestamp(date: Date())).rawValue > 0 {
@@ -213,7 +219,11 @@ extension PlanViewController {
                     
                     //delete from Firestore
                     //subdocuments are not delete automatically, so we have to do that too in case of success
-                    plan.deleteSubDocuments()
+                    plan.deleteSubDocuments() { (error) in
+                        if let error = error {
+                            UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                        }
+                    }
                 }
             }
             

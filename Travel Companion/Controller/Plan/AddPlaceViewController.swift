@@ -24,13 +24,15 @@ class AddPlaceViewController: UIViewController {
     var placeType: GooglePlaceType!
     var firestoreDbReference: CollectionReference!
     var pin: Pin?
+    var plan: Plan!
     
     func initPlacesSearchViewController() -> PlacesSearchViewController {
         let controller = PlacesSearchViewController(
             apiKey: SecretConstants.GOOGLE_PLACES_API_KEY,
             placeType: placeType,
             coordinate: (selectedPlace?.coordinate)!,
-            firestoreDbReference: firestoreDbReference
+            firestoreDbReference: firestoreDbReference,
+            plan: plan
             // Optional: radius: 10,
             // Optional: strictBounds: true,
             // Optional: searchBarPlaceholder: "Start typing..."

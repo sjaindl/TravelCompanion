@@ -122,7 +122,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, controller: UIViewController, popToController: UIViewController) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, plan: Plan, controller: UIViewController, popToController: UIViewController) {
         if indexPath.row == 0 {
             let sections = IndexSet.init(integer: indexPath.section)
             cellData[indexPath.section].opened = !cellData[indexPath.section].opened
@@ -143,7 +143,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                     aircraft = searchResponse.aircrafts[aircraftIndex]
                 }
                 
-                self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
             
@@ -156,7 +156,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                         if let aircraftIndex = hop.aircraft {
                             aircraft = searchResponse.aircrafts[aircraftIndex]
                         }
-                        self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                        self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                     }
                 }
                 
@@ -181,7 +181,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
         return weekdayBitMask & operatingDays > 0
     }
     
-    func persistFlight(_ hop: AirHop, aircraft: Aircraft?, airline: Airline, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference) {
+    func persistFlight(_ hop: AirHop, aircraft: Aircraft?, airline: Airline, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, plan: Plan, controller: UIViewController) {
         let arrPlace = searchResponse.places[hop.arrPlace].shortName
         let depPlace = searchResponse.places[hop.depPlace].shortName
         
@@ -207,6 +207,12 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
 //                UiUtils.showToast(message: error.localizedDescription, view: )
             } else {
                 debugPrint("Document added")
+                plan.fligths.append(flight)
+                if let controller = controller as? PlanDetailViewController {
+                    //we have to reload the data here as we have already popped the stack back to PlanDetailViewController
+                    //and we add data asynchronously here
+                    controller.tableView.reloadData()
+                }
             }
         }
     }

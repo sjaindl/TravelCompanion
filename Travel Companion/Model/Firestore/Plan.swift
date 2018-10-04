@@ -51,22 +51,22 @@ class Plan {
         configureDatabase()
     }
     
-    func deleteSubDocuments() {
+    func deleteSubDocuments(completion: @escaping (_ error: Error?) -> Void) {
         let firestorePlanBaseDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(pinName)
         
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.FLIGTHS), plannables: fligths)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT), plannables: publicTransport)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.HOTELS), plannables: hotels)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.RESTAURANTS), plannables: restaurants)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.ATTRACTIONS), plannables: attractions)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.FLIGTHS), plannables: fligths, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT), plannables: publicTransport, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.HOTELS), plannables: hotels, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.RESTAURANTS), plannables: restaurants, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.ATTRACTIONS), plannables: attractions, completion: completion)
         
-        deletePhotos()
+        deletePhotos(completion: completion)
     }
     
-    func deletePhotos() {
+    func deletePhotos(completion: @escaping (_ error: Error?) -> Void) {
         firestoreRememberPhotosDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                //UiUtils.showToast(message: "Error getting documents: \(error)", view: self.view)
+                completion(error)
             } else {
                 for document in querySnapshot!.documents {
                     
@@ -75,8 +75,9 @@ class Plan {
                         let storageImageRef = Storage.storage().reference(forURL: photo)
                         
                         storageImageRef.delete(completion: { (error) in
-                            if let error = error {
-//                                UiUtils.showToast(message: error.localizedDescription, view: self.view)
+                            if error != nil {
+                                completion(error)
+                                return
                             } else {
                                 debugPrint("Successfully deleted remember photo")
                             }
@@ -84,26 +85,25 @@ class Plan {
                     }
                     
                     //Delete database reference
-                    self.deleteDocument(with: document.documentID, firestoreCollectionReference: self.firestoreRememberPhotosDbReference)
+                    self.deleteDocument(with: document.documentID, firestoreCollectionReference: self.firestoreRememberPhotosDbReference, completion: completion)
                 }
             }
         }
     }
     
-    func deleteSubDocument(firestoreCollectionReference: CollectionReference, plannables: [Plannable]) {
+    func deleteSubDocument(firestoreCollectionReference: CollectionReference, plannables: [Plannable], completion: @escaping (_ error: Error?) -> Void) {
         for plannable in plannables {
-            deleteDocument(with: plannable.getId(), firestoreCollectionReference: firestoreCollectionReference)
+            deleteDocument(with: plannable.getId(), firestoreCollectionReference: firestoreCollectionReference, completion: completion)
         }
     }
     
-    func deleteDocument(with id: String, firestoreCollectionReference: CollectionReference) {
-        firestoreCollectionReference.document(id).delete() { err in
-            if let err = err {
-                print("Error removing document: \(err)")
+    func deleteDocument(with id: String, firestoreCollectionReference: CollectionReference, completion: @escaping (_ error: Error?) -> Void) {
+        firestoreCollectionReference.document(id).delete() { error in
+            if error != nil {
+                completion(error)
+                return
             } else {
-                print("Document successfully removed!")
-//                self.remove(at: indexPath)
-//                self.tableView.reloadData()
+                debugPrint("Document successfully removed!")
             }
         }
     }
@@ -120,18 +120,18 @@ class Plan {
         firestoreRememberPhotosDbReference = planReference.collection(FirestoreConstants.Collections.PHOTOS)
     }
     
-    func loadPlannables() {
+    func loadPlannables(completion: @escaping (_ error: Error?) -> Void) {
         reset()
         
-        loadPlannables(\Plan.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT)
+        loadPlannables(\Plan.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT, completion: completion)
         
-        loadPlannables(\Plan.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.PLANNABLES.PUBLIC_TRANSPORT)
+        loadPlannables(\Plan.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.PLANNABLES.PUBLIC_TRANSPORT, completion: completion)
         
-        loadPlannables(\Plan.hotels, collectionReference: firestoreHotelDbReference, plannableType: Constants.PLANNABLES.HOTEL)
+        loadPlannables(\Plan.hotels, collectionReference: firestoreHotelDbReference, plannableType: Constants.PLANNABLES.HOTEL, completion: completion)
         
-        loadPlannables(\Plan.restaurants, collectionReference: firestoreRestaurantDbReference, plannableType: Constants.PLANNABLES.RESTAURANT)
+        loadPlannables(\Plan.restaurants, collectionReference: firestoreRestaurantDbReference, plannableType: Constants.PLANNABLES.RESTAURANT, completion: completion)
         
-        loadPlannables(\Plan.attractions, collectionReference: firestoreAttractionDbReference, plannableType: Constants.PLANNABLES.ATTRACTION)
+        loadPlannables(\Plan.attractions, collectionReference: firestoreAttractionDbReference, plannableType: Constants.PLANNABLES.ATTRACTION, completion: completion)
     }
     
     func reset() {
@@ -152,14 +152,14 @@ class Plan {
         firestoreRememberPhotosDbReference = nil
     }
     
-    func loadPlannables(_ plannables: WritableKeyPath<Plan, [Plannable]>, collectionReference: CollectionReference, plannableType: String) {
+    func loadPlannables(_ plannables: WritableKeyPath<Plan, [Plannable]>, collectionReference: CollectionReference, plannableType: String, completion: @escaping (_ error: Error?) -> Void) {
         
         collectionReference.getDocuments() { (querySnapshot, error) in
-            if let error = error {
-                //UiUtils.showToast(message: "Error getting documents: \(error)", view: self.view)
+            if error != nil {
+                completion(error)
             } else {
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                    debugPrint("\(document.documentID) => \(document.data())")
                     
                     let plannable = try? PlannableFactory.createPlannable(of: plannableType, data: document.data())
                     
@@ -169,7 +169,7 @@ class Plan {
                             [weak self] in
                             self?[keyPath: plannables].append(plannable)
                             
-//                            self?.tableView.reloadData()
+                            completion(nil)
                         }
                     }
                 }

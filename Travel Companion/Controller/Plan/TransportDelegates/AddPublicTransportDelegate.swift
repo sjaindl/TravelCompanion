@@ -133,7 +133,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, controller: UIViewController, popToController: UIViewController) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, plan: Plan, controller: UIViewController, popToController: UIViewController) {
         
         let stops = cellData[indexPath.section].surfaceStops
         let route = self.cellData[indexPath.section].route!
@@ -151,7 +151,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Add route", comment: "Add route"), style: .default, handler: { _ in
                     
-                    self.persistPublicTransport(nil, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                    self.persistPublicTransport(nil, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                     
                     controller.navigationController?.popToViewController(popToController, animated: true)
                 }))
@@ -170,7 +170,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 
                 let stop = self.cellData[indexPath.section].surfaceStops[indexPath.row - 1]
 
-                self.persistPublicTransport(stop, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                self.persistPublicTransport(stop, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                 
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
@@ -178,7 +178,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             alert.addAction(UIAlertAction(title: NSLocalizedString("Whole route", comment: "Add whole route"), style: .default, handler: { _ in
 
                 for stop in stops {
-                    self.persistPublicTransport(stop, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference)
+                    self.persistPublicTransport(stop, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                 }
 
                 controller.navigationController?.popToViewController(popToController, animated: true)
@@ -206,7 +206,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
         return weekdayBitMask & operatingDays > 0
     }
     
-    func persistPublicTransport(_ stop: SurfaceStop?, segment: Segment, agency: SurfaceAgency?, route: Route, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference) {
+    func persistPublicTransport(_ stop: SurfaceStop?, segment: Segment, agency: SurfaceAgency?, route: Route, searchResponse: SearchResponse, date: Date, firestoreDbReference: CollectionReference, plan: Plan, controller: UIViewController) {
         
         let depPlace = searchResponse.places[route.depPlace].shortName
         let arrPlace = searchResponse.places[route.arrPlace].shortName
@@ -236,9 +236,15 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
         let docData = try! FirestoreEncoder().encode(publicTransport)
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: publicTransport.id, data: docData) { (error) in
             if let error = error {
-                print("Error adding document: \(error)")
+                debugPrint("Error adding document: \(error)")
             } else {
-                print("Document added")
+                debugPrint("Document added")
+                plan.publicTransport.append(publicTransport)
+                if let controller = controller as? PlanDetailViewController {
+                    //we have to reload the data here as we have already popped the stack back to PlanDetailViewController
+                    //and we add data asynchronously here
+                    controller.tableView.reloadData()
+                }
             }
         }
     }

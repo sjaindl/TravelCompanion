@@ -47,13 +47,14 @@ public enum GooglePlaceType: String {
     case zoo
 }
 
-open class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
+class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     
-    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "Enter Place") {
+    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, plan: Plan, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "Enter Place") {
         
         let gpaViewController = GooglePlacesAutocompleteContainer(
             apiKey: apiKey,
             firestoreDbReference: firestoreDbReference,
+            plan: plan,
             placeType: placeType,
             coordinate: coordinate,
             radius: radius,
@@ -71,10 +72,11 @@ open class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
 }
 
 
-open class GooglePlacesAutocompleteContainer: UITableViewController {
+class GooglePlacesAutocompleteContainer: UITableViewController {
     
     private var apiKey: String = ""
-    var firestoreDbReference: CollectionReference!
+    private var firestoreDbReference: CollectionReference!
+    private var plan: Plan!
     private var placeType: GooglePlaceType = .lodging
     private var coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
     private var radius: Double = 0.0
@@ -90,11 +92,12 @@ open class GooglePlacesAutocompleteContainer: UITableViewController {
         }
     }
     
-    convenience init(apiKey: String, firestoreDbReference: CollectionReference, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, radius: Double, strictBounds: Bool) {
+    convenience init(apiKey: String, firestoreDbReference: CollectionReference, plan: Plan, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, radius: Double, strictBounds: Bool) {
         self.init()
         
         self.apiKey = apiKey
         self.firestoreDbReference = firestoreDbReference
+        self.plan = plan
         self.placeType = placeType
         self.coordinate = coordinate
         self.radius = radius
@@ -138,8 +141,20 @@ extension GooglePlacesAutocompleteContainer {
                 UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
             } else {
                 print("Document added")
+                self.addPlaceToPlan(place)
                 self.dismiss(animated: true, completion: nil)
             }
+        }
+    }
+    
+    func addPlaceToPlan(_ place: GooglePlace) {
+        if placeType == GooglePlaceType.lodging {
+            plan.hotels.append(place)
+        } else if placeType == GooglePlaceType.restaurant {
+            plan.restaurants.append(place)
+        } else {
+            //some attraction
+            plan.attractions.append(place)
         }
     }
 }

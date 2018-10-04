@@ -19,6 +19,8 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var destination: SearchTextField!
     @IBOutlet weak var date: UIDatePicker!
     
+    var plan: Plan!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
             controller.date = date.date
             controller.firestoreDbReference = firestoreDbReference
             controller.planDetailController = planDetailController
+            controller.plan = plan
         }
     }
     
