@@ -12,9 +12,9 @@ PODS:
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
   - CodableFirebase (0.2.0)
-  - Crashlytics (3.10.2):
-    - Fabric (~> 1.7.7)
-  - Fabric (1.7.7)
+  - Crashlytics (3.10.7):
+    - Fabric (~> 1.7.11)
+  - Fabric (1.7.11)
   - FBSDKCoreKit (4.33.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.33.0):
@@ -35,6 +35,9 @@ PODS:
   - Firebase/Firestore (5.5.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (= 0.13.0)
+  - Firebase/Performance (5.5.0):
+    - Firebase/Core
+    - FirebasePerformance (= 2.1.0)
   - Firebase/RemoteConfig (5.5.0):
     - Firebase/Core
     - FirebaseRemoteConfig (= 3.0.1)
@@ -82,6 +85,15 @@ PODS:
   - FirebaseInstanceID (3.2.0):
     - FirebaseCore (~> 5.1)
     - GoogleUtilities/Environment (~> 5.2)
+  - FirebasePerformance (2.1.0):
+    - FirebaseAnalytics (~> 5.1)
+    - FirebaseInstanceID (~> 3.2)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GoogleUtilities/ISASwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.5)
   - FirebaseRemoteConfig (3.0.1):
     - FirebaseABTesting (~> 2.0)
     - FirebaseAnalytics (~> 5.1)
@@ -145,6 +157,10 @@ PODS:
   - GoogleToolboxForMac/DebugUtils (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
     - GoogleToolboxForMac/DebugUtils (= 2.1.4)
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -155,6 +171,7 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
   - GoogleUtilities/Environment (5.2.2)
+  - GoogleUtilities/ISASwizzler (5.2.2)
   - GoogleUtilities/Logger (5.2.2):
     - GoogleUtilities/Environment
   - GoogleUtilities/MethodSwizzler (5.2.2):
@@ -212,12 +229,13 @@ PODS:
 
 DEPENDENCIES:
   - CodableFirebase
-  - Crashlytics
-  - Fabric
+  - Crashlytics (~> 3.10.7)
+  - Fabric (~> 1.7.11)
   - Firebase
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - Firebase/Performance
   - Firebase/RemoteConfig
   - Firebase/Storage
   - FirebaseUI
@@ -244,6 +262,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstanceID
+    - FirebasePerformance
     - FirebaseRemoteConfig
     - FirebaseStorage
     - FirebaseUI
@@ -280,8 +299,8 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   CodableFirebase: 4b865f58c583a6c0ef8c81c6b12c6bf15ebd9181
-  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
-  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
+  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
+  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
   FBSDKCoreKit: 572b047a7e029bc44542bcf8a59414e7ff2b543e
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
   Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
@@ -293,6 +312,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
   FirebaseFirestore: 0a6e4b9256ae39ed41258aa46213975c93908a74
   FirebaseInstanceID: 8cd2c6cfe7b9ab65ce7e248f6da7f26f6775b9be
+  FirebasePerformance: 1d3354c505dd54f3b4b4b42d681683c0cdad4311
   FirebaseRemoteConfig: 7b6d675dfb11f0e0e638caee00908b06af150d56
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   FirebaseUI: 5ebebe2c096c71f20abd1d43d0388958373bdaa0
@@ -317,6 +337,6 @@ SPEC CHECKSUMS:
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: e5b0df8b8e8f2350d78bcfad11b7c2c87645cdf5
+PODFILE CHECKSUM: 0095d151ea34186152e69c0eedce4199df22da70
 
 COCOAPODS: 1.5.2
