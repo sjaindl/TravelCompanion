@@ -6,12 +6,12 @@
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
 //
 
-import UIKit
 import CoreData
 import Firebase
 import FirebaseAuthUI
 import GoogleMaps
 import GooglePlaces
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

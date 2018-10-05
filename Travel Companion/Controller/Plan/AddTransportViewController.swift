@@ -95,7 +95,9 @@ extension AddTransportViewController {
             }
             
             if filterStrings.count > 0, let searchTextField = textField as? SearchTextField {
-                searchTextField.filterStrings(filterStrings)
+                DispatchQueue.main.async {
+                    searchTextField.filterStrings(filterStrings)
+                }
             }
         }
         
