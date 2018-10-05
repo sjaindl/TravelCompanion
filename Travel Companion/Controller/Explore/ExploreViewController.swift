@@ -69,10 +69,10 @@ class ExploreViewController: UIViewController {
     func fetchFromFirestore() {
         firestoreDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                print("Error getting documents: \(error)")
+                debugPrint("Error getting documents: \(error)")
             } else {
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                    debugPrint("\(document.documentID) => \(document.data())")
                     
                     let placeId = document.data()[FirestoreConstants.Ids.Place.PLACE_ID] as? String
                     let latitude = document.data()[FirestoreConstants.Ids.Place.LATITUDE] as? Double
@@ -143,9 +143,10 @@ class ExploreViewController: UIViewController {
             FirestoreConstants.Ids.Place.LONGITUDE: place.coordinate.longitude
         ]) { (error) in
             if let error = error {
-                print("Error adding document: \(error)")
+                debugPrint("Error adding document: \(error)")
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
-                print("Document added")
+                debugPrint("Document added")
             }
         }
         
@@ -211,9 +212,10 @@ extension ExploreViewController: GMSMapViewDelegate {
                         if let placeId = pin.placeId {
                             self.firestoreDbReference.document(placeId).delete() { err in
                                 if let err = err {
-                                    print("Error removing document: \(err)")
+                                    debugPrint("Error removing document: \(err)")
+                                    UiUtils.showError(err.localizedDescription, controller: self)
                                 } else {
-                                    print("Document successfully removed!")
+                                    debugPrint("Document successfully removed!")
                                 }
                             }
                         }
@@ -264,13 +266,11 @@ extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
     }
     
     func placePicker(_ viewController: GMSPlacePickerViewController, didFailWithError error: Error) {
-        // In your own app you should handle this better, but for the demo we are just going to log
-        // a message.
-        NSLog("An error occurred while picking a place: \(error)")
+        UiUtils.showError("An error occurred while picking a place: \(error)", controller: self)
     }
     
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
-        NSLog("The place picker was canceled by the user")
+        debugPrint("The place picker was canceled by the user")
         
         // Dismiss the place picker.
         viewController.dismiss(animated: true, completion: nil)

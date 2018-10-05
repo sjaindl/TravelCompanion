@@ -15,6 +15,8 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noPhotoLabel: UILabel!
+    @IBOutlet weak var gallery: UIBarButtonItem!
+    @IBOutlet weak var camera: UIBarButtonItem!
     
     let imageCache = GlobalCache.imageCache
     var plan: Plan!
@@ -41,19 +43,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
         firestorePlanDbReference = nil
         firestorePhotoDbReference = nil
     }
-    
-    @IBOutlet weak var addFromCamera: UIBarButtonItem! {
-        didSet {
-//            UiUtils.setImage("cam", for: addFromCamera)
-        }
-    }
-    
-    @IBOutlet weak var addFromGallery: UIBarButtonItem! {
-        didSet {
-//            UiUtils.setImage("gallery", for: addFromGallery)
-        }
-    }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupFlowLayout()
@@ -112,8 +102,10 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     @IBAction func selectPhotoFromAlbum(_ sender: UIBarButtonItem) {
         showPicker(withType: .photoLibrary)
     }
-
+    
     func showPicker(withType: UIImagePickerController.SourceType) {
+        enableButtons(false)
+        
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = withType
@@ -131,7 +123,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             }
             
             guard let storagePath = metadata?.path else {
-                UiUtils.showToast(message: "Could not save image", view: self.view)
+                UiUtils.showError("Could not save image", controller: self)
                 return
             }
             
@@ -145,7 +137,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             FirestoreConstants.Ids.Plan.PATH: path
         ]) { (error, documentId) in
             if let error = error {
-                UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
+                UiUtils.showError("Error adding document: \(error)", controller: self)
                 return
             }
             
@@ -217,15 +209,15 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
                     
                     let storageImageRef = Storage.storage().reference(forURL: url)
-                    storageImageRef.delete() { err in
-                        if let err = err {
-                            print("Error removing document from storage: \(err)")
+                    storageImageRef.delete() { error in
+                        if let error = error {
+                            UiUtils.showError("Error removing document from storage: \(error.localizedDescription)", controller: self)
                         } else {
                             self.firestorePhotoDbReference.document(documentId).delete() { err in
-                                if let err = err {
-                                    print("Error removing document: \(err)")
+                                if let error = error {
+                                    UiUtils.showError("Error removing document: \(error)", controller: self)
                                 } else {
-                                    print("Document successfully removed!")
+                                    debugPrint("Document successfully removed!")
                                     self.photos.remove(at: indexPath.row)
                                     self.collectionView.reloadData()
                                 }
@@ -250,9 +242,15 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
             controller.data = sender as? Data
         }
     }
+    
+    func enableButtons(_ enable: Bool) {
+        camera.isEnabled = enable
+        gallery.isEnabled = enable
+    }
 }
 
 extension RememberDetailViewController {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
@@ -262,11 +260,12 @@ extension RememberDetailViewController {
             persistPhoto(photoData: data)
         }
         
-//        setShareButtonEnabledState()
+        enableButtons(true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+        enableButtons(true)
     }
 }
 

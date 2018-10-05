@@ -57,29 +57,21 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     @IBAction func fetchByCountry(_ sender: Any) {
-        resetFetchedResultsController()
-        
-        fetchType = FetchType.Country.rawValue
-        initResultsController()
-        setButtonState()
-        
-        fetchData()
+        fetch(by: FetchType.Country.rawValue)
     }
     
     @IBAction func fetchByPlace(_ sender: Any) {
-        resetFetchedResultsController()
-        
-        fetchType = FetchType.Place.rawValue
-        initResultsController()
-        setButtonState()
-        
-        fetchData()
+        fetch(by: FetchType.Place.rawValue)
     }
     
     @IBAction func fetchByLatLong(_ sender: Any) {
+        fetch(by: FetchType.LatLong.rawValue)
+    }
+    
+    func fetch(by type: Int) {
         resetFetchedResultsController()
         
-        fetchType = FetchType.LatLong.rawValue
+        fetchType = type
         initResultsController()
         setButtonState()
         
@@ -149,17 +141,10 @@ class ExplorePhotosViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.enableUi(true)
                     self.noPhotoLabel.isHidden = false
-                    self.showError("Could not fetch data \(error.localizedDescription)")
+                    UiUtils.showError("Could not fetch data \(error.localizedDescription)", controller: self)
                 }
             }
         }
-    }
-    
-    func showError(_ error: String) {
-        //show alertview with error message
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
     }
     
     func fetchRemoteData() {
@@ -179,13 +164,16 @@ class ExplorePhotosViewController: UIViewController {
     func fetchDataFromFlickr() {
         let latitude = pin.latitude
         let longitude = pin.longitude
-        let country = pin.country
+        var country = pin.countryCode
+        if let countryName = pin.country {
+            country = countryName //search primarily by whole country name, if not available by country code
+        }
         
         DispatchQueue.global().async {
             var queryItems = FlickrClient.sharedInstance.buildQueryItems()
             if self.fetchType == FetchType.Country.rawValue {
                 guard let country = country else {
-                    debugPrint("This location is not in a country. Can't fetch country photos.")
+                    UiUtils.showError("This location is not in a country. Can't fetch country photos.", controller: self)
                     
                     DispatchQueue.main.async {
                         self.noPhotoLabel.isHidden = false
@@ -201,9 +189,11 @@ class ExplorePhotosViewController: UIViewController {
             
             FlickrClient.sharedInstance.fetchPhotos(with: queryItems) { (error, isEmpty, photos) in
                 if let error = error {
-                    self.showError(error)
-                    self.noPhotoLabel.isHidden = false
-                    self.enableUi(true)
+                    DispatchQueue.main.async {
+                        UiUtils.showError(error, controller: self)
+                        self.noPhotoLabel.isHidden = false
+                        self.enableUi(true)
+                    }
                 } else {
                     DispatchQueue.main.async {
                         guard let photos = photos else {
@@ -226,9 +216,11 @@ class ExplorePhotosViewController: UIViewController {
     func loadPhotosOfPlace(placeID: String) {
         GMSPlacesClient.shared().lookUpPhotos(forPlaceID: placeID) { (photos, error) -> Void in
             if let error = error {
-                self.showError(error.localizedDescription)
+                UiUtils.showError(error.localizedDescription, controller: self)
                 self.noPhotoLabel.isHidden = false
                 self.enableUi(true)
+                
+                return
             } else {
                 if let photos = photos?.results, photos.count > 0 {
                     for photo in photos {
@@ -295,10 +287,10 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
                 
                 WebClient.sharedInstance.downloadImage(imagePath: imagePath) { (imageData, error) in
                     if let error = error {
-                        self.showError(error)
+                        UiUtils.showError(error, controller: self)
                     } else {
                         guard let imageData = imageData else {
-                            self.showError("Could not download image")
+                            UiUtils.showError("Could not download image", controller: self)
                             return
                         }
                         

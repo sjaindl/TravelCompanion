@@ -23,7 +23,6 @@ public class ExploreDetailViewController: UIViewController {
     @IBOutlet weak var urlTitle: UILabel!
     @IBOutlet weak var url: UILabel!
     @IBOutlet weak var latitudeLongitude: UILabel!
-    //    @IBOutlet weak var rating: UIProgressView!
     
     @IBOutlet weak var countryName: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -74,8 +73,6 @@ public class ExploreDetailViewController: UIViewController {
             url.isHidden = true
             urlTitle.isHidden = true
         }
-        
-//        rating.progress = pin.rating / 5 //max rating is 5 --> divide by 5 to get a value between 0.0 and 1.0
         
         countryName.text = pin.country
     }
@@ -189,17 +186,24 @@ public class ExploreDetailViewController: UIViewController {
                 setCountryData(country)
                 enableTabs(true)
             } else {
+                
+                guard let reachability = Network.reachability, reachability.isReachable else {
+                    UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+                    self.enableTabs(true)
+                    return
+                }
+                
                 fetchNewCountryData()
             }
 
         } catch {
-            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+            UiUtils.showError("Country data could not be retrieved: \(error.localizedDescription)", controller: self)
         }
     }
     
     func fetchNewCountryData() {
         guard let newCountry = pin.countryCode else {
-            debugPrint("This location is not in a country. Can't fetch country details.")
+            UiUtils.showToast(message: "This location is not in a country. Can't fetch country details.", view: self.view)
             self.enableTabs(true)
             return
         }
@@ -208,10 +212,10 @@ public class ExploreDetailViewController: UIViewController {
             DispatchQueue.main.async {
                 print(result.debugDescription)
                 if let error = error {
-                    self.showError(error)
+                    UiUtils.showError(error, controller: self)
                 } else {
                     guard let result = result else {
-                        self.showError("No country data available!")
+                        UiUtils.showError("No country data available.", controller: self)
                         self.enableTabs(true)
                         return
                     }
@@ -223,13 +227,6 @@ public class ExploreDetailViewController: UIViewController {
                 self.enableTabs(true)
             }
         }
-    }
-    
-    func showError(_ error: String) {
-        //show alertview with error message
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
     }
 }
 

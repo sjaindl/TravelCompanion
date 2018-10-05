@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         checkIfFirstLaunch()
         initDataController()
         FirestoreRemoteConfig.sharedInstance.activateFetched()
+        startNetworkReachabilityListener()
         
         return true
     }
@@ -42,6 +43,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = window?.rootViewController as! UINavigationController
         let mainMenuViewController = navigationController.topViewController as! MainMenuViewController
         mainMenuViewController.dataController = dataController
+    }
+    
+    func startNetworkReachabilityListener() {
+        do {
+            Network.reachability = try Reachability(hostname: "www.google.com")
+            do {
+                try Network.reachability?.start()
+            } catch let error as Network.Error {
+                debugPrint(error)
+            } catch {
+                debugPrint(error)
+            }
+        } catch {
+            debugPrint(error)
+        }
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {

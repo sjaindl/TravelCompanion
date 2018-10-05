@@ -79,20 +79,23 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         let marker = addPinToMap(with: coordinate)
         selectedPlace = SelectedPlace(marker: marker, coordinate: coordinate)
         
-        searchView?.removeFromSuperview()
+        guard let reachability = Network.reachability, reachability.isReachable else {
+            UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+            return
+        }
         
-        let placesSearchController = initPlacesSearchViewController()
-        searchView = placesSearchController.searchBar
-//        searchView?.translatesAutoresizingMaskIntoConstraints = false
+        search()
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let reachability = Network.reachability, reachability.isReachable else {
+            UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+            return false
+        }
         
-        self.view.addSubview(placesSearchController.searchBar)
-
-//        searchView?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
-//        searchView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
-//        searchView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -32).isActive = true
-//        searchView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        search()
         
-        present(placesSearchController, animated: true, completion: nil)
+        return true
     }
     
     func addPinToMap(with coordinate: CLLocationCoordinate2D) -> GMSMarker {
@@ -101,5 +104,22 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         marker.map = map
         
         return marker
+    }
+    
+    func search() {
+        searchView?.removeFromSuperview()
+        
+        let placesSearchController = initPlacesSearchViewController()
+        searchView = placesSearchController.searchBar
+        //        searchView?.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(placesSearchController.searchBar)
+        
+        //        searchView?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        //        searchView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
+        //        searchView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -32).isActive = true
+        //        searchView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        
+        present(placesSearchController, animated: true, completion: nil)
     }
 }

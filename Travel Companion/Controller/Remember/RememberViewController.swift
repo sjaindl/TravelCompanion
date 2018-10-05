@@ -42,7 +42,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     func fetchPlans() {
         firestorePlanDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                print("Error getting documents: \(error)")
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 
                 self.pastTrips.removeAll()

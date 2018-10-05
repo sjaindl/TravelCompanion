@@ -51,16 +51,21 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     func searchForTransport() {
         Rome2RioClient.sharedInstance.search(origin: origin.text!, destination: destination.text!, with: transportDelegate) { (error, searchResponse) in
             if let error = error {
-                UiUtils.showToast(message: error, view: self.view)
+                DispatchQueue.main.async {
+                    UiUtils.showError(error, controller: self)
+                }
                 return
             }
             
             guard let searchResponse = searchResponse else {
-                UiUtils.showToast(message: "No transport data available", view: self.view)
+                DispatchQueue.main.async {
+                    UiUtils.showError("No transport data available", controller: self)
+                }
                 return
             }
             
-            print(searchResponse)
+            debugPrint(searchResponse)
+            
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL, sender: searchResponse)
             }

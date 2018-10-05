@@ -34,7 +34,7 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         
         guard let name = pin.name else {
-            UiUtils.showToast(message: "No Wiki page found", view: self.view)
+            UiUtils.showError("No Wiki page found", controller: self)
             return
         }
         
@@ -42,7 +42,7 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
         
         WikiClient.sharedInstance.fetchWikiLink(country: name, domain: domain) { (error, wikiLink) in
             if let error = error {
-                debugPrint(error.debugDescription)
+                UiUtils.showError(error, controller: self)
             } else {
                 let url = URL(string: wikiLink!)
                 let request = URLRequest(url:url!)
