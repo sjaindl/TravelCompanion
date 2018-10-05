@@ -97,12 +97,12 @@ class ExplorePhotosViewController: UIViewController {
         let max = width > height ? width : height
         
         let space:CGFloat = 3
-        let isPortraitMode = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
-        let dimension = isPortraitMode ? (min - (2 * space)) / 2 : (max - (2 * space)) / 3
-        
+        let dimension = isPortrait ? (min - (2 * space)) / 2 : (max - (2 * space)) / 3
         flowLayout.minimumInteritemSpacing = space
         flowLayout.minimumLineSpacing = space
         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+        
+        debugPrint("space: \(space), dimension: \(dimension), portraitmode: \(isPortrait)")
     }
     
     func initResultsController() {

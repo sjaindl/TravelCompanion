@@ -63,6 +63,7 @@
 		9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */; };
 		9ABA83BC2165DE0B00CDE128 /* FirestoreRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */; };
 		9ABA83BE21672A8500CDE128 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA83BD21672A8500CDE128 /* Reachability.swift */; };
+		9ABA83C021680B7400CDE128 /* ViewControllerOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */; };
 		9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
 		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
 		9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */; };
@@ -183,6 +184,7 @@
 		9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePhotosViewController.swift; sourceTree = "<group>"; };
 		9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRemoteConfig.swift; sourceTree = "<group>"; };
 		9ABA83BD21672A8500CDE128 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerOrientation.swift; sourceTree = "<group>"; };
 		9AC023CD215ACE010076A3C2 /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
 		9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViewGestureAction.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
 				9AE4C28D212F6DC50056CD0D /* UiUtils.swift */,
 				9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */,
+				9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -860,6 +863,7 @@
 				9A882255214F6E5C00C333D4 /* AddTransportDelegate.swift in Sources */,
 				9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */,
 				9A91D9DD213E4E5500249E83 /* Rome2RioConstants.swift in Sources */,
+				9ABA83C021680B7400CDE128 /* ViewControllerOrientation.swift in Sources */,
 				9A882233214087A400C333D4 /* SearchTextField.swift in Sources */,
 				9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
