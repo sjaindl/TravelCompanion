@@ -8,7 +8,7 @@
 
 import CoreData
 import Firebase
-import FirebaseAuthUI
+import FirebaseUI
 import GoogleMaps
 import GooglePlaces
 import UIKit

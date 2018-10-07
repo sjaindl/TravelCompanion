@@ -74,6 +74,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             let depPlace = searchResponse.places[route.depPlace]
             let arrPlace = searchResponse.places[route.arrPlace]
             
+            cell.imageView?.image  = nil
             cell.textLabel?.text = "\(route.name): \(depPlace.shortName) - \(arrPlace.shortName)"
             
             var detailText = "\(segment.distance) km"
@@ -94,6 +95,8 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 return UITableViewCell()
             }
 
+            cell.imageView?.image  = nil
+            
             let stop = cellData[indexPath.section].surfaceStops[indexPath.row - 1]
             
             var duration = 0

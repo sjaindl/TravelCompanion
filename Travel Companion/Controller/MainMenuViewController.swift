@@ -7,9 +7,7 @@
 
 import UIKit
 import Firebase
-import FirebaseAuthUI
-import FirebaseFacebookAuthUI
-import FirebaseGoogleAuthUI
+import FirebaseUI
 import GooglePlaces
 import GooglePlacePicker
 
@@ -18,6 +16,7 @@ class MainMenuViewController: UIViewController {
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var user: User?
     var displayName = "Anonymous"
+    var isSignedIn = false
     
     @IBOutlet weak var exploreImage: UIImageView!
     @IBOutlet weak var planImage: UIImageView!
@@ -74,11 +73,6 @@ class MainMenuViewController: UIViewController {
     deinit {
         Auth.auth().removeStateDidChangeListener(_authHandle)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func signOut(_ sender: Any) {
         user = nil
@@ -103,16 +97,13 @@ class MainMenuViewController: UIViewController {
         
         // listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in
-            // refresh table data
-//            self.messages.removeAll(keepingCapacity: false)
-//            self.messagesTable.reloadData()
             
             // check if there is a current user
             if let activeUser = user {
                 // check if the current app user is the current FIRUser
                 if self.user != activeUser {
                     self.user = activeUser
-//                    self.signedInStatus(isSignedIn: true)
+                    self.signedInStatus(isSignedIn: true)
                     let name = user!.email!.components(separatedBy: "@")[0]
                     self.displayName = name
                     
@@ -128,15 +119,25 @@ class MainMenuViewController: UIViewController {
                 }
             } else {
                 // user must sign in
-//                self.signedInStatus(isSignedIn: false)
+                self.signedInStatus(isSignedIn: false)
                 self.loginSession()
             }
         }
+    }
+    
+    func signedInStatus(isSignedIn: Bool) {
+        self.isSignedIn = isSignedIn
     }
 
     func loginSession() {
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
         present(authViewController, animated: true, completion: nil)
     }
-    
+}
+
+extension FUIAuthBaseViewController{
+    open override func viewWillAppear(_ animated: Bool) {
+        //user must sign in, so there must be no cancel button
+        self.navigationItem.leftBarButtonItem = nil
+    }
 }

@@ -53,8 +53,9 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, searchResponse: SearchResponse) -> UITableViewCell {
+        
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID) else {
                 return UITableViewCell()
             }
             
@@ -66,6 +67,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             let arrPlace = searchResponse.places[route.arrPlace]
             
             cell.textLabel?.text = "\(route.name): \(depPlace.shortName) - \(arrPlace.shortName)"
+            cell.imageView?.image  = nil
             
             var duration = 0
             if let hops = leg.hops {
@@ -93,9 +95,11 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID) else {
                 return UITableViewCell()
             }
+            
+            cell.imageView?.image  = nil
             
             let hop = cellData[indexPath.section].airHop[indexPath.row - 1]
             
