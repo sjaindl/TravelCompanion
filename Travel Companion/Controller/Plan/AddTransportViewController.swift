@@ -30,8 +30,9 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
         destination.delegate = self
         
         date.datePickerMode = .date
+        UiUtils.layoutDatePicker(date)
     }
-
+    
     @IBAction func search(_ sender: Any) {
         searchForTransport()
     }

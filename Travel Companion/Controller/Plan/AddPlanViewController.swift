@@ -39,6 +39,9 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         setButtonEnabledState()
         
         firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+        
+        UiUtils.layoutDatePicker(startDate)
+        UiUtils.layoutDatePicker(endDate)
     }
     
     func setButtonEnabledState() {
@@ -90,11 +93,6 @@ extension AddPlanViewController {
         return pins.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        view.endEditing(true)
-        return pins[row].name
-    }
-    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         destinationText.text = self.pins[row].name
         selectedOriginalPinName = self.pins[row].name
@@ -111,9 +109,19 @@ extension AddPlanViewController {
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        //TODO: check whether pin with name exists -> if so, grey out add button + toast
-        setButtonEnabledState()
-        UiUtils.showToast(message: "Please enter a destination name", view: self.view)
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        //TODO: check whether pin with name exists -> if so, grey out add button + toast
+//        setButtonEnabledState()
+//        UiUtils.showToast(message: "Please enter a destination name", view: self.view)
+//    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        view.endEditing(true)
+        
+        let titleData = pins[row].name ?? ""
+        
+        let title = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.foregroundColor: UIColor.cyan])
+        
+        return title
     }
 }

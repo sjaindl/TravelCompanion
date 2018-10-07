@@ -53,7 +53,7 @@ class ExplorePhotosViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setupFlowLayout()
+        UiUtils.setupFlowLayout(for: self, view: view, flowLayout: flowLayout)
     }
     
     @IBAction func fetchByCountry(_ sender: Any) {
@@ -88,21 +88,6 @@ class ExplorePhotosViewController: UIViewController {
         NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
         dataSource.fetchedResultsController = nil
         collectionView.reloadData()
-    }
-    
-    func setupFlowLayout() {
-        let width = view.frame.size.width
-        let height = view.frame.size.height
-        let min = width > height ? height : width
-        let max = width > height ? width : height
-        
-        let space:CGFloat = 3
-        let dimension = isPortrait ? (min - (2 * space)) / 2 : (max - (2 * space)) / 3
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
-        
-        debugPrint("space: \(space), dimension: \(dimension), portraitmode: \(isPortrait)")
     }
     
     func initResultsController() {

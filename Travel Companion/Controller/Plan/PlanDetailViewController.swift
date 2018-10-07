@@ -12,9 +12,7 @@ import UIKit
 
 class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var tripName: UILabel!
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var date: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
@@ -69,10 +67,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = plan.name
-        
-        tripName.text = plan.name
-        date.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
+        navigationItem.title = "\(plan.name), \(UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -110,19 +105,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         loadImageIfAvailable()
         tableView.reloadData()
     }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        checkDeviceSize()
-    }
-    
-    func checkDeviceSize() {
-        if UIDevice.current.orientation.isLandscape {
-            setImageSize(100)
-        } else {
-            setImageSize(200)
-        }
-    }
-    
+
     func setImageSize(_ size: CGFloat) {
         imageWidthConstraint.constant = size
         imageHeightConstraint.constant = size
@@ -132,12 +115,10 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if let data = plan.imageData { //Has an image been chosen?
             image.image = UIImage(data: data)
             persistPhoto(photoData: data)
-            checkDeviceSize()
         } else if !plan.imageRef.isEmpty { //Is an image available in storage?
             
             if let cachedImage = imageCache.object(forKey: plan.imageRef as NSString) {
                 self.image.image = cachedImage
-                self.checkDeviceSize()
             } else {
             
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
@@ -154,7 +135,6 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     
                     self.imageCache.setObject(image, forKey: self.plan.imageRef as NSString)
                     self.image.image = image
-                    self.checkDeviceSize()
                 }
             }
         }
@@ -314,7 +294,6 @@ extension PlanDetailViewController {
         cell.textLabel?.text = plannable.description()
         cell.detailTextLabel?.attributedText = plannable.details()
         cell.detailTextLabel?.isUserInteractionEnabled = true
-        
         cell.detailTextLabel?.addTapGestureRecognizer {
             if let link = plannable.getLink(), let url = URL(string: link) {
                 UIApplication.shared.open(url, options: self.convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
@@ -429,6 +408,12 @@ extension PlanDetailViewController {
         } else {
             return PlanConstants.TripDetails.TripTitles.ATTRACTIONS.rawValue
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = CustomColors.appTextColorDefault()
+        header.textLabel?.font = header.textLabel?.font.withSize(20)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

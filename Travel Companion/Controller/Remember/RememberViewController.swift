@@ -128,4 +128,9 @@ extension RememberViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.SEGUES.REMEMBER_DETAIL_SEGUE_ID, sender: indexPath)
     }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.darkGray
+    }
+    
 }

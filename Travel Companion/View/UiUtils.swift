@@ -99,4 +99,29 @@ class UiUtils {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         controller.present(alert, animated: true)
     }
+    
+    static func layoutDatePicker(_ picker: UIView) {
+        picker.setValue(false, forKey: "highlightsToday");
+        layoutView(picker)
+    }
+    
+    static func layoutView(_ view: UIView) {
+        view.setValue(UIColor.cyan, forKey: "textColor");
+    }
+    
+    static func setupFlowLayout(for controller: UIViewController, view: UIView, flowLayout: UICollectionViewFlowLayout) {
+        let width = view.frame.size.width
+        let height = view.frame.size.height
+        let min = width > height ? height : width
+        let max = width > height ? width : height
+        
+        let space:CGFloat = 3
+        let dimension = controller.isPortrait ? (min - (2 * space)) / 2 : (max - (2 * space)) / 3
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        
+        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+        
+        debugPrint("space: \(space), dimension: \(dimension), portraitmode: \(controller.isPortrait)")
+    }
 }

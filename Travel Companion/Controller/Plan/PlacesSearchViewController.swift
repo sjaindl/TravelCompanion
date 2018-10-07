@@ -102,6 +102,8 @@ class GooglePlacesAutocompleteContainer: UITableViewController {
         self.coordinate = coordinate
         self.radius = radius
         self.strictBounds = strictBounds
+        
+        tableView.backgroundColor = UIColor.darkGray
     }
 }
 
@@ -130,6 +132,12 @@ extension GooglePlacesAutocompleteContainer {
         cell.accessoryType = .disclosureIndicator
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.darkGray
+        cell.textLabel?.textColor = CustomColors.appTextColorDefault()
+        cell.detailTextLabel?.textColor = CustomColors.appTextColorDefault()
     }
     
     override open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

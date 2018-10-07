@@ -190,7 +190,9 @@ extension PlanViewController {
         let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Show", comment: "Show"), style: .default, handler: { _ in
-            self.performSegue(withIdentifier: Constants.SEGUES.PLAN_DETAIL_SEGUE_ID, sender: indexPath)
+            DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes about 10 seconds)
+                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_DETAIL_SEGUE_ID, sender: indexPath)
+            }
             
             self.dismiss(animated: true, completion: nil)
         }))

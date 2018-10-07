@@ -46,22 +46,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setupFlowLayout()
-    }
-    
-    func setupFlowLayout() {
-        let width = view.frame.size.width
-        let height = view.frame.size.height
-        let min = width > height ? height : width
-        let max = width > height ? width : height
-        
-        let space:CGFloat = 3
-        let isPortraitMode = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
-        let dimension = isPortraitMode ? (min - (2 * space)) / 2 : (max - (2 * space)) / 3
-        
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+        UiUtils.setupFlowLayout(for: self, view: view, flowLayout: flowLayout)
     }
     
     func configureStorage() {
