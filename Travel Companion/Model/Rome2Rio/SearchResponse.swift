@@ -118,9 +118,8 @@ struct IndicativePrice: Codable {
     var nativePriceLow: Float?
     var nativePriceHigh: Float?
     var nativeCurrency: String?
-    
 /*
-     Example:
+IndicativePrice example response:
  "name": "Shared",
  "price": 29,
  "priceLow": 28,
@@ -162,7 +161,7 @@ struct AirLeg: Codable {
 }
 
 /*
- DayFlags
+ operatingDays - DayFlags:
  Value    Description
  0x01    Sunday
  0x02    Monday

@@ -52,13 +52,13 @@ class Plan {
     }
     
     func deleteSubDocuments(completion: @escaping (_ error: Error?) -> Void) {
-        let firestorePlanBaseDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(pinName)
+        let firestorePlanBaseDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans).document(pinName)
         
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.FLIGTHS), plannables: fligths, completion: completion)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT), plannables: publicTransport, completion: completion)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.HOTELS), plannables: hotels, completion: completion)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.RESTAURANTS), plannables: restaurants, completion: completion)
-        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.ATTRACTIONS), plannables: attractions, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.fligths), plannables: fligths, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.publicTransport), plannables: publicTransport, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.hotels), plannables: hotels, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.restaurants), plannables: restaurants, completion: completion)
+        deleteSubDocument(firestoreCollectionReference: firestorePlanBaseDbReference.collection(FirestoreConstants.Collections.attractions), plannables: attractions, completion: completion)
         
         deletePhotos(completion: completion)
     }
@@ -70,8 +70,8 @@ class Plan {
             } else {
                 for document in querySnapshot!.documents {
                     
-                    //delete remember photo in firebase storage
-                    if let photo = document.data()[FirestoreConstants.Ids.Plan.PATH] as? String {
+                    //Delete remember photo in firebase storage
+                    if let photo = document.data()[FirestoreConstants.Ids.Plan.path] as? String {
                         let storageImageRef = Storage.storage().reference(forURL: photo)
                         
                         storageImageRef.delete(completion: { (error) in
@@ -109,29 +109,29 @@ class Plan {
     }
     
     func configureDatabase() {
-        let planReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(name)
+        let planReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans).document(name)
         
-        firestoreFligthDbReference = planReference.collection(FirestoreConstants.Collections.FLIGTHS)
-        firestorePublicTransportDbReference = planReference.collection(FirestoreConstants.Collections.PUBLIC_TRANSPORT)
-        firestoreHotelDbReference = planReference.collection(FirestoreConstants.Collections.HOTELS)
-        firestoreRestaurantDbReference = planReference.collection(FirestoreConstants.Collections.RESTAURANTS)
-        firestoreAttractionDbReference = planReference.collection(FirestoreConstants.Collections.ATTRACTIONS)
+        firestoreFligthDbReference = planReference.collection(FirestoreConstants.Collections.fligths)
+        firestorePublicTransportDbReference = planReference.collection(FirestoreConstants.Collections.publicTransport)
+        firestoreHotelDbReference = planReference.collection(FirestoreConstants.Collections.hotels)
+        firestoreRestaurantDbReference = planReference.collection(FirestoreConstants.Collections.restaurants)
+        firestoreAttractionDbReference = planReference.collection(FirestoreConstants.Collections.attractions)
         
-        firestoreRememberPhotosDbReference = planReference.collection(FirestoreConstants.Collections.PHOTOS)
+        firestoreRememberPhotosDbReference = planReference.collection(FirestoreConstants.Collections.photos)
     }
     
     func loadPlannables(completion: @escaping (_ error: Error?) -> Void) {
         reset()
         
-        loadPlannables(\Plan.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.PLANNABLES.FLIGHT, completion: completion)
+        loadPlannables(\Plan.fligths, collectionReference: firestoreFligthDbReference, plannableType: Constants.Plannables.flight, completion: completion)
         
-        loadPlannables(\Plan.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.PLANNABLES.PUBLIC_TRANSPORT, completion: completion)
+        loadPlannables(\Plan.publicTransport, collectionReference: firestorePublicTransportDbReference, plannableType: Constants.Plannables.publicTransport, completion: completion)
         
-        loadPlannables(\Plan.hotels, collectionReference: firestoreHotelDbReference, plannableType: Constants.PLANNABLES.HOTEL, completion: completion)
+        loadPlannables(\Plan.hotels, collectionReference: firestoreHotelDbReference, plannableType: Constants.Plannables.hotel, completion: completion)
         
-        loadPlannables(\Plan.restaurants, collectionReference: firestoreRestaurantDbReference, plannableType: Constants.PLANNABLES.RESTAURANT, completion: completion)
+        loadPlannables(\Plan.restaurants, collectionReference: firestoreRestaurantDbReference, plannableType: Constants.Plannables.restaurant, completion: completion)
         
-        loadPlannables(\Plan.attractions, collectionReference: firestoreAttractionDbReference, plannableType: Constants.PLANNABLES.ATTRACTION, completion: completion)
+        loadPlannables(\Plan.attractions, collectionReference: firestoreAttractionDbReference, plannableType: Constants.Plannables.attraction, completion: completion)
     }
     
     func reset() {
@@ -161,7 +161,7 @@ class Plan {
                 for document in querySnapshot!.documents {
                     debugPrint("\(document.documentID) => \(document.data())")
                     
-                    let plannable = try? PlannableFactory.createPlannable(of: plannableType, data: document.data())
+                    let plannable = try? PlannableFactory.makePlannable(of: plannableType, data: document.data())
                     
                     if let plannable = plannable {
                         DispatchQueue.main.async {

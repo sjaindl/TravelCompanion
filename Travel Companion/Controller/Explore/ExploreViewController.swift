@@ -26,11 +26,10 @@ class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         self.navigationItem.title = "Explore"
         
         map.delegate = self
-        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLACES)
+        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.places)
         
         initCamera()
         initResultsController()
@@ -43,9 +42,9 @@ class ExploreViewController: UIViewController {
     
     func initResultsController() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.SORT_KEY, ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: Constants.CoreData.CACHE_NAME_PINS)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: Constants.CoreData.cacheNamePins)
     }
     
     func fetchData() {
@@ -60,23 +59,22 @@ class ExploreViewController: UIViewController {
             } else {
                 fetchFromFirestore()
             }
-            
         } catch {
-            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+            UiUtils.showError("Data fetch could not be performed: \(error.localizedDescription)", controller: self)
         }
     }
     
     func fetchFromFirestore() {
         firestoreDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                debugPrint("Error getting documents: \(error)")
+                UiUtils.showError("Error getting documents: \(error)", controller: self)
             } else {
                 for document in querySnapshot!.documents {
                     debugPrint("\(document.documentID) => \(document.data())")
                     
-                    let placeId = document.data()[FirestoreConstants.Ids.Place.PLACE_ID] as? String
-                    let latitude = document.data()[FirestoreConstants.Ids.Place.LATITUDE] as? Double
-                    let longitude = document.data()[FirestoreConstants.Ids.Place.LONGITUDE] as? Double
+                    let placeId = document.data()[FirestoreConstants.Ids.Place.placeId] as? String
+                    let latitude = document.data()[FirestoreConstants.Ids.Place.latitude] as? Double
+                    let longitude = document.data()[FirestoreConstants.Ids.Place.longitude] as? Double
                     
                     if let placeId = placeId, let latitude = latitude, let longitude = longitude {
                         let pin = CoreDataClient.sharedInstance.storePin(self.dataController, placeId: placeId, latitude: latitude, longitude: longitude)
@@ -92,7 +90,7 @@ class ExploreViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID || segue.identifier == Constants.SEGUES.EXPLORE_PHOTOS_SEGUE_ID || segue.identifier == Constants.SEGUES.EXPLORE_WIKI_SEGUE_ID {
+        if segue.identifier == Constants.Segues.exploreDetail || segue.identifier == Constants.Segues.explorePhotos || segue.identifier == Constants.Segues.exploreWiki {
             let controller = segue.destination as! UITabBarController
             let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
             let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
@@ -103,16 +101,16 @@ class ExploreViewController: UIViewController {
             photosTargetController.pin = sender as? Pin
             photosTargetController.dataController = dataController
             wikitargetController.pin = sender as? Pin
-            wikitargetController.domain = WikiConstants.UrlComponents.DOMAIN_WIKIPEDIA
+            wikitargetController.domain = WikiConstants.UrlComponents.domainWikipedia
             wikivoyagetargetController.pin = sender as? Pin
-            wikivoyagetargetController.domain = WikiConstants.UrlComponents.DOMAIN_WIKIVOYAGE
+            wikivoyagetargetController.domain = WikiConstants.UrlComponents.domainWikiVoyage
         }
     }
     
     func initCamera() {
-        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
-        let latitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LATITUDE)
-        let longitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LONGITUDE)
+        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
+        let latitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.mapLatitude)
+        let longitude = UserDefaults.standard.double(forKey: Constants.UserDefaults.mapLongitude)
         
         setCamera(with: latitude, longitude: longitude, zoom: zoom)
     }
@@ -137,10 +135,10 @@ class ExploreViewController: UIViewController {
         let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, countryCode: countryCode)
         
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
-            FirestoreConstants.Ids.Place.PLACE_ID: place.placeID,
-            FirestoreConstants.Ids.Place.NAME: place.name,
-            FirestoreConstants.Ids.Place.LATITUDE: place.coordinate.latitude,
-            FirestoreConstants.Ids.Place.LONGITUDE: place.coordinate.longitude
+            FirestoreConstants.Ids.Place.placeId: place.placeID,
+            FirestoreConstants.Ids.Place.name: place.name,
+            FirestoreConstants.Ids.Place.latitude: place.coordinate.latitude,
+            FirestoreConstants.Ids.Place.longitude: place.coordinate.longitude
         ]) { (error) in
             if let error = error {
                 debugPrint("Error adding document: \(error)")
@@ -179,9 +177,9 @@ class ExploreViewController: UIViewController {
 extension ExploreViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LATITUDE)
-        UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LONGITUDE)
-        UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
+        UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.mapLatitude)
+        UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.mapLongitude)
+        UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.zoomLevel)
         
         mapCenter = position.target
     }
@@ -191,7 +189,7 @@ extension ExploreViewController: GMSMapViewDelegate {
         let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Show details", comment: "Show details"), style: .default, handler: { _ in
-            self.performSegue(withIdentifier: Constants.SEGUES.EXPLORE_DETAIL_SEGUE_ID, sender: marker.userData)
+            self.performSegue(withIdentifier: Constants.Segues.exploreDetail, sender: marker.userData)
             
             self.dismiss(animated: true, completion: nil)
         }))
@@ -200,7 +198,7 @@ extension ExploreViewController: GMSMapViewDelegate {
             if let pin = marker.userData as? Pin, let pinName = pin.name {
                 
                 //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
-                let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+                let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
                 
                 let documentReference = firestorePlanDbReference.document(pinName)
                 
@@ -210,10 +208,10 @@ extension ExploreViewController: GMSMapViewDelegate {
                     } else {
                         //delete from Firestore
                         if let placeId = pin.placeId {
-                            self.firestoreDbReference.document(placeId).delete() { err in
-                                if let err = err {
-                                    debugPrint("Error removing document: \(err)")
-                                    UiUtils.showError(err.localizedDescription, controller: self)
+                            self.firestoreDbReference.document(placeId).delete() { error in
+                                if let error = error {
+                                    debugPrint("Error removing document: \(error)")
+                                    UiUtils.showError(error.localizedDescription, controller: self)
                                 } else {
                                     debugPrint("Document successfully removed!")
                                 }
@@ -249,7 +247,7 @@ extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
         let marker = addPinToMap(with: place.coordinate)
         
         //center map at newly added pin
-        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
+        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
         setCamera(with: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: zoom)
         
         GeoNamesClient.sharedInstance.fetchCountryCode(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude) { (error, code) in

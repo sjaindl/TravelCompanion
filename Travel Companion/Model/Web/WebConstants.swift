@@ -11,19 +11,19 @@ import Foundation
 struct WebConstants {
     
     struct ParameterKeys {
-        static let ACCEPT_TYPE = "Accept"
-        static let CONTENT_TYPE = "Content-Type"
-        static let HTTP_POST = "POST"
-        static let HTTP_PUT = "PUT"
-        static let HTTP_GET = "GET"
-        static let HTTP_DELETE = "DELETE"
+        static let acceptType = "Accept"
+        static let contentType = "Content-Type"
+        static let httpPost = "POST"
+        static let httpPut = "PUT"
+        static let httpGet = "GET"
+        static let httpDelete = "DELETE"
         
-        static let STATUS = "status"
-        static let ERROR = "error"
+        static let status = "status"
+        static let error = "error"
     }
     
     struct ParameterValues {
-        static let TYPE_JSON = "application/json"
-        static let CONTENT_TYPE = "Content-Type"
+        static let typeJson = "application/json"
+        static let contentType = "Content-Type"
     }
 }

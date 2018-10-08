@@ -27,7 +27,7 @@ class ExplorePhotosViewController: UIViewController {
     var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>!
     var fetchType: Int = FetchType.Country.rawValue
     
-    var choosePhoto: Bool = false //TODO: enum refactor
+    var choosePhoto: Bool = false
     var plan: Plan!
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,7 +47,7 @@ class ExplorePhotosViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         self.tabBarController?.navigationItem.title = pin.name
     }
     
@@ -85,7 +85,7 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func resetFetchedResultsController() {
-        NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
+        NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)")
         dataSource.fetchedResultsController = nil
         collectionView.reloadData()
     }
@@ -93,14 +93,14 @@ class ExplorePhotosViewController: UIViewController {
     func initResultsController() {
         let fetchRequest: NSFetchRequest<Photos> = Photos.fetchRequest()
         
-        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.SORT_KEY, ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         let predicate = NSPredicate(format: "pin = %@ AND type = %d", pin, fetchType)
         
         fetchRequest.predicate = predicate
         
-        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.REUSE_IDS.ALBUM_CELL_REUSE_ID, cacheName: "\(Constants.CoreData.CACHE_NAME_PHOTOS)-\(pin.objectID)")
+        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.ReuseIds.albumCell, cacheName: "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)")
     }
     
     func fetchData() {
@@ -167,9 +167,9 @@ class ExplorePhotosViewController: UIViewController {
                     return
                 }
                 
-                queryItems[FlickrConstants.FlickrParameterKeys.Text] = country
+                queryItems[FlickrConstants.ParameterKeys.text] = country
             } else if self.fetchType == FetchType.LatLong.rawValue {
-                queryItems[FlickrConstants.FlickrParameterKeys.BoundingBox] = FlickrClient.sharedInstance.bboxString(latitude: latitude, longitude: longitude)
+                queryItems[FlickrConstants.ParameterKeys.boundingBox] = FlickrClient.sharedInstance.bboxString(latitude: latitude, longitude: longitude)
             }
             
             FlickrClient.sharedInstance.fetchPhotos(with: queryItems) { (error, isEmpty, photos) in
@@ -209,7 +209,11 @@ class ExplorePhotosViewController: UIViewController {
             } else {
                 if let photos = photos?.results, photos.count > 0 {
                     for photo in photos {
-                        CoreDataClient.sharedInstance.storePhoto(self.dataController, placePhoto: photo, pin: self.pin, fetchType: self.fetchType)
+                        CoreDataClient.sharedInstance.storePhoto(self.dataController, placePhoto: photo, pin: self.pin, fetchType: self.fetchType) { (error) in
+                            if let error = error {
+                                UiUtils.showError(error, controller: self)
+                            }
+                        }
                     }
                 } else {
                     self.noPhotoLabel.isHidden = false
@@ -221,7 +225,7 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func initMap() {
-        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
+        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
         
         if let pin = pin {
             let camera = GMSCameraPosition.camera(withLatitude: pin.latitude,
@@ -260,9 +264,9 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.REUSE_IDS.ALBUM_CELL_REUSE_ID, for: indexPath) as! AlbumCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.ReuseIds.albumCell, for: indexPath) as! AlbumCollectionViewCell
         
-        cell.locationImage.image = UIImage(named: Constants.CoreData.PLACEHOLDER_IMAGE)
+        cell.locationImage.image = UIImage(named: Constants.CoreData.placeholderImage)
         
         if let imageData = dataSource.object(at: indexPath).imageData {
             cell.locationImage.image = UIImage(data: imageData)
@@ -303,12 +307,12 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
             plan.imageData = photo.imageData
             self.navigationController?.popViewController(animated: true)
         } else {
-            performSegue(withIdentifier: Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID, sender: photo)
+            performSegue(withIdentifier: Constants.Segues.photoDetail, sender: photo)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID {
+        if segue.identifier == Constants.Segues.photoDetail {
             let destinationViewController = segue.destination as! PhotosDetailViewController
             let photo = sender as! Photos
             destinationViewController.data = photo.imageData

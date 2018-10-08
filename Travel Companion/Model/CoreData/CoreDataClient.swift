@@ -69,12 +69,11 @@ class CoreDataClient {
         return country
     }
     
-    func storePhoto(_ dataController: DataController, placePhoto: GMSPlacePhotoMetadata, pin: Pin, fetchType: Int) {
+    func storePhoto(_ dataController: DataController, placePhoto: GMSPlacePhotoMetadata, pin: Pin, fetchType: Int, completion: @escaping (_ error: String?) -> Void) {
         GMSPlacesClient.shared().loadPlacePhoto(placePhoto, callback: {
             (placePhoto, error) -> Void in
             if let error = error {
-                // TODO: handle the error.
-                print("Error: \(error.localizedDescription)")
+                completion(error.localizedDescription)
             } else {
                 let photo = Photos(context: dataController.viewContext)
                 
@@ -88,9 +87,9 @@ class CoreDataClient {
     }
     
     func storePhoto(_ dataController: DataController, photo: [String: AnyObject], pin: Pin, fetchType: Int) -> Photos? {
-        if let title = photo[FlickrConstants.FlickrResponseKeys.Title] as? String,
-            /* Does the photo have a key for 'url_l'? */
-            let imageUrlString = photo[FlickrConstants.FlickrResponseKeys.ImageSize] as? String {
+        if let title = photo[FlickrConstants.ResponseKeys.title] as? String,
+            /* Does the photo have a key for the specified image size? */
+            let imageUrlString = photo[FlickrConstants.ResponseKeys.imageSize] as? String {
             
             let photo = Photos(context: dataController.viewContext)
             
@@ -132,4 +131,3 @@ class CoreDataClient {
         return nil
     }
 }
-

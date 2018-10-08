@@ -38,7 +38,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL {
+        if segue.identifier == Constants.Segues.planAddTransportDetail {
             let controller = segue.destination as! AddTransportDetailViewController
             controller.searchResponse = sender as? SearchResponse
             controller.transportDelegate = transportDelegate
@@ -68,7 +68,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
             debugPrint(searchResponse)
             
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_TRANSPORT_DETAIL, sender: searchResponse)
+                self.performSegue(withIdentifier: Constants.Segues.planAddTransportDetail, sender: searchResponse)
             }
         }
     }

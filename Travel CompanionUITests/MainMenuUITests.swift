@@ -79,7 +79,6 @@ class MainMenuUITests: XCTestCase {
     }
     
     func testAuthenticationFlow() {
-        //TODO sign out?
         let signInWithGoogleButton = app.buttons["Sign in with Google"]
         XCTAssertTrue(signInWithGoogleButton.exists, "Authentication screen not initially shown")
         
@@ -92,6 +91,5 @@ class MainMenuUITests: XCTestCase {
         app.toolbars["Toolbar"].buttons["Sign out"].tap()
         
         XCTAssertTrue(signInWithGoogleButton.exists, "Sign out did not forward to authentication screen")
-    }
-    
+    }    
 }

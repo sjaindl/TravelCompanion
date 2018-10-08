@@ -10,77 +10,79 @@ import Foundation
 
 struct Constants {
     
-    struct PLANNABLES {
-        static let FLIGHT = "flight"
-        static let PUBLIC_TRANSPORT = "publicTransport"
-        static let HOTEL = "hotel"
-        static let RESTAURANT = "restaurant"
-        static let ATTRACTION = "attraction"
+    struct Plannables {
+        static let flight = "flight"
+        static let publicTransport = "publicTransport"
+        static let hotel = "hotel"
+        static let restaurant = "restaurant"
+        static let attraction = "attraction"
     }
     
-    struct REUSE_IDS {
-        static let PLAN_CELL_REUSE_ID = "planReuseCellId"
-        static let PLAN_DETAIL_CELL_REUSE_ID = "planDetailReuseCellId"
-        static let PLAN_DETAIL_WITH_IMAGE_CELL_REUSE_ID = "planDetailWithImageReuseCellId"
-        static let ALBUM_CELL_REUSE_ID = "photoCell"
-        static let TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID = "transportDetail"
-        static let TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID = "transportDetailSection"
+    struct ReuseIds {
+        static let planCell = "planReuseCellId"
+        static let planDetailCell = "planDetailReuseCellId"
+        static let planDetailWithImageCell = "planDetailWithImageReuseCellId"
+        static let albumCell = "photoCell"
+        static let transportDetailWithoutImageCell = "transportDetail"
+        static let transportDetailWithImageCell = "transportDetailSection"
     }
     
-    struct SEGUES {
-        static let EXPLORE_PHOTOS_SEGUE_ID = "explorePhotos"
-        static let EXPLORE_WIKI_SEGUE_ID = "wiki"
-        static let EXPLORE_SEGUE_ID = "explore"
-        static let EXPLORE_DETAIL_SEGUE_ID = "exploreDetail"
-        static let PLAN_SEGUE_ID = "plan"
-        static let REMEMBER_SEGUE_ID = "remember"
-        static let REMEMBER_DETAIL_SEGUE_ID = "rememberDetail"
-        static let PHOTO_DETAIL_SEGUE_ID = "photoDetail"
-        static let ADD_PLAN_SEGUE_ID = "addPlan"
-        static let PLAN_DETAIL_SEGUE_ID = "planDetail"
-        static let PLAN_CHOOSE_PHOTO_SEGUE_ID = "choosePlanPhoto"
-        static let PLAN_ADD_FLIGHT = "addFlight"
-        static let PLAN_ADD_PUBLIC_TRANSPORT = "addPublicTransport"
-        static let PLAN_ADD_TRANSPORT_DETAIL = "addTransportDetail"
-        static let PLAN_ADD_NOTES = "addNotes"
-        static let PLAN_ADD_PLACE = "addPlace"
+    struct Segues {
+        static let explore = "explore"
+        static let explorePhotos = "explorePhotos"
+        static let exploreWiki = "wiki"
+        static let exploreDetail = "exploreDetail"
+        
+        static let plan = "plan"
+        static let addPlan = "addPlan"
+        static let planDetail = "planDetail"
+        static let planChoosePhoto = "choosePlanPhoto"
+        static let planAddFlight = "addFlight"
+        static let planAddPublicTransport = "addPublicTransport"
+        static let planAddTransportDetail = "addTransportDetail"
+        static let planAddNotes = "addNotes"
+        static let planAddPlace = "addPlace"
+        
+        static let remember = "remember"
+        static let rememberDetail = "rememberDetail"
+        static let photoDetail = "photoDetail"
     }
     
     struct CoreData {
-        static let PLACEHOLDER_IMAGE = "placeholder"
-        static let SORT_KEY = "creationDate"
-        static let CACHE_NAME_PINS = "pin"
-        static let CACHE_NAME_PHOTOS = "photos"
-        static let CACHE_NAME_COUNTRIES = "countries"
+        static let placeholderImage = "placeholder"
+        static let sortKey = "creationDate"
+        static let cacheNamePins = "pin"
+        static let cacheNamePhotos = "photos"
+        static let cacheNameCountries = "countries"
         
-        static let PHOTO_LIMIT = 40
+        static let photoLimit = 40
     }
     
     struct UserDefaults {
-        static let USER_DEFAULT_LAUNCHED_BEFORE = "hasLaunchedBefore"
-        static let USER_DEFAULT_MAP_LATITUDE = "mapLatitude"
-        static let USER_DEFAULT_MAP_LONGITUDE = "mapLongitude"
-        static let USER_DEFAULT_ZOOM_LEVEL = "zoomLevel"
+        static let launchedBefore = "hasLaunchedBefore"
+        static let mapLatitude = "mapLatitude"
+        static let mapLongitude = "mapLongitude"
+        static let zoomLevel = "zoomLevel"
         
-        static let STANDARD_ZOOM_LEVEL = 6.0
-        static let STANDARD_LATITUDE = 47.0
-        static let STANDARD_LONGITUDE = 15.5
+        static let zoomLevelStandard = 6.0
+        static let mapLatitudeStandard = 47.0
+        static let mapLongitudeStandard = 15.5
     }
     
-    static let ZOOM_LEVEL_DETAIL = 10.0
+    static let zoomLevelDetail = 10.0
     
     struct RemoteConfig {
         struct Keys {
-            static let PHOTO_RESIZING_HEIGHT = "firestorePhotoResizingHeight"
-            static let PHOTO_RESIZING_WIDTH = "firestorePhotoResizingWidth"
-            static let TRANSPORT_SEARCH_AUTOCOMPLETE = "transportSearchAutocomplete"
-            static let PHOTOS_TO_DOWNLOAD = "numberOfPhotosToDownload"
+            static let photoResizingHeight = "firestorePhotoResizingHeight"
+            static let photoResizingWidth = "firestorePhotoResizingWidth"
+            static let transportSearchAutocomplete = "transportSearchAutocomplete"
+            static let numberOfPhotosToDownload = "numberOfPhotosToDownload"
         }
         
         struct LocalDefaultValues {
-            static let PHOTO_RESIZING_HEIGHT = 800
-            static let PHOTO_RESIZING_WIDTH = 800
-            static let TRANSPORT_SEARCH_AUTOCOMPLETE = true
+            static let photoResizingHeight = 800
+            static let photoResizingWidth = 800
+            static let transportSearchAutocomplete = true
         }
         
     }

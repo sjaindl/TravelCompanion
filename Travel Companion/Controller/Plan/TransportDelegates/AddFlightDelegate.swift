@@ -55,7 +55,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, searchResponse: SearchResponse) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.transportDetailWithoutImageCell) else {
                 return UITableViewCell()
             }
             
@@ -95,7 +95,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID) else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.transportDetailWithImageCell) else {
                 return UITableViewCell()
             }
             
@@ -105,7 +105,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             
             let airline = searchResponse.airlines[hop.airline]
             
-            if let airlineUrl = airline.icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(airlineUrl)") {
+            if let airlineUrl = airline.icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(airlineUrl)") {
                 try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
             }
             
@@ -208,7 +208,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: flight.id, data: docData) { (error) in
             if let error = error {
                 debugPrint("Error adding document: \(error)")
-//                UiUtils.showToast(message: error.localizedDescription, view: )
+                UiUtils.showToast(message: error.localizedDescription, view: controller.view)
             } else {
                 debugPrint("Document added")
                 plan.fligths.append(flight)
@@ -223,9 +223,9 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
     
     func buildSearchQueryItems(origin: String, destination: String) -> [String: String] {
         return [
-            Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
-            Rome2RioConstants.ParameterKeys.OriginName: origin,
-            Rome2RioConstants.ParameterKeys.DestinationName: destination,
+            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRome2Rio,
+            Rome2RioConstants.ParameterKeys.originName: origin,
+            Rome2RioConstants.ParameterKeys.destinationName: destination,
             Rome2RioConstants.ParameterKeys.noRail: "true",
             Rome2RioConstants.ParameterKeys.noBus: "true",
             Rome2RioConstants.ParameterKeys.noFerry: "true",

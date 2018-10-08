@@ -16,9 +16,9 @@ class RestCountriesClient {
     
     func fetchCountryDetails(of country: String, completionHandler: @escaping (_ errorString: String?, _ isEmtpy: Bool, _ result: [String: AnyObject]?) -> Void) {
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: RestCountriesConstants.UrlComponents.PROTOCOL, forHost: RestCountriesConstants.UrlComponents.DOMAIN, forMethod: RestCountriesConstants.UrlComponents.PATH + country)
+        let url = WebClient.sharedInstance.createUrl(forScheme: RestCountriesConstants.UrlComponents.urlProtocol, forHost: RestCountriesConstants.UrlComponents.domain, forMethod: RestCountriesConstants.UrlComponents.path + country)
         
-        let request = buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchCountryData") { (results, error) in
             
@@ -26,8 +26,6 @@ class RestCountriesClient {
             if let error = error {
                 completionHandler(error.localizedDescription, true, nil)
             } else {
-                /* GUARD: Is "photos" key in our result? */
-                
                 if let result = results as? [String:AnyObject] {
                     completionHandler(nil, false, result)
                 } else {
@@ -35,9 +33,5 @@ class RestCountriesClient {
                 }
             }
         }
-    }
-    
-    private func buildRequest(withUrl url: URL, withHttpMethod httpMethod: String) -> URLRequest {
-        return WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: httpMethod)
     }
 }

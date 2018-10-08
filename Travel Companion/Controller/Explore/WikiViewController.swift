@@ -10,8 +10,6 @@ import WebKit
 import UIKit
 
 class WikiViewController: UIViewController, WKNavigationDelegate {
-
-    //@IBOutlet weak var webView: WKWebView!
     
     @IBOutlet weak var webView: WKWebView!
     var pin: Pin!
@@ -61,5 +59,4 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         UiUtils.showToast(message: error.localizedDescription, view: self.view)
     }
-    
 }

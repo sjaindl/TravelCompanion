@@ -10,31 +10,31 @@ import Foundation
 
 class GoogleConstants {
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN = "maps.googleapis.com"
-        static let PATH = "/maps/api/place/"
-        static let PATH_NEARBYSEARCH = PATH + "nearbysearch/json"
-        static let PATH_PHOTOS = "https://maps.googleapis.com/maps/api/place/photo"
+        static let urlProtocol = "https"
+        static let domain = "maps.googleapis.com"
+        static let path = "/maps/api/place/"
+        static let pathNearbySearch = path + "nearbysearch/json"
+        static let pathPhotos = "https://maps.googleapis.com/maps/api/place/photo"
     }
     
     struct ParameterKeys {
-        static let Key = "key"
-        static let Name = "name"
-        static let Location = "location"
-        static let RankBy = "rankby"
-        static let Radius = "radius"
-        static let PlaceType = "type"
-        static let StrictBounds = "strictbounds"
+        static let key = "key"
+        static let name = "name"
+        static let location = "location"
+        static let rankBy = "rankby"
+        static let radius = "radius"
+        static let placeType = "type"
+        static let strictBounds = "strictbounds"
         
-        static let MaxWidth = "maxwidth"
-        static let PhotoReference = "photoreference"
+        static let maxWidth = "maxwidth"
+        static let photoReference = "photoreference"
     }
     
     struct ParameterValues {
-        static let RankBy = "prominence"
-        static let Radius = "50000"
-        static let StrictBounds = "true"
+        static let rankBy = "prominence"
+        static let radius = "50000"
+        static let strictBounds = "true"
         
-        static let MaxWidth = "400"
+        static let maxWidth = "400"
     }
 }

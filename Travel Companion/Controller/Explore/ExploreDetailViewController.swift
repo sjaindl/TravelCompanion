@@ -137,7 +137,7 @@ public class ExploreDetailViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         self.tabBarController?.navigationItem.title = pin.name
         
         enableTabs(false)
@@ -164,11 +164,11 @@ public class ExploreDetailViewController: UIViewController {
     func initResultsController() {
         var cacheName: String? = nil
         if let countryCode = pin.countryCode {
-            cacheName = Constants.CoreData.CACHE_NAME_COUNTRIES + countryCode
+            cacheName = Constants.CoreData.cacheNameCountries + countryCode
         }
         
         let fetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.SORT_KEY, ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.predicate = NSPredicate(format: "country == %@", pin.countryCode ?? "")
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: cacheName)

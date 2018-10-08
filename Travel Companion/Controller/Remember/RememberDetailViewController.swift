@@ -33,7 +33,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
         self.navigationItem.title = plan.name
         
         // Do any additional setup after loading the view.
-        firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS).document(plan.pinName).collection(FirestoreConstants.Collections.PHOTOS)
+        firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans).document(plan.pinName).collection(FirestoreConstants.Collections.photos)
         
         configureStorage()
         loadPhotos()
@@ -62,7 +62,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             } else {
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
-                    if let photo = document.data()[FirestoreConstants.Ids.Plan.PATH] as? String {
+                    if let photo = document.data()[FirestoreConstants.Ids.Plan.path] as? String {
                         self.photos.append(RememberPhotos(url: photo, documentId: document.documentID))
                     }
                 }
@@ -99,7 +99,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     
     func persistPhoto(photoData: Data) {
         let fileName = plan.pinName + String(Int(Date.timeIntervalSinceReferenceDate * 10000000))
-        let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.PLANS + "/" + plan.pinName + "/" + FirestoreConstants.Collections.PHOTOS, fileName: fileName)
+        let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.plans + "/" + plan.pinName + "/" + FirestoreConstants.Collections.photos, fileName: fileName)
         
         FirestoreClient.storePhoto(storageRef: storageRef, path: path, photoData: photoData) { (metadata, error) in
             if let error = error {
@@ -119,7 +119,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     
     func updatePhotos(_ path: String) {
         FirestoreClient.addData(collectionReference: firestorePhotoDbReference, data: [
-            FirestoreConstants.Ids.Plan.PATH: path
+            FirestoreConstants.Ids.Plan.path: path
         ]) { (error, documentId) in
             if let error = error {
                 UiUtils.showError("Error adding document: \(error)", controller: self)
@@ -143,7 +143,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.REUSE_IDS.ALBUM_CELL_REUSE_ID, for: indexPath) as! AlbumCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.ReuseIds.albumCell, for: indexPath) as! AlbumCollectionViewCell
         
         guard let url = photos[indexPath.row].url else {
             return cell
@@ -153,7 +153,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
             cell.locationImage.image = cachedImage
             cell.setNeedsLayout()
         } else {
-            cell.locationImage.image = UIImage(named: Constants.CoreData.PLACEHOLDER_IMAGE)
+            cell.locationImage.image = UIImage(named: Constants.CoreData.placeholderImage)
             
             let storageImageRef = Storage.storage().reference(forURL: url)
             storageImageRef.getData(maxSize: 2 * 1024 * 1024) { (imageData, error) in
@@ -184,7 +184,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
             let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Show photo", comment: "Show photo"), style: .default, handler: { _ in
-                self.performSegue(withIdentifier: Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID, sender: data)
+                self.performSegue(withIdentifier: Constants.Segues.photoDetail, sender: data)
             }))
             
             let photo = self.photos[indexPath.row]
@@ -222,7 +222,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.PHOTO_DETAIL_SEGUE_ID {
+        if segue.identifier == Constants.Segues.photoDetail {
             let controller = segue.destination as! PhotosDetailViewController
             controller.data = sender as? Data
         }

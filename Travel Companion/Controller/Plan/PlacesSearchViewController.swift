@@ -148,7 +148,7 @@ extension GooglePlacesAutocompleteContainer {
             if let error = error {
                 UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
             } else {
-                print("Document added")
+                debugPrint("Document added")
                 self.addPlaceToPlan(place)
                 self.dismiss(animated: true, completion: nil)
             }

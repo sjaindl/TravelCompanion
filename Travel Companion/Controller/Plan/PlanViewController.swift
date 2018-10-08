@@ -38,9 +38,8 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Do any additional setup after loading the view.
         initResultsController()
-        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
         
         fetchPins()
     }
@@ -57,9 +56,9 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func initResultsController() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.SORT_KEY, ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: Constants.CoreData.CACHE_NAME_PINS)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: Constants.CoreData.cacheNamePins)
     }
     
     func fetchPins() {
@@ -69,27 +68,27 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
                 pins = result
             }
         } catch {
-            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+            UiUtils.showError("Data fetch could not be performed: \(error.localizedDescription)", controller: self)
         }
     }
     
     func fetchPlans() {
         firestoreDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                print("Error getting documents: \(error)")
+                debugPrint("Error getting documents: \(error)")
+                UiUtils.showError("Could not fetch plans: \(error)", controller: self)
             } else {
-                
                 self.upcomingTrips.removeAll()
                 self.pastTrips.removeAll()
                 
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                    debugPrint("\(document.documentID) => \(document.data())")
                     
-                    let name = document.data()[FirestoreConstants.Ids.Plan.NAME] as? String
-                    let pinName = document.data()[FirestoreConstants.Ids.Plan.PIN_NAME] as? String
-                    let startDate = document.data()[FirestoreConstants.Ids.Plan.START_DATE] as? Timestamp
-                    let endDate = document.data()[FirestoreConstants.Ids.Plan.END_DATE] as? Timestamp
-                    let imageRef = document.data()[FirestoreConstants.Ids.Plan.IMAGE_REFERENCE] as? String
+                    let name = document.data()[FirestoreConstants.Ids.Plan.name] as? String
+                    let pinName = document.data()[FirestoreConstants.Ids.Plan.pinName] as? String
+                    let startDate = document.data()[FirestoreConstants.Ids.Plan.startDate] as? Timestamp
+                    let endDate = document.data()[FirestoreConstants.Ids.Plan.endDate] as? Timestamp
+                    let imageRef = document.data()[FirestoreConstants.Ids.Plan.imageReference] as? String
                     
                     if let name = name, let pinName = pinName, let startDate = startDate, let endDate = endDate {
                         var imagePath = ""
@@ -126,10 +125,10 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.ADD_PLAN_SEGUE_ID {
+        if segue.identifier == Constants.Segues.addPlan {
             let controller = segue.destination as! AddPlanViewController
             controller.pins = pins
-        } else if segue.identifier == Constants.SEGUES.PLAN_DETAIL_SEGUE_ID {
+        } else if segue.identifier == Constants.Segues.planDetail {
             let controller = segue.destination as! PlanDetailViewController
             let indexPath = sender as! IndexPath
             let plan = getSectionArray(for: indexPath.section)[indexPath.row]
@@ -151,7 +150,7 @@ extension PlanViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_CELL_REUSE_ID)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planCell)!
         
         let plan = getSectionArray(for: indexPath.section)[indexPath.row]
         
@@ -190,8 +189,8 @@ extension PlanViewController {
         let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Show", comment: "Show"), style: .default, handler: { _ in
-            DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes about 10 seconds)
-                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_DETAIL_SEGUE_ID, sender: indexPath)
+            DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes some seconds)
+                self.performSegue(withIdentifier: Constants.Segues.planDetail, sender: indexPath)
             }
             
             self.dismiss(animated: true, completion: nil)
@@ -201,11 +200,11 @@ extension PlanViewController {
             let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
             let imageRef = plan.imageRef
             
-            self.firestoreDbReference.document(plan.pinName).delete() { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
+            self.firestoreDbReference.document(plan.pinName).delete() { error in
+                if let error = error {
+                    UiUtils.showError("Error removing document: \(error)", controller: self)
                 } else {
-                    print("Document successfully removed!")
+                    debugPrint("Document successfully removed!")
                     self.remove(at: indexPath)
                     self.tableView.reloadData()
                     
@@ -257,9 +256,9 @@ extension PlanViewController {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return PlanConstants.Trips.TripTitles.UPCOMING.rawValue
+            return PlanConstants.Trips.TripTitles.upcoming.rawValue
         } else {
-            return PlanConstants.Trips.TripTitles.PAST.rawValue
+            return PlanConstants.Trips.TripTitles.past.rawValue
         }
     }
     

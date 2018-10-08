@@ -157,25 +157,25 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func addHotel(_ sender: Any) {
-        performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: GooglePlaceType.lodging)
+        performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: GooglePlaceType.lodging)
     }
     
     @IBAction func addRestaurant(_ sender: Any) {
-        performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: GooglePlaceType.restaurant)
+        performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: GooglePlaceType.restaurant)
     }
     
     @IBAction func addAttraction(_ sender: Any) {
-        let vc = UIViewController()
-        vc.preferredContentSize = CGSize(width: 250,height: 300)
+        let viewController = UIViewController()
+        viewController.preferredContentSize = CGSize(width: 250,height: 300)
         let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 300))
         pickerView.delegate = self
         pickerView.dataSource = self
-        vc.view.addSubview(pickerView)
+        viewController.view.addSubview(pickerView)
         let editRadiusAlert = UIAlertController(title: "Choose place type", message: "", preferredStyle: UIAlertController.Style.alert)
-        editRadiusAlert.setValue(vc, forKey: "contentViewController")
+        editRadiusAlert.setValue(viewController, forKey: "contentViewController")
         
         editRadiusAlert.addAction(UIAlertAction(title: "Search", style: .default) { (action)  in
-            self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_PLACE, sender: self.selectedPlaceType)
+            self.performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: self.selectedPlaceType)
         })
         
         editRadiusAlert.addAction(UIAlertAction(title: "Cancel", style: .default) { (action)  in
@@ -188,7 +188,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @objc
     func chooseImage() {
-        performSegue(withIdentifier: Constants.SEGUES.PLAN_CHOOSE_PHOTO_SEGUE_ID, sender: nil)
+        performSegue(withIdentifier: Constants.Segues.planChoosePhoto, sender: nil)
     }
     
     func configureDatabase() {        
@@ -196,26 +196,26 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.PLAN_CHOOSE_PHOTO_SEGUE_ID {
+        if segue.identifier == Constants.Segues.planChoosePhoto {
             let controller = segue.destination as! ExplorePhotosViewController
             let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
             controller.pin = pin
             controller.dataController = dataController
             controller.choosePhoto = true
             controller.plan = plan
-        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_FLIGHT {
+        } else if segue.identifier == Constants.Segues.planAddFlight {
             let controller = segue.destination as! AddTransportViewController
             controller.firestoreDbReference = plan.firestoreFligthDbReference
             controller.transportDelegate = AddFlightDelegate()
             controller.planDetailController = self
             controller.plan = plan
-        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_PUBLIC_TRANSPORT {
+        } else if segue.identifier == Constants.Segues.planAddPublicTransport {
             let controller = segue.destination as! AddTransportViewController
             controller.firestoreDbReference = plan.firestorePublicTransportDbReference
             controller.transportDelegate = AddPublicTransportDelegate()
             controller.planDetailController = self
             controller.plan = plan
-        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_NOTES {
+        } else if segue.identifier == Constants.Segues.planAddNotes {
             let indexPath = sender as! IndexPath
             let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
             let collectionReference = getSectionReference(for: indexPath.section)
@@ -223,7 +223,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let controller = segue.destination as! NotesViewController
             controller.plannable = plannable
             controller.plannableCollectionReference = collectionReference
-        } else if segue.identifier == Constants.SEGUES.PLAN_ADD_PLACE {
+        } else if segue.identifier == Constants.Segues.planAddPlace {
             let controller = segue.destination as! AddPlaceViewController
             
             let placetype = sender as! GooglePlaceType
@@ -240,7 +240,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func persistPhoto(photoData: Data) {
-        let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.PLANS, fileName: plan.pinName)
+        let path = FirestoreClient.storageByPath(path: FirestoreConstants.Collections.plans, fileName: plan.pinName)
         FirestoreClient.storePhoto(storageRef: storageRef, path: path, photoData: photoData) { (metadata, error) in
             if let error = error {
                 UiUtils.showToast(message: error.localizedDescription, view: self.view)
@@ -259,11 +259,11 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func updatePlan() {
         FirestoreClient.addData(collectionReference: firestorePlanDbReference, documentName: plan.name, data: [
-            FirestoreConstants.Ids.Plan.NAME: plan.name,
-            FirestoreConstants.Ids.Plan.PIN_NAME: plan.pinName,
-            FirestoreConstants.Ids.Plan.START_DATE: plan.startDate,
-            FirestoreConstants.Ids.Plan.END_DATE: plan.endDate,
-            FirestoreConstants.Ids.Plan.IMAGE_REFERENCE: plan.imageRef
+            FirestoreConstants.Ids.Plan.name: plan.name,
+            FirestoreConstants.Ids.Plan.pinName: plan.pinName,
+            FirestoreConstants.Ids.Plan.startDate: plan.startDate,
+            FirestoreConstants.Ids.Plan.endDate: plan.endDate,
+            FirestoreConstants.Ids.Plan.imageReference: plan.imageRef
         ]) { (error) in
             if let error = error {
                 UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
@@ -283,11 +283,11 @@ extension PlanDetailViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_CELL_REUSE_ID)!
+        var cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planDetailCell)!
         let plannable = getSectionArray(for: indexPath.section)[indexPath.row]
         
         if let imageUrl = plannable.imageUrl(), let url = URL(string: imageUrl) {
-            cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_DETAIL_WITH_IMAGE_CELL_REUSE_ID)!
+            cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planDetailWithImageCell)!
             try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
         }
 
@@ -313,7 +313,7 @@ extension PlanDetailViewController {
             let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Add note", comment: "Add note"), style: .default, handler: { _ in
-                self.performSegue(withIdentifier: Constants.SEGUES.PLAN_ADD_NOTES, sender: indexPath)
+                self.performSegue(withIdentifier: Constants.Segues.planAddNotes, sender: indexPath)
             }))
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
@@ -398,15 +398,15 @@ extension PlanDetailViewController {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return PlanConstants.TripDetails.TripTitles.FLIGHTS.rawValue
+            return PlanConstants.TripDetails.TripTitles.flights.rawValue
         } else if section == 1 {
-            return PlanConstants.TripDetails.TripTitles.PUBLIC_TRANSPORT.rawValue
+            return PlanConstants.TripDetails.TripTitles.publicTransport.rawValue
         } else if section == 2 {
-            return PlanConstants.TripDetails.TripTitles.HOTELS.rawValue
+            return PlanConstants.TripDetails.TripTitles.hotels.rawValue
         } else if section == 3 {
-            return PlanConstants.TripDetails.TripTitles.RESTAURANTS.rawValue
+            return PlanConstants.TripDetails.TripTitles.restaurants.rawValue
         } else {
-            return PlanConstants.TripDetails.TripTitles.ATTRACTIONS.rawValue
+            return PlanConstants.TripDetails.TripTitles.attractions.rawValue
         }
     }
     
@@ -442,7 +442,7 @@ extension PlanDetailViewController {
 }
 
 extension PlanDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

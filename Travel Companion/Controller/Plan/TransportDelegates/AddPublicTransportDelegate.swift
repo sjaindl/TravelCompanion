@@ -60,9 +60,9 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
         
         let agency = cellData[indexPath.section].agency
         let segment = cellData[indexPath.section].segment!
-        var cellReuseId = Constants.REUSE_IDS.TRANSPORT_DETAIL_WITHOUT_IMAGE_CELL_REUSE_ID
+        var cellReuseId = Constants.ReuseIds.transportDetailWithoutImageCell
         if let agency = agency, searchResponse.agencies[agency.agency].icon?.url != nil {
-            cellReuseId = Constants.REUSE_IDS.TRANSPORT_DETAIL_WITH_IMAGE_CELL_REUSE_ID
+            cellReuseId = Constants.ReuseIds.transportDetailWithImageCell
         }
         
         if indexPath.row == 0 {
@@ -82,7 +82,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             if let agency = agency {
                 detailText = searchResponse.agencies[agency.agency].name + ", " + detailText
                 
-                if let agencyUrl = searchResponse.agencies[agency.agency].icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(agencyUrl)") {
+                if let agencyUrl = searchResponse.agencies[agency.agency].icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(agencyUrl)") {
                     try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
                 }
             }
@@ -199,7 +199,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
         let weekdayToTravel = Calendar.current.component(.weekday, from: date)
         
         guard let operatingDays = agency.operatingDays else {
-            return true //this is potentially a rideshare or similar, where no fixed operating days are available
+            return true //this is potentially a rideshare or similar, where no fixed operating days are available. This is ok.
         }
         
         guard let weekdayBitMask = weekDayToDayFlagMap[weekdayToTravel] else {
@@ -254,9 +254,9 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
     
     func buildSearchQueryItems(origin: String, destination: String) -> [String: String] {
         return [
-            Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
-            Rome2RioConstants.ParameterKeys.OriginName: origin,
-            Rome2RioConstants.ParameterKeys.DestinationName: destination,
+            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRome2Rio,
+            Rome2RioConstants.ParameterKeys.originName: origin,
+            Rome2RioConstants.ParameterKeys.destinationName: destination,
             Rome2RioConstants.ParameterKeys.noAir: "true",
             Rome2RioConstants.ParameterKeys.noAirLeg: "true"
         ]

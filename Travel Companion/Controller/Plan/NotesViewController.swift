@@ -46,9 +46,9 @@ class NotesViewController: UIViewController {
         
         FirestoreClient.addData(collectionReference: plannableCollectionReference, documentName: plannable.getId(), data: docData) { (error) in
             if let error = error {
-                print("Error adding document: \(error)")
+                UiUtils.showError("Error adding document: \(error)", controller: self)
             } else {
-                print("Document added")
+                debugPrint("Notes document added")
             }
         }
     }

@@ -97,7 +97,7 @@ class GooglePlace: NSObject, Plannable {
     
     func imageUrl() -> String? {
         if let photos = photos, photos.count > 0, let photoReference = photos[0].photoReference {
-            return "\(GoogleConstants.UrlComponents.PATH_PHOTOS)?\(GoogleConstants.ParameterKeys.MaxWidth)=\(GoogleConstants.ParameterValues.MaxWidth)&\(GoogleConstants.ParameterKeys.PhotoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys.Key)=\(SecretConstants.GOOGLE_PLACES_API_KEY)"
+            return "\(GoogleConstants.UrlComponents.pathPhotos)?\(GoogleConstants.ParameterKeys.maxWidth)=\(GoogleConstants.ParameterValues.maxWidth)&\(GoogleConstants.ParameterKeys.photoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys.key)=\(SecretConstants.apiKeyGooglePlaces)"
         }
         return ""
     }
@@ -149,6 +149,8 @@ struct PlusCode: Codable {
 }
 
 /*
+ This would be the PlaceDetails, if it is used in future:
+ 
 class PlaceDetails {
     let formattedAddress: String
     var name: String? = nil

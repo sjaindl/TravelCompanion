@@ -18,7 +18,10 @@ extension UIViewController {
             case .landscapeLeft, .landscapeRight:
                 return false
             default: // unknown, faceUp or faceDown
-                guard let window = self.view.window else { return false }
+                guard let window = self.view.window else {
+                    return false
+                }
+                
                 return window.frame.size.width < window.frame.size.height
         }
     }

@@ -30,15 +30,14 @@ class WebClient {
             }
         }
         
-        
         return urlComponent.url!
     }
     
     func buildRequest(withUrl url: URL, withHttpMethod httpMethod: String) -> URLRequest {
         var request = URLRequest(url: url)
         
-        request.addValue(WebConstants.ParameterValues.TYPE_JSON, forHTTPHeaderField: WebConstants.ParameterKeys.ACCEPT_TYPE)
-        request.addValue(WebConstants.ParameterValues.TYPE_JSON, forHTTPHeaderField: WebConstants.ParameterKeys.CONTENT_TYPE)
+        request.addValue(WebConstants.ParameterValues.typeJson, forHTTPHeaderField: WebConstants.ParameterKeys.acceptType)
+        request.addValue(WebConstants.ParameterValues.typeJson, forHTTPHeaderField: WebConstants.ParameterKeys.contentType)
         
         request.httpMethod = httpMethod
         
@@ -126,7 +125,7 @@ class WebClient {
             
             //get detailled status code error message, if available
             convertDataWithCompletionHandler(data, withOffset: offset) { (parsedResult, errorDetail) in
-                if let parsedResult = parsedResult as? [String: AnyObject], let status = parsedResult[WebConstants.ParameterKeys.STATUS] as? Int, let errorDescription = parsedResult[WebConstants.ParameterKeys.ERROR] as? String {
+                if let parsedResult = parsedResult as? [String: AnyObject], let status = parsedResult[WebConstants.ParameterKeys.status] as? Int, let errorDescription = parsedResult[WebConstants.ParameterKeys.error] as? String {
                         statusCodeError = NSError(domain: errorDomain, code: 5, userInfo: [NSLocalizedDescriptionKey: errorDescription +  " (" + String(status) + ")"])
                 }
             }

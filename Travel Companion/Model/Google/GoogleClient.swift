@@ -19,10 +19,10 @@ class GoogleClient {
         
         let queryItems = buildPlaceSearchQueryItems(for: text, coordinate: coordinate, type: type)
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.PROTOCOL, forHost: GoogleConstants.UrlComponents.DOMAIN, forMethod:
-            GoogleConstants.UrlComponents.PATH_NEARBYSEARCH, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
+            GoogleConstants.UrlComponents.pathNearbySearch, withQueryItems: queryItems)
         
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "googlePlacesSearch") { (data, webError) in
             
@@ -54,19 +54,19 @@ class GoogleClient {
     
     private func buildPlaceSearchQueryItems(for text: String?, coordinate: CLLocationCoordinate2D, type: String) -> [String: String] {
         var parameters = [
-            GoogleConstants.ParameterKeys.RankBy: GoogleConstants.ParameterValues.RankBy,
-            GoogleConstants.ParameterKeys.Radius: GoogleConstants.ParameterValues.Radius,
-            GoogleConstants.ParameterKeys.PlaceType: type,
-            GoogleConstants.ParameterKeys.Key: SecretConstants.GOOGLE_PLACES_API_KEY,
-            GoogleConstants.ParameterKeys.StrictBounds: GoogleConstants.ParameterValues.StrictBounds
+            GoogleConstants.ParameterKeys.rankBy: GoogleConstants.ParameterValues.rankBy,
+            GoogleConstants.ParameterKeys.radius: GoogleConstants.ParameterValues.radius,
+            GoogleConstants.ParameterKeys.placeType: type,
+            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces,
+            GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds
         ]
         
         if CLLocationCoordinate2DIsValid(coordinate) {
-            parameters[GoogleConstants.ParameterKeys.Location] = "\(coordinate.latitude),\(coordinate.longitude)"
+            parameters[GoogleConstants.ParameterKeys.location] = "\(coordinate.latitude),\(coordinate.longitude)"
         }
         
         if let text = text, text.count > 0, text != " " {
-            parameters[GoogleConstants.ParameterKeys.Name] = text
+            parameters[GoogleConstants.ParameterKeys.name] = text
         }
         
         return parameters

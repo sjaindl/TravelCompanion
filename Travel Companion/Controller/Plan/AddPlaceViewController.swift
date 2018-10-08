@@ -28,7 +28,7 @@ class AddPlaceViewController: UIViewController {
     
     func initPlacesSearchViewController() -> PlacesSearchViewController {
         let controller = PlacesSearchViewController(
-            apiKey: SecretConstants.GOOGLE_PLACES_API_KEY,
+            apiKey: SecretConstants.apiKeyGooglePlaces,
             placeType: placeType,
             coordinate: (selectedPlace?.coordinate)!,
             firestoreDbReference: firestoreDbReference,
@@ -54,9 +54,9 @@ class AddPlaceViewController: UIViewController {
     }
     
     func initCamera() {
-        let zoom = Float(Constants.ZOOM_LEVEL_DETAIL)
-        let latitude = pin?.latitude ?? Constants.UserDefaults.STANDARD_LATITUDE
-        let longitude = pin?.longitude ?? Constants.UserDefaults.STANDARD_LONGITUDE
+        let zoom = Float(Constants.zoomLevelDetail)
+        let latitude = pin?.latitude ?? Constants.UserDefaults.mapLatitudeStandard
+        let longitude = pin?.longitude ?? Constants.UserDefaults.mapLongitudeStandard
         
         let camera = GMSCameraPosition.camera(withLatitude: latitude,
                                               longitude: longitude,
@@ -111,14 +111,9 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         
         let placesSearchController = initPlacesSearchViewController()
         searchView = placesSearchController.searchBar
-        //        searchView?.translatesAutoresizingMaskIntoConstraints = false
+        //searchView?.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(placesSearchController.searchBar)
-        
-        //        searchView?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
-        //        searchView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 32).isActive = true
-        //        searchView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -32).isActive = true
-        //        searchView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         
         present(placesSearchController, animated: true, completion: nil)
     }

@@ -16,15 +16,15 @@ class GeoNamesClient {
     
     func fetchCountryCode(latitude: Double, longitude: Double, completionHandler: @escaping (_ errorString: String?, _ result: AnyObject?) -> Void) {
         
-        let method = GeoNamesConstants.UrlComponents.PATH
+        let method = GeoNamesConstants.UrlComponents.path
         
-        let queryItems: [String: String] = [GeoNamesConstants.ParameterKeys.LATITUDE: String(latitude),
-                                            GeoNamesConstants.ParameterKeys.LONGITUDE: String(longitude),
-                                            GeoNamesConstants.ParameterKeys.USERNAME: GeoNamesConstants.ParameterValues.USERNAME]
+        let queryItems: [String: String] = [GeoNamesConstants.ParameterKeys.latitude: String(latitude),
+                                            GeoNamesConstants.ParameterKeys.longitude: String(longitude),
+                                            GeoNamesConstants.ParameterKeys.username: SecretConstants.userNameGeoNames]
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: GeoNamesConstants.UrlComponents.PROTOCOL, forHost: GeoNamesConstants.UrlComponents.DOMAIN, forMethod: method, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: GeoNamesConstants.UrlComponents.urlProtocol, forHost: GeoNamesConstants.UrlComponents.domain, forMethod: method, withQueryItems: queryItems)
         
-        let request = buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchCountryCode", stringResponse: true) { (result, error) in
             
@@ -35,9 +35,5 @@ class GeoNamesClient {
                 completionHandler(nil, result)
             }
         }
-    }
-    
-    private func buildRequest(withUrl url: URL, withHttpMethod httpMethod: String) -> URLRequest {
-        return WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: httpMethod)
     }
 }

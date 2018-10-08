@@ -4,6 +4,7 @@
 //
 //  Created by Alejandro Pasccon on 4/20/16.
 //  Copyright © 2016 Alejandro Pasccon. All rights reserved.
+//  Credits to https://github.com/apasccon/SearchTextField - converted to Swift 4
 //
 
 import UIKit

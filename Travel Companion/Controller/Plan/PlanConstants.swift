@@ -9,33 +9,21 @@
 import Foundation
 
 struct PlanConstants {
+    
     struct Trips {
-//        enum Trips: Int {
-//            case UPCOMING = 0
-//            case PAST = 1
-//        }
-//
         enum TripTitles: String {
-            case UPCOMING = "Upcoming Trips"
-            case PAST = "Past Trips"
+            case upcoming = "Upcoming Trips"
+            case past = "Past Trips"
         }
     }
     
     struct TripDetails {
-//        enum TripDetails: Int {
-//            case FLIGHTS = 0
-//            case PUBLIC_TRANSPORT = 1
-//            case HOTELS = 2
-//            case ATTRACTIONS = 3
-//        }
-//
         enum TripTitles: String {
-            case FLIGHTS = "Flights"
-            case PUBLIC_TRANSPORT = "Public Transport"
-            case HOTELS = "Hotels"
-            case RESTAURANTS = "Restaurants"
-            case ATTRACTIONS = "Attractions"
+            case flights = "Flights"
+            case publicTransport = "Public Transport"
+            case hotels = "Hotels"
+            case restaurants = "Restaurants"
+            case attractions = "Attractions"
         }
     }
 }
-

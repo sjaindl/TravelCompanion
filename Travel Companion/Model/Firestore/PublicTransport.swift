@@ -73,7 +73,7 @@ class PublicTransport: NSObject, Plannable {
     
     func imageUrl() -> String? {
         if let agencyUrl = agencyUrl {
-            return "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(agencyUrl)"
+            return "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(agencyUrl)"
         }
         return ""
     }

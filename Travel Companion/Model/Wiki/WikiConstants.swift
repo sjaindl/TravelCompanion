@@ -11,31 +11,28 @@ import Foundation
 struct WikiConstants {
     
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN_WIKIPEDIA = "en.wikipedia.org"
-        static let DOMAIN_WIKIVOYAGE = "en.wikivoyage.org"
-        static let PATH = "/w/api.php"
+        static let urlProtocol = "https"
+        static let domainWikipedia = "en.wikipedia.org"
+        static let domainWikiVoyage = "en.wikivoyage.org"
+        static let path = "/w/api.php"
     }
     
     struct ParameterKeys {
-        static let Action = "action"
-        static let Format = "format"
-        static let Titles = "titles"
-        static let Prop = "prop"
-        static let Inprop = "inprop"
+        static let action = "action"
+        static let format = "format"
+        static let titles = "titles"
+        static let prop = "prop"
+        static let inprop = "inprop"
     }
     
     struct ParameterValues {
-        static let QUERY = "query"
-        static let ResponseFormat = "json"
-        static let PropInfo = "info"
-        static let Inprop = "url"
+        static let query = "query"
+        static let responseFormat = "json"
+        static let propInfo = "info"
+        static let inprop = "url"
     }
     
     struct ResponseKeys {
-        static let Query = "query"
-        static let Pages = "pages"
-        static let PageId = "pageid"
-        static let FullUrl = "fullurl"
+        static let fullUrl = "fullurl"
     }
 }

@@ -30,7 +30,7 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         self.navigationItem.title = "Main Menu"
 
         configureAuth()
@@ -55,19 +55,19 @@ class MainMenuViewController: UIViewController {
     @objc
     func explore() {
         print("explore")
-        performSegue(withIdentifier: Constants.SEGUES.EXPLORE_SEGUE_ID, sender: nil)
+        performSegue(withIdentifier: Constants.Segues.explore, sender: nil)
     }
     
     @objc
     func plan() {
         print("plan")
-        performSegue(withIdentifier: Constants.SEGUES.PLAN_SEGUE_ID, sender: nil)
+        performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
     }
     
     @objc
     func remember() {
         print("remember")
-        performSegue(withIdentifier: Constants.SEGUES.REMEMBER_SEGUE_ID, sender: nil)
+        performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
     }
     
     deinit {
@@ -82,10 +82,10 @@ class MainMenuViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.EXPLORE_SEGUE_ID {
+        if segue.identifier == Constants.Segues.explore {
             let controller = segue.destination as! ExploreViewController
             controller.dataController = dataController
-        } else if segue.identifier == Constants.SEGUES.PLAN_SEGUE_ID {
+        } else if segue.identifier == Constants.Segues.plan {
             let controller = segue.destination as! PlanViewController
             controller.dataController = dataController
         }
@@ -108,12 +108,12 @@ class MainMenuViewController: UIViewController {
                     self.displayName = name
                     
                     let firestoreDbReference = FirestoreClient.userReference()
-                    let data: [String: String] = [FirestoreConstants.Ids.User.UID: activeUser.uid,
-                                                  FirestoreConstants.Ids.User.EMAIL: activeUser.email ?? "",
-                                                  FirestoreConstants.Ids.User.NAME: activeUser.displayName ?? "",
-                                                  FirestoreConstants.Ids.User.PROVIDER: activeUser.providerID,
-                                                  FirestoreConstants.Ids.User.PHOTO_URL: activeUser.photoURL?.absoluteString ?? "",
-                                                  FirestoreConstants.Ids.User.PHONE: activeUser.phoneNumber ?? ""]
+                    let data: [String: String] = [FirestoreConstants.Ids.User.userId: activeUser.uid,
+                                                  FirestoreConstants.Ids.User.email: activeUser.email ?? "",
+                                                  FirestoreConstants.Ids.User.displayName: activeUser.displayName ?? "",
+                                                  FirestoreConstants.Ids.User.providerId: activeUser.providerID,
+                                                  FirestoreConstants.Ids.User.photoUrl: activeUser.photoURL?.absoluteString ?? "",
+                                                  FirestoreConstants.Ids.User.phoneNumber: activeUser.phoneNumber ?? ""]
                     
                     firestoreDbReference.setData(data)
                 }

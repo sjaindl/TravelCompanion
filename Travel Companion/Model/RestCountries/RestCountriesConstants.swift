@@ -11,39 +11,39 @@ import Foundation
 class RestCountriesConstants {
     
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN = "restcountries.eu"
-        static let PATH = "/rest/v2/alpha/"
+        static let urlProtocol = "https"
+        static let domain = "restcountries.eu"
+        static let path = "/rest/v2/alpha/"
     }
     
     struct ResponseKeys {
-        static let ALPHA_CODE = "alpha2Code"
-        static let NAME = "name"
-        static let CALLING_CODES = "callingCodes"
+        static let alphaCode = "alpha2Code"
+        static let name = "name"
+        static let callingCodes = "callingCodes"
         
-        static let REGION = "region"
-        static let SUBREGION = "subregion"
+        static let region = "region"
+        static let subregion = "subregion"
         
-        static let REGIONAL_BLOCKS = "regionalBlocs"
-        static let REGIONAL_BLOCKS_NAME = "name"
-        static let REGIONAL_BLOCKS_ACRONYM = "acronym"
+        static let regionalBlocks = "regionalBlocs"
+        static let regionalBlocksName = "name"
+        static let regionalBlocksAcronym = "acronym"
         
-        static let NATIVE_NAME = "nativeName"
+        static let nativeName = "nativeName"
         
-        static let LANGUAGES = "languages"
-        static let LANGUAGE_NAME = "name"
+        static let languages = "languages"
+        static let languageName = "name"
         
-        static let DOMAINS = "topLevelDomain"
-        static let FLAG = "flag"
-        static let TIMEZONES = "timezones"
+        static let topLevelDomain = "topLevelDomain"
+        static let flag = "flag"
+        static let timezones = "timezones"
         
-        static let CURRENCIES = "currencies"
-        static let CURRENCY_NAME = "name"
-        static let CURRENCY_CODE = "code"
-        static let CURRENCY_SYMBOL = "symbol"
+        static let currencies = "currencies"
+        static let currencyName = "name"
+        static let currencyCode = "code"
+        static let currencySymbol = "symbol"
         
-        static let POPULATION = "population"
-        static let AREA = "area"
-        static let CAPITAL = "capital"
+        static let population = "population"
+        static let area = "area"
+        static let capital = "capital"
     }
 }

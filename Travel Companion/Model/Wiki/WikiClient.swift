@@ -15,15 +15,15 @@ class WikiClient {
     
     func fetchWikiLink(country: String, domain: String, completionHandler: @escaping (_ errorString: String?, _ result: String?) -> Void) {
         
-        let queryItems: [String: String] = [WikiConstants.ParameterKeys.Action: WikiConstants.ParameterValues.QUERY,
-                                            WikiConstants.ParameterKeys.Inprop: WikiConstants.ParameterValues.Inprop,
-                                            WikiConstants.ParameterKeys.Prop: WikiConstants.ParameterValues.PropInfo,
-                                            WikiConstants.ParameterKeys.Format: WikiConstants.ParameterValues.ResponseFormat,
-                                            WikiConstants.ParameterKeys.Titles: country]
+        let queryItems: [String: String] = [WikiConstants.ParameterKeys.action: WikiConstants.ParameterValues.query,
+                                            WikiConstants.ParameterKeys.inprop: WikiConstants.ParameterValues.inprop,
+                                            WikiConstants.ParameterKeys.prop: WikiConstants.ParameterValues.propInfo,
+                                            WikiConstants.ParameterKeys.format: WikiConstants.ParameterValues.responseFormat,
+                                            WikiConstants.ParameterKeys.titles: country]
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: WikiConstants.UrlComponents.PROTOCOL, forHost: domain, forMethod: WikiConstants.UrlComponents.PATH, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: WikiConstants.UrlComponents.urlProtocol, forHost: domain, forMethod: WikiConstants.UrlComponents.path, withQueryItems: queryItems)
         
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchWiki", stringResponse: true) { (result, error) in
             
@@ -31,7 +31,7 @@ class WikiClient {
             if let error = error {
                 completionHandler(error.localizedDescription, nil)
             } else {
-                if let responseElements = result?.components(separatedBy: "\""), let index = responseElements.index(of: WikiConstants.ResponseKeys.FullUrl), index <= responseElements.count + 2 {
+                if let responseElements = result?.components(separatedBy: "\""), let index = responseElements.index(of: WikiConstants.ResponseKeys.fullUrl), index <= responseElements.count + 2 {
                     completionHandler(nil, responseElements[index + 2])
                 } else {
                     print("Could not find result in \(result!)")

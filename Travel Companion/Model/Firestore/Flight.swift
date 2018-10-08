@@ -63,7 +63,7 @@ class Flight: NSObject, Plannable {
     
     func imageUrl() -> String? {
         if let airlineUrl = airlineUrl {
-            return "\(Rome2RioConstants.UrlComponents.PROTOCOL)://\(Rome2RioConstants.UrlComponents.DOMAIN)\(airlineUrl)"
+            return "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(airlineUrl)"
         }
         return ""
     }

@@ -10,17 +10,17 @@ import CodableFirebase
 import Foundation
 
 class PlannableFactory {
-    static func createPlannable(of type: String, data: [String: Any]) throws -> Plannable {
+    static func makePlannable(of type: String, data: [String: Any]) throws -> Plannable {
       switch type {
-        case Constants.PLANNABLES.FLIGHT:
+        case Constants.Plannables.flight:
             return try FirestoreDecoder().decode(Flight.self, from: data)
-        case Constants.PLANNABLES.PUBLIC_TRANSPORT:
+        case Constants.Plannables.publicTransport:
             return try FirestoreDecoder().decode(PublicTransport.self, from: data)
-        case Constants.PLANNABLES.ATTRACTION:
+        case Constants.Plannables.attraction:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
-        case Constants.PLANNABLES.HOTEL:
+        case Constants.Plannables.hotel:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
-        case Constants.PLANNABLES.RESTAURANT:
+        case Constants.Plannables.restaurant:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
         default:
             throw NSError(domain: "Plannable type not supported", code: -1, userInfo: [:])

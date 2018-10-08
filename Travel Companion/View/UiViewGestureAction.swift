@@ -2,8 +2,8 @@
 //  UiViewGestureAction.swift
 //  Travel Companion
 //
-//  Created by Stefan Jaindl on 01.10.18.
-//  Copyright © 2018 Stefan Jaindl. All rights reserved.
+//  Credits to https://gist.github.com/saoudrizwan
+//  gist: https://gist.github.com/saoudrizwan/548aa90be174320fbaa6b3e71f01f6ae
 //
 
 import Foundation
@@ -47,9 +47,6 @@ extension UIView {
     @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
         if let action = self.tapGestureRecognizerAction {
             action?()
-        } else {
-            print("no action")
         }
     }
-    
 }

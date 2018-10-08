@@ -11,18 +11,14 @@ import Foundation
 class GeoNamesConstants {
     
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN = "secure.geonames.org"
-        static let PATH = "/countryCode"
+        static let urlProtocol = "https"
+        static let domain = "secure.geonames.org"
+        static let path = "/countryCode"
     }
     
     struct ParameterKeys {
-        static let LATITUDE = "lat"
-        static let LONGITUDE = "lng"
-        static let USERNAME = "username"
-    }
-    
-    struct ParameterValues {
-        static let USERNAME = "jaindl.stefan"
+        static let latitude = "lat"
+        static let longitude = "lng"
+        static let username = "username"
     }
 }

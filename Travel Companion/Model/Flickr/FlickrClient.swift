@@ -40,12 +40,6 @@ class FlickrClient {
                         }
                     }
                     
-//                    while photoNumber < Constants.CoreData.PHOTO_LIMIT && photoNumber < photos.count {
-//                        let photoDictionary = photos[photoNumber] as [String: AnyObject]
-//                        flickrPhotos.append(photoDictionary)
-//                        photoNumber = photoNumber + 1
-//                    }
-                    
                     completionHandler(nil, false, flickrPhotos)
                 }
             }
@@ -54,9 +48,9 @@ class FlickrClient {
     
     private func fetchPhotosOfLocation(with queryItems: [String: String], withPageNumber pageNumber: Int? = nil, completionHandler: @escaping (_ errorString: String?, _ randomPage: Int, _ photos: [[String: AnyObject]]?) -> Void) {
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: FlickrConstants.UrlComponents.PROTOCOL, forHost: FlickrConstants.UrlComponents.DOMAIN, forMethod: FlickrConstants.UrlComponents.PATH, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: FlickrConstants.UrlComponents.urlProtocol, forHost: FlickrConstants.UrlComponents.domain, forMethod: FlickrConstants.UrlComponents.path, withQueryItems: queryItems)
         
-        let request = buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchPhotosOfLocation") { (results, error) in
             
@@ -66,11 +60,11 @@ class FlickrClient {
             } else {
                 /* GUARD: Is "photos" key in our result? */
                 
-                if let photosDictionary = results?[FlickrConstants.FlickrResponseKeys.Photos] as? [String:AnyObject], let photosArray = photosDictionary[FlickrConstants.FlickrResponseKeys.Photo] as? [[String: AnyObject]] {
+                if let photosDictionary = results?[FlickrConstants.ResponseKeys.photos] as? [String:AnyObject], let photosArray = photosDictionary[FlickrConstants.ResponseKeys.photo] as? [[String: AnyObject]] {
 
                     completionHandler(nil, 0, photosArray) //page 0
                 } else {
-                    print("Could not find \(FlickrConstants.ParameterKeys.RESULTS) in \(results!)")
+                    print("Could not find \(FlickrConstants.ResponseKeys.photo) in \(results!)")
                     completionHandler("Fetching of Photos failed (no results).", 0, nil)
                 }
             }
@@ -79,13 +73,13 @@ class FlickrClient {
     
     func buildQueryItems() -> [String: String] {
         return [
-            FlickrConstants.FlickrParameterKeys.Method: FlickrConstants.FlickrParameterValues.SearchMethod,
-            FlickrConstants.FlickrParameterKeys.APIKey: SecretConstants.FLICKR_API_KEY,
-            FlickrConstants.FlickrParameterKeys.SafeSearch: FlickrConstants.FlickrParameterValues.UseSafeSearch,
-            FlickrConstants.FlickrParameterKeys.Extras: FlickrConstants.FlickrParameterValues.ImageSize,
-            FlickrConstants.FlickrParameterKeys.Format: FlickrConstants.FlickrParameterValues.ResponseFormat,
-            FlickrConstants.FlickrParameterKeys.NoJSONCallback: FlickrConstants.FlickrParameterValues.DisableJSONCallback,
-            FlickrConstants.FlickrParameterKeys.SortOrder: FlickrConstants.FlickrParameterValues.SortOrder
+            FlickrConstants.ParameterKeys.method: FlickrConstants.ParameterValues.searchMethod,
+            FlickrConstants.ParameterKeys.apiKey: SecretConstants.apiKeyFlickr,
+            FlickrConstants.ParameterKeys.safeSearch: FlickrConstants.ParameterValues.useSafeSearch,
+            FlickrConstants.ParameterKeys.extras: FlickrConstants.ParameterValues.imageSize,
+            FlickrConstants.ParameterKeys.format: FlickrConstants.ParameterValues.responseFormat,
+            FlickrConstants.ParameterKeys.noJsonCallback: FlickrConstants.ParameterValues.disableJsonCallback,
+            FlickrConstants.ParameterKeys.sortOrder: FlickrConstants.ParameterValues.sortOrder
             //"tags": "1025fav" //wow
         ]
     }
@@ -96,10 +90,10 @@ class FlickrClient {
     
     func bboxString(latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
-        let minimumLon = max(longitude - FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.0)
-        let minimumLat = max(latitude - FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.0)
-        let maximumLon = min(longitude + FlickrConstants.Flickr.SearchBBoxHalfWidth, FlickrConstants.Flickr.SearchLonRange.1)
-        let maximumLat = min(latitude + FlickrConstants.Flickr.SearchBBoxHalfHeight, FlickrConstants.Flickr.SearchLatRange.1)
+        let minimumLon = max(longitude - FlickrConstants.Location.searchBBoxHalfWidth, FlickrConstants.Location.searchLongitudeRange.0)
+        let minimumLat = max(latitude - FlickrConstants.Location.searchBBoxHalfHeight, FlickrConstants.Location.searchLatitudeRange.0)
+        let maximumLon = min(longitude + FlickrConstants.Location.searchBBoxHalfWidth, FlickrConstants.Location.searchLongitudeRange.1)
+        let maximumLat = min(latitude + FlickrConstants.Location.searchBBoxHalfHeight, FlickrConstants.Location.searchLatitudeRange.1)
         return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
     }
     

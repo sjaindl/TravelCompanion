@@ -51,7 +51,6 @@ class UiUtils {
     }
     
     static func getLink(_ text: String) -> String? {
-        
         let linkBeginIndex = text.range(of: "<a href=\"",
                                         options: NSString.CompareOptions.literal,
                                         range: text.startIndex..<text.endIndex,
@@ -65,7 +64,6 @@ class UiUtils {
         if let linkBeginIndex = linkBeginIndex, let linkEndIndex = linkEndIndex {
             return String(text[(linkBeginIndex.upperBound)..<(linkEndIndex.lowerBound)])
         }
-        
         
         return nil
     }
@@ -100,7 +98,7 @@ class UiUtils {
         controller.present(alert, animated: true)
     }
     
-    static func layoutDatePicker(_ picker: UIView) {
+    static func layoutDatePicker(_ picker: UIDatePicker) {
         picker.setValue(false, forKey: "highlightsToday");
         layoutView(picker)
     }

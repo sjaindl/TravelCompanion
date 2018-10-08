@@ -31,9 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initApis() {
-        GMSServices.provideAPIKey(SecretConstants.GOOGLE_MAPS_API_KEY) //Google Maps
-        GMSPlacesClient.provideAPIKey(SecretConstants.GOOGLE_PLACES_API_KEY) //Google Places
-        GMSServices.provideAPIKey(SecretConstants.GOOGLE_PLACES_API_KEY) //Google PlacePicker
+        GMSServices.provideAPIKey(SecretConstants.apiKeyGoogleMaps) //Google Maps
+        GMSPlacesClient.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google Places
+        GMSServices.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google PlacePicker
         FirebaseApp.configure() //Firebase
         Fabric.sharedSDK().debug = true
     }
@@ -78,11 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkIfFirstLaunch() {
-        if !UserDefaults.standard.bool(forKey: Constants.UserDefaults.USER_DEFAULT_LAUNCHED_BEFORE) {
-            UserDefaults.standard.set(true, forKey: Constants.UserDefaults.USER_DEFAULT_LAUNCHED_BEFORE)
-            UserDefaults.standard.set(Constants.UserDefaults.STANDARD_ZOOM_LEVEL, forKey: Constants.UserDefaults.USER_DEFAULT_ZOOM_LEVEL)
-            UserDefaults.standard.set(Constants.UserDefaults.STANDARD_LONGITUDE, forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LONGITUDE)
-            UserDefaults.standard.set(Constants.UserDefaults.STANDARD_LATITUDE, forKey: Constants.UserDefaults.USER_DEFAULT_MAP_LATITUDE)
+        if !UserDefaults.standard.bool(forKey: Constants.UserDefaults.launchedBefore) {
+            UserDefaults.standard.set(true, forKey: Constants.UserDefaults.launchedBefore)
+            UserDefaults.standard.set(Constants.UserDefaults.zoomLevelStandard, forKey: Constants.UserDefaults.zoomLevel)
+            UserDefaults.standard.set(Constants.UserDefaults.mapLongitudeStandard, forKey: Constants.UserDefaults.mapLongitude)
+            UserDefaults.standard.set(Constants.UserDefaults.mapLatitudeStandard, forKey: Constants.UserDefaults.mapLatitude)
         }
     }
     

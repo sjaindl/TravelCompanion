@@ -26,7 +26,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         
         // Do any additional setup after loading the view.
-        firestorePlanDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+        firestorePlanDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,11 +50,11 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
                     
-                    let name = document.data()[FirestoreConstants.Ids.Plan.NAME] as? String
-                    let pinName = document.data()[FirestoreConstants.Ids.Plan.PIN_NAME] as? String
-                    let startDate = document.data()[FirestoreConstants.Ids.Plan.START_DATE] as? Timestamp
-                    let endDate = document.data()[FirestoreConstants.Ids.Plan.END_DATE] as? Timestamp
-                    let imageRef = document.data()[FirestoreConstants.Ids.Plan.IMAGE_REFERENCE] as? String
+                    let name = document.data()[FirestoreConstants.Ids.Plan.name] as? String
+                    let pinName = document.data()[FirestoreConstants.Ids.Plan.pinName] as? String
+                    let startDate = document.data()[FirestoreConstants.Ids.Plan.startDate] as? Timestamp
+                    let endDate = document.data()[FirestoreConstants.Ids.Plan.endDate] as? Timestamp
+                    let imageRef = document.data()[FirestoreConstants.Ids.Plan.imageReference] as? String
                     
                     if let name = name, let pinName = pinName, let startDate = startDate, let endDate = endDate {
                         var imagePath = ""
@@ -78,7 +78,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.SEGUES.REMEMBER_DETAIL_SEGUE_ID {
+        if segue.identifier == Constants.Segues.rememberDetail {
             let controller = segue.destination as! RememberDetailViewController
             let indexPath = sender as! IndexPath
             let plan = pastTrips[indexPath.row]
@@ -98,7 +98,7 @@ extension RememberViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.REUSE_IDS.PLAN_CELL_REUSE_ID)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planCell)!
         
         let plan = pastTrips[indexPath.row]
         
@@ -126,7 +126,7 @@ extension RememberViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Constants.SEGUES.REMEMBER_DETAIL_SEGUE_ID, sender: indexPath)
+        performSegue(withIdentifier: Constants.Segues.rememberDetail, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

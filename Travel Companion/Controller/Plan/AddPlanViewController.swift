@@ -38,7 +38,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         setButtonEnabledState()
         
-        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.PLANS)
+        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
         
         UiUtils.layoutDatePicker(startDate)
         UiUtils.layoutDatePicker(endDate)
@@ -69,15 +69,15 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     func persistPlan(of plan: Plan) {
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: plan.pinName, data: [
-            FirestoreConstants.Ids.Plan.NAME: plan.name,
-            FirestoreConstants.Ids.Plan.PIN_NAME: plan.pinName,
-            FirestoreConstants.Ids.Plan.START_DATE: plan.startDate,
-            FirestoreConstants.Ids.Plan.END_DATE: plan.endDate
+            FirestoreConstants.Ids.Plan.name: plan.name,
+            FirestoreConstants.Ids.Plan.pinName: plan.pinName,
+            FirestoreConstants.Ids.Plan.startDate: plan.startDate,
+            FirestoreConstants.Ids.Plan.endDate: plan.endDate
         ]) { (error) in
             if let error = error {
-                print("Error adding document: \(error)")
+                UiUtils.showError("Error adding document: \(error)", controller: self)
             } else {
-                print("Document added")
+                debugPrint("Document added")
             }
         }
     }
@@ -103,8 +103,8 @@ extension AddPlanViewController {
         
         if textField == self.destinationText {
             destinationPicker.isHidden = false
-            //if you don't want the users to see the keyboard type:
             
+            //hide keyboard:
             textField.endEditing(true)
         }
     }
@@ -112,7 +112,7 @@ extension AddPlanViewController {
 //    func textFieldDidEndEditing(_ textField: UITextField) {
 //        //TODO: check whether pin with name exists -> if so, grey out add button + toast
 //        setButtonEnabledState()
-//        UiUtils.showToast(message: "Please enter a destination name", view: self.view)
+//        UiUtils.showToast(message: "Please enter a valid destination name", view: self.view)
 //    }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {

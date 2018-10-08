@@ -17,13 +17,12 @@ class Rome2RioClient {
         
         let queryItems = buildAutoCompleteQueryItems(query: query)
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.PROTOCOL, forHost: Rome2RioConstants.UrlComponents.DOMAIN, forMethod:
-            Rome2RioConstants.UrlComponents.PATH_AUTOCOMPLETE, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.urlProtocol, forHost: Rome2RioConstants.UrlComponents.domain, forMethod:
+            Rome2RioConstants.UrlComponents.pathAutocomplete, withQueryItems: queryItems)
         
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "placesAutocomplete") { (data, error) in
-            
             /* Send the desired value(s) to completion handler */
             if let error = error {
                 completionHandler(error.localizedDescription, nil)
@@ -37,8 +36,6 @@ class Rome2RioClient {
                         debugPrint(error)
                         completionHandler(error.localizedDescription, nil)
                     }
-                    
-                    
                 } else {
                     completionHandler("Search failed (no data).", nil)
                 }
@@ -50,10 +47,10 @@ class Rome2RioClient {
         
         let queryItems = delegate.buildSearchQueryItems(origin: origin, destination: destination)
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.PROTOCOL, forHost: Rome2RioConstants.UrlComponents.DOMAIN, forMethod:
-            Rome2RioConstants.UrlComponents.PATH_SEARCH, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.urlProtocol, forHost: Rome2RioConstants.UrlComponents.domain, forMethod:
+            Rome2RioConstants.UrlComponents.pathSearch, withQueryItems: queryItems)
         
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.HTTP_GET)
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
         WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "travelSearch") { (data, webError) in
             
@@ -81,8 +78,8 @@ class Rome2RioClient {
     
     func buildAutoCompleteQueryItems(query: String) -> [String: String] {
         return [
-            Rome2RioConstants.ParameterKeys.Key: SecretConstants.ROME2RIO_API_KEY,
-            Rome2RioConstants.ParameterKeys.Query: query
+            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRome2Rio,
+            Rome2RioConstants.ParameterKeys.query: query
         ]
     }
 }

@@ -10,44 +10,44 @@ import Foundation
 
 class FirestoreConstants {
     struct Collections {
-        static let USERS = "users"
-        static let PLACES = "places"
-        static let PLANS = "plans"
+        static let users = "users"
+        static let places = "places"
+        static let plans = "plans"
         
-        static let FLIGTHS = "fligths"
-        static let PUBLIC_TRANSPORT = "publicTransport"
-        static let HOTELS = "hotels"
-        static let RESTAURANTS = "restaurants"
-        static let ATTRACTIONS = "attractions"
+        static let fligths = "fligths"
+        static let publicTransport = "publicTransport"
+        static let hotels = "hotels"
+        static let restaurants = "restaurants"
+        static let attractions = "attractions"
         
-        static let PHOTOS = "photos"
+        static let photos = "photos"
     }
     
     struct Ids {
         struct Place {
-            static let PLACE_ID = "placeId"
-            static let LATITUDE = "latitude"
-            static let LONGITUDE = "longitude"
-            static let NAME = "name"
+            static let placeId = "placeId"
+            static let latitude = "latitude"
+            static let longitude = "longitude"
+            static let name = "name"
         }
         
         struct Plan {
-            static let NAME = "name"
-            static let PIN_NAME = "pinName"
-            static let START_DATE = "startDate"
-            static let END_DATE = "endDate"
-            static let IMAGE_REFERENCE = "image"
+            static let name = "name"
+            static let pinName = "pinName"
+            static let startDate = "startDate"
+            static let endDate = "endDate"
+            static let imageReference = "image"
             
-            static let PATH = "path"
+            static let path = "path"
         }
         
         struct User {
-            static let UID = "uid"
-            static let EMAIL = "email"
-            static let NAME = "displayName"
-            static let PROVIDER = "providerID"
-            static let PHOTO_URL = "photoURL"
-            static let PHONE = "phoneNumber"
+            static let userId = "uid"
+            static let email = "email"
+            static let displayName = "displayName"
+            static let providerId = "providerID"
+            static let photoUrl = "photoURL"
+            static let phoneNumber = "phoneNumber"
         }
     }    
 }

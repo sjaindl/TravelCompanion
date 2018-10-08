@@ -29,23 +29,23 @@ extension Country {
     }
     
     func storeResultArray(result: [String: AnyObject]) {
-        if let countryName = result[RestCountriesConstants.ResponseKeys.NAME] as? String {
+        if let countryName = result[RestCountriesConstants.ResponseKeys.name] as? String {
             self.country = countryName
         }
         
-        if let capital = result[RestCountriesConstants.ResponseKeys.CAPITAL] as? String {
+        if let capital = result[RestCountriesConstants.ResponseKeys.capital] as? String {
             self.capital = capital
         }
         
-        if let area = result[RestCountriesConstants.ResponseKeys.AREA] as? Float {
+        if let area = result[RestCountriesConstants.ResponseKeys.area] as? Float {
             self.area = area
         }
         
-        if let population = result[RestCountriesConstants.ResponseKeys.POPULATION] as? Int32 {
+        if let population = result[RestCountriesConstants.ResponseKeys.population] as? Int32 {
             self.population = population
         }
         
-        if let alphaCode = result[RestCountriesConstants.ResponseKeys.ALPHA_CODE] as? String {
+        if let alphaCode = result[RestCountriesConstants.ResponseKeys.alphaCode] as? String {
             self.isoCode = alphaCode
             
             let flag = "https://www.countryflags.io/\(alphaCode)/flat/64.png"
@@ -54,40 +54,40 @@ extension Country {
             }
         }
         
-        if let nativeName = result[RestCountriesConstants.ResponseKeys.NATIVE_NAME] as? String {
+        if let nativeName = result[RestCountriesConstants.ResponseKeys.nativeName] as? String {
             self.nativeName = nativeName
         }
         
-        if let region = result[RestCountriesConstants.ResponseKeys.REGION] as? String {
+        if let region = result[RestCountriesConstants.ResponseKeys.region] as? String {
             self.region = region
-            if let subregion = result[RestCountriesConstants.ResponseKeys.SUBREGION] as? String {
+            if let subregion = result[RestCountriesConstants.ResponseKeys.subregion] as? String {
                 self.region?.append(", \(subregion)")
             }
         }
         
-        if let languages = result[RestCountriesConstants.ResponseKeys.LANGUAGES] as? [[String:String]], languages.count > 0 {
+        if let languages = result[RestCountriesConstants.ResponseKeys.languages] as? [[String:String]], languages.count > 0 {
             var countryLanguage = ""
             
             for language in languages {
-                if let language = language[RestCountriesConstants.ResponseKeys.LANGUAGE_NAME] {
+                if let language = language[RestCountriesConstants.ResponseKeys.languageName] {
                     countryLanguage.append(language + ", ")
                 }
             }
             self.languages = countryLanguage.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let currencies = result[RestCountriesConstants.ResponseKeys.CURRENCIES] as? [[String:String]], currencies.count > 0 {
+        if let currencies = result[RestCountriesConstants.ResponseKeys.currencies] as? [[String:String]], currencies.count > 0 {
             var countryCurrency = ""
             
             for currency in currencies {
-                if let name = currency[RestCountriesConstants.ResponseKeys.CURRENCY_NAME], let code = currency[RestCountriesConstants.ResponseKeys.CURRENCY_CODE], let symbol = currency[RestCountriesConstants.ResponseKeys.CURRENCY_SYMBOL] {
+                if let name = currency[RestCountriesConstants.ResponseKeys.currencyName], let code = currency[RestCountriesConstants.ResponseKeys.currencyCode], let symbol = currency[RestCountriesConstants.ResponseKeys.currencySymbol] {
                     countryCurrency.append("\(name) (\(code)/\(symbol)), ")
                 }
             }
             self.currencies = countryCurrency.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let timezones = result[RestCountriesConstants.ResponseKeys.TIMEZONES] as? [String], timezones.count > 0 {
+        if let timezones = result[RestCountriesConstants.ResponseKeys.timezones] as? [String], timezones.count > 0 {
             var countryTimezones = ""
             
             for timezone in timezones {
@@ -96,7 +96,7 @@ extension Country {
             self.timezones = countryTimezones.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let domains = result[RestCountriesConstants.ResponseKeys.DOMAINS] as? [String], domains.count > 0 {
+        if let domains = result[RestCountriesConstants.ResponseKeys.topLevelDomain] as? [String], domains.count > 0 {
             var countryDomains = ""
             
             for domain in domains {
@@ -105,7 +105,7 @@ extension Country {
             self.domains = countryDomains.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let callingCodes = result[RestCountriesConstants.ResponseKeys.CALLING_CODES] as? [String], callingCodes.count > 0 {
+        if let callingCodes = result[RestCountriesConstants.ResponseKeys.callingCodes] as? [String], callingCodes.count > 0 {
             var countrCallingCodes = ""
             
             for callingCode in callingCodes {
@@ -114,11 +114,11 @@ extension Country {
             self.callingCodes = countrCallingCodes.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let blocks = result[RestCountriesConstants.ResponseKeys.REGIONAL_BLOCKS] as? [[String:AnyObject]], blocks.count > 0 {
+        if let blocks = result[RestCountriesConstants.ResponseKeys.regionalBlocks] as? [[String:AnyObject]], blocks.count > 0 {
             var regionalBlocks = ""
             
             for block in blocks {
-                if let name = block[RestCountriesConstants.ResponseKeys.REGIONAL_BLOCKS_NAME] as? String, let acronym = block[RestCountriesConstants.ResponseKeys.REGIONAL_BLOCKS_ACRONYM] as? String {
+                if let name = block[RestCountriesConstants.ResponseKeys.regionalBlocksName] as? String, let acronym = block[RestCountriesConstants.ResponseKeys.regionalBlocksAcronym] as? String {
                     regionalBlocks.append("\(name) (\(acronym)), ")
                 }
             }

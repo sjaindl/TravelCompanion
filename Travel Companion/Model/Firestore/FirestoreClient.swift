@@ -26,7 +26,7 @@ class FirestoreClient {
     
     static func userReference() -> DocumentReference {
         let uid = Auth.auth().currentUser?.uid ?? "anonymous"
-        return newDatabaseInstance().collection(FirestoreConstants.Collections.USERS).document(uid)
+        return newDatabaseInstance().collection(FirestoreConstants.Collections.users).document(uid)
     }
     
     static func addData(collectionReference: CollectionReference, documentName: String, data: [String: Any], completion: @escaping (Error?) -> ()) {
@@ -83,7 +83,7 @@ class FirestoreClient {
         let widthRatio = targetSize.width  / size.width
         let heigthRatio = targetSize.height / size.height
         
-        // Figure out what our orientation is, and use that to form the rectangle
+        //Determine aspect ratio (by orientation):
         var newSize: CGSize
         if(widthRatio > heigthRatio) {
             newSize = CGSize(width: size.width * heigthRatio, height: size.height * heigthRatio)
@@ -91,10 +91,9 @@ class FirestoreClient {
             newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
         
-        // This is the rect that we've calculated out and this is what is actually used below
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
-        // Actually do the resizing to the rect using the ImageContext stuff
+        //Resize image with UIGraphics
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()

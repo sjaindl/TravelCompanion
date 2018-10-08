@@ -23,7 +23,7 @@ class DataController {
     func load(completion: (() -> Void)? = nil) {
         persistentContainer.loadPersistentStores() { (description, error) in
             guard error == nil else {
-                print("\(error!.localizedDescription)")
+                debugPrint("\(error!.localizedDescription)")
                 return
             }
             

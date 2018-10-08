@@ -10,27 +10,19 @@ import Foundation
 
 struct Rome2RioConstants {
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN = "free.rome2rio.com"
-        static let PATH = "/api/1.4/json/"
-        static let PATH_AUTOCOMPLETE = PATH + "Autocomplete"
-        static let PATH_SEARCH = PATH + "Search"
-        static let PATH_FLIGHTS = PATH + "Flights"
+        static let urlProtocol = "https"
+        static let domain = "free.rome2rio.com"
+        static let path = "/api/1.4/json/"
+        static let pathAutocomplete = path + "Autocomplete"
+        static let pathSearch = path + "Search"
     }
     
     struct ParameterKeys {
-        static let Key = "key"
-        static let Query = "query"
+        static let key = "key"
+        static let query = "query"
         
-        static let OriginName = "oName"
-        static let DestinationName = "dName"
-        
-        static let Action = "action"
-        static let FlightOriginName = "origin"
-        static let FlightDestinationName = "destination"
-        static let DepartureDate = "outDate"
-        static let ReturnDate = "retDate"
-        static let NumberOfAdults = "adults"
+        static let originName = "oName"
+        static let destinationName = "dName"
         
         static let noAir = "noAir"
         static let noAirLeg = "noAirLeg"
@@ -46,20 +38,5 @@ struct Rome2RioConstants {
         static let noMinorStart = "noMinorStart"
         static let noMinorEnd = "noMinorEnd"
         static let noPath = "noPath"
-    }
-    
-    struct ParameterValues {
-        static let ActionStartSearch = "StartSearch"
-        static let ActionPollSearch = "PollSearch"
-    }
-    
-    struct ResponseKeys {
-        static let Places = "places"
-        static let PlaceType = "kind"
-        static let PlaceNameShort = "shortName"
-        static let PlaceNameLong = "longName"
-        static let StationCode = "code"
-        static let Latitude = "lat"
-        static let Longitude = "lng"
     }
 }

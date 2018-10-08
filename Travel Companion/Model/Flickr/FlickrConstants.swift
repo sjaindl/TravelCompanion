@@ -11,54 +11,43 @@ import Foundation
 struct FlickrConstants {
 
     struct UrlComponents {
-        static let PROTOCOL = "https"
-        static let DOMAIN = "api.flickr.com"
-        static let PATH = "/services/rest"
+        static let urlProtocol = "https"
+        static let domain = "api.flickr.com"
+        static let path = "/services/rest"
     }
     
-    struct Flickr {
-        static let SearchBBoxHalfWidth = 0.01
-        static let SearchBBoxHalfHeight = 0.01
-        static let SearchLatRange = (-90.0, 90.0)
-        static let SearchLonRange = (-180.0, 180.0)
+    struct Location {
+        static let searchBBoxHalfWidth = 0.01
+        static let searchBBoxHalfHeight = 0.01
+        static let searchLatitudeRange = (-90.0, 90.0)
+        static let searchLongitudeRange = (-180.0, 180.0)
     }
     
-    struct FlickrParameterKeys {
-        static let Method = "method"
-        static let APIKey = "api_key"
-        static let Extras = "extras"
-        static let Format = "format"
-        static let NoJSONCallback = "nojsoncallback"
-        static let SortOrder = "sort"
-        static let SafeSearch = "safe_search"
-        static let Text = "text"
-        static let BoundingBox = "bbox"
-        static let Page = "page"
-    }
-    
-    struct FlickrParameterValues {
-        static let SearchMethod = "flickr.photos.search"
-        static let ResponseFormat = "json"
-        static let DisableJSONCallback = "1" /* 1 means "yes" */
-        static let ImageSize = "url_m"
-        static let UseSafeSearch = "1"
-        static let SortOrder = "relevance"
-    }
-    
-    struct FlickrResponseKeys {
-        static let Status = "stat"
-        static let Photos = "photos"
-        static let Photo = "photo"
-        static let Title = "title"
-        static let ImageSize = "url_m"
-        static let Pages = "pages"
-        static let PerPage = "perpage"
-        static let Total = "total"
-    }
-
     struct ParameterKeys {
-        static let RESULTS = "results"
+        static let method = "method"
+        static let apiKey = "api_key"
+        static let extras = "extras"
+        static let format = "format"
+        static let noJsonCallback = "nojsoncallback"
+        static let sortOrder = "sort"
+        static let safeSearch = "safe_search"
+        static let text = "text"
+        static let boundingBox = "bbox"
     }
     
-    static let MAX_NUMBER_PHOTOS = 4000
+    struct ParameterValues {
+        static let searchMethod = "flickr.photos.search"
+        static let responseFormat = "json"
+        static let disableJsonCallback = "1" /* 1 means "yes" */
+        static let imageSize = "url_m"
+        static let useSafeSearch = "1"
+        static let sortOrder = "relevance"
+    }
+    
+    struct ResponseKeys {
+        static let photos = "photos"
+        static let photo = "photo"
+        static let title = "title"
+        static let imageSize = "url_m"
+    }
 }
