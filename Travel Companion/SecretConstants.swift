@@ -9,9 +9,9 @@
 import Foundation
 
 class SecretConstants {
-    static let GOOGLE_MAPS_API_KEY = "insert your api key here"
-    static let GOOGLE_PLACES_API_KEY = "insert your api key here"
-    static let GOOGLE_CLOUD_API_KEY = "insert your api key here"
-    static let FLICKR_API_KEY = "insert your api key here"
-    static let ROME2RIO_API_KEY = "insert your api key here"
+    static let apiKeyGoogleMaps = "insert your api key here"
+    static let apiKeyGooglePlaces = "insert your api key here"
+    static let apiKeyFlickr = "insert your api key here"
+    static let apiKeyRome2Rio = "insert your api key here"
+    static let userNameGeoNames = "insert your username here"
 }
