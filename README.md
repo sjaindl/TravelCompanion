@@ -10,6 +10,7 @@ Then install dependencies via command line:
 `pod install`
 
 In the file SecretConstants.swift are only placeholder-values, that need to be exchanged with valid API keys/user names.
+A Google configuration file, associated with the above Google API key, must be added to under: Supporting Files/GoogleService-Info.plist
 
 ## Licence
 
