@@ -15,7 +15,7 @@ class MainMenuViewController: UIViewController {
     
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var user: User?
-    var displayName = "Anonymous"
+    var displayName = "anonymous".localized()
     var isSignedIn = false
     
     @IBOutlet weak var exploreImage: UIImageView!
@@ -31,8 +31,8 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Main Menu"
-
+        self.navigationItem.title = "mainMenuTitle".localized()
+        
         configureAuth()
         configureGestureRecognizers()
     }
@@ -54,19 +54,16 @@ class MainMenuViewController: UIViewController {
     
     @objc
     func explore() {
-        print("explore")
         performSegue(withIdentifier: Constants.Segues.explore, sender: nil)
     }
     
     @objc
     func plan() {
-        print("plan")
         performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
     }
     
     @objc
     func remember() {
-        print("remember")
         performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
     }
     

@@ -32,7 +32,7 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         
         guard let name = pin.name else {
-            UiUtils.showError("No Wiki page found", controller: self)
+            UiUtils.showError("noWikiPage".localized(), controller: self)
             return
         }
         

@@ -91,7 +91,7 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
         case .delete:
             collectionView.deleteSections(indexSet)
         case .update, .move:
-            print("Unsupported section action type")
+            debugPrint("Unsupported section action type")
         }
     }
 }

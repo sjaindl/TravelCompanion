@@ -129,7 +129,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                     
                     guard let data = data, let image = UIImage(data: data) else {
-                        UiUtils.showToast(message: "No image data available", view: self.view)
+                        UiUtils.showToast(message: "noImageData".localized(), view: self.view)
                         return
                     }
                     
@@ -171,14 +171,14 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         pickerView.delegate = self
         pickerView.dataSource = self
         viewController.view.addSubview(pickerView)
-        let editRadiusAlert = UIAlertController(title: "Choose place type", message: "", preferredStyle: UIAlertController.Style.alert)
+        let editRadiusAlert = UIAlertController(title: "choosePlaceType".localized(), message: "", preferredStyle: UIAlertController.Style.alert)
         editRadiusAlert.setValue(viewController, forKey: "contentViewController")
         
-        editRadiusAlert.addAction(UIAlertAction(title: "Search", style: .default) { (action)  in
+        editRadiusAlert.addAction(UIAlertAction(title: "search".localized(), style: .default) { (action)  in
             self.performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: self.selectedPlaceType)
         })
         
-        editRadiusAlert.addAction(UIAlertAction(title: "Cancel", style: .default) { (action)  in
+        editRadiusAlert.addAction(UIAlertAction(title: "cancel".localized(), style: .default) { (action)  in
             self.dismiss(animated: true, completion: nil)
         })
         
@@ -248,7 +248,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             guard let storagePath = metadata?.path else {
-                UiUtils.showToast(message: "Could not save image", view: self.view)
+                UiUtils.showToast(message: "imageNotSaved".localized(), view: self.view)
                 return
             }
             
@@ -266,7 +266,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             FirestoreConstants.Ids.Plan.imageReference: plan.imageRef
         ]) { (error) in
             if let error = error {
-                UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
+                UiUtils.showToast(message: error.localizedDescription, view: self.view)
                 return
             }
         }
@@ -310,28 +310,28 @@ extension PlanDetailViewController {
         if plannables.count - 1 >= indexPath.row {
             
             //choose single flight or whole leg?
-            let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Add note", comment: "Add note"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "addNote".localized(), style: .default, handler: { _ in
                 self.performSegue(withIdentifier: Constants.Segues.planAddNotes, sender: indexPath)
             }))
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
                 let plannable = self.getSectionArray(for: indexPath.section)[indexPath.row]
                 let collectionReference = self.getSectionReference(for: indexPath.section)
                 
-                collectionReference.document(plannable.getId()).delete() { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
+                collectionReference.document(plannable.getId()).delete() { error in
+                    if let error = error {
+                        debugPrint(error.localizedDescription)
                     } else {
-                        print("Document successfully removed!")
+                        debugPrint("Document successfully removed!")
                         self.removeElement(at: indexPath)
                         self.tableView.reloadData()
                     }
                 }
             }))
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
                 self.dismiss(animated: true, completion: nil)
             }))
             
@@ -398,15 +398,15 @@ extension PlanDetailViewController {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return PlanConstants.TripDetails.TripTitles.flights.rawValue
+            return PlanConstants.TripDetails.TripTitles.flights.rawValue.localized()
         } else if section == 1 {
-            return PlanConstants.TripDetails.TripTitles.publicTransport.rawValue
+            return PlanConstants.TripDetails.TripTitles.publicTransport.rawValue.localized()
         } else if section == 2 {
-            return PlanConstants.TripDetails.TripTitles.hotels.rawValue
+            return PlanConstants.TripDetails.TripTitles.hotels.rawValue.localized()
         } else if section == 3 {
-            return PlanConstants.TripDetails.TripTitles.restaurants.rawValue
+            return PlanConstants.TripDetails.TripTitles.restaurants.rawValue.localized()
         } else {
-            return PlanConstants.TripDetails.TripTitles.attractions.rawValue
+            return PlanConstants.TripDetails.TripTitles.attractions.rawValue.localized()
         }
     }
     

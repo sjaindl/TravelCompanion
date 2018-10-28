@@ -56,7 +56,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
     func loadPhotos() {
         firestorePhotoDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                UiUtils.showToast(message: "Could not fetch data \(error.localizedDescription)", view: self.view)
+                UiUtils.showToast(message: error.localizedDescription, view: self.view)
                 self.enableUi(true)
                 self.noPhotoLabel.isHidden = false
             } else {
@@ -108,7 +108,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             }
             
             guard let storagePath = metadata?.path else {
-                UiUtils.showError("Could not save image", controller: self)
+                UiUtils.showError("imageNotSaved".localized(), controller: self)
                 return
             }
             
@@ -122,7 +122,7 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
             FirestoreConstants.Ids.Plan.path: path
         ]) { (error, documentId) in
             if let error = error {
-                UiUtils.showError("Error adding document: \(error)", controller: self)
+                UiUtils.showError(error.localizedDescription, controller: self)
                 return
             }
             
@@ -163,7 +163,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
                 }
                 
                 guard let imageData = imageData, let image = UIImage(data: imageData) else {
-                    UiUtils.showToast(message: "No image data available", view: self.view)
+                    UiUtils.showToast(message: "noImageData".localized(), view: self.view)
                     return
                 }
                 
@@ -181,9 +181,9 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
         
         if let image = cell.locationImage.image, let data = image.pngData() {
             
-            let alert = UIAlertController(title: "Choose action", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Show photo", comment: "Show photo"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "showPhoto".localized(), style: .default, handler: { _ in
                 self.performSegue(withIdentifier: Constants.Segues.photoDetail, sender: data)
             }))
             
@@ -191,16 +191,16 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
             
             if let url = photo.url, let documentId = photo.documentId {
             
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
                     
                     let storageImageRef = Storage.storage().reference(forURL: url)
                     storageImageRef.delete() { error in
                         if let error = error {
-                            UiUtils.showError("Error removing document from storage: \(error.localizedDescription)", controller: self)
+                            UiUtils.showError(error.localizedDescription, controller: self)
                         } else {
                             self.firestorePhotoDbReference.document(documentId).delete() { err in
                                 if let error = error {
-                                    UiUtils.showError("Error removing document: \(error)", controller: self)
+                                    UiUtils.showError(error.localizedDescription, controller: self)
                                 } else {
                                     debugPrint("Document successfully removed!")
                                     self.photos.remove(at: indexPath.row)
@@ -213,7 +213,7 @@ extension RememberDetailViewController : UICollectionViewDelegate, UICollectionV
                 }))
             }
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
                 self.dismiss(animated: true, completion: nil)
             }))
             

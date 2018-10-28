@@ -77,7 +77,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             cell.imageView?.image  = nil
             cell.textLabel?.text = "\(route.name): \(depPlace.shortName) - \(arrPlace.shortName)"
             
-            var detailText = "\(segment.distance) km"
+            var detailText = String(format: "km".localized(), segment.distance)
             
             if let agency = agency {
                 detailText = searchResponse.agencies[agency.agency].name + ", " + detailText
@@ -114,7 +114,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             let place = searchResponse.places[stop.place]
             cell.textLabel?.text = place.shortName
             
-            var detailText = "\(duration / 60) hours, \(duration % 60) minutes"
+            var detailText = String(format: "duration".localized(), duration / 60, duration % 60)
             
             if let prices = segment.indicativePrices, prices.count > 0 {
                 if let name = prices[0].name {
@@ -150,16 +150,16 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 cellData[indexPath.section].opened = !cellData[indexPath.section].opened
                 tableView.reloadSections(sections, with: .fade)
             } else {
-                let alert = UIAlertController(title: "Add Public Transport", message: "Do you want to add the tapped route?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "addPublicTransport".localized(), message: "addRoute?".localized(), preferredStyle: .alert)
                 
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Add route", comment: "Add route"), style: .default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "addRoute".localized(), style: .default, handler: { _ in
                     
                     self.persistPublicTransport(nil, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                     
                     controller.navigationController?.popToViewController(popToController, animated: true)
                 }))
                 
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
                     controller.dismiss(animated: true, completion: nil)
                 }))
                 
@@ -167,9 +167,9 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
             }
         } else {
             //choose single flight or whole leg?
-            let alert = UIAlertController(title: "Add Public Transport", message: "Do you want to add the tapped stop or whole route?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "addPublicTransport".localized(), message: "addStopOrRoute?".localized(), preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Single Stop", comment: "Add single stop"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "singleStop".localized(), style: .default, handler: { _ in
                 
                 let stop = self.cellData[indexPath.section].surfaceStops[indexPath.row - 1]
 
@@ -178,7 +178,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Whole route", comment: "Add whole route"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "wholeRoute".localized(), style: .default, handler: { _ in
 
                 for stop in stops {
                     self.persistPublicTransport(stop, segment: segment, agency: agency, route: route, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
@@ -187,7 +187,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
                 controller.dismiss(animated: true, completion: nil)
             }))
 
@@ -263,6 +263,6 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
     }
     
     func description() -> String {
-        return "Public Transport"
+        return "publicTransport".localized()
     }
 }

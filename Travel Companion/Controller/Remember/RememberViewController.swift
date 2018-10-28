@@ -20,7 +20,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Remember"
+        self.navigationItem.title = "remember".localized()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -114,7 +114,7 @@ extension RememberViewController {
                 }
                 
                 guard let data = data else {
-                    UiUtils.showToast(message: "No image data available", view: self.view)
+                    UiUtils.showToast(message: "noImageData".localized(), view: self.view)
                     return
                 }
                 

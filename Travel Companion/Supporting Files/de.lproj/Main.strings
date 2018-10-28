@@ -1,21 +1,267 @@
 
+/* Class = "UILabel"; text = "Title"; ObjectID = "07n-aZ-f3m"; */
+"07n-aZ-f3m.text" = "Titel";
+
+/* Class = "UIButton"; normalTitle = "Country"; ObjectID = "0fU-Sj-3qf"; */
+"0fU-Sj-3qf.normalTitle" = "Land";
+
+/* Class = "UILabel"; text = "Phone: "; ObjectID = "166-LI-rDY"; */
+"166-LI-rDY.text" = "Telefon: ";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "36B-VI-zJN"; */
+"36B-VI-zJN.normalTitle" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "3cY-OE-gY7"; */
+"3cY-OE-gY7.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "No Images"; ObjectID = "3ki-gT-Vsa"; */
+"3ki-gT-Vsa.text" = "Keine Fotos";
+
 /* Class = "UILabel"; text = "Capture your memories in the travel gallery"; ObjectID = "4RJ-D4-tqC"; */
-"4RJ-D4-tqC.text" = "Capture your memories in the travel gallery";
+"4RJ-D4-tqC.text" = "Halte deine Erinnerungen in der Gallerie fest";
+
+/* Class = "UIButton"; normalTitle = "Location"; ObjectID = "4iF-2h-4CD"; */
+"4iF-2h-4CD.normalTitle" = "Ort";
 
 /* Class = "UILabel"; text = "REMEMBER"; ObjectID = "5CZ-0s-lcp"; */
-"5CZ-0s-lcp.text" = "REMEMBER";
+"5CZ-0s-lcp.text" = "FESTHALTEN";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "6cB-eg-aRg"; */
+"6cB-eg-aRg.text" = "Nicht verfügbar";
+
+/* Class = "UITabBarItem"; title = "Detail"; ObjectID = "7E4-VG-Ay4"; */
+"7E4-VG-Ay4.title" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8ey-2E-OfM"; */
+"8ey-2E-OfM.text" = "Titel";
+
+/* Class = "UILabel"; text = "Display name:"; ObjectID = "9RT-y1-G3x"; */
+"9RT-y1-G3x.text" = "Anzeigename:";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "9r7-lx-qgD"; */
+"9r7-lx-qgD.text" = "Nicht verfügbar";
+
+/* Class = "UIButton"; normalTitle = "Place"; ObjectID = "A64-FU-WkF"; */
+"A64-FU-WkF.normalTitle" = "Platz";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "BYt-8X-5gh"; */
+"BYt-8X-5gh.text" = "Nicht verfügbar";
+
+/* Class = "UIBarButtonItem"; title = "Restaurant"; ObjectID = "CVa-h4-q6Y"; */
+"CVa-h4-q6Y.title" = "Restaurant";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "DUb-NQ-hir"; */
+"DUb-NQ-hir.normalTitle" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Origin: "; ObjectID = "DY5-o6-nGg"; */
+"DY5-o6-nGg.text" = "Abreiseort: ";
+
+/* Class = "UILabel"; text = "Capital: "; ObjectID = "DZj-kp-awV"; */
+"DZj-kp-awV.text" = "Hauptstadt: ";
+
+/* Class = "UITextField"; placeholder = "destination name"; ObjectID = "F3u-f4-8ar"; */
+"F3u-f4-8ar.placeholder" = "Zielort";
+
+/* Class = "UILabel"; text = "Domains: "; ObjectID = "Fid-nJ-kmu"; */
+"Fid-nJ-kmu.text" = "Domains: ";
+
+/* Class = "UIBarButtonItem"; title = "Hotel"; ObjectID = "Fmi-dN-1n8"; */
+"Fmi-dN-1n8.title" = "Hotel";
+
+/* Class = "UILabel"; text = "URL: "; ObjectID = "FnZ-oe-w8q"; */
+"FnZ-oe-w8q.text" = "URL: ";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Fzv-le-9Eu"; */
+"Fzv-le-9Eu.text" = "Subtitel";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "HKs-ng-Qir"; */
+"HKs-ng-Qir.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "I91-wF-Rtm"; */
+"I91-wF-Rtm.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "IRe-4S-Dzn"; */
+"IRe-4S-Dzn.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "JS0-B9-1Co"; */
+"JS0-B9-1Co.text" = "Nicht verfügbar";
 
 /* Class = "UILabel"; text = "Plan and share your travel itineraries"; ObjectID = "JcT-6q-YHY"; */
-"JcT-6q-YHY.text" = "Plan and share your travel itineraries";
+"JcT-6q-YHY.text" = "Plane und teile deine Reise";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "JsV-Vf-weF"; */
+"JsV-Vf-weF.text" = "Titel";
+
+/* Class = "UILabel"; text = "Timezones: "; ObjectID = "K5u-nC-Tpi"; */
+"K5u-nC-Tpi.text" = "Zeitzonen: ";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "Lgh-Be-uAT"; */
+"Lgh-Be-uAT.normalTitle" = "Suche";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "MJB-QE-LYZ"; */
+"MJB-QE-LYZ.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Language: "; ObjectID = "OPo-ml-Whx"; */
+"OPo-ml-Whx.text" = "Sprache: ";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "Ozo-qm-ftG"; */
+"Ozo-qm-ftG.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "QO4-l0-hZF"; */
+"QO4-l0-hZF.text" = "Nicht verfügbar";
+
+/* Class = "UIBarButtonItem"; title = "Flight"; ObjectID = "R9U-Lk-Yao"; */
+"R9U-Lk-Yao.title" = "Flug";
+
+/* Class = "UILabel"; text = "No Images"; ObjectID = "SaR-U8-j3U"; */
+"SaR-U8-j3U.text" = "Keine Fotos";
+
+/* Class = "UIBarButtonItem"; title = "Attraction"; ObjectID = "U3w-jZ-wxQ"; */
+"U3w-jZ-wxQ.title" = "Attraktion";
+
+/* Class = "UILabel"; text = "Region: "; ObjectID = "V7H-gB-C3p"; */
+"V7H-gB-C3p.text" = "Region: ";
+
+/* Class = "UIViewController"; title = "MainMenu"; ObjectID = "VGg-jM-tTd"; */
+"VGg-jM-tTd.title" = "Hauptmenü";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "W0b-hq-Qdt"; */
+"W0b-hq-Qdt.text" = "Subtitel";
+
+/* Class = "UIBarButtonItem"; title = "Find new location"; ObjectID = "WP0-7v-ILw"; */
+"WP0-7v-ILw.title" = "Finde neuen Ort";
+
+/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "WuP-8n-SJr"; */
+"WuP-8n-SJr.normalTitle" = "OK";
+
+/* Class = "UILabel"; text = "Place"; ObjectID = "Xba-ea-SdM"; */
+"Xba-ea-SdM.text" = "Platz";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Xuq-nV-CyV"; */
+"Xuq-nV-CyV.text" = "Titel";
+
+/* Class = "UITabBarItem"; title = "Photos"; ObjectID = "YL9-4T-lO9"; */
+"YL9-4T-lO9.title" = "Fotos";
+
+/* Class = "UILabel"; text = "Start Date: "; ObjectID = "YYM-Va-9vG"; */
+"YYM-Va-9vG.text" = "Startdatum: ";
+
+/* Class = "UIBarButtonItem"; title = "addFromGallery"; ObjectID = "ZEd-CV-ZE1"; */
+"ZEd-CV-ZE1.title" = "addFromGallery";
+
+/* Class = "UIBarButtonItem"; title = "addFromCam"; ObjectID = "ZRs-nF-bkr"; */
+"ZRs-nF-bkr.title" = "addFromCam";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "ZgM-zk-uUL"; */
+"ZgM-zk-uUL.text" = "Nicht verfügbar";
+
+/* Class = "UITabBarItem"; title = "Photos"; ObjectID = "aHK-3D-ZGo"; */
+"aHK-3D-ZGo.title" = "Fotos";
+
+/* Class = "UILabel"; text = "Destination:"; ObjectID = "bGc-ft-Snu"; */
+"bGc-ft-Snu.text" = "Zielort:";
+
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "bbB-XD-b1p"; */
+"bbB-XD-b1p.title" = "Hinzufügen";
+
+/* Class = "UILabel"; text = "End Date: "; ObjectID = "bdV-U4-2SE"; */
+"bdV-U4-2SE.text" = "Enddatum: ";
+
+/* Class = "UILabel"; text = "title"; ObjectID = "coo-4i-qnQ"; */
+"coo-4i-qnQ.text" = "Titel";
+
+/* Class = "UILabel"; text = "Rating: "; ObjectID = "d3d-mf-G2d"; */
+"d3d-mf-G2d.text" = "Rating: ";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "eJq-2f-qbm"; */
+"eJq-2f-qbm.text" = "Subtitel";
+
+/* Class = "UIButton"; normalTitle = "Add trip"; ObjectID = "eZz-qn-ib7"; */
+"eZz-qn-ib7.normalTitle" = "Reise hinzufügen";
+
+/* Class = "UITabBarItem"; title = "WikiVoyage"; ObjectID = "ehw-xb-7kV"; */
+"ehw-xb-7kV.title" = "WikiVoyage";
+
+/* Class = "UILabel"; text = "Destination:"; ObjectID = "g2K-eW-r9w"; */
+"g2K-eW-r9w.text" = "Zielort:";
 
 /* Class = "UIBarButtonItem"; title = "Sign out"; ObjectID = "h4T-1g-JjQ"; */
-"h4T-1g-JjQ.title" = "Sign out";
+"h4T-1g-JjQ.title" = "Abmelden";
+
+/* Class = "UIBarButtonItem"; title = "Public Transport"; ObjectID = "hJW-gM-7hv"; */
+"hJW-gM-7hv.title" = "Öffentlicher Transport";
+
+/* Class = "UILabel"; text = "Calling codes: "; ObjectID = "hd5-Vg-HZq"; */
+"hd5-Vg-HZq.text" = "Ländervorwahl: ";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "jm8-CZ-ZQv"; */
+"jm8-CZ-ZQv.text" = "Titel";
+
+/* Class = "UILabel"; text = "Date: "; ObjectID = "jqI-zb-GOu"; */
+"jqI-zb-GOu.text" = "Datum: ";
+
+/* Class = "UILabel"; text = "ISO code: "; ObjectID = "k2n-5S-xXP"; */
+"k2n-5S-xXP.text" = "ISO-Code: ";
+
+/* Class = "UILabel"; text = "Population: "; ObjectID = "kDG-Po-PXK"; */
+"kDG-Po-PXK.text" = "Bevölkerung: ";
+
+/* Class = "UILabel"; text = "Area: "; ObjectID = "kKe-TM-b8C"; */
+"kKe-TM-b8C.text" = "Fläche: ";
+
+/* Class = "UILabel"; text = "Currency: "; ObjectID = "kb1-9X-ivr"; */
+"kb1-9X-ivr.text" = "Währung: ";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "lKy-EM-4Ks"; */
+"lKy-EM-4Ks.text" = "Nicht verfügbar";
+
+/* Class = "UITabBarItem"; title = "Wikipedia"; ObjectID = "mXR-5F-guc"; */
+"mXR-5F-guc.title" = "Wikipedia";
 
 /* Class = "UILabel"; text = "Explore the world for new travel opportunities"; ObjectID = "nRW-Hn-drL"; */
-"nRW-Hn-drL.text" = "Explore the world for new travel opportunities";
+"nRW-Hn-drL.text" = "Erkunde die Welt nach neuen Reisemöglichkeiten";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "o33-Bt-EmO"; */
+"o33-Bt-EmO.text" = "Detail";
+
+/* Class = "UILabel"; text = "Location:"; ObjectID = "pm8-XX-PRd"; */
+"pm8-XX-PRd.text" = "Ort:";
 
 /* Class = "UILabel"; text = "PLAN"; ObjectID = "pxn-w9-R92"; */
-"pxn-w9-R92.text" = "PLAN";
+"pxn-w9-R92.text" = "PLANEN";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "qiM-Hf-8bT"; */
+"qiM-Hf-8bT.text" = "Detail";
 
 /* Class = "UILabel"; text = "EXPLORE"; ObjectID = "svj-7s-zZj"; */
-"svj-7s-zZj.text" = "EXPLORE";
+"svj-7s-zZj.text" = "ERKUNDEN";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "tfX-rD-jiP"; */
+"tfX-rD-jiP.text" = "Detail";
+
+/* Class = "UILabel"; text = "Regional blocks:"; ObjectID = "txM-0n-tgI"; */
+"txM-0n-tgI.text" = "Regionale Blöcke:";
+
+/* Class = "UILabel"; text = "Native name: "; ObjectID = "uqQ-Ww-N1i"; */
+"uqQ-Ww-N1i.text" = "Nativer Name: ";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "uvy-Ke-ua7"; */
+"uvy-Ke-ua7.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "vMr-eo-gpn"; */
+"vMr-eo-gpn.text" = "Nicht verfügbar";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vpC-wk-UEc"; */
+"vpC-wk-UEc.text" = "Titel";
+
+/* Class = "UILabel"; text = "Country"; ObjectID = "vq4-4T-cTG"; */
+"vq4-4T-cTG.text" = "Land";
+
+/* Class = "UILabel"; text = "Type: "; ObjectID = "wDb-gD-yBg"; */
+"wDb-gD-yBg.text" = "Typ: ";
+
+/* Class = "UILabel"; text = "Not available"; ObjectID = "wIy-f6-7Ed"; */
+"wIy-f6-7Ed.text" = "Nicht verfügbar";
+
+/* Class = "UITextField"; placeholder = "Add notes.."; ObjectID = "woR-QT-mKn"; */
+"woR-QT-mKn.placeholder" = "Notizen hinzufügen..";

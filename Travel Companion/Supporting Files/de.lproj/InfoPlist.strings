@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  Travel Companion
+
+  Created by Stefan Jaindl on 28.10.18.
+  Copyright © 2018 Stefan Jaindl. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Travel Companion";
+"NSHumanReadableCopyright" = "2018 Stefan Jaindl. Alle Rechte vorbehalten.";
+"NSLocationWhenInUseUsageDescription" = "Travel Companion benutzt deinen Standort um neue Reisegelegenheiten zu erkunden";
+"NSCameraUsageDescription" = "Erstelle Fotos mit deiner Kamera um deine Reisen festzuhalten";

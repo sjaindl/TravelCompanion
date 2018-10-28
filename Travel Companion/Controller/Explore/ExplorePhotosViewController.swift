@@ -126,7 +126,7 @@ class ExplorePhotosViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.enableUi(true)
                     self.noPhotoLabel.isHidden = false
-                    UiUtils.showError("Could not fetch data \(error.localizedDescription)", controller: self)
+                    UiUtils.showError(error.localizedDescription, controller: self)
                 }
             }
         }
@@ -158,7 +158,7 @@ class ExplorePhotosViewController: UIViewController {
             var queryItems = FlickrClient.sharedInstance.buildQueryItems()
             if self.fetchType == FetchType.Country.rawValue {
                 guard let country = country else {
-                    UiUtils.showError("This location is not in a country. Can't fetch country photos.", controller: self)
+                    UiUtils.showError("noCountryPhotos".localized(), controller: self)
                     
                     DispatchQueue.main.async {
                         self.noPhotoLabel.isHidden = false
@@ -279,7 +279,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
                         UiUtils.showError(error, controller: self)
                     } else {
                         guard let imageData = imageData else {
-                            UiUtils.showError("Could not download image", controller: self)
+                            UiUtils.showError("errorDownloadImage".localized(), controller: self)
                             return
                         }
                         
@@ -299,7 +299,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
         
         guard photo.imageData != nil else {
             debugPrint("No image data to display")
-            UiUtils.showToast(message: "Please wait for photo downloads to finish", view: self.view)
+            UiUtils.showToast(message: "waitForPhotos", view: self.view)
             return
         }
         

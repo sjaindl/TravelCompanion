@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  Travel Companion
+
+  Created by Stefan Jaindl on 28.10.18.
+  Copyright © 2018 Stefan Jaindl. All rights reserved.
+*/
+
+"anonymous" = "Anonymous";
+"mainMenuTitle" = "Main Menu";
+"photoDetail" = "Photo Detail";
+"remember" = "Remember";
+"noImageData" = "No image data available";
+"imageNotSaved" = "Could not save image";
+"chooseAction" = "Choose action";
+"showPhoto" = "Show photo";
+"delete" = "Delete";
+"cancel" = "Cancel";
+"addPlace" = "Add %@ Place";
+"offline" = "The Internet connection appears to be offline.";
+"enterPlace" = "Enter Place";
+"addNote" = "Add Note";
+"addTransport" = "Add %@";
+"noTransportData" = "No transport data available";
+"choosePlaceType" = "Choose place type";
+"search" = "Search";
+"attractions" = "Attractions";
+"restaurants" = "Restaurants";
+"hotels" = "Hotels";
+"publicTransport" = "Public Transport";
+"flights" = "Flights";
+"flight" = "Flight";
+"upcomingTrips" = "Upcoming Trips";
+"pastTrips" = "Past Trips";
+"addPlan" = "Add Plan";
+"plan" = "Plan";
+"show" = "Show";
+"numberOfTrips" = "%d Trips";
+"km" = "%.2f km";
+"duration" = "%d hours, %d minutes";
+"addPublicTransport" = "Add Public Transport";
+"addRoute?" = "Do you want to add the route?";
+"addRoute" = "Add route";
+"addStopOrRoute?" = "Do you want to add the stop or whole route?";
+"singleStop" = "Single Stop";
+"wholeRoute" = "Whole route";
+"flightDetail" = "≈%.2f km, %d hours, %d minutes";
+"addFlight" = "Add Flight";
+"addFlight?" = "Do you want to add the flight or whole leg?";
+"singleFlight" = "Single flight";
+"wholeLeg" = "Whole leg";
+"noWikiPage" = "No Wiki page found";
+"noCountryPhotos" = "This location is not in a country. Can't fetch country photos.";
+"noCountryDetails" = "This location is not in a country. Can't fetch country details.";
+"errorDownloadImage" = "Could not download image";
+"waitForPhotos" = "Please wait for photo downloads to finish";
+"south" = "S";
+"north" = "N";
+"west" = "W";
+"east" = "E";
+"km²" = "km²";
+"noCountryData" = "No country data available.";
+"explore" = "Explore";
+"showDetails" = "Show details";
+"planExists" = "Plan %@ exists. Can't delete pin.";
+"addTranport" = "Add %@";

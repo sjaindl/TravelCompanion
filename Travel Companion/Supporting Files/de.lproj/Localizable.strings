@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  Travel Companion
+
+  Created by Stefan Jaindl on 28.10.18.
+  Copyright © 2018 Stefan Jaindl. All rights reserved.
+*/
+
+"anonymous" = "Anonym";
+"mainMenuTitle" = "Hauptmenü";
+"photoDetail" = "Foto Detail";
+"remember" = "Festhalten";
+"noImageData" = "Keine Fotos verfügbar";
+"imageNotSaved" = "Konnte Fotos nicht speichern";
+"chooseAction" = "Wähle Aktion";
+"showPhoto" = "Zeite Foto";
+"delete" = "Löschen";
+"cancel" = "Abbrechen";
+"addPlace" = "%@-Ort hinzufügen";
+"offline" = "Es besteht keine Netzwerkverbindung.";
+"enterPlace" = "Ort eingeben";
+"addNote" = "Notiz hinzufügen";
+"addTransport" = "Füge %@ hinzu";
+"noTransportData" = "Keine Transporte verfügbar";
+"choosePlaceType" = "Wähle Orttyp";
+"search" = "Suche";
+"attractions" = "Attraktionen";
+"restaurants" = "Restaurants";
+"hotels" = "Hotels";
+"publicTransport" = "Transporte";
+"flights" = "Flüge";
+"flight" = "Flug";
+"upcomingTrips" = "Bevorstehende Reisen";
+"pastTrips" = "Vergangene Reisen";
+"addPlan" = "Plan hinzufügen";
+"plan" = "Plan";
+"show" = "Anzeigen";
+"numberOfTrips" = "%d Reisen";
+"km" = "%.2f km";
+"duration" = "%d Stunden, %d Minuten";
+"addPublicTransport" = "Transport hinzufügen";
+"addRoute?" = "Möchtest du die Route hinzufügen?";
+"addRoute" = "Route hinzufügen";
+"addStopOrRoute?" = "Möchtest du den einzelnen Stop oder die gesamte Route hinzufügen?";
+"singleStop" = "Einzelner Stop";
+"wholeRoute" = "Gesamte Route";
+"flightDetail" = "≈%.2f km, %d Stunden, %d Minuten";
+"addFlight" = "Flug hinzufügen";
+"addFlight?" = "Möchtest du den Zwischenflug oder die gesamte Route hinzufügen?";
+"singleFlight" = "Zwischenflug";
+"wholeLeg" = "Gesamte Route";
+"noWikiPage" = "Keine Wiki-Seite gefunden";
+"noCountryPhotos" = "Dieser Ort kein Land. Keine Fotos verfügbar.";
+"noCountryDetails" = "Dieser Ort kein Land. Keine Länderdetails verfügbar.";
+"errorDownloadImage" = "Fehler beim Herunterladen der Fotos";
+"waitForPhotos" = "Bitte warte bis das Herunterladen der Fotos fertig ist";
+"south" = "S";
+"north" = "N";
+"west" = "W";
+"east" = "O";
+"km²" = "km²";
+"noCountryData" = "Keine Länderdaten verfügbar";
+"explore" = "Erkunden";
+"showDetails" = "Details anzeigen";
+"planExists" = "Plan %@ existiert. Pin kann nicht gelöscht werden.";
+"addTranport" = "Füge %@ hinzu";

@@ -49,7 +49,7 @@ public enum GooglePlaceType: String {
 
 class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     
-    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, plan: Plan, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "Enter Place") {
+    convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, plan: Plan, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "enterPlace".localized()) {
         
         let gpaViewController = GooglePlacesAutocompleteContainer(
             apiKey: apiKey,
@@ -146,7 +146,7 @@ extension GooglePlacesAutocompleteContainer {
         let docData = try! FirestoreEncoder().encode(place)
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.getId(), data: docData) { (error) in
             if let error = error {
-                UiUtils.showToast(message: "Error adding document: \(error)", view: self.view)
+                UiUtils.showToast(message: error.localizedDescription, view: self.view)
             } else {
                 debugPrint("Document added")
                 self.addPlaceToPlan(place)

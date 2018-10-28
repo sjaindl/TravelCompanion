@@ -20,7 +20,7 @@ class NotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Add Note"
+        self.navigationItem.title = "addNote".localized()
         
         notes.text = plannable.getNotes()
     }
@@ -46,7 +46,7 @@ class NotesViewController: UIViewController {
         
         FirestoreClient.addData(collectionReference: plannableCollectionReference, documentName: plannable.getId(), data: docData) { (error) in
             if let error = error {
-                UiUtils.showError("Error adding document: \(error)", controller: self)
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 debugPrint("Notes document added")
             }

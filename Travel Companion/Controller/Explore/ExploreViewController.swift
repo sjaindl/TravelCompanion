@@ -26,7 +26,7 @@ class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Explore"
+        self.navigationItem.title = "explore".localized()
         
         map.delegate = self
         firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.places)
@@ -60,14 +60,14 @@ class ExploreViewController: UIViewController {
                 fetchFromFirestore()
             }
         } catch {
-            UiUtils.showError("Data fetch could not be performed: \(error.localizedDescription)", controller: self)
+            UiUtils.showError(error.localizedDescription, controller: self)
         }
     }
     
     func fetchFromFirestore() {
         firestoreDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
-                UiUtils.showError("Error getting documents: \(error)", controller: self)
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 for document in querySnapshot!.documents {
                     debugPrint("\(document.documentID) => \(document.data())")
@@ -141,7 +141,7 @@ class ExploreViewController: UIViewController {
             FirestoreConstants.Ids.Place.longitude: place.coordinate.longitude
         ]) { (error) in
             if let error = error {
-                debugPrint("Error adding document: \(error)")
+                debugPrint("Error adding document: \(error.localizedDescription)")
                 UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 debugPrint("Document added")
@@ -186,15 +186,15 @@ extension ExploreViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
-        let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Show details", comment: "Show details"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "showDetails".localized(), style: .default, handler: { _ in
             self.performSegue(withIdentifier: Constants.Segues.exploreDetail, sender: marker.userData)
             
             self.dismiss(animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
             if let pin = marker.userData as? Pin, let pinName = pin.name {
                 
                 //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
@@ -204,13 +204,13 @@ extension ExploreViewController: GMSMapViewDelegate {
                 
                 documentReference.getDocument { (document, error) in
                     if let document = document, document.exists {
-                        UiUtils.showError("Plan \(pinName) exists. Can't delete pin.", controller: self)
+                        UiUtils.showError(String(format: "planExists".localized(), pinName), controller: self)
                     } else {
                         //delete from Firestore
                         if let placeId = pin.placeId {
                             self.firestoreDbReference.document(placeId).delete() { error in
                                 if let error = error {
-                                    debugPrint("Error removing document: \(error)")
+                                    debugPrint("Error removing document: \(error.localizedDescription)")
                                     UiUtils.showError(error.localizedDescription, controller: self)
                                 } else {
                                     debugPrint("Document successfully removed!")
@@ -232,7 +232,7 @@ extension ExploreViewController: GMSMapViewDelegate {
             self.dismiss(animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
             self.dismiss(animated: true, completion: nil)
         }))
         
@@ -264,7 +264,7 @@ extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
     }
     
     func placePicker(_ viewController: GMSPlacePickerViewController, didFailWithError error: Error) {
-        UiUtils.showError("An error occurred while picking a place: \(error)", controller: self)
+        UiUtils.showError(error.localizedDescription, controller: self)
     }
     
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {

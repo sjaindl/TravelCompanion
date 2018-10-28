@@ -83,7 +83,8 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                 duration = route.totalDuration
             }
             
-            var detailText = "≈\(segment.distance) km, \(duration / 60) hours, \(duration % 60) minutes"
+            var detailText = String(format: "flightDetail".localized(), segment.distance, duration / 60, duration % 60)
+            
             if let prices = leg.indicativePrices, prices.count > 0 {
                 if let minPrice = prices[0].nativePriceLow, let maxPrice = prices[0].nativePriceHigh {
                     detailText += ", \(minPrice) - \(maxPrice) \(prices[0].currency)"
@@ -136,9 +137,9 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             let leg = cellData[indexPath.section].airLeg!
             
             //choose single flight or whole leg?
-            let alert = UIAlertController(title: "Add Flight", message: "Do you want to add the tapped flight or whole leg?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "addFlight".localized(), message: "addFlight?".localized(), preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Single flight", comment: "Add single flight"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "singleFlight".localized(), style: .default, handler: { _ in
                 
                 let hop = self.cellData[indexPath.section].airHop[indexPath.row - 1]
                 let airline = searchResponse.airlines[hop.airline]
@@ -151,7 +152,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Whole leg", comment: "Add whole leg"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "wholeLeg".localized(), style: .default, handler: { _ in
                 
                 if let hops = leg.hops {
                     for hop in hops {
@@ -167,7 +168,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                 controller.navigationController?.popToViewController(popToController, animated: true)
             }))
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
                 controller.dismiss(animated: true, completion: nil)
             }))
             
@@ -242,6 +243,6 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
     }
     
     func description() -> String {
-        return "Flight"
+        return "flight".localized()
     }
 }

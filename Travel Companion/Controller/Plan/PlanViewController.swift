@@ -33,7 +33,7 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Plan"
+        self.navigationItem.title = "plan".localized()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -68,7 +68,7 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
                 pins = result
             }
         } catch {
-            UiUtils.showError("Data fetch could not be performed: \(error.localizedDescription)", controller: self)
+            UiUtils.showError(error.localizedDescription, controller: self)
         }
     }
     
@@ -76,7 +76,7 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
         firestoreDbReference.getDocuments() { (querySnapshot, error) in
             if let error = error {
                 debugPrint("Error getting documents: \(error)")
-                UiUtils.showError("Could not fetch plans: \(error)", controller: self)
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 self.upcomingTrips.removeAll()
                 self.pastTrips.removeAll()
@@ -172,7 +172,7 @@ extension PlanViewController {
                     }
                     
                     guard let data = data, let image = UIImage(data: data) else {
-                        UiUtils.showToast(message: "No image data available", view: self.view)
+                        UiUtils.showToast(message: "noImageData".localized(), view: self.view)
                         return
                     }
                     
@@ -186,9 +186,9 @@ extension PlanViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Show", comment: "Show"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "show".localized(), style: .default, handler: { _ in
             DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes some seconds)
                 self.performSegue(withIdentifier: Constants.Segues.planDetail, sender: indexPath)
             }
@@ -196,13 +196,13 @@ extension PlanViewController {
             self.dismiss(animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: "Delete"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
             let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
             let imageRef = plan.imageRef
             
             self.firestoreDbReference.document(plan.pinName).delete() { error in
                 if let error = error {
-                    UiUtils.showError("Error removing document: \(error)", controller: self)
+                    UiUtils.showError(error.localizedDescription, controller: self)
                 } else {
                     debugPrint("Document successfully removed!")
                     self.remove(at: indexPath)
@@ -231,7 +231,7 @@ extension PlanViewController {
             self.dismiss(animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
             self.dismiss(animated: true, completion: nil)
         }))
         
@@ -256,13 +256,13 @@ extension PlanViewController {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return PlanConstants.Trips.TripTitles.upcoming.rawValue
+            return PlanConstants.Trips.TripTitles.upcoming.rawValue.localized()
         } else {
-            return PlanConstants.Trips.TripTitles.past.rawValue
+            return PlanConstants.Trips.TripTitles.past.rawValue.localized()
         }
     }
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "\(getSectionArray(for: section).count) Trips"
+        return String(format: "numberOfTrips".localized(), getSectionArray(for: section).count)
     }
 }

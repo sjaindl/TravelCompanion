@@ -47,7 +47,7 @@ class AddPlaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Add \(placeType.rawValue) Place"
+        self.navigationItem.title = String(format: "addPlace".localized(), placeType.rawValue)
         
         map.delegate = self
         initCamera()
@@ -80,7 +80,7 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         selectedPlace = SelectedPlace(marker: marker, coordinate: coordinate)
         
         guard let reachability = Network.reachability, reachability.isReachable else {
-            UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+            UiUtils.showError("offline".localized(), controller: self)
             return
         }
         
@@ -89,7 +89,7 @@ extension AddPlaceViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         guard let reachability = Network.reachability, reachability.isReachable else {
-            UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+            UiUtils.showError("offline".localized(), controller: self)
             return false
         }
         
@@ -111,7 +111,6 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         
         let placesSearchController = initPlacesSearchViewController()
         searchView = placesSearchController.searchBar
-        //searchView?.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(placesSearchController.searchBar)
         

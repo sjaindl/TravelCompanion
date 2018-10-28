@@ -12,18 +12,18 @@ struct PlanConstants {
     
     struct Trips {
         enum TripTitles: String {
-            case upcoming = "Upcoming Trips"
-            case past = "Past Trips"
+            case upcoming = "upcomingTrips"
+            case past = "pastTrips"
         }
     }
     
     struct TripDetails {
         enum TripTitles: String {
-            case flights = "Flights"
-            case publicTransport = "Public Transport"
-            case hotels = "Hotels"
-            case restaurants = "Restaurants"
-            case attractions = "Attractions"
+            case flights = "flights"
+            case publicTransport = "publicTransport"
+            case hotels = "hotels"
+            case restaurants = "restaurants"
+            case attractions = "attractions"
         }
     }
 }

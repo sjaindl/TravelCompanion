@@ -25,7 +25,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Add Plan"
+        self.navigationItem.title = "addPlan".localized()
         
         destinationPicker.delegate = self
         destinationPicker.dataSource = self
@@ -75,7 +75,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             FirestoreConstants.Ids.Plan.endDate: plan.endDate
         ]) { (error) in
             if let error = error {
-                UiUtils.showError("Error adding document: \(error)", controller: self)
+                UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 debugPrint("Document added")
             }

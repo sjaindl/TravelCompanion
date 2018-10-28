@@ -24,7 +24,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Add \(transportDelegate.description())"
+        self.navigationItem.title = String(format: "addTransport".localized(), transportDelegate.description())
         
         origin.delegate = self
         destination.delegate = self
@@ -60,7 +60,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
             
             guard let searchResponse = searchResponse else {
                 DispatchQueue.main.async {
-                    UiUtils.showError("No transport data available", controller: self)
+                    UiUtils.showError("noTransportData".localized(), controller: self)
                 }
                 return
             }

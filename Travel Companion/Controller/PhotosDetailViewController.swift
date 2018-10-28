@@ -19,7 +19,7 @@ class PhotosDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Photo Detail"
+        self.navigationItem.title = "photoDetail".localized()
         
         photoImage.image = UIImage(data: data)
         photoTitle.text = text

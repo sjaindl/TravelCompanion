@@ -58,8 +58,8 @@ public class ExploreDetailViewController: UIViewController {
             phoneTitle.isHidden = true
         }
         
-        let latitudePostfix = pin.latitude < 0 ? "S" : "N"
-        let longitudePostfix = pin.longitude < 0 ? "W" : "E"
+        let latitudePostfix = pin.latitude < 0 ? "south".localized() : "north".localized()
+        let longitudePostfix = pin.longitude < 0 ? "west".localized() : "east".localized()
         latitudeLongitude.text = "\(pin.latitude)° \(latitudePostfix), \(pin.longitude)° \(longitudePostfix)"
         
         if let website = pin.url?.absoluteString {
@@ -103,7 +103,7 @@ public class ExploreDetailViewController: UIViewController {
             self.currency.text = currency
         }
         
-        self.area.text = (country.area as NSNumber).description(withLocale: Locale.current) + " km²"
+        self.area.text = (country.area as NSNumber).description(withLocale: Locale.current) + " " + "km²".localized()
         self.population.text = (country.population as NSNumber).description(withLocale: Locale.current)
         
         if let timezones = country.timezones, !timezones.isEmpty {
@@ -188,7 +188,7 @@ public class ExploreDetailViewController: UIViewController {
             } else {
                 
                 guard let reachability = Network.reachability, reachability.isReachable else {
-                    UiUtils.showError("The Internet connection appears to be offline.", controller: self)
+                    UiUtils.showError("offline".localized(), controller: self)
                     self.enableTabs(true)
                     return
                 }
@@ -197,13 +197,13 @@ public class ExploreDetailViewController: UIViewController {
             }
 
         } catch {
-            UiUtils.showError("Country data could not be retrieved: \(error.localizedDescription)", controller: self)
+            UiUtils.showError(error.localizedDescription, controller: self)
         }
     }
     
     func fetchNewCountryData() {
         guard let newCountry = pin.countryCode else {
-            UiUtils.showToast(message: "This location is not in a country. Can't fetch country details.", view: self.view)
+            UiUtils.showToast(message: "noCountryDetails", view: self.view)
             self.enableTabs(true)
             return
         }
@@ -215,7 +215,7 @@ public class ExploreDetailViewController: UIViewController {
                     UiUtils.showError(error, controller: self)
                 } else {
                     guard let result = result else {
-                        UiUtils.showError("No country data available.", controller: self)
+                        UiUtils.showError("noCountryData", controller: self)
                         self.enableTabs(true)
                         return
                     }
