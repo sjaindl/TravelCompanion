@@ -9,7 +9,7 @@
 import WebKit
 import UIKit
 
-class WikiViewController: UIViewController, WKNavigationDelegate {
+class WikiViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     var pin: Pin!
@@ -49,9 +49,10 @@ class WikiViewController: UIViewController, WKNavigationDelegate {
                 }
             }
         }
-        
     }
-    
+}
+
+extension WikiViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         debugPrint("finish navigation to \(String(describing: webView.url))")
     }

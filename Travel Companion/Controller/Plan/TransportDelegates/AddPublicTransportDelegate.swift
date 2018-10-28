@@ -254,7 +254,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
     
     func buildSearchQueryItems(origin: String, destination: String) -> [String: String] {
         return [
-            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRome2Rio,
+            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRomeToRio,
             Rome2RioConstants.ParameterKeys.originName: origin,
             Rome2RioConstants.ParameterKeys.destinationName: destination,
             Rome2RioConstants.ParameterKeys.noAir: "true",

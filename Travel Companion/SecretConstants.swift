@@ -12,6 +12,6 @@ class SecretConstants {
     static let apiKeyGoogleMaps = "insert your api key here"
     static let apiKeyGooglePlaces = "insert your api key here"
     static let apiKeyFlickr = "insert your api key here"
-    static let apiKeyRome2Rio = "insert your api key here"
+    static let apiKeyRomeToRio = "insert your api key here"
     static let userNameGeoNames = "insert your username here"
 }

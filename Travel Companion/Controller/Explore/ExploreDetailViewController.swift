@@ -39,6 +39,23 @@ public class ExploreDetailViewController: UIViewController {
     @IBOutlet weak var nativeName: UILabel!
     @IBOutlet weak var regionalBlocks: UILabel!
     
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.tabBarController?.navigationItem.title = pin.name
+        
+        enableTabs(false)
+        initResultsController()
+        setPinData(pin)
+        
+        if let country: Country = pin.countryOfPin {
+            setCountryData(country)
+            enableTabs(true)
+        } else {
+            fetchCountry()
+        }
+    }
+    
     func setPinData(_ pin: Pin) {
         placeName.text = pin.name
         
@@ -132,23 +149,6 @@ public class ExploreDetailViewController: UIViewController {
         
         if let regionalBlocks = country.regionalBlocks, !regionalBlocks.isEmpty {
             self.regionalBlocks.text = regionalBlocks
-        }
-    }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.tabBarController?.navigationItem.title = pin.name
-        
-        enableTabs(false)
-        initResultsController()
-        setPinData(pin)
-        
-        if let country: Country = pin.countryOfPin {
-            setCountryData(country)
-            enableTabs(true)
-        } else {
-            fetchCountry()
         }
     }
     

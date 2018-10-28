@@ -25,7 +25,6 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Do any additional setup after loading the view.
         firestorePlanDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
     }
     
@@ -90,7 +89,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
 
 extension RememberViewController {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 //past trips
+        return 1 //past trips. Default is already 1. Just to make it clear.
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

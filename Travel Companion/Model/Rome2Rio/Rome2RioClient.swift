@@ -78,7 +78,7 @@ class Rome2RioClient {
     
     func buildAutoCompleteQueryItems(query: String) -> [String: String] {
         return [
-            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRome2Rio,
+            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRomeToRio,
             Rome2RioConstants.ParameterKeys.query: query
         ]
     }
