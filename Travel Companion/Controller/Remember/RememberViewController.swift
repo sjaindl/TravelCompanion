@@ -15,7 +15,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var firestorePlanDbReference: CollectionReference!
-    var pastTrips: [Plan] = []
+    var rememberTrips: [Plan] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
                 UiUtils.showError(error.localizedDescription, controller: self)
             } else {
                 
-                self.pastTrips.removeAll()
+                self.rememberTrips.removeAll()
                 
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
@@ -63,8 +63,9 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         let plan = Plan(name: name, originalName: pinName, startDate: startDate, endDate: endDate, imageRef: imagePath)
                         
-                        if endDate.compare(Timestamp(date: Date())).rawValue <= 0 {
-                            self.pastTrips.append(plan)
+                        //remember photos should be storable from the beginning of the trip
+                        if startDate.compare(Timestamp(date: Date())).rawValue <= 0 {
+                            self.rememberTrips.append(plan)
                         }
                     }
                 }
@@ -80,7 +81,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == Constants.Segues.rememberDetail {
             let controller = segue.destination as! RememberDetailViewController
             let indexPath = sender as! IndexPath
-            let plan = pastTrips[indexPath.row]
+            let plan = rememberTrips[indexPath.row]
             controller.plan = plan
             controller.firestorePlanDbReference = firestorePlanDbReference
         }
@@ -93,13 +94,13 @@ extension RememberViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pastTrips.count
+        return rememberTrips.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planCell)!
         
-        let plan = pastTrips[indexPath.row]
+        let plan = rememberTrips[indexPath.row]
         
         cell.textLabel?.text = plan.name
         cell.detailTextLabel?.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)

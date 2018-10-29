@@ -125,13 +125,13 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let indexPath = sender as! IndexPath
-        let plan = getSectionArray(for: indexPath.section)[indexPath.row]
-        
         if segue.identifier == Constants.Segues.addPlan {
             let controller = segue.destination as! AddPlanViewController
             controller.pins = pins
         } else if segue.identifier == Constants.Segues.planDetail {
+            let indexPath = sender as! IndexPath
+            let plan = getSectionArray(for: indexPath.section)[indexPath.row]
+            
             let controller = segue.destination as! PlanDetailViewController
             
             controller.plan = plan
@@ -139,6 +139,9 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
             controller.dataController = dataController
             controller.firestorePlanDbReference = firestoreDbReference
         } else if segue.identifier == Constants.Segues.exploreDetail {
+            let indexPath = sender as! IndexPath
+            let plan = getSectionArray(for: indexPath.section)[indexPath.row]
+            
             let controller = segue.destination as! UITabBarController
             let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
             let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
