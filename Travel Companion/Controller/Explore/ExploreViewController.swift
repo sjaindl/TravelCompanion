@@ -127,6 +127,7 @@ class ExploreViewController: UIViewController {
         let position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let marker = GMSMarker(position: position)
         marker.map = map
+        marker.appearAnimation = .pop
         
         return marker
     }
@@ -186,7 +187,12 @@ extension ExploreViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
-        let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
+        guard let pin = marker.userData as? Pin else {
+            debugPrint("no valid pin")
+            return false
+        }
+        
+        let alert = UIAlertController(title: pin.name, message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "showDetails".localized(), style: .default, handler: { _ in
             self.performSegue(withIdentifier: Constants.Segues.exploreDetail, sender: marker.userData)

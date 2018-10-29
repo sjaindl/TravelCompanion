@@ -58,7 +58,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let plan = Plan(name: destinationText.text!, originalName: originalName, startDate: Timestamp(date: startDate.date), endDate: Timestamp(date: endDate.date))
         
         //TODO: check whether plan already exists and ask if user wants to override
-        persistPlan(of: plan)
+        persistPlan(plan)
         
         dismiss(animated: true, completion: nil)
     }
@@ -67,7 +67,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         dismiss(animated: true, completion: nil)
     }
     
-    func persistPlan(of plan: Plan) {
+    func persistPlan(_ plan: Plan) {
         FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: plan.pinName, data: [
             FirestoreConstants.Ids.Plan.name: plan.name,
             FirestoreConstants.Ids.Plan.pinName: plan.pinName,
