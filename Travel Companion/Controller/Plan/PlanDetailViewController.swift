@@ -10,7 +10,7 @@ import CodableFirebase
 import Firebase
 import UIKit
 
-class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -339,6 +339,54 @@ extension PlanDetailViewController {
         }
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UITableViewHeaderFooterView()
+        headerView.textLabel?.text = headerTitle(for: section)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(sectionTapped))
+        tapRecognizer.delegate = self
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
+        headerView.addGestureRecognizer(tapRecognizer)
+        
+        return headerView
+    }
+    
+    @objc
+    func sectionTapped(sender: UITapGestureRecognizer) {
+        //make sure that header row was tapped:
+        guard sender.state == UIGestureRecognizer.State.ended, let tableView = self.tableView, sender.view != nil else {
+            return
+        }
+        
+        let tapLocation = sender.location(in: tableView)
+        if let tapIndexPath = tableView.indexPathForRow(at: tapLocation) {
+            if (tableView.cellForRow(at: tapIndexPath)) != nil {
+                debugPrint("tapped on row at index: \(tapIndexPath.row)")
+            }
+        }  else {
+            for section in 0..<tableView.numberOfSections {
+                let sectionHeaderArea = tableView.rectForHeader(inSection: section)
+                if sectionHeaderArea.contains(tapLocation) {
+                    // do something with the section
+                    debugPrint("tapped on section at index: \(section)")
+                    
+                    if section == 0 {
+                        performSegue(withIdentifier: Constants.Segues.planAddFlight, sender: nil)
+                    } else if section == 1 {
+                        performSegue(withIdentifier: Constants.Segues.planAddPublicTransport, sender: nil)
+                    } else if section == 2 {
+                        addHotel(sender)
+                    } else if section == 3 {
+                        addRestaurant(sender)
+                    } else {
+                        addAttraction(sender)
+                    }
+                }
+            }
+        }
+    }
+    
     fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
         return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
     }
@@ -397,6 +445,20 @@ extension PlanDetailViewController {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return headerTitle(for: section)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = CustomColors.appTextColorDefault()
+        header.textLabel?.font = header.textLabel?.font.withSize(20)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func headerTitle(for section: Int) -> String? {
         if section == 0 {
             return PlanConstants.TripDetails.TripTitles.flights.rawValue.localized()
         } else if section == 1 {
@@ -408,16 +470,6 @@ extension PlanDetailViewController {
         } else {
             return PlanConstants.TripDetails.TripTitles.attractions.rawValue.localized()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = CustomColors.appTextColorDefault()
-        header.textLabel?.font = header.textLabel?.font.withSize(20)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
