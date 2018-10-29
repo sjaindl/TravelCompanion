@@ -103,9 +103,6 @@ extension AddPlanViewController {
         
         if textField == self.destinationText {
             destinationPicker.isHidden = false
-            
-            //hide keyboard:
-            textField.endEditing(true)
         }
     }
     

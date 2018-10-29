@@ -375,7 +375,7 @@ extension PlanDetailViewController {
                     addHotel(sender)
                 } else if section == 3 {
                     addRestaurant(sender)
-                } else {
+                } else if section == 4 {
                     addAttraction(sender)
                 }
             }
@@ -402,15 +402,17 @@ extension PlanDetailViewController {
     
     func removeElement(at indexPath: IndexPath) {
         let section = indexPath.section
-        if section == 0 {
+        let row = indexPath.row
+        
+        if section == 0, plan.fligths.count > row {
             plan.fligths.remove(at: indexPath.row)
-        } else if section == 1 {
+        } else if section == 1, plan.publicTransport.count > row {
             plan.publicTransport.remove(at: indexPath.row)
-        } else if section == 2 {
+        } else if section == 2, plan.hotels.count > row {
             plan.hotels.remove(at: indexPath.row)
-        } else if section == 3 {
+        } else if section == 3, plan.restaurants.count > row {
             plan.restaurants.remove(at: indexPath.row)
-        } else {
+        } else if section == 4, plan.attractions.count > row {
             plan.attractions.remove(at: indexPath.row)
         }
     }
