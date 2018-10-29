@@ -360,28 +360,23 @@ extension PlanDetailViewController {
         }
         
         let tapLocation = sender.location(in: tableView)
-        if let tapIndexPath = tableView.indexPathForRow(at: tapLocation) {
-            if (tableView.cellForRow(at: tapIndexPath)) != nil {
-                debugPrint("tapped on row at index: \(tapIndexPath.row)")
-            }
-        }  else {
-            for section in 0..<tableView.numberOfSections {
-                let sectionHeaderArea = tableView.rectForHeader(inSection: section)
-                if sectionHeaderArea.contains(tapLocation) {
-                    // do something with the section
-                    debugPrint("tapped on section at index: \(section)")
-                    
-                    if section == 0 {
-                        performSegue(withIdentifier: Constants.Segues.planAddFlight, sender: nil)
-                    } else if section == 1 {
-                        performSegue(withIdentifier: Constants.Segues.planAddPublicTransport, sender: nil)
-                    } else if section == 2 {
-                        addHotel(sender)
-                    } else if section == 3 {
-                        addRestaurant(sender)
-                    } else {
-                        addAttraction(sender)
-                    }
+        
+        for section in 0..<tableView.numberOfSections {
+            let sectionHeaderArea = tableView.rectForHeader(inSection: section)
+            if sectionHeaderArea.contains(tapLocation) {
+                // do something with the section
+                debugPrint("tapped on section at index: \(section)")
+                
+                if section == 0 {
+                    performSegue(withIdentifier: Constants.Segues.planAddFlight, sender: nil)
+                } else if section == 1 {
+                    performSegue(withIdentifier: Constants.Segues.planAddPublicTransport, sender: nil)
+                } else if section == 2 {
+                    addHotel(sender)
+                } else if section == 3 {
+                    addRestaurant(sender)
+                } else {
+                    addAttraction(sender)
                 }
             }
         }

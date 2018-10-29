@@ -150,6 +150,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                 
                 self.persistFlight(hop, aircraft: aircraft, airline: airline, searchResponse: searchResponse, date: date, firestoreDbReference: firestoreDbReference, plan: plan, controller: popToController)
                 controller.navigationController?.popToViewController(popToController, animated: true)
+                UiUtils.showToast(message: "addedRoute".localized(), view: popToController.view)
             }))
             
             alert.addAction(UIAlertAction(title: "wholeLeg".localized(), style: .default, handler: { _ in
@@ -166,6 +167,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
                 }
                 
                 controller.navigationController?.popToViewController(popToController, animated: true)
+                UiUtils.showToast(message: "addedRoute".localized(), view: popToController.view)
             }))
             
             alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in

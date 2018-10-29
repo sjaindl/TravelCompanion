@@ -149,8 +149,15 @@ extension GooglePlacesAutocompleteContainer {
                 UiUtils.showToast(message: error.localizedDescription, view: self.view)
             } else {
                 debugPrint("Document added")
+                
                 self.addPlaceToPlan(place)
-                self.dismiss(animated: true, completion: nil)
+                
+                UiUtils.showToast(message: "addedPlace".localized(), view: self.view)
+                
+                //show toast for 1 second
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                    self.dismiss(animated: true, completion: nil)
+                })
             }
         }
     }

@@ -64,3 +64,5 @@
 "showDetails" = "Show details";
 "planExists" = "Plan %@ exists. Can't delete pin.";
 "addTranport" = "Add %@";
+"addedRoute" = "Successfully added route";
+"addedPlace" = "Successfully added place";

@@ -64,3 +64,5 @@
 "showDetails" = "Details anzeigen";
 "planExists" = "Plan %@ existiert. Pin kann nicht gelöscht werden.";
 "addTranport" = "Füge %@ hinzu";
+"addedRoute" = "Route erfolgreich hinzugefügt";
+"addedPlace" = "Platz erfolgreich hinzugefügt";
