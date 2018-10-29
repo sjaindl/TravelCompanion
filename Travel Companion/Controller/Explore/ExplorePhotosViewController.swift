@@ -299,7 +299,7 @@ extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionVi
         
         guard photo.imageData != nil else {
             debugPrint("No image data to display")
-            UiUtils.showToast(message: "waitForPhotos", view: self.view)
+            UiUtils.showToast(message: "waitForPhotos".localized(), view: self.view)
             return
         }
         

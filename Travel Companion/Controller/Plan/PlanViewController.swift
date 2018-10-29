@@ -125,17 +125,36 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = sender as! IndexPath
+        let plan = getSectionArray(for: indexPath.section)[indexPath.row]
+        
         if segue.identifier == Constants.Segues.addPlan {
             let controller = segue.destination as! AddPlanViewController
             controller.pins = pins
         } else if segue.identifier == Constants.Segues.planDetail {
             let controller = segue.destination as! PlanDetailViewController
-            let indexPath = sender as! IndexPath
-            let plan = getSectionArray(for: indexPath.section)[indexPath.row]
+            
             controller.plan = plan
             controller.pins = pins
             controller.dataController = dataController
             controller.firestorePlanDbReference = firestoreDbReference
+        } else if segue.identifier == Constants.Segues.exploreDetail {
+            let controller = segue.destination as! UITabBarController
+            let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
+            let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
+            let wikivoyagetargetController = controller.viewControllers![2] as! WikiViewController
+            let wikitargetController = controller.viewControllers![3] as! WikiViewController
+            
+            let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
+            
+            detailTargetController.pin = pin
+            detailTargetController.dataController = dataController
+            photosTargetController.pin = pin
+            photosTargetController.dataController = dataController
+            wikitargetController.pin = pin
+            wikitargetController.domain = WikiConstants.UrlComponents.domainWikipedia
+            wikivoyagetargetController.pin = pin
+            wikivoyagetargetController.domain = WikiConstants.UrlComponents.domainWikiVoyage
         }
     }
 }
@@ -191,6 +210,14 @@ extension PlanViewController {
         alert.addAction(UIAlertAction(title: "show".localized(), style: .default, handler: { _ in
             DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes some seconds)
                 self.performSegue(withIdentifier: Constants.Segues.planDetail, sender: indexPath)
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "showDetails".localized(), style: .default, handler: { _ in
+            DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes some seconds)
+                self.performSegue(withIdentifier: Constants.Segues.exploreDetail, sender: indexPath)
             }
             
             self.dismiss(animated: true, completion: nil)
