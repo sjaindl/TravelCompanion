@@ -33,6 +33,50 @@
 		9A5B6A3021117EC500060790 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1421117EC400060790 /* Podfile */; };
 		9A5B6A3121117EC500060790 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9A5B6A1521117EC400060790 /* LICENSE */; };
 		9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B6A3521117EFD00060790 /* AppDelegate.swift */; };
+		9A61868C2188CE60002F59BC /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
+		9A61868D2188CE97002F59BC /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DA21117E4600060790 /* DataController.swift */; };
+		9A61868E2188CE99002F59BC /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D921117E4600060790 /* Pin+Extensions.swift */; };
+		9A61868F2188CE9B002F59BC /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E121117E4600060790 /* Photos+Extensions.swift */; };
+		9A6186902188CE9D002F59BC /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
+		9A6186912188CEA0002F59BC /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266B02122DF7200EE0F5C /* CoreDataClient.swift */; };
+		9A6186922188CEC2002F59BC /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
+		9A6186932188CEC4002F59BC /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
+		9A6186942188CEF3002F59BC /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DC21117E4600060790 /* FlickrClient.swift */; };
+		9A6186952188CEF5002F59BC /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DD21117E4600060790 /* FlickrConstants.swift */; };
+		9A6186962188CF25002F59BC /* SecretConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D1211245AF001D2517 /* SecretConstants.swift */; };
+		9A6186972188CF60002F59BC /* FirestoreRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA83BB2165DE0B00CDE128 /* FirestoreRemoteConfig.swift */; };
+		9A6186982188CF7D002F59BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
+		9A6186992188D015002F59BC /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
+		9A61869A2188D017002F59BC /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
+		9A61869B2188D02B002F59BC /* FetchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C27F212BD95B0056CD0D /* FetchType.swift */; };
+		9A61869C2188E6C8002F59BC /* WikiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A94013F21334F0400178105 /* WikiClient.swift */; };
+		9A61869D2188E6CC002F59BC /* WikiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A94014121334F0D00178105 /* WikiConstants.swift */; };
+		9A61869E21897C06002F59BC /* Rome2RioClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DA213E4E4800249E83 /* Rome2RioClient.swift */; };
+		9A61869F21897C0A002F59BC /* Rome2RioConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DC213E4E5500249E83 /* Rome2RioConstants.swift */; };
+		9A6186A021897C0D002F59BC /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D9DE213E50F400249E83 /* SearchResponse.swift */; };
+		9A6186A121897C0F002F59BC /* AutoCompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */; };
+		9A6186A721898120002F59BC /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2932132A4110056CD0D /* Plan.swift */; };
+		9A6186A82189813C002F59BC /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A450F2F2185CE7000875B42 /* LocalizableString.swift */; };
+		9A6186A921898141002F59BC /* FirestoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A42122C37500EE0F5C /* FirestoreClient.swift */; };
+		9A6186AA21898144002F59BC /* FirestoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AC2122C3C100EE0F5C /* FirestoreConstants.swift */; };
+		9A6186AB21898147002F59BC /* Flight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8822482148EAB300C333D4 /* Flight.swift */; };
+		9A6186AC2189814A002F59BC /* Plannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88224A2148ED7100C333D4 /* Plannable.swift */; };
+		9A6186AD2189814D002F59BC /* PublicTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88225B215151B300C333D4 /* PublicTransport.swift */; };
+		9A6186B52189829A002F59BC /* AddTransportSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B42189829A002F59BC /* AddTransportSearchDelegate.swift */; };
+		9A6186B7218982BF002F59BC /* AddFlightSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B6218982BF002F59BC /* AddFlightSearchDelegate.swift */; };
+		9A6186B9218982D0002F59BC /* AddPublicTransportSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B8218982D0002F59BC /* AddPublicTransportSearchDelegate.swift */; };
+		9A6186BB21898399002F59BC /* AddPublicTransportSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B8218982D0002F59BC /* AddPublicTransportSearchDelegate.swift */; };
+		9A6186BC2189839D002F59BC /* AddTransportSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B42189829A002F59BC /* AddTransportSearchDelegate.swift */; };
+		9A6186BD218983BD002F59BC /* AddFlightSearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186B6218982BF002F59BC /* AddFlightSearchDelegate.swift */; };
+		9A6186BE21898727002F59BC /* PlannableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88224C21496D6800C333D4 /* PlannableFactory.swift */; };
+		9A6186BF218A0D3F002F59BC /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CD215ACE010076A3C2 /* GooglePlace.swift */; };
+		9A6186C1218A0DB0002F59BC /* GoogleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */; };
+		9A6186C3218A0DE2002F59BC /* FormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186C2218A0DE2002F59BC /* FormatUtils.swift */; };
+		9A6186C4218A0E75002F59BC /* FormatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186C2218A0DE2002F59BC /* FormatUtils.swift */; };
+		9A6186C6218A14FE002F59BC /* GooglePlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186C5218A14FE002F59BC /* GooglePlaceType.swift */; };
+		9A6186C7218A1804002F59BC /* GooglePlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6186C5218A14FE002F59BC /* GooglePlaceType.swift */; };
+		9A6186C8218A1866002F59BC /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA266A82122C3A800EE0F5C /* GoogleClient.swift */; };
+		9A6186C9218A18F0002F59BC /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
 		9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */; };
 		9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D6BFA2133C60500B98447 /* PlanConstants.swift */; };
 		9A88222F21407CFF00C333D4 /* AutoCompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */; };
@@ -74,23 +118,12 @@
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
-		9AE4C26F212A8CE80056CD0D /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
-		9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
-		9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */; };
-		9AE4C272212A8D0B0056CD0D /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */; };
 		9AE4C273212A8D1E0056CD0D /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DE21117E4600060790 /* WebConstants.swift */; };
 		9AE4C274212A8D200056CD0D /* WebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E221117E4600060790 /* WebClient.swift */; };
-		9AE4C27B212B7CA70056CD0D /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
-		9AE4C27C212B822A0056CD0D /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
-		9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D921117E4600060790 /* Pin+Extensions.swift */; };
-		9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69E121117E4600060790 /* Photos+Extensions.swift */; };
 		9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C27F212BD95B0056CD0D /* FetchType.swift */; };
-		9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69DD21117E4600060790 /* FlickrConstants.swift */; };
 		9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C284212C8CC20056CD0D /* ExploreUiTests.swift */; };
 		9AE4C287212F5EF50056CD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
 		9AE4C288212F5EF70056CD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4CE21121B55001D2517 /* Main.storyboard */; };
-		9AE4C28B212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
-		9AE4C28C212F6A9B0056CD0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
 		9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C28D212F6DC50056CD0D /* UiUtils.swift */; };
 		9AE4C2912131CBE10056CD0D /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2902131CBE10056CD0D /* PlanViewController.swift */; };
 		9AE4C2942132A4110056CD0D /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2932132A4110056CD0D /* Plan.swift */; };
@@ -160,6 +193,11 @@
 		9A5B6A1421117EC400060790 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9A5B6A1521117EC400060790 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9A5B6A3521117EFD00060790 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9A6186B42189829A002F59BC /* AddTransportSearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportSearchDelegate.swift; sourceTree = "<group>"; };
+		9A6186B6218982BF002F59BC /* AddFlightSearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlightSearchDelegate.swift; sourceTree = "<group>"; };
+		9A6186B8218982D0002F59BC /* AddPublicTransportSearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPublicTransportSearchDelegate.swift; sourceTree = "<group>"; };
+		9A6186C2218A0DE2002F59BC /* FormatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtils.swift; sourceTree = "<group>"; };
+		9A6186C5218A14FE002F59BC /* GooglePlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlaceType.swift; sourceTree = "<group>"; };
 		9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		9A6D6BFA2133C60500B98447 /* PlanConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanConstants.swift; sourceTree = "<group>"; };
 		9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompleteResponse.swift; sourceTree = "<group>"; };
@@ -330,6 +368,7 @@
 				9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */,
 				9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */,
 				9ABA83C12169EC9000CDE128 /* CustomColors.swift */,
+				9A6186C2218A0DE2002F59BC /* FormatUtils.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,8 +442,11 @@
 			isa = PBXGroup;
 			children = (
 				9A882254214F6E5C00C333D4 /* AddTransportDelegate.swift */,
+				9A6186B42189829A002F59BC /* AddTransportSearchDelegate.swift */,
 				9A882256214F6E7A00C333D4 /* AddFlightDelegate.swift */,
 				9A882258214F6E8B00C333D4 /* AddPublicTransportDelegate.swift */,
+				9A6186B6218982BF002F59BC /* AddFlightSearchDelegate.swift */,
+				9A6186B8218982D0002F59BC /* AddPublicTransportSearchDelegate.swift */,
 			);
 			path = TransportDelegates;
 			sourceTree = "<group>";
@@ -448,8 +490,6 @@
 				9AE4C2932132A4110056CD0D /* Plan.swift */,
 				9A88224A2148ED7100C333D4 /* Plannable.swift */,
 				9A88225B215151B300C333D4 /* PublicTransport.swift */,
-				9AC023CD215ACE010076A3C2 /* GooglePlace.swift */,
-				9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -459,6 +499,9 @@
 			children = (
 				9AA266A82122C3A800EE0F5C /* GoogleClient.swift */,
 				9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */,
+				9AC023CD215ACE010076A3C2 /* GooglePlace.swift */,
+				9A6186C5218A14FE002F59BC /* GooglePlaceType.swift */,
+				9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */,
 			);
 			path = Google;
 			sourceTree = "<group>";
@@ -849,16 +892,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A6186C3218A0DE2002F59BC /* FormatUtils.swift in Sources */,
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
 				9ABA83BC2165DE0B00CDE128 /* FirestoreRemoteConfig.swift in Sources */,
 				9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */,
+				9A6186B7218982BF002F59BC /* AddFlightSearchDelegate.swift in Sources */,
 				9A882259214F6E8B00C333D4 /* AddPublicTransportDelegate.swift in Sources */,
 				9A94014021334F0400178105 /* WikiClient.swift in Sources */,
 				9A88225C215151B300C333D4 /* PublicTransport.swift in Sources */,
 				9A882251214A2DCD00C333D4 /* NotesViewController.swift in Sources */,
 				9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */,
 				9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */,
+				9A6186C6218A14FE002F59BC /* GooglePlaceType.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
 				9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */,
 				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
@@ -869,6 +915,7 @@
 				9AC023D421651D760076A3C2 /* GlobalCache.swift in Sources */,
 				9AA266AB2122C3B700EE0F5C /* GoogleConstants.swift in Sources */,
 				9AF39BED2126CA7D00D85DF2 /* GeoNamesConstants.swift in Sources */,
+				9A6186B9218982D0002F59BC /* AddPublicTransportSearchDelegate.swift in Sources */,
 				9A8822492148EAB300C333D4 /* Flight.swift in Sources */,
 				9AC023CE215ACE010076A3C2 /* GooglePlace.swift in Sources */,
 				9AE4C280212BD95B0056CD0D /* FetchType.swift in Sources */,
@@ -901,6 +948,7 @@
 				9A8822312140845B00C333D4 /* AddTransportViewController.swift in Sources */,
 				9A88225F21536B6500C333D4 /* RememberDetailViewController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
+				9A6186B52189829A002F59BC /* AddTransportSearchDelegate.swift in Sources */,
 				9A91D9DF213E50F400249E83 /* SearchResponse.swift in Sources */,
 				9A88226521563A3800C333D4 /* RememberPhotos.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
@@ -923,19 +971,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AE4C27D212B82BB0056CD0D /* Pin+Extensions.swift in Sources */,
-				9AE4C28B212F6A9B0056CD0D /* Constants.swift in Sources */,
-				9AE4C283212BDEDC0056CD0D /* FlickrConstants.swift in Sources */,
-				9AE4C27C212B822A0056CD0D /* Country+Extensions.swift in Sources */,
-				9AE4C27E212B82C10056CD0D /* Photos+Extensions.swift in Sources */,
-				9AE4C26F212A8CE80056CD0D /* RestCountriesClient.swift in Sources */,
-				9AE4C272212A8D0B0056CD0D /* GeoNamesConstants.swift in Sources */,
-				9AE4C27B212B7CA70056CD0D /* TravelCompanion.xcdatamodel in Sources */,
-				9AE4C270212A8CEF0056CD0D /* RestCountriesConstants.swift in Sources */,
-				9AE4C271212A8CFA0056CD0D /* GeoNamesClient.swift in Sources */,
+				9A6186BF218A0D3F002F59BC /* GooglePlace.swift in Sources */,
+				9A6186C8218A1866002F59BC /* GoogleClient.swift in Sources */,
+				9A6186992188D015002F59BC /* GeoNamesClient.swift in Sources */,
+				9A6186932188CEC4002F59BC /* RestCountriesConstants.swift in Sources */,
+				9A61869C2188E6C8002F59BC /* WikiClient.swift in Sources */,
+				9A6186AA21898144002F59BC /* FirestoreConstants.swift in Sources */,
+				9A6186962188CF25002F59BC /* SecretConstants.swift in Sources */,
+				9A61869F21897C0A002F59BC /* Rome2RioConstants.swift in Sources */,
+				9A61868D2188CE97002F59BC /* DataController.swift in Sources */,
+				9A6186AB21898147002F59BC /* Flight.swift in Sources */,
 				9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */,
+				9A6186AC2189814A002F59BC /* Plannable.swift in Sources */,
+				9A6186902188CE9D002F59BC /* Country+Extensions.swift in Sources */,
+				9A61868C2188CE60002F59BC /* TravelCompanion.xcdatamodel in Sources */,
 				9AE4C273212A8D1E0056CD0D /* WebConstants.swift in Sources */,
+				9A6186A82189813C002F59BC /* LocalizableString.swift in Sources */,
+				9A61869A2188D017002F59BC /* GeoNamesConstants.swift in Sources */,
+				9A6186C1218A0DB0002F59BC /* GoogleConstants.swift in Sources */,
+				9A6186982188CF7D002F59BC /* Constants.swift in Sources */,
+				9A6186BD218983BD002F59BC /* AddFlightSearchDelegate.swift in Sources */,
+				9A6186922188CEC2002F59BC /* RestCountriesClient.swift in Sources */,
+				9A6186AD2189814D002F59BC /* PublicTransport.swift in Sources */,
+				9A6186972188CF60002F59BC /* FirestoreRemoteConfig.swift in Sources */,
+				9A61869E21897C06002F59BC /* Rome2RioClient.swift in Sources */,
+				9A6186A721898120002F59BC /* Plan.swift in Sources */,
+				9A6186A921898141002F59BC /* FirestoreClient.swift in Sources */,
+				9A6186BB21898399002F59BC /* AddPublicTransportSearchDelegate.swift in Sources */,
 				9AE4C274212A8D200056CD0D /* WebClient.swift in Sources */,
+				9A6186BE21898727002F59BC /* PlannableFactory.swift in Sources */,
+				9A6186952188CEF5002F59BC /* FlickrConstants.swift in Sources */,
+				9A6186C4218A0E75002F59BC /* FormatUtils.swift in Sources */,
+				9A61869D2188E6CC002F59BC /* WikiConstants.swift in Sources */,
+				9A61868E2188CE99002F59BC /* Pin+Extensions.swift in Sources */,
+				9A6186912188CEA0002F59BC /* CoreDataClient.swift in Sources */,
+				9A6186BC2189839D002F59BC /* AddTransportSearchDelegate.swift in Sources */,
+				9A6186A021897C0D002F59BC /* SearchResponse.swift in Sources */,
+				9A6186A121897C0F002F59BC /* AutoCompleteResponse.swift in Sources */,
+				9A6186C7218A1804002F59BC /* GooglePlaceType.swift in Sources */,
+				9A6186C9218A18F0002F59BC /* PlacesNearbySearchResponse.swift in Sources */,
+				9A61868F2188CE9B002F59BC /* Photos+Extensions.swift in Sources */,
+				9A61869B2188D02B002F59BC /* FetchType.swift in Sources */,
+				9A6186942188CEF3002F59BC /* FlickrClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,7 +1022,6 @@
 			files = (
 				9A5B69C021117A7C00060790 /* MainMenuUITests.swift in Sources */,
 				9AE4C286212C8CCC0056CD0D /* ExploreUiTests.swift in Sources */,
-				9AE4C28C212F6A9B0056CD0D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
