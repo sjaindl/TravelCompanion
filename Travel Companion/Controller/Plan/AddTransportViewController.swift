@@ -14,6 +14,7 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     var firestoreDbReference: CollectionReference!
     var planDetailController: PlanDetailViewController!
     var transportDelegate: AddTransportDelegate!
+    var transportSearchDelegate: AddTransportSearchDelegate!
     
     @IBOutlet weak var origin: SearchTextField!
     @IBOutlet weak var destination: SearchTextField!
@@ -50,7 +51,9 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     }
     
     func searchForTransport() {
-        Rome2RioClient.sharedInstance.search(origin: origin.text!, destination: destination.text!, with: transportDelegate) { (error, searchResponse) in
+        let queryItems = transportSearchDelegate.buildSearchQueryItems(origin: origin.text!, destination: destination.text!)
+        
+        Rome2RioClient.sharedInstance.search(with: queryItems) { (error, searchResponse) in
             if let error = error {
                 DispatchQueue.main.async {
                     UiUtils.showError(error, controller: self)

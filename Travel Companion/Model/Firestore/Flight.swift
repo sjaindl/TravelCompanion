@@ -47,7 +47,7 @@ class Flight: NSObject, Plannable {
     }
     
     func description() -> String {
-        return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
+        return "\(FormatUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
     }
     
     func details() -> NSMutableAttributedString {

@@ -67,7 +67,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "\(plan.name), \(UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
+        navigationItem.title = "\(plan.name), \(FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -207,12 +207,14 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let controller = segue.destination as! AddTransportViewController
             controller.firestoreDbReference = plan.firestoreFligthDbReference
             controller.transportDelegate = AddFlightDelegate()
+            controller.transportSearchDelegate = AddFlightSearchDelegate()
             controller.planDetailController = self
             controller.plan = plan
         } else if segue.identifier == Constants.Segues.planAddPublicTransport {
             let controller = segue.destination as! AddTransportViewController
             controller.firestoreDbReference = plan.firestorePublicTransportDbReference
             controller.transportDelegate = AddPublicTransportDelegate()
+            controller.transportSearchDelegate = AddPublicTransportSearchDelegate()
             controller.planDetailController = self
             controller.plan = plan
         } else if segue.identifier == Constants.Segues.planAddNotes {

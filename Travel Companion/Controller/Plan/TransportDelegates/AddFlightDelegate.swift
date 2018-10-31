@@ -224,26 +224,6 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
         }
     }
     
-    func buildSearchQueryItems(origin: String, destination: String) -> [String: String] {
-        return [
-            Rome2RioConstants.ParameterKeys.key: SecretConstants.apiKeyRomeToRio,
-            Rome2RioConstants.ParameterKeys.originName: origin,
-            Rome2RioConstants.ParameterKeys.destinationName: destination,
-            Rome2RioConstants.ParameterKeys.noRail: "true",
-            Rome2RioConstants.ParameterKeys.noBus: "true",
-            Rome2RioConstants.ParameterKeys.noFerry: "true",
-            Rome2RioConstants.ParameterKeys.noCar: "true",
-            Rome2RioConstants.ParameterKeys.noBikeshare: "true",
-            Rome2RioConstants.ParameterKeys.noRideshare: "true",
-            Rome2RioConstants.ParameterKeys.noTowncar: "true",
-            Rome2RioConstants.ParameterKeys.noCommuter: "true",
-            Rome2RioConstants.ParameterKeys.noSpecial: "true",
-            Rome2RioConstants.ParameterKeys.noMinorStart: "true",
-            Rome2RioConstants.ParameterKeys.noMinorEnd: "true",
-            Rome2RioConstants.ParameterKeys.noPath: "true"
-        ]
-    }
-    
     func description() -> String {
         return "flight".localized()
     }

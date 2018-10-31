@@ -7,47 +7,57 @@
 //
 
 import CoreData
+import CoreLocation
+import Firebase
 import XCTest
 
-@testable import Travel_Companion
+//@testable import Travel_Companion
 
 class NetworkInteractionTests: XCTestCase {
     
-//    var sessionUnderTest: URLSession!
     var mockDataController: DataController!
-    
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
-        return managedObjectModel
-    }()
-    
-    lazy var mockPersistantContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "TravelCompanion", managedObjectModel: self.managedObjectModel)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        description.shouldAddStoreAsynchronously = false // Make it simpler in test env
-        
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { (description, error) in
-            // Check if the data store is in memory
-            precondition( description.type == NSInMemoryStoreType )
-            
-            // Check if creating container wrong
-            if let error = error {
-                fatalError("Create an in-mem coordinator failed \(error)")
-            }
-        }
-        return container
-    }()
+    var mockPersistantContainer: NSPersistentContainer!
     
     override func setUp() {
         super.setUp()
+        
+        let managedObjectModel: NSManagedObjectModel = {
+            let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
+            return managedObjectModel
+        }()
+        
+        mockPersistantContainer = {
+            let container = NSPersistentContainer(name: "TravelCompanion", managedObjectModel: managedObjectModel)
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            description.shouldAddStoreAsynchronously = false // Make it simpler in test env
+            
+            container.persistentStoreDescriptions = [description]
+            container.loadPersistentStores { (description, error) in
+                // Check if the data store is in memory
+                precondition( description.type == NSInMemoryStoreType )
+                
+                // Check if creating container wrong
+                if let error = error {
+                    fatalError("Create an in-mem coordinator failed \(error)")
+                }
+            }
+            return container
+        }()
+        
         mockDataController = DataController(persistentContainer: mockPersistantContainer)
         mockDataController.backgroundContext = mockPersistantContainer.newBackgroundContext()
+        
+        FirebaseApp.configure()
     }
     
     override func tearDown() {
-        flushData()
+        flushData(for: "Country")
+        flushData(for: "Pin")
+        
+        mockDataController = nil
+        mockPersistantContainer = nil
+        
         super.tearDown()
     }
     
@@ -147,7 +157,6 @@ class NetworkInteractionTests: XCTestCase {
         let latitude = 46.617
         let longitude = 14.26
         
-        var pin: Pin!
         var photo: Photos!
         var errorResponse: String?
         
@@ -155,14 +164,14 @@ class NetworkInteractionTests: XCTestCase {
         
         // when
         var queryItems = FlickrClient.sharedInstance.buildQueryItems()
-        queryItems[FlickrConstants.FlickrParameterKeys.Text] = "Austria"
+        queryItems[FlickrConstants.ParameterKeys.text] = "Austria"
         
         FlickrClient.sharedInstance.fetchPhotos(with: queryItems) { (error, isEmpty, photos) in
             
             if let error = error {
                 errorResponse = error.description
             } else if let photos = photos, photos.count > 0 {
-                pin = CoreDataClient.sharedInstance.storePin(self.mockDataController, placeId: "fakePlaceId", latitude: latitude, longitude: longitude)
+                let pin = CoreDataClient.sharedInstance.storePin(self.mockDataController!, placeId: "fakePlaceId", latitude: latitude, longitude: longitude)
                 photo = CoreDataClient.sharedInstance.storePhoto(self.mockDataController, photo: photos[0], pin: pin, fetchType: fetchType)
             } else {
                 errorResponse = "no country code returned"
@@ -171,7 +180,7 @@ class NetworkInteractionTests: XCTestCase {
             promise.fulfill()
         }
         
-        waitForExpectations(timeout: 50, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         // then
         XCTAssertNil(errorResponse)
@@ -200,13 +209,187 @@ class NetworkInteractionTests: XCTestCase {
         XCTAssertNotNil(flagData)
     }
     
-    func flushData() {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+    func testWikiClientResponse() {
+        // given
+        let wikiArticleName = "Austria"
+        let domain = WikiConstants.UrlComponents.domainWikipedia
+        var errorResponse: String?
+        
+        var url: URL?
+        
+        let promise = expectation(description: "Wiki page URL successfully returned")
+        
+        // when
+        WikiClient.sharedInstance.fetchWikiLink(country: wikiArticleName, domain: domain) { (error, wikiLink) in
+            if let error = error {
+                errorResponse = error.description
+            } else {
+                url = URL(string: wikiLink!)
+            }
+            
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        // then
+        XCTAssertNil(errorResponse)
+        XCTAssertNotNil(url)
+    }
+    
+    func testRome2RioSearchClientResponse() {
+        // given
+        let origin = "Graz"
+        let destination = "Singapore"
+        let transportDelegate = AddFlightSearchDelegate()
+        
+        var response: SearchResponse?
+        var errorResponse: String?
+        
+        let promise = expectation(description: "Search results successfully returned")
+        
+        // when
+        let queryItems = transportDelegate.buildSearchQueryItems(origin: origin, destination: destination)
+        
+        Rome2RioClient.sharedInstance.search(with: queryItems) { (error, searchResponse) in
+            if let error = error {
+                errorResponse = error.description
+            }
+            
+            if searchResponse == nil {
+                errorResponse = "No search response returned"
+            } else {
+                response = searchResponse
+            }
+            
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 15, handler: nil)
+        
+        // then
+        XCTAssertNil(errorResponse)
+        XCTAssertNotNil(response)
+        
+        XCTAssertTrue(response!.places.count > 0)
+        XCTAssertNotNil(response!.airlines.count > 0)
+        XCTAssertNotNil(response!.routes.count > 0)
+    }
+    
+    func testRome2RioAutoCompleteClientResponse() {
+        // given
+        let textToAutocomplete = "Gra"
+        
+        var response: AutoCompleteResponse?
+        var errorResponse: String?
+        
+        let promise = expectation(description: "Autocomplete results successfully returned")
+        
+        // when
+        Rome2RioClient.sharedInstance.autocomplete(with: textToAutocomplete) { (error, autoCompleteResponse) in
+            if let error = error {
+                errorResponse = error.description
+            }
+            
+            if autoCompleteResponse == nil {
+                errorResponse = "No autocomplete response returned"
+            } else {
+                response = autoCompleteResponse
+            }
+            
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 15, handler: nil)
+        
+        // then
+        XCTAssertNil(errorResponse)
+        XCTAssertNotNil(response)
+        
+        XCTAssertTrue(response!.places.count > 0)
+    }
+    
+    func testFirestore() {
+        // given
+        let path = "test/" + FirestoreClient.storageByPath(path: FirestoreConstants.Collections.plans, fileName: "testFile")
+        let storageRef = Storage.storage().reference()
+        let url = URL(string: "https://www.countryflags.io/AT/flat/64.png")
+        let data = try! Data(contentsOf: url!)
+            //FirestoreClient.newDatabaseInstance().collection("test").document("testDoc").collection(FirestoreConstants.Collections.plans)
+        
+        var metadataResponse: StorageMetadata?
+        var errorResponse: String?
+        
+        let promise = expectation(description: "Photo successfully stored in Firestore")
+        
+        // when
+        FirestoreClient.storePhoto(storageRef: storageRef, path: path, photoData: data) { (metadata, error) in
+            if let error = error {
+                errorResponse = error.localizedDescription
+            }
+            
+            if metadata == nil {
+                errorResponse = "No metadata returned"
+            } else {
+                metadataResponse = metadata
+            }
+            
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 30, handler: nil)
+        
+        // then
+        XCTAssertNil(errorResponse)
+        XCTAssertNotNil(metadataResponse)
+        
+        XCTAssertNotNil(metadataResponse!.path)
+    }
+    
+    func testGooglePlacesClientResponse() {
+        // given
+        let searchText = "Marina Bay Sands"
+        let coordinate = CLLocationCoordinate2D(latitude: 1.290270, longitude: 103.851959)
+        let placeType = GooglePlaceType.lodging
+        
+        var foundPlaces: [GooglePlace]?
+        var errorResponse: String?
+        
+        let promise = expectation(description: "Autocomplete results successfully returned")
+        
+        // when
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.rawValue) { (error, places) in
+            if let error = error {
+                errorResponse = error.description
+            }
+            
+            if places.isEmpty {
+                errorResponse = "No Google places returned"
+            } else {
+                foundPlaces = places
+            }
+            
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        // then
+        XCTAssertNil(errorResponse)
+        XCTAssertNotNil(foundPlaces)
+        
+        XCTAssertTrue(foundPlaces!.count > 0)
+        XCTAssertEqual(foundPlaces![0].name, "Marina Bay Sands, Singapore")
+    }
+    
+    func flushData(for entity: String) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         let objs = try! mockPersistantContainer.viewContext.fetch(fetchRequest)
+        
         for case let obj as NSManagedObject in objs {
             mockPersistantContainer.viewContext.delete(obj)
         }
         
-        try! mockPersistantContainer.viewContext.save()
+        try? mockPersistantContainer.viewContext.save()
     }
 }

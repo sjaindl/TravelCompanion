@@ -44,7 +44,7 @@ class PublicTransport: NSObject, Plannable {
     }
     
     func description() -> String {
-        return "\(UiUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)"
+        return "\(FormatUtils.formatTimestampForDisplay(timestamp: date)), \(depPlace) - \(arrPlace)" //TODO: Move to FormatUtils
     }
     
     func details() -> NSMutableAttributedString {

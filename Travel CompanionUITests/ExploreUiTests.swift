@@ -33,11 +33,11 @@ class ExploreUiTests: XCTestCase {
         app.navigationBars["Select a location"].buttons["Search"].tap()
         app.navigationBars["searchBar"].searchFields["Search"].tap()
         
-        let searchSearchField = app.navigationBars["searchBar"].searchFields["Search"]
+        let searchField = app.navigationBars["searchBar"].searchFields["Search"]
         
-        searchSearchField.tap()
+        searchField.tap()
         UIPasteboard.general.string = "Mountain View, CA, USA"
-        searchSearchField.doubleTap()
+        searchField.doubleTap()
         app.menuItems.element(boundBy: 0).tap()
     
         let tablesQuery = app.tables

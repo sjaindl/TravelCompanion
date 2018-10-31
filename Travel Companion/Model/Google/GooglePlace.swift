@@ -72,7 +72,7 @@ class GooglePlace: NSObject, Plannable {
             details = NSMutableAttributedString(string: "\(details.string). \(rating)/5*")
         }
         
-        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0].htmlUnescape(), let linkText = UiUtils.getLinkAttributedText(photoAttribution) {
+        if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0].htmlUnescape(), let linkText = FormatUtils.getLinkAttributedText(photoAttribution) {
             details.append(linkText)
         }
         
@@ -81,7 +81,7 @@ class GooglePlace: NSObject, Plannable {
     
     func getLink() -> String? {
         if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0].htmlUnescape() {
-            return UiUtils.getLink(photoAttribution)
+            return FormatUtils.getLink(photoAttribution)
         }
         
         return nil
@@ -89,7 +89,7 @@ class GooglePlace: NSObject, Plannable {
     
     func getLinkText() -> NSMutableAttributedString? {
         if let photos = photos, photos.count > 0, let photoAttribution = photos[0].htmlAttributions?[0] {
-            return UiUtils.getLinkAttributedText(photoAttribution)
+            return FormatUtils.getLinkAttributedText(photoAttribution)
         }
         
         return nil

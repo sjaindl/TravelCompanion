@@ -11,42 +11,6 @@ import Firebase
 import UIKit
 import CoreLocation
 
-public enum GooglePlaceType: String {
-    case lodging           //hotels
-    case restaurant        //restaurants
-    
-    //attractions:
-    case point_of_interest
-    case amusement_park
-    case aquarium
-    case art_gallery
-    case atm
-    case bank
-    case bar
-    case beauty_salon
-    case bowling_alley
-    case cafe
-    case casino
-    case church
-    case city_hall
-    case embassy
-    case gym
-    case hindu_temple
-    case library
-    case mosque
-    case movie_theater
-    case museum
-    case night_club
-    case post_office
-    case rv_park
-    case shopping_mall
-    case spa
-    case stadium
-    case synagogue
-    case travel_agency
-    case zoo
-}
-
 class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     
     convenience public init(apiKey: String, placeType: GooglePlaceType, coordinate: CLLocationCoordinate2D, firestoreDbReference: CollectionReference, plan: Plan, radius: CLLocationDistance = 0, strictBounds: Bool = false, searchBarPlaceholder: String = "enterPlace".localized()) {
@@ -124,7 +88,7 @@ extension GooglePlacesAutocompleteContainer {
         
         cell.textLabel?.text = place.description()
         let detailText = place.details()
-        if let attributions = place.htmlAttributions, attributions.count > 0, let attribution = UiUtils.getLinkAttributedText(attributions[0]) {
+        if let attributions = place.htmlAttributions, attributions.count > 0, let attribution = FormatUtils.getLinkAttributedText(attributions[0]) {
             detailText.append(NSAttributedString(string: "\n"))
             detailText.append(attribution)
         }

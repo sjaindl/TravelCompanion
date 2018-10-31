@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google Places
         GMSServices.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google PlacePicker
         FirebaseApp.configure() //Firebase
-        Fabric.sharedSDK().debug = true
+        Fabric.sharedSDK().debug = false
     }
     
     func initDataController() {

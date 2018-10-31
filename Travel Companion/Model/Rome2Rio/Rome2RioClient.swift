@@ -43,9 +43,7 @@ class Rome2RioClient {
         }
     }
     
-    func search(origin: String, destination: String, with delegate: AddTransportDelegate, completionHandler: @escaping (_ errorString: String?, _ searchResponse: SearchResponse?) -> Void) {
-        
-        let queryItems = delegate.buildSearchQueryItems(origin: origin, destination: destination)
+    func search(with queryItems: [String: String], completionHandler: @escaping (_ errorString: String?, _ searchResponse: SearchResponse?) -> Void) {
         
         let url = WebClient.sharedInstance.createUrl(forScheme: Rome2RioConstants.UrlComponents.urlProtocol, forHost: Rome2RioConstants.UrlComponents.domain, forMethod:
             Rome2RioConstants.UrlComponents.pathSearch, withQueryItems: queryItems)
@@ -83,3 +81,4 @@ class Rome2RioClient {
         ]
     }
 }
+

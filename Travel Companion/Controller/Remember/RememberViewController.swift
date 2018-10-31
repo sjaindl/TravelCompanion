@@ -103,7 +103,7 @@ extension RememberViewController {
         let plan = rememberTrips[indexPath.row]
         
         cell.textLabel?.text = plan.name
-        cell.detailTextLabel?.text = UiUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
+        cell.detailTextLabel?.text = FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
         
         if !plan.imageRef.isEmpty { //Is an image available in storage?
             let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
