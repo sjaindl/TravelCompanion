@@ -58,6 +58,8 @@ class NetworkInteractionTests: XCTestCase {
         mockDataController = nil
         mockPersistantContainer = nil
         
+        FirebaseApp.app()?.delete() { _ in }
+        
         super.tearDown()
     }
     
