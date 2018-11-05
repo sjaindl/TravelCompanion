@@ -23,15 +23,38 @@ class RememberUiTests: XCTestCase {
         goToRememberScreen()
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testRememberUi() {
+        let app = XCUIApplication()
+        let tripToRemember = app.tables/*@START_MENU_TOKEN@*/.staticTexts["Mountain View"]/*[[".cells.staticTexts[\"Mountain View\"]",".staticTexts[\"Mountain View\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        
+        var exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: tripToRemember, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
+            
+        tripToRemember.tap()
+        XCTAssertTrue(app.toolbars["Toolbar"].buttons["addFromGallery"].exists)
+        XCTAssertTrue(app.toolbars["Toolbar"].buttons["addFromCam"].exists)
+        
+        app.collectionViews.cells.children(matching: .other).element.tap() //tap photo
+        let chooseActionAlert = app.alerts["Choose action"]
+        let showPhotoAlertButton = chooseActionAlert.buttons["Show photo"]
+        let deleteAlertButton = chooseActionAlert.buttons["Delete"]
+        let cancelAlertButton = chooseActionAlert.buttons["Cancel"]
+        XCTAssertTrue(showPhotoAlertButton.exists)
+        XCTAssertTrue(deleteAlertButton.exists)
+        XCTAssertTrue(cancelAlertButton.exists)
+        showPhotoAlertButton.tap()
+        
+        let photoDetailNavigationBar = app.navigationBars["Photo Detail"]
+        exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: photoDetailNavigationBar, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertTrue(photoDetailNavigationBar.exists)
+        
+        app.otherElements.containing(.navigationBar, identifier:"Photo Detail").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.tap()
+        XCTAssertTrue(photoDetailNavigationBar.buttons["Mountain View"].exists)
     }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
+    
     func goToRememberScreen() {
         UiTestUtils.loginWithEmailIfNecessary(self)
         
