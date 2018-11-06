@@ -79,7 +79,7 @@ public class ExploreDetailViewController: UIViewController {
         let longitudePostfix = pin.longitude < 0 ? "west".localized() : "east".localized()
         latitudeLongitude.text = "\(pin.latitude)° \(latitudePostfix), \(pin.longitude)° \(longitudePostfix)"
         
-        if let website = pin.url?.absoluteString {
+        if let website = pin.url {
             let linkString = NSMutableAttributedString(string: website)
             linkString.addAttribute(.link, value: URL(string: website) ?? website, range: NSMakeRange(0, website.count))
             url.attributedText = linkString

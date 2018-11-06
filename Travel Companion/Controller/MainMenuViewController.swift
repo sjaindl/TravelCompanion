@@ -86,7 +86,6 @@ class MainMenuViewController: UIViewController {
             let controller = segue.destination as! PlanViewController
             controller.dataController = dataController
         }
-        
     }
     
     func configureAuth() {

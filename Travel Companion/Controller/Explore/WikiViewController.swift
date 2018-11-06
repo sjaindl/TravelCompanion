@@ -9,11 +9,44 @@
 import WebKit
 import UIKit
 
-class WikiViewController: UIViewController {
+class WikiViewController: UIViewController, WKUIDelegate {
     
-    @IBOutlet weak var webView: WKWebView!
+    var webView: WKWebView!
     var pin: Pin!
     var domain: String!
+    
+    override func loadView() {
+        super.loadView()
+        
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(webView)
+        
+        if #available(iOS 11, *) {
+            let guide = view.safeAreaLayoutGuide
+            NSLayoutConstraint.activate([
+                webView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+                webView.topAnchor.constraint(equalTo: guide.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+                ])
+            
+        } else {
+            let standardSpacing: CGFloat = 8.0
+            let margins = view.layoutMarginsGuide
+            NSLayoutConstraint.activate([
+                webView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+                webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: standardSpacing),
+                bottomLayoutGuide.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: standardSpacing),
+                webView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                webView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+                ])
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

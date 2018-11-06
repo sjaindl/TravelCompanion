@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Country" representedClassName="Country" syncable="YES" codeGenerationType="class">
         <attribute name="area" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="callingCodes" optional="YES" attributeType="String" syncable="YES"/>
@@ -37,7 +37,7 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="URI" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="countryOfPin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="pins" inverseEntity="Country" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos" syncable="YES"/>
         <relationship name="placetypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlaceType" inverseName="pin" inverseEntity="PlaceType" syncable="YES"/>
@@ -49,7 +49,7 @@
     <elements>
         <element name="Country" positionX="-947" positionY="782" width="128" height="285"/>
         <element name="Photos" positionX="-360" positionY="954" width="128" height="135"/>
-        <element name="Pin" positionX="-684" positionY="909" width="128" height="255"/>
-        <element name="PlaceType" positionX="-983" positionY="1053" width="128" height="73"/>
+        <element name="Pin" positionX="-684" positionY="909" width="128" height="253"/>
+        <element name="PlaceType" positionX="-981.2421875" positionY="1127.9375" width="128" height="73"/>
     </elements>
 </model>

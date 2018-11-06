@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3rR-wY-boj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3rR-wY-boj">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,32 +25,32 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1T6-qq-R1n">
-                                        <rect key="frame" x="0.0" y="0.0" width="400" height="858"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="333.33333333333331" height="858"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="esJ-gS-vHW">
-                                                <rect key="frame" x="0.0" y="0.0" width="333.33333333333331" height="669.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="333.33333333333331" height="762"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nDG-pA-QWh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="333.33333333333331" height="87.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="333.33333333333331" height="180"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="explore" translatesAutoresizingMaskIntoConstraints="NO" id="Ijo-Oo-fvh">
-                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="87.333333333333329"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="180"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="80" id="7qX-QJ-7xL"/>
                                                                     <constraint firstAttribute="width" constant="80" id="Qgh-by-8OF"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-dF-yNv">
-                                                                <rect key="frame" x="88.000000000000014" y="0.0" width="245.33333333333337" height="87.333333333333329"/>
+                                                                <rect key="frame" x="88.000000000000014" y="0.0" width="245.33333333333337" height="180"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="EXPLORE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svj-7s-zZj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="135.33333333333334" height="42.333333333333336"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="135.33333333333334" height="117.66666666666667"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                                         <color key="textColor" red="0.0078431372549019607" green="0.80000000000000004" blue="0.72941176470588232" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Explore the world for new travel opportunities" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nRW-Hn-drL">
-                                                                        <rect key="frame" x="0.0" y="42.333333333333343" width="245.33333333333334" height="45"/>
+                                                                        <rect key="frame" x="0.0" y="117.66666666666664" width="245.33333333333334" height="62.333333333333329"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" red="0.0078431372549019607" green="0.80000000000000004" blue="0.72941176470588232" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -60,12 +60,12 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="16N-K7-FMc">
-                                                        <rect key="frame" x="0.0" y="87.333333333333371" width="240" height="582"/>
+                                                        <rect key="frame" x="0.0" y="180" width="240" height="582"/>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="N2t-Aw-eMG">
-                                                <rect key="frame" x="0.0" y="677.33333333333337" width="285.33333333333331" height="89.333333333333371"/>
+                                                <rect key="frame" x="0.0" y="770" width="285.33333333333331" height="80"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jc8-FW-tJ1">
                                                         <rect key="frame" x="0.0" y="0.0" width="285.33333333333331" height="80"/>
@@ -87,7 +87,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Plan your travel itineraries" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JcT-6q-YHY">
-                                                                        <rect key="frame" x="0.0" y="52.33333333333325" width="197.33333333333334" height="27.666666666666664"/>
+                                                                        <rect key="frame" x="0.0" y="52.333333333333364" width="197.33333333333334" height="27.666666666666664"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -97,34 +97,34 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BLR-Wn-Twf">
-                                                        <rect key="frame" x="0.0" y="80" width="240" height="9.3333333333333286"/>
+                                                        <rect key="frame" x="0.0" y="80" width="240" height="0.0"/>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8hT-jP-zw2">
-                                                <rect key="frame" x="0.0" y="774.66666666666663" width="400" height="83.333333333333371"/>
+                                                <rect key="frame" x="0.0" y="858" width="318" height="0.0"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="luq-Rc-0bb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="79"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="318" height="0.0"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="remember" translatesAutoresizingMaskIntoConstraints="NO" id="c2i-Ab-fxi">
-                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="79"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="0.0"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="80" id="huq-PR-jTI"/>
                                                                     <constraint firstAttribute="width" constant="80" id="uqb-LJ-CNi"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="8n7-4q-C3K">
-                                                                <rect key="frame" x="88" y="0.0" width="312" height="79"/>
+                                                                <rect key="frame" x="88" y="0.0" width="230" height="0.0"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="REMEMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5CZ-0s-lcp">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="312" height="38.333333333333336"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="230" height="0.0"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Capture your memories in the travel gallery" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RJ-D4-tqC">
-                                                                        <rect key="frame" x="0.0" y="38.333333333333371" width="312" height="40.666666666666657"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="230" height="0.0"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -134,7 +134,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KcE-9G-GaO">
-                                                        <rect key="frame" x="0.0" y="79" width="240" height="4.3333333333333286"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="0.0"/>
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
@@ -245,7 +245,7 @@
         <!--Plan View Controller-->
         <scene sceneID="B5H-hg-0UZ">
             <objects>
-                <viewController id="wuO-ZT-hdO" customClass="PlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wuO-ZT-hdO" customClass="PlanViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BxB-pT-gzJ">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -254,7 +254,7 @@
                                 <rect key="frame" x="0.0" y="88" width="480" height="805"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="JsV-Vf-weF" detailTextLabel="tfX-rD-jiP" imageView="Zc6-ra-oES" style="IBUITableViewCellStyleSubtitle" id="diK-L6-sUc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="JsV-Vf-weF" detailTextLabel="tfX-rD-jiP" imageView="Zc6-ra-oES" style="IBUITableViewCellStyleSubtitle" id="diK-L6-sUc">
                                         <rect key="frame" x="0.0" y="28" width="480" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="diK-L6-sUc" id="BFU-Nh-FD4">
@@ -340,7 +340,7 @@
         <!--Plan Detail View Controller-->
         <scene sceneID="9nX-hZ-qa0">
             <objects>
-                <viewController id="9bi-5Y-lDi" customClass="PlanDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9bi-5Y-lDi" customClass="PlanDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c9W-cS-2YM">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -374,7 +374,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="separatorColor" red="0.36862745098039218" green="0.75294117647058822" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planDetailWithImageReuseCellId" textLabel="jm8-CZ-ZQv" detailTextLabel="Fzv-le-9Eu" imageView="8fb-U4-5rb" style="IBUITableViewCellStyleSubtitle" id="4em-iF-Oyz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planDetailWithImageReuseCellId" textLabel="jm8-CZ-ZQv" detailTextLabel="Fzv-le-9Eu" imageView="8fb-U4-5rb" style="IBUITableViewCellStyleSubtitle" id="4em-iF-Oyz">
                                         <rect key="frame" x="0.0" y="55.333333333333343" width="480" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4em-iF-Oyz" id="aMI-zZ-wDA">
@@ -413,7 +413,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planDetailReuseCellId" textLabel="07n-aZ-f3m" detailTextLabel="W0b-hq-Qdt" style="IBUITableViewCellStyleSubtitle" id="ect-EC-lgf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planDetailReuseCellId" textLabel="07n-aZ-f3m" detailTextLabel="W0b-hq-Qdt" style="IBUITableViewCellStyleSubtitle" id="ect-EC-lgf">
                                         <rect key="frame" x="0.0" y="99.333333333333343" width="480" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ect-EC-lgf" id="BRe-Zu-yDZ">
@@ -530,7 +530,7 @@
         <!--Notes View Controller-->
         <scene sceneID="OSf-x6-XeG">
             <objects>
-                <viewController id="T8Z-NN-EKh" customClass="NotesViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="T8Z-NN-EKh" customClass="NotesViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sHh-tw-fpn">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -593,7 +593,7 @@
         <!--Add Transport View Controller-->
         <scene sceneID="XKc-Y8-CbE">
             <objects>
-                <viewController id="RTV-U7-kv4" customClass="AddTransportViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RTV-U7-kv4" customClass="AddTransportViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P3A-sD-WP3">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -607,7 +607,7 @@
                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-pz-cQE" userLabel="Origin" customClass="SearchTextField" customModule="Travel_Companion" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-pz-cQE" userLabel="Origin" customClass="SearchTextField" customModule="Travel_CompanionTests" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="16" width="464" height="0.0"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -619,7 +619,7 @@
                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tbT-6R-kbO" userLabel="Destination" customClass="SearchTextField" customModule="Travel_Companion" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tbT-6R-kbO" userLabel="Destination" customClass="SearchTextField" customModule="Travel_CompanionTests" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="48" width="464" height="0.0"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -686,7 +686,7 @@
         <!--Add Transport Detail View Controller-->
         <scene sceneID="qbf-L7-DAT">
             <objects>
-                <tableViewController id="24p-re-2N0" customClass="AddTransportDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="24p-re-2N0" customClass="AddTransportDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="V6L-pt-vlp">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -786,7 +786,7 @@
         <!--Add Plan View Controller-->
         <scene sceneID="Vmf-LY-gzL">
             <objects>
-                <viewController id="xdo-RK-LXN" customClass="AddPlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xdo-RK-LXN" customClass="AddPlanViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZXw-MH-fX9">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -918,13 +918,13 @@
         <!--ExploreDetail-->
         <scene sceneID="uC0-IN-jPZ">
             <objects>
-                <viewController id="ikQ-Nq-vzn" userLabel="ExploreDetail" customClass="ExploreDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ikQ-Nq-vzn" userLabel="ExploreDetail" customClass="ExploreDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wcb-Ul-2Ra">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNb-eU-VXS">
-                                <rect key="frame" x="8" y="96" width="464" height="784"/>
+                                <rect key="frame" x="8" y="96" width="464" height="833"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="N8w-m9-ko7">
                                         <rect key="frame" x="8" y="8" width="464" height="1928.6666666666667"/>
@@ -1032,18 +1032,6 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wNY-XK-gqh">
                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
                                                     </stackView>
-                                                    <wkWebView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rtr-Zf-nAP" userLabel="webView">
-                                                        <rect key="frame" x="0.0" y="232" width="300" height="200"/>
-                                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="K1m-fe-sFJ"/>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="uf1-sf-UKH"/>
-                                                        </constraints>
-                                                        <wkWebViewConfiguration key="configuration">
-                                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                                            <wkPreferences key="preferences"/>
-                                                        </wkWebViewConfiguration>
-                                                    </wkWebView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vq4-4T-cTG">
                                                         <rect key="frame" x="0.0" y="232.00000000000006" width="88" height="26.333333333333314"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
@@ -1211,11 +1199,6 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <variation key="default">
-                                                    <mask key="subviews">
-                                                        <exclude reference="Rtr-Zf-nAP"/>
-                                                    </mask>
-                                                </variation>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -1289,32 +1272,14 @@
         <!--WikiVoyage-->
         <scene sceneID="oyU-Ob-Hrx">
             <objects>
-                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2an-2B-Mm1">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7sq-1r-WlT">
-                                <rect key="frame" x="0.0" y="88" width="480" height="800"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="7sq-1r-WlT" firstAttribute="top" secondItem="6VP-jJ-9JN" secondAttribute="top" id="CCa-eX-3zj"/>
-                            <constraint firstItem="6VP-jJ-9JN" firstAttribute="trailing" secondItem="7sq-1r-WlT" secondAttribute="trailing" id="IfI-AA-JNc"/>
-                            <constraint firstItem="7sq-1r-WlT" firstAttribute="leading" secondItem="6VP-jJ-9JN" secondAttribute="leading" id="JmM-RB-daz"/>
-                            <constraint firstItem="6VP-jJ-9JN" firstAttribute="bottom" secondItem="7sq-1r-WlT" secondAttribute="bottom" id="wvx-o3-KRt"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6VP-jJ-9JN"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="WikiVoyage" id="ehw-xb-7kV"/>
-                    <connections>
-                        <outlet property="webView" destination="7sq-1r-WlT" id="4Hy-mr-UN4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gyE-5Z-UxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1344,7 +1309,7 @@
         <!--ExplorePhotos-->
         <scene sceneID="taz-9R-yQ3">
             <objects>
-                <viewController id="QqY-JT-Kne" userLabel="ExplorePhotos" customClass="ExplorePhotosViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QqY-JT-Kne" userLabel="ExplorePhotos" customClass="ExplorePhotosViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="O8r-Sx-9gw">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1366,7 +1331,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="nzK-28-XtY" customClass="AlbumCollectionViewCell" customModule="Travel_Companion" customModuleProvider="target">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="nzK-28-XtY" customClass="AlbumCollectionViewCell" customModule="Travel_CompanionTests" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="111"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1467,7 +1432,7 @@
         <!--Photos Detail View Controller-->
         <scene sceneID="h9G-h1-uWL">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetail" id="Iq3-wv-qnR" customClass="PhotosDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExploreDetail" id="Iq3-wv-qnR" customClass="PhotosDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a9a-bd-10p">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1505,32 +1470,14 @@
         <!--WikiPedia-->
         <scene sceneID="6fO-iU-hbS">
             <objects>
-                <viewController id="ZrL-yO-Oo2" userLabel="WikiPedia" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZrL-yO-Oo2" userLabel="WikiPedia" customClass="WikiViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v4Y-5f-uSo">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHh-cI-xWb">
-                                <rect key="frame" x="0.0" y="88" width="480" height="800"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="HHh-cI-xWb" firstAttribute="top" secondItem="11X-2P-qiX" secondAttribute="top" id="3fn-dw-xZk"/>
-                            <constraint firstItem="11X-2P-qiX" firstAttribute="bottom" secondItem="HHh-cI-xWb" secondAttribute="bottom" id="GXt-Zq-dLM"/>
-                            <constraint firstItem="11X-2P-qiX" firstAttribute="trailing" secondItem="HHh-cI-xWb" secondAttribute="trailing" id="r6J-Ws-jFr"/>
-                            <constraint firstItem="HHh-cI-xWb" firstAttribute="leading" secondItem="11X-2P-qiX" secondAttribute="leading" id="yZQ-rT-yUr"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="11X-2P-qiX"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Wikipedia" id="mXR-5F-guc"/>
-                    <connections>
-                        <outlet property="webView" destination="HHh-cI-xWb" id="nl2-W5-mVy"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMk-PZ-lif" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1539,7 +1486,7 @@
         <!--RememberDetail-->
         <scene sceneID="kdz-Sg-qbK">
             <objects>
-                <viewController id="uDL-Bf-kyc" userLabel="RememberDetail" customClass="RememberDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uDL-Bf-kyc" userLabel="RememberDetail" customClass="RememberDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eEm-uu-Egy">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1554,7 +1501,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="mRu-nL-m3n" customClass="AlbumCollectionViewCell" customModule="Travel_Companion" customModuleProvider="target">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="mRu-nL-m3n" customClass="AlbumCollectionViewCell" customModule="Travel_CompanionTests" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="111"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1639,7 +1586,7 @@
         <!--Remember View Controller-->
         <scene sceneID="ext-IP-Twv">
             <objects>
-                <viewController id="6BR-9U-h1Z" customClass="RememberViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6BR-9U-h1Z" customClass="RememberViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1mN-Hh-L4y">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1649,7 +1596,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="vpC-wk-UEc" detailTextLabel="o33-Bt-EmO" imageView="FHD-Yd-YZZ" style="IBUITableViewCellStyleSubtitle" id="zIV-Ll-G9F">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planReuseCellId" textLabel="vpC-wk-UEc" detailTextLabel="o33-Bt-EmO" imageView="FHD-Yd-YZZ" style="IBUITableViewCellStyleSubtitle" id="zIV-Ll-G9F">
                                         <rect key="frame" x="0.0" y="28" width="480" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zIV-Ll-G9F" id="nkj-Pt-cvB">
@@ -1719,7 +1666,7 @@
         <!--Add Place View Controller-->
         <scene sceneID="VdX-qs-TsJ">
             <objects>
-                <viewController id="o8d-NG-NUT" customClass="AddPlaceViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="o8d-NG-NUT" customClass="AddPlaceViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oZZ-1J-fQh">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1748,23 +1695,23 @@
         </scene>
     </scenes>
     <resources>
-        <image name="attraction" width="166" height="166"/>
-        <image name="austria" width="85" height="56"/>
-        <image name="cam" width="32" height="32"/>
-        <image name="explore" width="413" height="394"/>
-        <image name="flight" width="166" height="166"/>
+        <image name="attraction" width="375" height="375"/>
+        <image name="austria" width="255" height="170"/>
+        <image name="cam" width="25.600000381469727" height="25.600000381469727"/>
+        <image name="explore" width="297.3599853515625" height="283.67999267578125"/>
+        <image name="flight" width="375" height="375"/>
         <image name="gallery" width="20" height="20"/>
-        <image name="hotel" width="166" height="166"/>
-        <image name="pin" width="333" height="333"/>
-        <image name="placeholder" width="341" height="341"/>
-        <image name="plan" width="394" height="329"/>
-        <image name="public_transport" width="166" height="166"/>
-        <image name="remember" width="37" height="37"/>
-        <image name="restaurant" width="166" height="166"/>
+        <image name="hotel" width="375" height="375"/>
+        <image name="pin" width="1000" height="1000"/>
+        <image name="placeholder" width="512" height="512"/>
+        <image name="plan" width="284.16000366210938" height="236.8800048828125"/>
+        <image name="public_transport" width="375" height="375"/>
+        <image name="remember" width="113" height="113"/>
+        <image name="restaurant" width="375" height="375"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="v0l-Vg-UdY"/>
-        <segue reference="JAe-Zd-6u7"/>
+        <segue reference="9b4-KA-uEe"/>
+        <segue reference="5Ik-Ud-dR6"/>
         <segue reference="ZgN-dJ-ofH"/>
         <segue reference="ogx-ac-6aS"/>
     </inferredMetricsTieBreakers>

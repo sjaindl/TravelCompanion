@@ -37,7 +37,7 @@ class CoreDataClient {
         }
         
         pin.placeId = place.placeID
-        pin.url = place.website
+        pin.url = place.website?.absoluteString
         
         for type in place.types {
             let placeType = PlaceType(context: dataController.viewContext)
