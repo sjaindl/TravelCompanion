@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 <h1>Privacy Policy</h1>
 (<a href="https://github.com/sjaindl/TravelCompanion/blob/master/docs/PrivacyPolice_DE.md">German version</a>)
 
