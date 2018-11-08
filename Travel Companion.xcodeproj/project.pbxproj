@@ -113,6 +113,9 @@
 		9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */; };
 		9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */; };
 		9AC023D421651D760076A3C2 /* GlobalCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC023D321651D760076A3C2 /* GlobalCache.swift */; };
+		9ACBFEEB2194E26F004C1506 /* PrivacyPolice_DE.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEE92194E26E004C1506 /* PrivacyPolice_DE.md */; };
+		9ACBFEF22194E59F004C1506 /* index.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEF12194E59F004C1506 /* index.md */; };
+		9ACBFEF42194E6B6004C1506 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */; };
 		9AD61603218FA35C00BFA74E /* UiTestTableViewFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD61602218FA35C00BFA74E /* UiTestTableViewFilter.swift */; };
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
@@ -242,6 +245,9 @@
 		9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
 		9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiViewGestureAction.swift; sourceTree = "<group>"; };
 		9AC023D321651D760076A3C2 /* GlobalCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalCache.swift; sourceTree = "<group>"; };
+		9ACBFEE92194E26E004C1506 /* PrivacyPolice_DE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = PrivacyPolice_DE.md; sourceTree = "<group>"; };
+		9ACBFEF12194E59F004C1506 /* index.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
+		9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9AD61602218FA35C00BFA74E /* UiTestTableViewFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiTestTableViewFilter.swift; sourceTree = "<group>"; };
 		9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearchViewController.swift; sourceTree = "<group>"; };
 		9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +324,7 @@
 		9A5B699021117A7B00060790 = {
 			isa = PBXGroup;
 			children = (
+				9ACBFEE72194E26E004C1506 /* docs */,
 				9A5B6A1521117EC400060790 /* LICENSE */,
 				9A5B6A1421117EC400060790 /* Podfile */,
 				9A5B6A1321117EC400060790 /* README.md */,
@@ -548,6 +555,15 @@
 			path = Explore;
 			sourceTree = "<group>";
 		};
+		9ACBFEE72194E26E004C1506 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				9ACBFEF12194E59F004C1506 /* index.md */,
+				9ACBFEE92194E26E004C1506 /* PrivacyPolice_DE.md */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		9AE4C28F2131CB3F0056CD0D /* Plan */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +602,7 @@
 		9AFB2212218AF0AD00185122 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */,
 				9AFB2213218AF0AD00185122 /* Main.storyboard */,
 				9AFB2215218AF0AD00185122 /* Localizable.strings */,
 				9AFB2217218AF0AD00185122 /* InfoPlist.strings */,
@@ -712,8 +729,11 @@
 				9A5B6A3021117EC500060790 /* Podfile in Resources */,
 				9A5B6A2F21117EC500060790 /* README.md in Resources */,
 				9A450F2421859A9F00875B42 /* Localizable.strings in Resources */,
+				9ACBFEF22194E59F004C1506 /* index.md in Resources */,
 				9AFB221C218AF0AD00185122 /* Localizable.strings in Resources */,
+				9ACBFEEB2194E26F004C1506 /* PrivacyPolice_DE.md in Resources */,
 				9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */,
+				9ACBFEF42194E6B6004C1506 /* LaunchScreen.storyboard in Resources */,
 				9AFB221F218AF0AD00185122 /* InfoPlist.strings in Resources */,
 				9A1AD4CD21121A4D001D2517 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1159,7 +1179,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
@@ -1204,7 +1224,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1217,7 +1237,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
