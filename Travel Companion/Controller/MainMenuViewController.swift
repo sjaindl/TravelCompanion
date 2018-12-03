@@ -26,6 +26,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var planLabel: UILabel!
     @IBOutlet weak var rememberLabel: UILabel!
     
+    @IBOutlet weak var signOutButton: UIBarButtonItem!
     var dataController: DataController!
     
     override func viewDidLoad() {
@@ -59,12 +60,20 @@ class MainMenuViewController: UIViewController {
     
     @objc
     func plan() {
-        performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
+        if !isSignedIn {
+            UiUtils.showHint("accountRequired".localized(), title: "loginRequired".localized(), controller: self)
+        } else {
+            performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
+        }
     }
     
     @objc
     func remember() {
-        performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
+        if !isSignedIn {
+            UiUtils.showHint("accountRequired".localized(), title: "loginRequired".localized(), controller: self)
+        } else {
+            performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
+        }
     }
     
     deinit {
@@ -72,10 +81,18 @@ class MainMenuViewController: UIViewController {
     }
     
     @IBAction func signOut(_ sender: Any) {
-        user = nil
-        try? Auth.auth().signOut()
-        
-        loginSession()
+        if isSignedIn {
+            user = nil
+            
+            do {
+                try Auth.auth().signOut()
+                signedInStatus(isSignedIn: false)
+            } catch {
+                UiUtils.showError("signOutError".localized(), controller: self)
+            }
+        } else {
+            loginSession()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -123,17 +140,15 @@ class MainMenuViewController: UIViewController {
     
     func signedInStatus(isSignedIn: Bool) {
         self.isSignedIn = isSignedIn
+        if isSignedIn {
+            self.signOutButton.title = "signOut".localized()
+        } else {
+            self.signOutButton.title = "signIn".localized()
+        }
     }
-
+    
     func loginSession() {
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
         present(authViewController, animated: true, completion: nil)
-    }
-}
-
-extension FUIAuthBaseViewController{
-    open override func viewWillAppear(_ animated: Bool) {
-        //user must sign in, so there must be no cancel button
-        self.navigationItem.leftBarButtonItem = nil
     }
 }

@@ -29,7 +29,10 @@ class ExploreViewController: UIViewController {
         self.navigationItem.title = "explore".localized()
         
         map.delegate = self
-        firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.places)
+        
+        if Auth.auth().currentUser?.uid != nil {
+            firestoreDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.places)
+        }
         
         initCamera()
         initResultsController()
@@ -56,7 +59,7 @@ class ExploreViewController: UIViewController {
                     let marker = addPinToMap(with: coordinate)
                     store(pin, in: marker)
                 }
-            } else {
+            } else if firestoreDbReference != nil {
                 fetchFromFirestore()
             }
         } catch {
@@ -135,17 +138,19 @@ class ExploreViewController: UIViewController {
     func persistPin(of place: GMSPlace, countryCode: String?) -> Pin {
         let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, countryCode: countryCode)
         
-        FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
-            FirestoreConstants.Ids.Place.placeId: place.placeID,
-            FirestoreConstants.Ids.Place.name: place.name,
-            FirestoreConstants.Ids.Place.latitude: place.coordinate.latitude,
-            FirestoreConstants.Ids.Place.longitude: place.coordinate.longitude
-        ]) { (error) in
-            if let error = error {
-                debugPrint("Error adding document: \(error.localizedDescription)")
-                UiUtils.showError(error.localizedDescription, controller: self)
-            } else {
-                debugPrint("Document added")
+        if firestoreDbReference != nil {
+            FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
+                FirestoreConstants.Ids.Place.placeId: place.placeID,
+                FirestoreConstants.Ids.Place.name: place.name,
+                FirestoreConstants.Ids.Place.latitude: place.coordinate.latitude,
+                FirestoreConstants.Ids.Place.longitude: place.coordinate.longitude
+            ]) { (error) in
+                if let error = error {
+                    debugPrint("Error adding document: \(error.localizedDescription)")
+                    UiUtils.showError(error.localizedDescription, controller: self)
+                } else {
+                    debugPrint("Document added")
+                }
             }
         }
         
@@ -203,35 +208,33 @@ extension ExploreViewController: GMSMapViewDelegate {
         alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
             if let pin = marker.userData as? Pin, let pinName = pin.name {
                 
-                //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
-                let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
-                
-                let documentReference = firestorePlanDbReference.document(pinName)
-                
-                documentReference.getDocument { (document, error) in
-                    if let document = document, document.exists {
-                        UiUtils.showError(String(format: "planExists".localized(), pinName), controller: self)
-                    } else {
-                        //delete from Firestore
-                        if let placeId = pin.placeId {
-                            self.firestoreDbReference.document(placeId).delete() { error in
-                                if let error = error {
-                                    debugPrint("Error removing document: \(error.localizedDescription)")
-                                    UiUtils.showError(error.localizedDescription, controller: self)
-                                } else {
-                                    debugPrint("Document successfully removed!")
+                if self.firestoreDbReference != nil {
+                    //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
+                    let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)
+                    
+                    let documentReference = firestorePlanDbReference.document(pinName)
+                    
+                    documentReference.getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            UiUtils.showError(String(format: "planExists".localized(), pinName), controller: self)
+                        } else {
+                            //delete from Firestore
+                            if let placeId = pin.placeId {
+                                self.firestoreDbReference.document(placeId).delete() { error in
+                                    if let error = error {
+                                        debugPrint("Error removing document: \(error.localizedDescription)")
+                                        UiUtils.showError(error.localizedDescription, controller: self)
+                                    } else {
+                                        debugPrint("Document successfully removed!")
+                                    }
                                 }
                             }
+                            
+                            self.removeFromCoreData(pin, marker: marker)
                         }
-                        
-                        if let index = self.fetchedResultsController.indexPath(forObject: pin) {
-                            let object = self.fetchedResultsController.object(at: index)
-                            self.dataController.viewContext.delete(object)
-                            try? self.dataController.save()
-                        }
-                        
-                        marker.map = nil
                     }
+                } else {
+                    self.removeFromCoreData(pin, marker: marker)
                 }
             }
             
@@ -245,6 +248,16 @@ extension ExploreViewController: GMSMapViewDelegate {
         present(alert, animated: true, completion: nil)
         
         return true
+    }
+    
+    func removeFromCoreData(_ pin: Pin, marker: GMSMarker) {
+        if let index = self.fetchedResultsController.indexPath(forObject: pin) {
+            let object = self.fetchedResultsController.object(at: index)
+            self.dataController.viewContext.delete(object)
+            try? self.dataController.save()
+        }
+        
+        marker.map = nil
     }
 }
 

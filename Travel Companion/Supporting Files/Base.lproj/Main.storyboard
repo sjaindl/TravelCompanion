@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -182,6 +183,7 @@
                         <outlet property="planLabel" destination="pxn-w9-R92" id="yaP-2m-gPr"/>
                         <outlet property="rememberImage" destination="c2i-Ab-fxi" id="99P-Pc-4rC"/>
                         <outlet property="rememberLabel" destination="5CZ-0s-lcp" id="Zas-Df-KYF"/>
+                        <outlet property="signOutButton" destination="h4T-1g-JjQ" id="0NL-gc-H1X"/>
                         <segue destination="1mH-cT-4Yu" kind="show" identifier="explore" id="fjZ-xd-BmB"/>
                         <segue destination="wuO-ZT-hdO" kind="show" identifier="plan" id="785-gA-QXn"/>
                         <segue destination="6BR-9U-h1Z" kind="show" identifier="remember" id="Sv8-kP-hTb"/>
@@ -245,7 +247,7 @@
         <!--Plan View Controller-->
         <scene sceneID="B5H-hg-0UZ">
             <objects>
-                <viewController id="wuO-ZT-hdO" customClass="PlanViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wuO-ZT-hdO" customClass="PlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BxB-pT-gzJ">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -340,7 +342,7 @@
         <!--Plan Detail View Controller-->
         <scene sceneID="9nX-hZ-qa0">
             <objects>
-                <viewController id="9bi-5Y-lDi" customClass="PlanDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9bi-5Y-lDi" customClass="PlanDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c9W-cS-2YM">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -530,7 +532,7 @@
         <!--Notes View Controller-->
         <scene sceneID="OSf-x6-XeG">
             <objects>
-                <viewController id="T8Z-NN-EKh" customClass="NotesViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="T8Z-NN-EKh" customClass="NotesViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sHh-tw-fpn">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -593,7 +595,7 @@
         <!--Add Transport View Controller-->
         <scene sceneID="XKc-Y8-CbE">
             <objects>
-                <viewController id="RTV-U7-kv4" customClass="AddTransportViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RTV-U7-kv4" customClass="AddTransportViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P3A-sD-WP3">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -607,7 +609,7 @@
                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-pz-cQE" userLabel="Origin" customClass="SearchTextField" customModule="Travel_CompanionTests" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-pz-cQE" userLabel="Origin" customClass="SearchTextField" customModule="Travel_Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="16" width="464" height="0.0"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -619,7 +621,7 @@
                                         <color key="textColor" red="0.0078431372550000003" green="0.80000000000000004" blue="0.72941176470000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tbT-6R-kbO" userLabel="Destination" customClass="SearchTextField" customModule="Travel_CompanionTests" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tbT-6R-kbO" userLabel="Destination" customClass="SearchTextField" customModule="Travel_Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="48" width="464" height="0.0"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -686,7 +688,7 @@
         <!--Add Transport Detail View Controller-->
         <scene sceneID="qbf-L7-DAT">
             <objects>
-                <tableViewController id="24p-re-2N0" customClass="AddTransportDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="24p-re-2N0" customClass="AddTransportDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="V6L-pt-vlp">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -786,7 +788,7 @@
         <!--Add Plan View Controller-->
         <scene sceneID="Vmf-LY-gzL">
             <objects>
-                <viewController id="xdo-RK-LXN" customClass="AddPlanViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xdo-RK-LXN" customClass="AddPlanViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZXw-MH-fX9">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -918,7 +920,7 @@
         <!--ExploreDetail-->
         <scene sceneID="uC0-IN-jPZ">
             <objects>
-                <viewController id="ikQ-Nq-vzn" userLabel="ExploreDetail" customClass="ExploreDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ikQ-Nq-vzn" userLabel="ExploreDetail" customClass="ExploreDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wcb-Ul-2Ra">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1272,7 +1274,7 @@
         <!--WikiVoyage-->
         <scene sceneID="oyU-Ob-Hrx">
             <objects>
-                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2an-2B-Mm1">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1309,7 +1311,7 @@
         <!--ExplorePhotos-->
         <scene sceneID="taz-9R-yQ3">
             <objects>
-                <viewController id="QqY-JT-Kne" userLabel="ExplorePhotos" customClass="ExplorePhotosViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QqY-JT-Kne" userLabel="ExplorePhotos" customClass="ExplorePhotosViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="O8r-Sx-9gw">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1331,7 +1333,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="nzK-28-XtY" customClass="AlbumCollectionViewCell" customModule="Travel_CompanionTests" customModuleProvider="target">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="nzK-28-XtY" customClass="AlbumCollectionViewCell" customModule="Travel_Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="111"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1432,7 +1434,7 @@
         <!--Photos Detail View Controller-->
         <scene sceneID="h9G-h1-uWL">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetail" id="Iq3-wv-qnR" customClass="PhotosDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExploreDetail" id="Iq3-wv-qnR" customClass="PhotosDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a9a-bd-10p">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1470,7 +1472,7 @@
         <!--WikiPedia-->
         <scene sceneID="6fO-iU-hbS">
             <objects>
-                <viewController id="ZrL-yO-Oo2" userLabel="WikiPedia" customClass="WikiViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZrL-yO-Oo2" userLabel="WikiPedia" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v4Y-5f-uSo">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1486,7 +1488,7 @@
         <!--RememberDetail-->
         <scene sceneID="kdz-Sg-qbK">
             <objects>
-                <viewController id="uDL-Bf-kyc" userLabel="RememberDetail" customClass="RememberDetailViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uDL-Bf-kyc" userLabel="RememberDetail" customClass="RememberDetailViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eEm-uu-Egy">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1501,7 +1503,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="mRu-nL-m3n" customClass="AlbumCollectionViewCell" customModule="Travel_CompanionTests" customModuleProvider="target">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="mRu-nL-m3n" customClass="AlbumCollectionViewCell" customModule="Travel_Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="111"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1586,7 +1588,7 @@
         <!--Remember View Controller-->
         <scene sceneID="ext-IP-Twv">
             <objects>
-                <viewController id="6BR-9U-h1Z" customClass="RememberViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6BR-9U-h1Z" customClass="RememberViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1mN-Hh-L4y">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1666,7 +1668,7 @@
         <!--Add Place View Controller-->
         <scene sceneID="VdX-qs-TsJ">
             <objects>
-                <viewController id="o8d-NG-NUT" customClass="AddPlaceViewController" customModule="Travel_CompanionTests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="o8d-NG-NUT" customClass="AddPlaceViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oZZ-1J-fQh">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1711,7 +1713,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9b4-KA-uEe"/>
-        <segue reference="5Ik-Ud-dR6"/>
+        <segue reference="JAe-Zd-6u7"/>
         <segue reference="ZgN-dJ-ofH"/>
         <segue reference="ogx-ac-6aS"/>
     </inferredMetricsTieBreakers>

@@ -66,3 +66,8 @@
 "addTranport" = "Add %@";
 "addedRoute" = "Successfully added route";
 "addedPlace" = "Successfully added place";
+"signOutError" = "Could not sign out";
+"loginRequired" = "Login required";
+"accountRequired" = "This feature requires an account. Please login.";
+"signOut" = "Sign out";
+"signIn" = "Sign in";

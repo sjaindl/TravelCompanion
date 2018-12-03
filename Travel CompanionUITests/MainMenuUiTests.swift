@@ -43,7 +43,7 @@ class MainMenuUiTests: XCTestCase {
         let signInWithFacebookButton = app.buttons["Sign in with Facebook"]
         let signInWithGoogleButton = app.buttons["Sign in with Google"]
         
-        XCTAssertFalse(cancelButton.exists, "Cancel button in authentication screen, but shouldn't be")
+        XCTAssertTrue(cancelButton.exists, "No cancel button in authentication screen, but should be")
         XCTAssertTrue(signInEmailButton.exists, "No sign in with email button in authentication screen")
         XCTAssertTrue(signInWithFacebookButton.exists, "No sign in with Facebook button in authentication screen")
         XCTAssertTrue(signInWithGoogleButton.exists, "No sign in with Google button in authentication screen")
@@ -80,5 +80,22 @@ class MainMenuUiTests: XCTestCase {
         
         let signInWithGoogleButton = app.buttons["Sign in with Google"]
         XCTAssertTrue(signInWithGoogleButton.exists, "Sign out did not forward to authentication screen")
+    }
+    
+    func testLoginRequired() {
+        app.navigationBars["Welcome"].buttons["Cancel"].tap()
+        app.images["plan"].tap()
+        
+        let loginRequiredAlert = app.alerts["Login required"]
+        XCTAssertTrue(loginRequiredAlert.exists, "No login required alert shown for plan feature")
+        let okButton = loginRequiredAlert.buttons["OK"]
+        okButton.tap()
+        
+        app.images["remember"].tap()
+        XCTAssertTrue(loginRequiredAlert.exists, "No login required alert shown for remember feature")
+        okButton.tap()
+        
+        app.images["explore"].tap()
+        XCTAssertFalse(loginRequiredAlert.exists, "Login required alert shown for explore feature, but shouldn't.")
     }
 }

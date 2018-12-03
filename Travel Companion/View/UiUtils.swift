@@ -45,6 +45,13 @@ class UiUtils {
         controller.present(alert, animated: true)
     }
     
+    static func showHint(_ message: String, title: String, controller: UIViewController) {
+        //show alertview with error message
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: true)
+    }
+    
     static func layoutDatePicker(_ picker: UIDatePicker) {
         picker.setValue(false, forKey: "highlightsToday");
         layoutView(picker)

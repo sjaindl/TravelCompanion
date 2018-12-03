@@ -685,6 +685,14 @@
 					9A5B699821117A7B00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					9A5B69AF21117A7C00060790 = {
 						CreatedOnToolsVersion = 9.4.1;

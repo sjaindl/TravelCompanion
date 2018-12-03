@@ -66,3 +66,8 @@
 "addTranport" = "Füge %@ hinzu";
 "addedRoute" = "Route erfolgreich hinzugefügt";
 "addedPlace" = "Platz erfolgreich hinzugefügt";
+"signOutError" = "Ausloggen nicht erfolgreich";
+"loginRequired" = "Login erforderlich";
+"accountRequired" = "Diese Funktionalität kann nur mit einem Konto genutzt werden. Bitte logge dich ein.";
+"signOut" = "Ausloggen";
+"signIn" = "Einloggen";
