@@ -40,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon" width="1024" height="1024"/>
+        <image name="icon" width="512" height="512"/>
     </resources>
 </document>
