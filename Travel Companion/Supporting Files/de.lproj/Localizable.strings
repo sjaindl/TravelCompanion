@@ -71,3 +71,4 @@
 "accountRequired" = "Diese Funktionalität kann nur mit einem Konto genutzt werden. Bitte logge dich ein.";
 "signOut" = "Ausloggen";
 "signIn" = "Einloggen";
+"next" = "Weiter";

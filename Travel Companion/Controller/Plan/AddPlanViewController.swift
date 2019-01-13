@@ -10,17 +10,30 @@ import Firebase
 import UIKit
 
 class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+
+    enum ButtonState: Int {
+        case destination = 0
+        case startDate = 1
+        case endDate = 2
+    }
     
+    @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var destinationPicker: UIPickerView!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var destinationText: UITextField!
     @IBOutlet weak var addTripButton: UIButton!
+    @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var startDate: UIDatePicker!
+    @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var addTrip: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var pins: [Pin] = []
     var selectedOriginalPinName: String?
     var firestoreDbReference: CollectionReference!
+    
+    var buttonState = ButtonState.destination
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +55,21 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         UiUtils.layoutDatePicker(startDate)
         UiUtils.layoutDatePicker(endDate)
+        
+        layoutButton(with: "next".localized(), showName: true, showStartDate: false, showEndDate: false)
+    }
+    
+    func layoutButton(with text: String, showName: Bool, showStartDate: Bool, showEndDate: Bool) {
+        addTrip.setTitle(text, for: .normal)
+        
+        destinationLabel.isHidden = !showName
+        destinationPicker.isHidden = !showName
+        nameLabel.isHidden = !showName
+        destinationText.isHidden = !showName
+        endDate.isHidden = !showEndDate
+        endDateLabel.isHidden = !showEndDate
+        startDate.isHidden = !showStartDate
+        startDateLabel.isHidden = !showStartDate
     }
     
     func setButtonEnabledState() {
@@ -53,14 +81,23 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
      
     @IBAction func addPlan(_ sender: Any) {
-        let originalName = selectedOriginalPinName ?? destinationText.text!
-        
-        let plan = Plan(name: destinationText.text!, originalName: originalName, startDate: Timestamp(date: startDate.date), endDate: Timestamp(date: endDate.date))
-        
-        //TODO: check whether plan already exists and ask if user wants to override
-        persistPlan(plan)
-        
-        dismiss(animated: true, completion: nil)
+        switch buttonState {
+        case .destination:
+            layoutButton(with: "next".localized(), showName: false, showStartDate: true, showEndDate: false)
+            buttonState = ButtonState.startDate
+        case .startDate:
+            layoutButton(with: "addPlan".localized(), showName: false, showStartDate: false, showEndDate: true)
+            buttonState = ButtonState.endDate
+        default:
+            let originalName = selectedOriginalPinName ?? destinationText.text!
+            
+            let plan = Plan(name: destinationText.text!, originalName: originalName, startDate: Timestamp(date: startDate.date), endDate: Timestamp(date: endDate.date))
+            
+            //TODO: check whether plan already exists and ask if user wants to override
+            persistPlan(plan)
+            
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {

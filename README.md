@@ -18,7 +18,7 @@ This project is under exclusive copyright, see https://github.com/sjaindl/Travel
 
 ## Intented User Experience
 
-TravelCompanion's goal is to let explore, plan and remember travels all in one place. It has an integrated sign-in mechanism with either Facebook, Google or email. This allows to synchronize data via Firebase over different devices (and potentially to Android, too, if there will be a future Android version).
+TravelCompanion's goal is to let explore, plan and remember travels all in one place.
 
 1. Explore:
 The explore feature offers a Google Map that allows to search for and drop pins on desired destinations. Basic information about the destination and country as well as photos about the country, place and geographical location can be retrieved. Articles on Wikipedia and Wikivoyage about the destination are offered, too.
@@ -36,6 +36,8 @@ Finally, plans are subdivided into upcoming and past trips, depending on the tra
 
 3. Remember:
 The remember feature displays past trips (or trips that have been started), where users can add photos from the gallery or camera.
+
+It has an integrated sign-in mechanism with either Facebook, Google or email. This allows to synchronize data via Firebase over different devices (and potentially to Android, too, if there will be a future Android version).
 
 The ideas behind the app and a prototype designed in Adobe XD can be found in the following blog post on my website:
 https://jaindlstefan.wixsite.com/projects

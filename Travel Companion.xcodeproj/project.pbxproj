@@ -386,11 +386,11 @@
 		9A5B69D421117E4600060790 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */,
 				9A882232214087A400C333D4 /* SearchTextField.swift */,
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
 				9AE4C28D212F6DC50056CD0D /* UiUtils.swift */,
 				9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */,
-				9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */,
 				9ABA83C12169EC9000CDE128 /* CustomColors.swift */,
 				9A6186C2218A0DE2002F59BC /* FormatUtils.swift */,
 			);
