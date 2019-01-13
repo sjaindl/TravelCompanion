@@ -65,8 +65,9 @@ struct Constants {
         static let zoomLevel = "zoomLevel"
         
         static let zoomLevelStandard = 6.0
-        static let mapLatitudeStandard = 47.0
-        static let mapLongitudeStandard = 15.5
+        //Coordinates of Apple headquarter
+        static let mapLatitudeStandard = 37.33182
+        static let mapLongitudeStandard = -122.03118
     }
     
     static let zoomLevelDetail = 10.0

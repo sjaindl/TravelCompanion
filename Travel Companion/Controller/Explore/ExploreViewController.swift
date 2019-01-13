@@ -164,7 +164,15 @@ class ExploreViewController: UIViewController {
     @IBAction func addPlace(_ sender: Any) {
         var viewport: GMSCoordinateBounds?
         
-        if let center = mapCenter {
+        let locationManager = CLLocationManager()
+        
+        if let currentLocation = locationManager.location?.coordinate {
+            let northEast = CLLocationCoordinate2D(latitude: currentLocation.latitude + 0.001,
+                                                   longitude: currentLocation.longitude + 0.001)
+            let southWest = CLLocationCoordinate2D(latitude: currentLocation.latitude - 0.001,
+                                                   longitude: currentLocation.longitude - 0.001)
+            viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+        } else if let center = mapCenter {
             let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001,
                                                    longitude: center.longitude + 0.001)
             let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001,
@@ -183,11 +191,13 @@ class ExploreViewController: UIViewController {
 extension ExploreViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.mapLatitude)
-        UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.mapLongitude)
-        UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.zoomLevel)
-        
-        mapCenter = position.target
+        if position.target.latitude != 0 && position.target.longitude != 0 {
+            UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.mapLatitude)
+            UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.mapLongitude)
+            UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.zoomLevel)
+            
+            mapCenter = position.target
+        }
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
