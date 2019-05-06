@@ -684,7 +684,7 @@
 				TargetAttributes = {
 					9A5B699821117A7B00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -696,12 +696,12 @@
 					};
 					9A5B69AF21117A7C00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = 9A5B699821117A7B00060790;
 					};
 					9A5B69BA21117A7C00060790 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = 9A5B699821117A7B00060790;
 					};
 				};
@@ -1273,7 +1273,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sjaindl.TravelCompanion;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1296,7 +1296,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "TravelCompanion Production Profile";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1318,7 +1318,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Companion.app/Travel Companion";
 			};
@@ -1340,7 +1340,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travel Companion.app/Travel Companion";
 			};
@@ -1361,7 +1361,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Travel Companion";
 			};
@@ -1381,7 +1381,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jnd.udacity.Travel-CompanionUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Travel Companion";
 			};

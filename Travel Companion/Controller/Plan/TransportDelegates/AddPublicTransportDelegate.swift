@@ -83,7 +83,7 @@ class AddPublicTransportDelegate: NSObject, AddTransportDelegate {
                 detailText = searchResponse.agencies[agency.agency].name + ", " + detailText
                 
                 if let agencyUrl = searchResponse.agencies[agency.agency].icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(agencyUrl)") {
-                    try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
+                    ((try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))) as ()??)
                 }
             }
             

@@ -107,7 +107,7 @@ class AddFlightDelegate: NSObject, AddTransportDelegate {
             let airline = searchResponse.airlines[hop.airline]
             
             if let airlineUrl = airline.icon?.url, let url = URL(string: "\(Rome2RioConstants.UrlComponents.urlProtocol)://\(Rome2RioConstants.UrlComponents.domain)\(airlineUrl)") {
-                try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))
+                ((try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))) as ()??)
             }
             
             var text = airline.name

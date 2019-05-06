@@ -31,7 +31,7 @@ class WikiClient {
             if let error = error {
                 completionHandler(error.localizedDescription, nil)
             } else {
-                if let responseElements = result?.components(separatedBy: "\""), let index = responseElements.index(of: WikiConstants.ResponseKeys.fullUrl), index <= responseElements.count + 2 {
+                if let responseElements = result?.components(separatedBy: "\""), let index = responseElements.firstIndex(of: WikiConstants.ResponseKeys.fullUrl), index <= responseElements.count + 2 {
                     completionHandler(nil, responseElements[index + 2])
                 } else {
                     print("Could not find result in \(result!)")
