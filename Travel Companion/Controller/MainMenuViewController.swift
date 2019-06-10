@@ -61,7 +61,7 @@ class MainMenuViewController: UIViewController {
     @objc
     func plan() {
         if !isSignedIn {
-            UiUtils.showHint("accountRequired".localized(), title: "loginRequired".localized(), controller: self)
+            loginSession()
         } else {
             performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
         }
@@ -70,7 +70,7 @@ class MainMenuViewController: UIViewController {
     @objc
     func remember() {
         if !isSignedIn {
-            UiUtils.showHint("accountRequired".localized(), title: "loginRequired".localized(), controller: self)
+            loginSession()
         } else {
             performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
         }
