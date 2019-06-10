@@ -79,7 +79,10 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
             if let indexPath = indexPath {
                 collectionView.reloadItems(at: [indexPath])
             }
+        @unknown default:
+            debugPrint("Unsupported section action type")
         }
+        
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -91,6 +94,8 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
         case .delete:
             collectionView.deleteSections(indexSet)
         case .update, .move:
+            debugPrint("Unsupported section action type")
+        @unknown default:
             debugPrint("Unsupported section action type")
         }
     }

@@ -8,6 +8,7 @@
 
 import CodableFirebase
 import Firebase
+import FirebaseFirestore
 import UIKit
 
 class AddTransportDetailViewController: UITableViewController {
@@ -46,7 +47,7 @@ class AddTransportDetailViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transportDelegate.tableView(_: tableView, numberOfRowsInSection: section)
+        return transportDelegate.tableView(tableView, numberOfRowsInSection: section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
