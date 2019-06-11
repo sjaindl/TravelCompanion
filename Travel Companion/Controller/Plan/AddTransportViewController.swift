@@ -8,6 +8,8 @@
 
 import Firebase
 import UIKit
+import RxCocoa
+import RxSwift
 
 class AddTransportViewController: UIViewController, UITextFieldDelegate {
 
@@ -22,16 +24,50 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     
     var plan: Plan!
     
+    var disposableOrigin: Disposable?
+    var disposableDestination: Disposable?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = String(format: "addTransport".localized(), transportDelegate.description())
         
-        origin.delegate = self
-        destination.delegate = self
+        disposableOrigin = setupAutocompletion(for: origin)
+        disposableDestination = setupAutocompletion(for: destination)
         
         date.datePickerMode = .date
         UiUtils.layoutDatePicker(date)
+    }
+    
+    deinit {
+        if let disposableOrigin = disposableOrigin {
+            disposableOrigin.dispose()
+        }
+        
+        if let disposableDestination = disposableDestination {
+            disposableDestination.dispose()
+        }
+    }
+    
+    func setupAutocompletion(for searchTextField: SearchTextField) -> Disposable {
+        return searchTextField.rx.text
+            .debug("rxAutocomplete")
+            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter{$0 != nil && $0!.count >= 5}
+            .flatMapLatest { query in
+                Rome2RioClient.sharedInstance.autocomplete(with: query!)
+                .startWith([]) // clears results on new search term
+                .catchErrorJustReturn([])
+            }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { filterStrings in
+                // bind to ui
+                if filterStrings.count > 0 {
+                    searchTextField.filterStrings(filterStrings)
+                }
+            })
+            //.disposed(by: disposeBag) --> do not dispose immediately, as user may continue typing
     }
     
     @IBAction func search(_ sender: Any) {
@@ -75,36 +111,5 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-}
-
-extension AddTransportViewController {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard FirestoreRemoteConfig.sharedInstance.transportSearchAutocomplete else {
-            debugPrint("Autocompletion is disabled.")
-            return true
-        }
-        
-        Rome2RioClient.sharedInstance.autocomplete(with: textField.text! + string) { (error, autoCompleteResponse) in
-            
-            guard error == nil else {
-                debugPrint("autocompletion threw an error.. skip it.")
-                return
-            }
-            
-            var filterStrings: [String] = []
-            
-            for place in (autoCompleteResponse?.places)! {
-                filterStrings.append(place.longName)
-            }
-            
-            if filterStrings.count > 0, let searchTextField = textField as? SearchTextField {
-                DispatchQueue.main.async {
-                    searchTextField.filterStrings(filterStrings)
-                }
-            }
-        }
-        
-        return true
-    }
+    
 }

@@ -39,12 +39,14 @@ class CoreDataClient {
         pin.placeId = place.placeID
         pin.url = place.website?.absoluteString
         
-        for type in place.types {
-            let placeType = PlaceType(context: dataController.viewContext)
-            placeType.pin = pin
-            placeType.type = type
+        if let types = place.types {
+            for type in types {
+                let placeType = PlaceType(context: dataController.viewContext)
+                placeType.pin = pin
+                placeType.type = type
+            }
         }
-        
+           
         try? dataController.save()
         
         return pin

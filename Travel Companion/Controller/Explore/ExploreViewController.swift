@@ -138,8 +138,8 @@ class ExploreViewController: UIViewController {
     func persistPin(of place: GMSPlace, countryCode: String?) -> Pin {
         let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, countryCode: countryCode)
         
-        if firestoreDbReference != nil {
-            FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.placeID, data: [
+        if firestoreDbReference != nil, let placeId = place.placeID {
+            FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: placeId, data: [
                 FirestoreConstants.Ids.Place.placeId: place.placeID,
                 FirestoreConstants.Ids.Place.name: place.name,
                 FirestoreConstants.Ids.Place.latitude: place.coordinate.latitude,

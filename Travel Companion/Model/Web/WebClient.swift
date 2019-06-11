@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 class WebClient {
     
@@ -180,6 +182,11 @@ class WebClient {
         
         /* Start request */
         task.resume()
+    }
+    
+    func taskForRxDataWebRequest(with request: URLRequest, transform: @escaping (_ transform: Data?) -> [String]) -> Observable<[String]> {
+        /* Perform Web request */
+        return URLSession.shared.rx.data(request: request).map { transform($0) }
     }
     
     func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){

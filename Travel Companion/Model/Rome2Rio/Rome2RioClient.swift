@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
 class Rome2RioClient {
     static let sharedInstance = Rome2RioClient()
     
     private init() {}
     
-    func autocomplete(with query: String, completionHandler: @escaping (_ errorString: String?, _ autoCompleteResponse: AutoCompleteResponse?) -> Void) {
+    func autocomplete(with query: String) -> Observable<[String]> {
         
         let queryItems = buildAutoCompleteQueryItems(query: query)
         
@@ -22,23 +23,21 @@ class Rome2RioClient {
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
-        WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "placesAutocomplete") { (data, error) in
-            /* Send the desired value(s) to completion handler */
-            if let error = error {
-                completionHandler(error.localizedDescription, nil)
-            } else {
-                if let data = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let autoCompleteResponse = try decoder.decode(AutoCompleteResponse.self, from: data)
-                        completionHandler(nil, autoCompleteResponse)
-                    } catch {
-                        debugPrint(error)
-                        completionHandler(error.localizedDescription, nil)
-                    }
-                } else {
-                    completionHandler("Search failed (no data).", nil)
+        return WebClient.sharedInstance.taskForRxDataWebRequest(with: request) { (data) in
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(AutoCompleteResponse.self, from: data!)
+                
+                var filterStrings: [String] = []
+                
+                for place in (result.places) {
+                    filterStrings.append(place.longName)
                 }
+                
+                return filterStrings
+            } catch {
+                print("Error: \(error)")
+                return []
             }
         }
     }
