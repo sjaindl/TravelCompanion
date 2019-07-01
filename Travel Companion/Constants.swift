@@ -25,6 +25,10 @@ struct Constants {
         static let albumCell = "photoCell"
         static let transportDetailWithoutImageCell = "transportDetail"
         static let transportDetailWithImageCell = "transportDetailSection"
+        static let originCellReuseIdCell = "originCellReuseId"
+        static let destinationCellReuseIdCell = "destinationCellReuseId"
+        
+        
     }
     
     struct Segues {
@@ -39,6 +43,8 @@ struct Constants {
         static let planChoosePhoto = "choosePlanPhoto"
         static let planAddFlight = "addFlight"
         static let planAddPublicTransport = "addPublicTransport"
+        static let planAddDestination = "addDestination"
+        static let planTransportDate = "transportDate"
         static let planAddTransportDetail = "addTransportDetail"
         static let planAddNotes = "addNotes"
         static let planAddPlace = "addPlace"

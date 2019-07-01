@@ -14,6 +14,10 @@
 		9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D32112D1C6001D2517 /* Assets.xcassets */; };
 		9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */; };
 		9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
+		9A368B3722C2BF950084F6E9 /* AddTransportOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */; };
+		9A368B3922C2D54C0084F6E9 /* AddTransportDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */; };
+		9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */; };
+		9A368B3D22C429560084F6E9 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3C22C429560084F6E9 /* Transport.swift */; };
 		9A450F2421859A9F00875B42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A450F2221859A9F00875B42 /* Localizable.strings */; };
 		9A450F302185CE7000875B42 /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A450F2F2185CE7000875B42 /* LocalizableString.swift */; };
 		9A5B69C021117A7C00060790 /* MainMenuUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* MainMenuUiTests.swift */; };
@@ -78,8 +82,6 @@
 		9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */; };
 		9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6D6BFA2133C60500B98447 /* PlanConstants.swift */; };
 		9A88222F21407CFF00C333D4 /* AutoCompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */; };
-		9A8822312140845B00C333D4 /* AddTransportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8822302140845B00C333D4 /* AddTransportViewController.swift */; };
-		9A882233214087A400C333D4 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A882232214087A400C333D4 /* SearchTextField.swift */; };
 		9A88223521463B0E00C333D4 /* AddTransportDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */; };
 		9A8822492148EAB300C333D4 /* Flight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8822482148EAB300C333D4 /* Flight.swift */; };
 		9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88224A2148ED7100C333D4 /* Plannable.swift */; };
@@ -179,6 +181,10 @@
 		9A1AD4D32112D1C6001D2517 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = "/Users/stefanjaindl/udacity/ios/TravelCompanion/Travel Companion/Controller/MainMenuViewController.swift"; sourceTree = "<absolute>"; };
 		9A2E0FA121246A700090EB43 /* Country+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Extensions.swift"; sourceTree = "<group>"; };
+		9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportOriginViewController.swift; sourceTree = "<group>"; };
+		9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDestinationViewController.swift; sourceTree = "<group>"; };
+		9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDateViewController.swift; sourceTree = "<group>"; };
+		9A368B3C22C429560084F6E9 /* Transport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		9A450F2321859A9F00875B42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A450F2B2185A54700875B42 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A450F2F2185CE7000875B42 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
@@ -210,8 +216,6 @@
 		9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		9A6D6BFA2133C60500B98447 /* PlanConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanConstants.swift; sourceTree = "<group>"; };
 		9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompleteResponse.swift; sourceTree = "<group>"; };
-		9A8822302140845B00C333D4 /* AddTransportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportViewController.swift; sourceTree = "<group>"; };
-		9A882232214087A400C333D4 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDetailViewController.swift; sourceTree = "<group>"; };
 		9A8822482148EAB300C333D4 /* Flight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flight.swift; sourceTree = "<group>"; };
 		9A88224A2148ED7100C333D4 /* Plannable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plannable.swift; sourceTree = "<group>"; };
@@ -387,7 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				9ABA83BF21680B7400CDE128 /* ViewControllerOrientation.swift */,
-				9A882232214087A400C333D4 /* SearchTextField.swift */,
 				9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */,
 				9AE4C28D212F6DC50056CD0D /* UiUtils.swift */,
 				9AC023D12162CE590076A3C2 /* UiViewGestureAction.swift */,
@@ -483,6 +486,7 @@
 				9A91D9DC213E4E5500249E83 /* Rome2RioConstants.swift */,
 				9A91D9DE213E50F400249E83 /* SearchResponse.swift */,
 				9A88222E21407CFF00C333D4 /* AutoCompleteResponse.swift */,
+				9A368B3C22C429560084F6E9 /* Transport.swift */,
 			);
 			path = Rome2Rio;
 			sourceTree = "<group>";
@@ -572,11 +576,13 @@
 				9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */,
 				9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */,
 				9A6D6BFA2133C60500B98447 /* PlanConstants.swift */,
-				9A8822302140845B00C333D4 /* AddTransportViewController.swift */,
 				9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */,
 				9A882250214A2DCD00C333D4 /* NotesViewController.swift */,
 				9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */,
 				9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */,
+				9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */,
+				9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */,
+				9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */,
 			);
 			path = Plan;
 			sourceTree = "<group>";
@@ -948,6 +954,7 @@
 				9A6186C6218A14FE002F59BC /* GooglePlaceType.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
 				9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */,
+				9A368B3D22C429560084F6E9 /* Transport.swift in Sources */,
 				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
 				9AA266AD2122C3C100EE0F5C /* FirestoreConstants.swift in Sources */,
@@ -969,24 +976,25 @@
 				9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */,
 				9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */,
 				9A88223521463B0E00C333D4 /* AddTransportDetailViewController.swift in Sources */,
+				9A368B3722C2BF950084F6E9 /* AddTransportOriginViewController.swift in Sources */,
 				9A5B6A3621117EFD00060790 /* AppDelegate.swift in Sources */,
 				9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */,
 				9A8822612154008800C333D4 /* RememberViewController.swift in Sources */,
 				9AE4C2942132A4110056CD0D /* Plan.swift in Sources */,
 				9A882255214F6E5C00C333D4 /* AddTransportDelegate.swift in Sources */,
+				9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */,
 				9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */,
 				9A91D9DD213E4E5500249E83 /* Rome2RioConstants.swift in Sources */,
 				9ABA83C021680B7400CDE128 /* ViewControllerOrientation.swift in Sources */,
-				9A882233214087A400C333D4 /* SearchTextField.swift in Sources */,
 				9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */,
 				9A5B69EA21117E4700060790 /* DataController.swift in Sources */,
 				9A88222F21407CFF00C333D4 /* AutoCompleteResponse.swift in Sources */,
+				9A368B3922C2D54C0084F6E9 /* AddTransportDestinationViewController.swift in Sources */,
 				9AA266A3211C0C5F00EE0F5C /* ExploreDetailViewController.swift in Sources */,
 				9A882257214F6E7A00C333D4 /* AddFlightDelegate.swift in Sources */,
 				9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */,
 				9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */,
 				9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */,
-				9A8822312140845B00C333D4 /* AddTransportViewController.swift in Sources */,
 				9A88225F21536B6500C333D4 /* RememberDetailViewController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
 				9A6186B52189829A002F59BC /* AddTransportSearchDelegate.swift in Sources */,

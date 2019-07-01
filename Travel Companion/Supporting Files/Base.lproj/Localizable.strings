@@ -72,3 +72,5 @@
 "signOut" = "Sign out";
 "signIn" = "Sign in";
 "next" = "Next";
+"searchOrigin" = "Search for Origin";
+"searchDestination" = "Search for Destination";

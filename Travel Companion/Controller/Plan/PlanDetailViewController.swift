@@ -204,14 +204,14 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             controller.choosePhoto = true
             controller.plan = plan
         } else if segue.identifier == Constants.Segues.planAddFlight {
-            let controller = segue.destination as! AddTransportViewController
+            let controller = segue.destination as! AddTransportOriginViewController
             controller.firestoreDbReference = plan.firestoreFligthDbReference
             controller.transportDelegate = AddFlightDelegate()
             controller.transportSearchDelegate = AddFlightSearchDelegate()
             controller.planDetailController = self
             controller.plan = plan
         } else if segue.identifier == Constants.Segues.planAddPublicTransport {
-            let controller = segue.destination as! AddTransportViewController
+            let controller = segue.destination as! AddTransportOriginViewController
             controller.firestoreDbReference = plan.firestorePublicTransportDbReference
             controller.transportDelegate = AddPublicTransportDelegate()
             controller.transportSearchDelegate = AddPublicTransportSearchDelegate()

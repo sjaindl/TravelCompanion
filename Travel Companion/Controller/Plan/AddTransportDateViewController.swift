@@ -1,78 +1,39 @@
 //
-//  AddFlightViewController.swift
+//  AddTransportDateViewController.swift
 //  Travel Companion
 //
-//  Created by Stefan Jaindl on 05.09.18.
-//  Copyright © 2018 Stefan Jaindl. All rights reserved.
+//  Created by Stefan Jaindl on 27.06.19.
+//  Copyright © 2019 Stefan Jaindl. All rights reserved.
 //
 
 import Firebase
 import UIKit
-import RxCocoa
-import RxSwift
 
-class AddTransportViewController: UIViewController, UITextFieldDelegate {
-
+class AddTransportDateViewController: UIViewController {
+    
     var firestoreDbReference: CollectionReference!
     var planDetailController: PlanDetailViewController!
     var transportDelegate: AddTransportDelegate!
     var transportSearchDelegate: AddTransportSearchDelegate!
     
-    @IBOutlet weak var origin: SearchTextField!
-    @IBOutlet weak var destination: SearchTextField!
-    @IBOutlet weak var date: UIDatePicker!
-    
     var plan: Plan!
+    var transport: Transport!
     
-    var disposableOrigin: Disposable?
-    var disposableDestination: Disposable?
+    @IBOutlet weak var date: UIDatePicker!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.navigationItem.title = String(format: "addTransport".localized(), transportDelegate.description())
-        
-        disposableOrigin = setupAutocompletion(for: origin)
-        disposableDestination = setupAutocompletion(for: destination)
         
         date.datePickerMode = .date
         UiUtils.layoutDatePicker(date)
     }
     
-    deinit {
-        if let disposableOrigin = disposableOrigin {
-            disposableOrigin.dispose()
-        }
-        
-        if let disposableDestination = disposableDestination {
-            disposableDestination.dispose()
-        }
-    }
-    
-    func setupAutocompletion(for searchTextField: SearchTextField) -> Disposable {
-        return searchTextField.rx.text
-            .debug("rxAutocomplete")
-            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .filter{$0 != nil && $0!.count >= 5}
-            .flatMapLatest { query in
-                Rome2RioClient.sharedInstance.autocomplete(with: query!)
-                .startWith([]) // clears results on new search term
-                .catchErrorJustReturn([])
-            }
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { filterStrings in
-                // bind to ui
-                if filterStrings.count > 0 {
-                    searchTextField.filterStrings(filterStrings)
-                }
-            })
-            //.disposed(by: disposeBag) --> do not dispose immediately, as user may continue typing
-    }
-    
-    @IBAction func search(_ sender: Any) {
+    @IBAction func search(_ sender: UIButton) {
         searchForTransport()
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.Segues.planAddTransportDetail {
@@ -87,7 +48,12 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
     }
     
     func searchForTransport() {
-        let queryItems = transportSearchDelegate.buildSearchQueryItems(origin: origin.text!, destination: destination.text!)
+        guard let origin = transport.origin, let destination = transport.destination else {
+            debugPrint("Something is wrong with origin or destination")
+            return
+        }
+        
+        let queryItems = transportSearchDelegate.buildSearchQueryItems(origin: origin, destination: destination)
         
         Rome2RioClient.sharedInstance.search(with: queryItems) { (error, searchResponse) in
             if let error = error {
@@ -111,5 +77,5 @@ class AddTransportViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
 }

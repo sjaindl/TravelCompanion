@@ -72,3 +72,5 @@
 "signOut" = "Ausloggen";
 "signIn" = "Einloggen";
 "next" = "Weiter";
+"searchOrigin" = "Suche Start";
+"searchDestination" = "Suche Ziel";

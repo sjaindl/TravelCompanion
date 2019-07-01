@@ -58,10 +58,10 @@ class WebClient {
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+            var json = String(data: jsonData, encoding: .utf8)!
+            
             if let jsonPrefix = jsonPrefix {
-                json = jsonPrefix + String(data: jsonData, encoding: .utf8)!
-            } else {
-                json = String(data: jsonData, encoding: .utf8)!
+                json = jsonPrefix + json
             }
             
             if let jsonPostfix = jsonPostfix {
@@ -186,10 +186,17 @@ class WebClient {
     
     func taskForRxDataWebRequest(with request: URLRequest, transform: @escaping (_ transform: Data?) -> [String]) -> Observable<[String]> {
         /* Perform Web request */
+        //TODO: performBasicWebResponseChecks
         return URLSession.shared.rx.data(request: request).map { transform($0) }
     }
     
-    func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
+    func downloadImage(imagePath: String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
+        /* TODO
+         items.asObservable().bindTo(self.collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self)) { row, data, cell in
+         cell.data = data
+         }.addDisposableTo(disposeBag)
+         */
+        
         let session = URLSession.shared
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
