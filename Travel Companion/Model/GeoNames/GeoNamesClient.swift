@@ -14,7 +14,7 @@ class GeoNamesClient {
     
     private init() { }
     
-    func fetchCountryCode(latitude: Double, longitude: Double, completionHandler: @escaping (_ errorString: String?, _ result: AnyObject?) -> Void) {
+    func fetchCountryCode(latitude: Double, longitude: Double, completionHandler: @escaping (_ errorString: String?, _ result: String?) -> Void) {
         
         let method = GeoNamesConstants.UrlComponents.path
         
@@ -26,13 +26,21 @@ class GeoNamesClient {
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
-        WebClient.sharedInstance.taskForWebRequest(request, errorDomain: "fetchCountryCode", stringResponse: true) { (result, error) in
+        WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "fetchCountryCode") { (data, error) in
             
             /* Send the desired value(s) to completion handler */
             if let error = error {
                 completionHandler(error.localizedDescription, nil)
             } else {
-                completionHandler(nil, result)
+                do {
+                    let decoder = JSONDecoder()
+                    let geocode = try decoder.decode(Geocode.self, from: data!)
+                    
+                    completionHandler(nil, geocode.countryCode)
+                } catch {
+                    print("Error: \(error)")
+                    completionHandler(error.localizedDescription, nil)
+                }
             }
         }
     }

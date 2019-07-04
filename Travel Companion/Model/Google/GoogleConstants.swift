@@ -15,6 +15,8 @@ class GoogleConstants {
         static let path = "/maps/api/place/"
         static let pathNearbySearch = path + "nearbysearch/json"
         static let pathPhotos = "https://maps.googleapis.com/maps/api/place/photo"
+        static let pathAutocomplete = path + "autocomplete/json"
+        static let pathPlaceDetail = path + "details/json"
     }
     
     struct ParameterKeys {
@@ -28,6 +30,13 @@ class GoogleConstants {
         
         static let maxWidth = "maxwidth"
         static let photoReference = "photoreference"
+        
+        static let sessionToken = "sessiontoken"
+        static let input = "input"
+        static let types = "types"
+        
+        static let placeId = "placeid"
+        static let fields = "fields"
     }
     
     struct ParameterValues {
@@ -36,5 +45,9 @@ class GoogleConstants {
         static let strictBounds = "true"
         
         static let maxWidth = "400"
+        
+        static let autocompletePlaceType = "(regions)"
+        
+        static let placeDetailFields = "address_component,adr_address,formatted_address,geometry,icon,name,permanently_closed,photo,type,url,utc_offset,vicinity" // basic data
     }
 }

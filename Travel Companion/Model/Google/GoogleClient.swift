@@ -8,6 +8,7 @@
 
 import CoreLocation
 import Foundation
+import RxSwift
 
 class GoogleClient {
     
@@ -68,6 +69,79 @@ class GoogleClient {
         if let text = text, text.count > 0, text != " " {
             parameters[GoogleConstants.ParameterKeys.name] = text
         }
+        
+        return parameters
+    }
+    
+    func autocomplete(for input: String, token: String) -> Observable<[PlacesPredictions]> {
+        let queryItems = buildAutoCompleteQueryItems(for: input, token: token)
+        
+        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
+            GoogleConstants.UrlComponents.pathAutocomplete, withQueryItems: queryItems)
+        
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
+        
+        return WebClient.sharedInstance.taskForRxDataPlacesPredictionsWebRequest(with: request) { (data) in
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(PlacesAutoCompleteResponse.self, from: data!)
+                
+                var filterStrings: [PlacesPredictions] = []
+                
+                for prediction in (result.predictions) {
+                    filterStrings.append(prediction/* .description */)
+                }
+                
+                return filterStrings
+            } catch {
+                print("Error: \(error)")
+                return []
+            }
+        }
+    }
+    
+    private func buildAutoCompleteQueryItems(for input: String, token: String) -> [String: String] {
+        let parameters = [
+            //GoogleConstants.ParameterKeys.radius: GoogleConstants.ParameterValues.radius,
+            GoogleConstants.ParameterKeys.types: GoogleConstants.ParameterValues.autocompletePlaceType,
+            GoogleConstants.ParameterKeys.input: input,
+            GoogleConstants.ParameterKeys.sessionToken: token,
+            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces,
+            //GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds
+        ]
+        
+        return parameters
+    }
+    
+    func placeDetail(for placeId: String, token: String) -> Observable<PlacesDetailsResponse?> {
+        let queryItems = buildPlaceDetailQueryItems(for: placeId, token: token)
+        
+        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
+            GoogleConstants.UrlComponents.pathPlaceDetail, withQueryItems: queryItems)
+        
+        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
+        
+        return WebClient.sharedInstance.taskForRxDataPlaceDetailsWebRequest(with: request) { (data) in
+            
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(PlacesDetailsResponse.self, from: data!)
+                
+                return result
+            } catch {
+                print("Error: \(error)")
+                return nil
+            }
+        }
+    }
+    
+    private func buildPlaceDetailQueryItems(for placeId: String, token: String) -> [String: String] {
+        let parameters = [
+            GoogleConstants.ParameterKeys.placeId: placeId,
+            GoogleConstants.ParameterKeys.fields: GoogleConstants.ParameterValues.placeDetailFields,
+            GoogleConstants.ParameterKeys.sessionToken: token,
+            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces
+        ]
         
         return parameters
     }

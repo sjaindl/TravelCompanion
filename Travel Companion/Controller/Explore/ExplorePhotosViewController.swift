@@ -114,8 +114,7 @@ class ExplorePhotosViewController: UIViewController {
                 if let result = self.dataSource.fetchedObjects() {
                     if result.count == 0 {
                         self.fetchRemoteData()
-                    }
-                    else {
+                    } else {
                         DispatchQueue.main.async {
                             self.collectionView.reloadData()
                             self.enableUi(true)
@@ -253,8 +252,7 @@ class ExplorePhotosViewController: UIViewController {
     }
 }
 
-extension ExplorePhotosViewController : UICollectionViewDelegate, UICollectionViewDataSource {
-    
+extension ExplorePhotosViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataSource.numberOfSections(in: collectionView)
     }

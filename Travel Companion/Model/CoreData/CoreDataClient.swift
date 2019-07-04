@@ -16,37 +16,35 @@ class CoreDataClient {
     
     private init() {}
     
-    func storePin(_ dataController: DataController, place: GMSPlace, countryCode: String?) -> Pin {
+    func storePin(_ dataController: DataController, place: PlacesDetailsResponse, placeId: String, countryCode: String?) -> Pin {
         let pin = Pin(context: dataController.viewContext)
-        pin.latitude = place.coordinate.latitude
-        pin.longitude = place.coordinate.longitude
-        pin.name = place.name
-        pin.phoneNumber = place.phoneNumber
-        pin.rating = place.rating
-        pin.address = place.formattedAddress
+        pin.latitude = place.result.geometry.location.lat
+        pin.longitude = place.result.geometry.location.lng
+        pin.name = place.result.name
+//        pin.phoneNumber = place.phoneNumber
+//        pin.rating = place.rating
+        pin.address = place.result.formattedAddress
         
         pin.countryCode = countryCode
         
-        if let addressComponents = place.addressComponents {
+        if let addressComponents = place.result.addressComponents {
             for component in addressComponents {
-                if component.type == "country" {
-                    pin.country = component.name
-                    break
-                }
+//                for type in component.types {
+//                    let placeType = PlaceType(context: dataController.viewContext)
+//                    placeType.pin = pin
+//                    placeType.type = type
+                    
+                    if component.types.contains("country") {
+                        pin.country = component.longName
+                    }
+//                }
+                
             }
         }
         
-        pin.placeId = place.placeID
-        pin.url = place.website?.absoluteString
+        pin.placeId = placeId
+        pin.url = place.result.url
         
-        if let types = place.types {
-            for type in types {
-                let placeType = PlaceType(context: dataController.viewContext)
-                placeType.pin = pin
-                placeType.type = type
-            }
-        }
-           
         try? dataController.save()
         
         return pin

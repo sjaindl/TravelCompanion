@@ -18,6 +18,9 @@
 		9A368B3922C2D54C0084F6E9 /* AddTransportDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */; };
 		9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */; };
 		9A368B3D22C429560084F6E9 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3C22C429560084F6E9 /* Transport.swift */; };
+		9A368B3F22CBBF530084F6E9 /* ExplorePlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3E22CBBF530084F6E9 /* ExplorePlacesSearchViewController.swift */; };
+		9A368B4122CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4022CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift */; };
+		9A368B4322CC139F0084F6E9 /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */; };
 		9A450F2421859A9F00875B42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A450F2221859A9F00875B42 /* Localizable.strings */; };
 		9A450F302185CE7000875B42 /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A450F2F2185CE7000875B42 /* LocalizableString.swift */; };
 		9A5B69C021117A7C00060790 /* MainMenuUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* MainMenuUiTests.swift */; };
@@ -119,6 +122,7 @@
 		9ACBFEF22194E59F004C1506 /* index.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEF12194E59F004C1506 /* index.md */; };
 		9ACBFEF42194E6B6004C1506 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */; };
 		9AD61603218FA35C00BFA74E /* UiTestTableViewFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD61602218FA35C00BFA74E /* UiTestTableViewFilter.swift */; };
+		9AD6752322CEA27A00322641 /* GeoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6752222CEA27A00322641 /* GeoCode.swift */; };
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
@@ -185,6 +189,9 @@
 		9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDestinationViewController.swift; sourceTree = "<group>"; };
 		9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDateViewController.swift; sourceTree = "<group>"; };
 		9A368B3C22C429560084F6E9 /* Transport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
+		9A368B3E22CBBF530084F6E9 /* ExplorePlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesSearchViewController.swift; sourceTree = "<group>"; };
+		9A368B4022CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAutocompleteResponse.swift; sourceTree = "<group>"; };
+		9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsResponse.swift; sourceTree = "<group>"; };
 		9A450F2321859A9F00875B42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A450F2B2185A54700875B42 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A450F2F2185CE7000875B42 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
@@ -253,6 +260,7 @@
 		9ACBFEF12194E59F004C1506 /* index.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
 		9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9AD61602218FA35C00BFA74E /* UiTestTableViewFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiTestTableViewFilter.swift; sourceTree = "<group>"; };
+		9AD6752222CEA27A00322641 /* GeoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCode.swift; sourceTree = "<group>"; };
 		9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearchViewController.swift; sourceTree = "<group>"; };
 		9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 		9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTests.swift; sourceTree = "<group>"; };
@@ -516,11 +524,13 @@
 		9AA266A72122C38D00EE0F5C /* Google */ = {
 			isa = PBXGroup;
 			children = (
+				9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */,
 				9AA266A82122C3A800EE0F5C /* GoogleClient.swift */,
 				9AA266AA2122C3B700EE0F5C /* GoogleConstants.swift */,
 				9AC023CD215ACE010076A3C2 /* GooglePlace.swift */,
 				9A6186C5218A14FE002F59BC /* GooglePlaceType.swift */,
 				9AC023CF215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift */,
+				9A368B4022CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift */,
 			);
 			path = Google;
 			sourceTree = "<group>";
@@ -551,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA266A0211B93C700EE0F5C /* ExploreViewController.swift */,
+				9A368B3E22CBBF530084F6E9 /* ExplorePlacesSearchViewController.swift */,
 				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
 				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
@@ -601,6 +612,7 @@
 			children = (
 				9AF39BEA2126CA4300D85DF2 /* GeoNamesClient.swift */,
 				9AF39BEC2126CA7D00D85DF2 /* GeoNamesConstants.swift */,
+				9AD6752222CEA27A00322641 /* GeoCode.swift */,
 			);
 			path = GeoNames;
 			sourceTree = "<group>";
@@ -983,6 +995,7 @@
 				9AE4C2942132A4110056CD0D /* Plan.swift in Sources */,
 				9A882255214F6E5C00C333D4 /* AddTransportDelegate.swift in Sources */,
 				9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */,
+				9A368B4122CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift in Sources */,
 				9A88224B2148ED7100C333D4 /* Plannable.swift in Sources */,
 				9A91D9DD213E4E5500249E83 /* Rome2RioConstants.swift in Sources */,
 				9ABA83C021680B7400CDE128 /* ViewControllerOrientation.swift in Sources */,
@@ -995,10 +1008,13 @@
 				9AA266B32123558000EE0F5C /* ExplorePhotosViewController.swift in Sources */,
 				9AE4C28E212F6DC50056CD0D /* UiUtils.swift in Sources */,
 				9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */,
+				9A368B3F22CBBF530084F6E9 /* ExplorePlacesSearchViewController.swift in Sources */,
 				9A88225F21536B6500C333D4 /* RememberDetailViewController.swift in Sources */,
 				9A5B69EC21117E4700060790 /* FlickrConstants.swift in Sources */,
+				9AD6752322CEA27A00322641 /* GeoCode.swift in Sources */,
 				9A6186B52189829A002F59BC /* AddTransportSearchDelegate.swift in Sources */,
 				9A91D9DF213E50F400249E83 /* SearchResponse.swift in Sources */,
+				9A368B4322CC139F0084F6E9 /* PlaceDetailsResponse.swift in Sources */,
 				9A88226521563A3800C333D4 /* RememberPhotos.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,

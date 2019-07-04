@@ -11,7 +11,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class AddTransportDestinationViewController: UIViewController, UITableViewDelegate {
+class AddTransportDestinationViewController: UIViewController {
         
     @IBOutlet weak var tableView: UITableView!
     
@@ -98,7 +98,7 @@ class AddTransportDestinationViewController: UIViewController, UITableViewDelega
     
 }
 
-extension AddTransportDestinationViewController {
+extension AddTransportDestinationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         transport.destination = self.results.value[indexPath.row]
         performSegue(withIdentifier: Constants.Segues.planTransportDate, sender: transport)

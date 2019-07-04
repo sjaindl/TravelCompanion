@@ -190,13 +190,19 @@ class WebClient {
         return URLSession.shared.rx.data(request: request).map { transform($0) }
     }
     
+    func taskForRxDataPlaceDetailsWebRequest(with request: URLRequest, transform: @escaping (_ transform: Data?) -> PlacesDetailsResponse?) -> Observable<PlacesDetailsResponse?> {
+        /* Perform Web request */
+        //TODO: performBasicWebResponseChecks
+        return URLSession.shared.rx.data(request: request).map { transform($0) }
+    }
+    
+    func taskForRxDataPlacesPredictionsWebRequest(with request: URLRequest, transform: @escaping (_ transform: Data?) -> [PlacesPredictions]) -> Observable<[PlacesPredictions]> {
+        /* Perform Web request */
+        //TODO: performBasicWebResponseChecks
+        return URLSession.shared.rx.data(request: request).map { transform($0) }
+    }
+    
     func downloadImage(imagePath: String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
-        /* TODO
-         items.asObservable().bindTo(self.collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self)) { row, data, cell in
-         cell.data = data
-         }.addDisposableTo(disposeBag)
-         */
-        
         let session = URLSession.shared
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)

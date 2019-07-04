@@ -27,8 +27,7 @@ struct Constants {
         static let transportDetailWithImageCell = "transportDetailSection"
         static let originCellReuseIdCell = "originCellReuseId"
         static let destinationCellReuseIdCell = "destinationCellReuseId"
-        
-        
+        static let googlePlaceCellReuseId = "googlePlaceCell"
     }
     
     struct Segues {
@@ -36,6 +35,7 @@ struct Constants {
         static let explorePhotos = "explorePhotos"
         static let exploreWiki = "wiki"
         static let exploreDetail = "exploreDetail"
+        static let searchPlaces = "searchPlaces"
         
         static let plan = "plan"
         static let addPlan = "addPlan"

@@ -10,10 +10,9 @@ import CoreData
 import CoreLocation
 import Firebase
 import GoogleMaps
-import GooglePlacePicker
 import UIKit
 
-class ExploreViewController: UIViewController {
+class ExploreViewController: UIViewController, PlacePicker {
 
     @IBOutlet weak var map: GMSMapView!
     
@@ -107,6 +106,9 @@ class ExploreViewController: UIViewController {
             wikitargetController.domain = WikiConstants.UrlComponents.domainWikipedia
             wikivoyagetargetController.pin = sender as? Pin
             wikivoyagetargetController.domain = WikiConstants.UrlComponents.domainWikiVoyage
+        } else if segue.identifier == Constants.Segues.searchPlaces {
+            let controller = segue.destination as! ExplorePlacesSearchViewController
+            controller.callback = self
         }
     }
     
@@ -127,23 +129,22 @@ class ExploreViewController: UIViewController {
     }
     
     func addPinToMap(with coordinate: CLLocationCoordinate2D) -> GMSMarker {
-        let position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let marker = GMSMarker(position: position)
+        let marker = GMSMarker(position: coordinate)
         marker.map = map
         marker.appearAnimation = .pop
         
         return marker
     }
     
-    func persistPin(of place: GMSPlace, countryCode: String?) -> Pin {
-        let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, countryCode: countryCode)
+    func persistPin(of place: PlacesDetailsResponse, placeId: String, countryCode: String?) -> Pin {
+        let pin = CoreDataClient.sharedInstance.storePin(dataController, place: place, placeId: placeId, countryCode: countryCode)
         
-        if firestoreDbReference != nil, let placeId = place.placeID {
+        if firestoreDbReference != nil, let name = place.result.name {
             FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: placeId, data: [
-                FirestoreConstants.Ids.Place.placeId: place.placeID,
-                FirestoreConstants.Ids.Place.name: place.name,
-                FirestoreConstants.Ids.Place.latitude: place.coordinate.latitude,
-                FirestoreConstants.Ids.Place.longitude: place.coordinate.longitude
+                FirestoreConstants.Ids.Place.placeId: placeId,
+                FirestoreConstants.Ids.Place.name: name,
+                FirestoreConstants.Ids.Place.latitude: place.result.geometry.location.lat,
+                FirestoreConstants.Ids.Place.longitude: place.result.geometry.location.lng
             ]) { (error) in
                 if let error = error {
                     debugPrint("Error adding document: \(error.localizedDescription)")
@@ -159,32 +160,6 @@ class ExploreViewController: UIViewController {
     
     func store(_ pin: Pin, in marker: GMSMarker) {
         marker.userData = pin
-    }
-    
-    @IBAction func addPlace(_ sender: Any) {
-        var viewport: GMSCoordinateBounds?
-        
-        let locationManager = CLLocationManager()
-        
-        if let currentLocation = locationManager.location?.coordinate {
-            let northEast = CLLocationCoordinate2D(latitude: currentLocation.latitude + 0.001,
-                                                   longitude: currentLocation.longitude + 0.001)
-            let southWest = CLLocationCoordinate2D(latitude: currentLocation.latitude - 0.001,
-                                                   longitude: currentLocation.longitude - 0.001)
-            viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
-        } else if let center = mapCenter {
-            let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001,
-                                                   longitude: center.longitude + 0.001)
-            let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001,
-                                                   longitude: center.longitude - 0.001)
-            viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
-        }
-        
-        let config = GMSPlacePickerConfig(viewport: viewport)
-        let placePicker = GMSPlacePickerViewController(config: config)
-        placePicker.delegate = self
-        
-        present(placePicker, animated: true, completion: nil)
     }
 }
 
@@ -269,37 +244,30 @@ extension ExploreViewController: GMSMapViewDelegate {
         
         marker.map = nil
     }
-}
-
-extension ExploreViewController : GMSPlacePickerViewControllerDelegate {
-    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
-        let marker = addPinToMap(with: place.coordinate)
+    
+    func didPickPlace(_ place: PlacesDetailsResponse, for placeId: String) {
+        let location = place.result.geometry.location
+        let latitude = location.lat
+        let longitude = location.lng
+        
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let marker = addPinToMap(with: coordinate)
         
         //center map at newly added pin
         let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
-        setCamera(with: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: zoom)
+        setCamera(with: latitude, longitude: longitude, zoom: zoom)
         
-        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude) { (error, code) in
+        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
             var countryCode: String?
-            if let code = code as? String {
+            if let code = code {
                 countryCode = code
             }
-            let pin = self.persistPin(of: place, countryCode: countryCode)
+            let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
             self.store(pin, in: marker)
         }
-        
-        // Dismiss the place picker.
-        viewController.dismiss(animated: true, completion: nil)
     }
-    
-    func placePicker(_ viewController: GMSPlacePickerViewController, didFailWithError error: Error) {
-        UiUtils.showError(error.localizedDescription, controller: self)
-    }
-    
-    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
-        debugPrint("The place picker was canceled by the user")
-        
-        // Dismiss the place picker.
-        viewController.dismiss(animated: true, completion: nil)
-    }
+}
+
+protocol PlacePicker {
+    func didPickPlace(_ place: PlacesDetailsResponse, for placeId: String)
 }
