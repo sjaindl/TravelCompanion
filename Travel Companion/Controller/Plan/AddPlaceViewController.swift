@@ -47,7 +47,7 @@ class AddPlaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = String(format: "addPlace".localized(), placeType.rawValue)
+        self.navigationItem.title = String(format: "addPlace".localized(), placeType.description!)
         
         map.delegate = self
         initCamera()

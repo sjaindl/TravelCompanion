@@ -148,7 +148,7 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
         
         currentSearchText = searchText
         
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), type: placeType.rawValue) { (error, places) in
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), type: placeType.key) { (error, places) in
             self.places = places
         }
     }

@@ -27,38 +27,38 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var storageRef: StorageReference!
     
     var supportedPlaceTypes: [GooglePlaceType] = [
-        GooglePlaceType.point_of_interest,
-        GooglePlaceType.amusement_park,
+        GooglePlaceType.pointOfInterest,
+        GooglePlaceType.amusementPark,
         GooglePlaceType.aquarium,
-        GooglePlaceType.art_gallery,
+        GooglePlaceType.artGallery,
         GooglePlaceType.atm,
         GooglePlaceType.bank,
         GooglePlaceType.bar,
-        GooglePlaceType.beauty_salon,
-        GooglePlaceType.bowling_alley,
+        GooglePlaceType.beautySalon,
+        GooglePlaceType.bowlingAlley,
         GooglePlaceType.cafe,
         GooglePlaceType.casino,
         GooglePlaceType.church,
-        GooglePlaceType.city_hall,
+        GooglePlaceType.cityHall,
         GooglePlaceType.embassy,
         GooglePlaceType.gym,
-        GooglePlaceType.hindu_temple,
+        GooglePlaceType.hinduTemple,
         GooglePlaceType.library,
         GooglePlaceType.mosque,
-        GooglePlaceType.movie_theater,
+        GooglePlaceType.movieTheater,
         GooglePlaceType.museum,
-        GooglePlaceType.night_club,
-        GooglePlaceType.post_office,
-        GooglePlaceType.rv_park,
-        GooglePlaceType.shopping_mall,
+        GooglePlaceType.nightClub,
+        GooglePlaceType.postOffice,
+        GooglePlaceType.rvPark,
+        GooglePlaceType.shoppingMall,
         GooglePlaceType.spa,
         GooglePlaceType.stadium,
         GooglePlaceType.synagogue,
-        GooglePlaceType.travel_agency,
+        GooglePlaceType.travelAgency,
         GooglePlaceType.zoo
     ]
     
-    var selectedPlaceType = GooglePlaceType.point_of_interest
+    var selectedPlaceType = GooglePlaceType.pointOfInterest
     
     var lastScrollPos: CGFloat = 0.0
     
@@ -503,7 +503,7 @@ extension PlanDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return supportedPlaceTypes[row].rawValue
+        return supportedPlaceTypes[row].description
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

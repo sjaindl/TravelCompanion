@@ -360,7 +360,7 @@ class NetworkInteractionTests: XCTestCase {
         let promise = expectation(description: "Autocomplete results successfully returned")
         
         // when
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.rawValue) { (error, places) in
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.key) { (error, places) in
             if let error = error {
                 errorResponse = error.description
             }
