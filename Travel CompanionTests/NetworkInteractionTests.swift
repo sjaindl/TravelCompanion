@@ -10,6 +10,7 @@ import CoreData
 import CoreLocation
 import Firebase
 import XCTest
+import RxSwift
 
 //@testable import Travel_Companion
 
@@ -282,25 +283,24 @@ class NetworkInteractionTests: XCTestCase {
         // given
         let textToAutocomplete = "Gra"
         
-        var response: AutoCompleteResponse?
+        var response: [String]?
         var errorResponse: String?
         
         let promise = expectation(description: "Autocomplete results successfully returned")
         
         // when
-        Rome2RioClient.sharedInstance.autocomplete(with: textToAutocomplete) { (error, autoCompleteResponse) in
-            if let error = error {
-                errorResponse = error.description
-            }
-            
-            if autoCompleteResponse == nil {
-                errorResponse = "No autocomplete response returned"
-            } else {
-                response = autoCompleteResponse
-            }
-            
-            promise.fulfill()
-        }
+        _ = Rome2RioClient.sharedInstance.autocomplete(with: textToAutocomplete).catchErrorJustReturn([])
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { autoCompleteResponse in
+                
+                if autoCompleteResponse.count == 0 {
+                    errorResponse = "No autocomplete response returned"
+                } else {
+                    response = autoCompleteResponse
+                }
+                
+                promise.fulfill()
+            })
         
         waitForExpectations(timeout: 15, handler: nil)
         
@@ -308,7 +308,7 @@ class NetworkInteractionTests: XCTestCase {
         XCTAssertNil(errorResponse)
         XCTAssertNotNil(response)
         
-        XCTAssertTrue(response!.places.count > 0)
+        XCTAssertTrue(response!.count > 0)
     }
     
     func testFirestore() {
@@ -381,7 +381,7 @@ class NetworkInteractionTests: XCTestCase {
         XCTAssertNotNil(foundPlaces)
         
         XCTAssertTrue(foundPlaces!.count > 0)
-        XCTAssertEqual(foundPlaces![0].name, "Marina Bay Sands, Singapore")
+        XCTAssertTrue(foundPlaces![0].name.contains("Marina Bay Sands"))
     }
     
     func flushData(for entity: String) {

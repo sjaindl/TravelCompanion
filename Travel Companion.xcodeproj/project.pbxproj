@@ -123,6 +123,9 @@
 		9ACBFEF42194E6B6004C1506 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ACBFEF32194E6B6004C1506 /* LaunchScreen.storyboard */; };
 		9AD61603218FA35C00BFA74E /* UiTestTableViewFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD61602218FA35C00BFA74E /* UiTestTableViewFilter.swift */; };
 		9AD6752322CEA27A00322641 /* GeoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6752222CEA27A00322641 /* GeoCode.swift */; };
+		9AD6752422D2378E00322641 /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */; };
+		9AD6752522D2379600322641 /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4022CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift */; };
+		9AD6752622D237A300322641 /* GeoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD6752222CEA27A00322641 /* GeoCode.swift */; };
 		9AD67E6E215A93F9004B077A /* PlacesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */; };
 		9AD67E70215AA9B5004B077A /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */; };
 		9AE4C26E212A86DB0056CD0D /* NetworkInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C26D212A86DB0056CD0D /* NetworkInteractionTests.swift */; };
@@ -1043,6 +1046,7 @@
 				9A6186932188CEC4002F59BC /* RestCountriesConstants.swift in Sources */,
 				9A61869C2188E6C8002F59BC /* WikiClient.swift in Sources */,
 				9A6186AA21898144002F59BC /* FirestoreConstants.swift in Sources */,
+				9AD6752422D2378E00322641 /* PlaceDetailsResponse.swift in Sources */,
 				9A6186962188CF25002F59BC /* SecretConstants.swift in Sources */,
 				9A61869F21897C0A002F59BC /* Rome2RioConstants.swift in Sources */,
 				9A61868D2188CE97002F59BC /* DataController.swift in Sources */,
@@ -1057,6 +1061,7 @@
 				9A6186C1218A0DB0002F59BC /* GoogleConstants.swift in Sources */,
 				9A6186982188CF7D002F59BC /* Constants.swift in Sources */,
 				9A6186BD218983BD002F59BC /* AddFlightSearchDelegate.swift in Sources */,
+				9AD6752622D237A300322641 /* GeoCode.swift in Sources */,
 				9A6186922188CEC2002F59BC /* RestCountriesClient.swift in Sources */,
 				9A6186AD2189814D002F59BC /* PublicTransport.swift in Sources */,
 				9A6186972188CF60002F59BC /* FirestoreRemoteConfig.swift in Sources */,
@@ -1069,6 +1074,7 @@
 				9A6186952188CEF5002F59BC /* FlickrConstants.swift in Sources */,
 				9A6186C4218A0E75002F59BC /* FormatUtils.swift in Sources */,
 				9A61869D2188E6CC002F59BC /* WikiConstants.swift in Sources */,
+				9AD6752522D2379600322641 /* PlacesAutocompleteResponse.swift in Sources */,
 				9A61868E2188CE99002F59BC /* Pin+Extensions.swift in Sources */,
 				9A6186912188CEA0002F59BC /* CoreDataClient.swift in Sources */,
 				9A6186BC2189839D002F59BC /* AddTransportSearchDelegate.swift in Sources */,
