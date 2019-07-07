@@ -80,7 +80,7 @@ class NetworkInteractionTests: XCTestCase {
                 errorResponse = error.description
             }
             
-            if let code = code as? String {
+            if let code = code {
                 actualCountryCode = code
             } else {
                 errorResponse = "no country code returned"

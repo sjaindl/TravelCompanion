@@ -161,6 +161,38 @@ class ExploreViewController: UIViewController, PlacePicker {
     func store(_ pin: Pin, in marker: GMSMarker) {
         marker.userData = pin
     }
+    
+    func didPickPlace(_ place: PlacesDetailsResponse, for placeId: String) {
+        let location = place.result.geometry.location
+        let latitude = location.lat
+        let longitude = location.lng
+        
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let marker = addPinToMap(with: coordinate)
+        
+        //center map at newly added pin
+        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
+        setCamera(with: latitude, longitude: longitude, zoom: zoom)
+        
+        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
+            var countryCode: String?
+            if let code = code {
+                countryCode = code
+            }
+            let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
+            self.store(pin, in: marker)
+        }
+    }
+    
+    func removeFromCoreData(_ pin: Pin, marker: GMSMarker) {
+        if let index = self.fetchedResultsController.indexPath(forObject: pin) {
+            let object = self.fetchedResultsController.object(at: index)
+            self.dataController.viewContext.delete(object)
+            try? self.dataController.save()
+        }
+        
+        marker.map = nil
+    }
 }
 
 extension ExploreViewController: GMSMapViewDelegate {
@@ -176,7 +208,6 @@ extension ExploreViewController: GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        
         guard let pin = marker.userData as? Pin else {
             debugPrint("no valid pin")
             return false
@@ -235,36 +266,8 @@ extension ExploreViewController: GMSMapViewDelegate {
         return true
     }
     
-    func removeFromCoreData(_ pin: Pin, marker: GMSMarker) {
-        if let index = self.fetchedResultsController.indexPath(forObject: pin) {
-            let object = self.fetchedResultsController.object(at: index)
-            self.dataController.viewContext.delete(object)
-            try? self.dataController.save()
-        }
-        
-        marker.map = nil
-    }
-    
-    func didPickPlace(_ place: PlacesDetailsResponse, for placeId: String) {
-        let location = place.result.geometry.location
-        let latitude = location.lat
-        let longitude = location.lng
-        
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let marker = addPinToMap(with: coordinate)
-        
-        //center map at newly added pin
-        let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
-        setCamera(with: latitude, longitude: longitude, zoom: zoom)
-        
-        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
-            var countryCode: String?
-            if let code = code {
-                countryCode = code
-            }
-            let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
-            self.store(pin, in: marker)
-        }
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        performSegue(withIdentifier: Constants.Segues.searchPlaces, sender: nil)
     }
 }
 
