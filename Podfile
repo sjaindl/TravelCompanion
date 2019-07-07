@@ -20,7 +20,6 @@ target 'Travel Companion' do
     
     pod 'GoogleMaps'
     pod 'GooglePlaces'
-    pod 'GooglePlacePicker'
     
     pod 'HTMLEntities', :git => 'https://github.com/IBM-Swift/swift-html-entities.git'
 

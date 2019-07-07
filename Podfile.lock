@@ -155,9 +155,6 @@ PODS:
   - GoogleMaps/Base (3.1.0)
   - GoogleMaps/Maps (3.1.0):
     - GoogleMaps/Base
-  - GooglePlacePicker (3.1.0):
-    - GoogleMaps (= 3.1.0)
-    - GooglePlaces (= 3.1.0)
   - GooglePlaces (3.1.0):
     - GoogleMaps/Base (= 3.1.0)
   - GoogleSignIn (4.4.0):
@@ -243,7 +240,6 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseUI
   - GoogleMaps
-  - GooglePlacePicker
   - GooglePlaces
   - HTMLEntities (from `https://github.com/IBM-Swift/swift-html-entities.git`)
   - RxCocoa
@@ -272,7 +268,6 @@ SPEC REPOS:
     - FirebaseUI
     - GoogleAppMeasurement
     - GoogleMaps
-    - GooglePlacePicker
     - GooglePlaces
     - GoogleSignIn
     - GoogleToolboxForMac
@@ -319,7 +314,6 @@ SPEC CHECKSUMS:
   FirebaseUI: 8734527e38959ba31b433b8115c21941d1b67ec8
   GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
   GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
-  GooglePlacePicker: 1c60c2a26e9d1e73bcb0c6f89609db8d777d13c1
   GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
@@ -336,6 +330,6 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
 
-PODFILE CHECKSUM: 83c760b9c64cdd111b68da7da98e357459eab132
+PODFILE CHECKSUM: 4a8408bd36bebae533e4ec8446838c2c94ac31f0
 
 COCOAPODS: 1.5.2

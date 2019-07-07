@@ -9,7 +9,6 @@ import UIKit
 import Firebase
 import FirebaseUI
 import GooglePlaces
-import GooglePlacePicker
 
 class MainMenuViewController: UIViewController {
     

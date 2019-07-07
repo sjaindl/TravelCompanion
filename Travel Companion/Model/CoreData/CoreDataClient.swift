@@ -8,7 +8,7 @@
 
 import CoreData
 import Foundation
-import GooglePlacePicker
+import GooglePlaces
 
 class CoreDataClient {
     
