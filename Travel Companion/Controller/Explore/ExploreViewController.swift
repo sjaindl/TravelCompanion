@@ -256,7 +256,6 @@ class ExploreViewController: UIViewController, PlacePicker {
         if let pin = marker.userData as? Pin, let pinName = pin.name {
             alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
                 
-                
                 if self.firestoreDbReference != nil {
                     //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
                     let firestorePlanDbReference: CollectionReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans)

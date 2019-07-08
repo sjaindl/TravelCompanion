@@ -13,8 +13,9 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
     enum ButtonState: Int {
         case destination = 0
-        case startDate = 1
-        case endDate = 2
+        case name = 1
+        case startDate = 2
+        case endDate = 3
     }
     
     @IBOutlet weak var destinationLabel: UILabel!
@@ -57,20 +58,20 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         UiUtils.layoutDatePicker(startDate)
         UiUtils.layoutDatePicker(endDate)
         
-        layoutButton(with: "next".localized(), showName: true, showStartDate: false, showEndDate: false)
+        layoutButton(with: "next".localized(), showDestination: true, showName: false, showStartDate: false, showEndDate: false)
     }
     
-    func layoutButton(with text: String, showName: Bool, showStartDate: Bool, showEndDate: Bool) {
+    func layoutButton(with text: String, showDestination: Bool, showName: Bool, showStartDate: Bool, showEndDate: Bool) {
         addTrip.setTitle(text, for: .normal)
         
-        destinationLabel.isHidden = !showName
-        destinationPicker.isHidden = !showName
+        destinationLabel.isHidden = !showDestination
+        destinationPicker.isHidden = !showDestination
         nameLabel.isHidden = !showName
         destinationText.isHidden = !showName
-        endDate.isHidden = !showEndDate
-        endDateLabel.isHidden = !showEndDate
         startDate.isHidden = !showStartDate
         startDateLabel.isHidden = !showStartDate
+        endDate.isHidden = !showEndDate
+        endDateLabel.isHidden = !showEndDate
     }
     
     func setButtonEnabledState() {
@@ -82,12 +83,17 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func addPlan(_ sender: Any) {
+        destinationText.resignFirstResponder()
+        
         switch buttonState {
         case .destination:
-            layoutButton(with: "next".localized(), showName: false, showStartDate: true, showEndDate: false)
+            layoutButton(with: "next".localized(), showDestination: false, showName: true, showStartDate: false, showEndDate: false)
+            buttonState = ButtonState.name
+        case .name:
+            layoutButton(with: "next".localized(), showDestination: false, showName: false, showStartDate: true, showEndDate: false)
             buttonState = ButtonState.startDate
         case .startDate:
-            layoutButton(with: "addPlan".localized(), showName: false, showStartDate: false, showEndDate: true)
+            layoutButton(with: "addPlan".localized(), showDestination: false, showName: false, showStartDate: false, showEndDate: true)
             buttonState = ButtonState.endDate
         default:
             let originalName = selectedOriginalPinName ?? destinationText.text!
@@ -147,13 +153,6 @@ extension AddPlanViewController {
         destinationText.text = self.pins[row].name
         selectedOriginalPinName = self.pins[row].name
         setButtonEnabledState()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == self.destinationText {
-            destinationPicker.isHidden = false
-        }
     }
     
 //    func textFieldDidEndEditing(_ textField: UITextField) {

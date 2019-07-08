@@ -16,7 +16,7 @@
 "showPhoto" = "Zeite Foto";
 "delete" = "Löschen";
 "cancel" = "Abbrechen";
-"addPlace" = "%@-Ort hinzufügen";
+"addPlace" = "%@ hinzufügen";
 "offline" = "Es besteht keine Netzwerkverbindung.";
 "enterPlace" = "Ort eingeben";
 "addNote" = "Notiz hinzufügen";
@@ -103,7 +103,7 @@
 "shoppingMall" = "Shopping Center";
 "spa" = "Bad";
 "stadium" = "Stadion";
-"synagogue" = "Synagogue";
+"synagogue" = "Synagoge";
 "travelAgency" = "Reiseagentur";
 "zoo" = "Zoo";
 "planTrip" = "Reise planen";
