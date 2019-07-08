@@ -32,6 +32,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var pins: [Pin] = []
     var selectedOriginalPinName: String?
     var firestoreDbReference: CollectionReference!
+    var dataController: DataController!
     
     var buttonState = ButtonState.destination
     
@@ -79,7 +80,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             addTrip.isEnabled = false
         }
     }
-     
+    
     @IBAction func addPlan(_ sender: Any) {
         switch buttonState {
         case .destination:
@@ -96,12 +97,24 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             //TODO: check whether plan already exists and ask if user wants to override
             persistPlan(plan)
             
-            dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: Constants.Segues.planDetail, sender: plan)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.Segues.planDetail {
+            //After successful add plan: Redirect to plan detail
+            let controller = segue.destination as! PlanDetailViewController
+            let plan = sender as! Plan
+            controller.plan = plan
+            controller.pins = pins
+            controller.dataController = dataController
+            controller.firestorePlanDbReference = firestoreDbReference
         }
     }
     
     @IBAction func cancel(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func persistPlan(_ plan: Plan) {

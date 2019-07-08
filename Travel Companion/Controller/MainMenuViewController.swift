@@ -37,6 +37,12 @@ class MainMenuViewController: UIViewController {
         configureGestureRecognizers()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        Auth.auth().removeStateDidChangeListener(_authHandle)
+    }
+    
     func configureGestureRecognizers() {
         addGestureRecognizer(selector: #selector(explore), view: exploreImage)
         addGestureRecognizer(selector: #selector(explore), view: exploreLabel)
@@ -75,10 +81,6 @@ class MainMenuViewController: UIViewController {
         }
     }
     
-    deinit {
-        Auth.auth().removeStateDidChangeListener(_authHandle)
-    }
-    
     @IBAction func signOut(_ sender: Any) {
         if isSignedIn {
             user = nil
@@ -105,7 +107,7 @@ class MainMenuViewController: UIViewController {
     }
     
     func configureAuth() {
-        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth()]
+        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
         
         // listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in

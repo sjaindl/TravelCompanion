@@ -9,16 +9,21 @@
 import CoreData
 import CoreLocation
 import Firebase
+import FirebaseUI
 import GoogleMaps
 import UIKit
 
 class ExploreViewController: UIViewController, PlacePicker {
-
+    
     @IBOutlet weak var map: GMSMapView!
     
+    fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var dataController: DataController!
     var fetchedResultsController: NSFetchedResultsController<Pin>!
     var mapCenter: CLLocationCoordinate2D? = nil
+    
+    var redirectAfterLogin = false
+    var cachedPin: Pin?
     
     var firestoreDbReference: CollectionReference!
     
@@ -40,6 +45,34 @@ class ExploreViewController: UIViewController, PlacePicker {
     
     deinit {
         firestoreDbReference = nil
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        addAuthListener()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let _authHandle = _authHandle {
+            Auth.auth().removeStateDidChangeListener(_authHandle)
+        }
+    }
+    
+    func addAuthListener() {
+        // listen for changes in the authorization state
+        _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in
+            
+            // check if there is a current user
+            if user != nil, self.redirectAfterLogin, let cachedPin = self.cachedPin {
+                //redirect to plan detail after successful login
+                self.performSegue(withIdentifier: Constants.Segues.addPlan, sender: cachedPin)
+                self.redirectAfterLogin = false
+                self.cachedPin = nil
+            }
+        }
     }
     
     func initResultsController() {
@@ -109,6 +142,11 @@ class ExploreViewController: UIViewController, PlacePicker {
         } else if segue.identifier == Constants.Segues.searchPlaces {
             let controller = segue.destination as! ExplorePlacesSearchViewController
             controller.callback = self
+        } else if segue.identifier == Constants.Segues.addPlan {
+            let controller = segue.destination as! AddPlanViewController
+            let pin = sender as! Pin
+            controller.pins = [pin]
+            controller.dataController = dataController
         }
     }
     
@@ -181,6 +219,7 @@ class ExploreViewController: UIViewController, PlacePicker {
             }
             let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
             self.store(pin, in: marker)
+            _ = self.showPlaceDialog(marker: marker)
         }
     }
     
@@ -193,21 +232,14 @@ class ExploreViewController: UIViewController, PlacePicker {
         
         marker.map = nil
     }
-}
-
-extension ExploreViewController: GMSMapViewDelegate {
     
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        if position.target.latitude != 0 && position.target.longitude != 0 {
-            UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.mapLatitude)
-            UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.mapLongitude)
-            UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.zoomLevel)
-            
-            mapCenter = position.target
-        }
+    func loginSession() {
+        
+        let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
+        present(authViewController, animated: true, completion: nil)
     }
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+    func showPlaceDialog(marker: GMSMarker) -> Bool {
         guard let pin = marker.userData as? Pin else {
             debugPrint("no valid pin")
             return false
@@ -221,8 +253,9 @@ extension ExploreViewController: GMSMapViewDelegate {
             self.dismiss(animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
-            if let pin = marker.userData as? Pin, let pinName = pin.name {
+        if let pin = marker.userData as? Pin, let pinName = pin.name {
+            alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
+                
                 
                 if self.firestoreDbReference != nil {
                     //checks whether there is a plan. if so, shows alert message and doesn't delete (plan must be deleted first by user).
@@ -252,10 +285,26 @@ extension ExploreViewController: GMSMapViewDelegate {
                 } else {
                     self.removeFromCoreData(pin, marker: marker)
                 }
-            }
+                
+                self.dismiss(animated: true, completion: nil)
+            }))
             
-            self.dismiss(animated: true, completion: nil)
-        }))
+            let action = UIAlertAction(title: "planTrip".localized(), style: .default, handler: { _ in
+                
+                if self.firestoreDbReference == nil {
+                    //Login required to use this feature, redirect to login!
+                    self.redirectAfterLogin = true
+                    self.cachedPin = pin
+                    self.loginSession()
+                } else {
+                    self.performSegue(withIdentifier: Constants.Segues.addPlan, sender: pin)
+                }
+            })
+            
+            let image = UIImage(named: "lock")
+            action.setValue(image?.withRenderingMode(.alwaysOriginal), forKey: "image")
+            alert.addAction(action)
+        }
         
         alert.addAction(UIAlertAction(title: "cancel".localized(), style: .default, handler: { _ in
             self.dismiss(animated: true, completion: nil)
@@ -264,6 +313,23 @@ extension ExploreViewController: GMSMapViewDelegate {
         present(alert, animated: true, completion: nil)
         
         return true
+    }
+}
+
+extension ExploreViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        if position.target.latitude != 0 && position.target.longitude != 0 {
+            UserDefaults.standard.set(position.target.latitude, forKey: Constants.UserDefaults.mapLatitude)
+            UserDefaults.standard.set(position.target.longitude, forKey: Constants.UserDefaults.mapLongitude)
+            UserDefaults.standard.set(position.zoom, forKey: Constants.UserDefaults.zoomLevel)
+            
+            mapCenter = position.target
+        }
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        return showPlaceDialog(marker: marker)
     }
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {

@@ -75,6 +75,8 @@
 "searchOrigin" = "Suche Start";
 "searchDestination" = "Suche Ziel";
 "searchPlaces" = "Suche Ort";
+"lodging" = "Unterkunft";
+"restaurant" = "Restaurant";
 "pointOfInterest" = "Ort von Interesse";
 "amusementPark" = "Vergnügungspark";
 "aquarium" = "Aquarium";
@@ -104,3 +106,4 @@
 "synagogue" = "Synagogue";
 "travelAgency" = "Reiseagentur";
 "zoo" = "Zoo";
+"planTrip" = "Reise planen";

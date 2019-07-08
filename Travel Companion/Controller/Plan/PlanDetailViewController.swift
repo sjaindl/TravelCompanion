@@ -79,6 +79,24 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         configureStorage()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent, let controllers = navigationController?.viewControllers {
+            var previousController: UIViewController?
+            for controller in controllers {
+                if controller.isKind(of: AddPlanViewController.self) {
+                    if let previousController = previousController {
+                        //skip AddPlanViewController on back navigation
+                        self.navigationController?.popToViewController(previousController, animated: true)
+                    }
+                    return
+                }
+                previousController = controller
+            }
+        }
+    }
+    
     func addSwipeGestureRecognizers() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeUp.direction = .up
