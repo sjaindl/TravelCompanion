@@ -67,7 +67,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "\(plan.name), \(FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "calendar"), style: .plain, target: self, action: #selector(changeDate))
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -77,6 +77,12 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         configureDatabase()
         configureStorage()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationItem.title = "\(plan.name), \(FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,6 +101,11 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 previousController = controller
             }
         }
+    }
+    
+    @objc
+    func changeDate() {
+        performSegue(withIdentifier: Constants.Segues.planChangeDate, sender: nil)
     }
     
     func addSwipeGestureRecognizers() {
@@ -254,6 +265,10 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             
             let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
             controller.pin = pin
+            
+            controller.plan = plan
+        } else if segue.identifier == Constants.Segues.planChangeDate {
+            let controller = segue.destination as! ChangeDateViewController
             
             controller.plan = plan
         }

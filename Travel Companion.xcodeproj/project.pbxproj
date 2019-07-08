@@ -14,6 +14,7 @@
 		9A1AD4D42112D1C6001D2517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D32112D1C6001D2517 /* Assets.xcassets */; };
 		9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */; };
 		9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
+		9A2FC22922D3EA6C007D6828 /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */; };
 		9A368B3722C2BF950084F6E9 /* AddTransportOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */; };
 		9A368B3922C2D54C0084F6E9 /* AddTransportDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */; };
 		9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */; };
@@ -188,6 +189,7 @@
 		9A1AD4D32112D1C6001D2517 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = "/Users/stefanjaindl/udacity/ios/TravelCompanion/Travel Companion/Controller/MainMenuViewController.swift"; sourceTree = "<absolute>"; };
 		9A2E0FA121246A700090EB43 /* Country+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Extensions.swift"; sourceTree = "<group>"; };
+		9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
 		9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportOriginViewController.swift; sourceTree = "<group>"; };
 		9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDestinationViewController.swift; sourceTree = "<group>"; };
 		9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDateViewController.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 				9A88225A214FFEC200C333D4 /* TransportDelegates */,
 				9AE4C2902131CBE10056CD0D /* PlanViewController.swift */,
 				9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */,
+				9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */,
 				9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */,
 				9A6D6BFA2133C60500B98447 /* PlanConstants.swift */,
 				9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */,
@@ -965,6 +968,7 @@
 				9A6A54BF2133C3B800B515E3 /* PlanDetailViewController.swift in Sources */,
 				9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */,
 				9A6186C6218A14FE002F59BC /* GooglePlaceType.swift in Sources */,
+				9A2FC22922D3EA6C007D6828 /* ChangeDateViewController.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
 				9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */,
 				9A368B3D22C429560084F6E9 /* Transport.swift in Sources */,

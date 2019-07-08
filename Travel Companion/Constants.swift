@@ -48,6 +48,7 @@ struct Constants {
         static let planAddTransportDetail = "addTransportDetail"
         static let planAddNotes = "addNotes"
         static let planAddPlace = "addPlace"
+        static let planChangeDate = "changeDate"
         
         static let remember = "remember"
         static let rememberDetail = "rememberDetail"
