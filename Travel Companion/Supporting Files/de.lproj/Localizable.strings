@@ -49,7 +49,7 @@
 "addFlight?" = "Möchtest du den Zwischenflug oder die gesamte Route hinzufügen?";
 "singleFlight" = "Zwischenflug";
 "wholeLeg" = "Gesamte Route";
-"noWikiPage" = "Keine Wiki-Seite gefunden";
+"noPage" = "Keine Website gefunden";
 "noCountryPhotos" = "Dieser Ort kein Land. Keine Fotos verfügbar.";
 "noCountryDetails" = "Dieser Ort kein Land. Keine Länderdetails verfügbar.";
 "errorDownloadImage" = "Fehler beim Herunterladen der Fotos";

@@ -49,7 +49,7 @@
 "addFlight?" = "Do you want to add the flight or whole leg?";
 "singleFlight" = "Single flight";
 "wholeLeg" = "Whole leg";
-"noWikiPage" = "No Wiki page found";
+"noPage" = "No page found";
 "noCountryPhotos" = "This location is not in a country. Can't fetch country photos.";
 "noCountryDetails" = "This location is not in a country. Can't fetch country details.";
 "errorDownloadImage" = "Could not download image";

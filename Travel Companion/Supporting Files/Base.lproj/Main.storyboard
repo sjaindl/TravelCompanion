@@ -1238,22 +1238,6 @@
             </objects>
             <point key="canvasLocation" x="-1339" y="36"/>
         </scene>
-        <!--WikiVoyage-->
-        <scene sceneID="oyU-Ob-Hrx">
-            <objects>
-                <viewController id="jTs-pH-xZb" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2an-2B-Mm1">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="6VP-jJ-9JN"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="WikiVoyage" id="ehw-xb-7kV"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gyE-5Z-UxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4448" y="-2877"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Yih-9I-e7H">
             <objects>
@@ -1266,9 +1250,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="ikQ-Nq-vzn" kind="relationship" relationship="viewControllers" id="eSH-AC-jqQ"/>
-                        <segue destination="QqY-JT-Kne" kind="relationship" relationship="viewControllers" id="5Ik-Ud-dR6"/>
-                        <segue destination="jTs-pH-xZb" kind="relationship" relationship="viewControllers" id="WHQ-6c-CHP"/>
-                        <segue destination="ZrL-yO-Oo2" kind="relationship" relationship="viewControllers" id="gow-rK-hB3"/>
+                        <segue destination="QqY-JT-Kne" kind="relationship" relationship="viewControllers" id="kVB-Ch-mgo"/>
+                        <segue destination="ARQ-U5-72I" kind="relationship" relationship="viewControllers" id="rFO-Z3-kmz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e46-qO-X3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1291,7 +1274,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FI4-8g-nWV">
-                                <rect key="frame" x="0.0" y="216" width="480" height="704"/>
+                                <rect key="frame" x="0.0" y="216" width="480" height="655"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="69V-k4-GqB">
                                     <size key="itemSize" width="138" height="111"/>
@@ -1326,7 +1309,7 @@
                                 </connections>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CEJ-aq-DPu">
-                                <rect key="frame" x="8" y="944" width="464" height="34"/>
+                                <rect key="frame" x="8" y="895" width="464" height="34"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fU-Sj-3qf" userLabel="country">
                                         <rect key="frame" x="0.0" y="0.0" width="154.66666666666666" height="34"/>
@@ -1396,7 +1379,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2k-Tb-eRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4688" y="351"/>
+            <point key="canvasLocation" x="4530" y="312"/>
         </scene>
         <!--Photos Detail View Controller-->
         <scene sceneID="h9G-h1-uWL">
@@ -1435,22 +1418,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rRW-Ka-6ED" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6011" y="351"/>
-        </scene>
-        <!--WikiPedia-->
-        <scene sceneID="6fO-iU-hbS">
-            <objects>
-                <viewController id="ZrL-yO-Oo2" userLabel="WikiPedia" customClass="WikiViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="v4Y-5f-uSo">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="11X-2P-qiX"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Wikipedia" id="mXR-5F-guc"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YMk-PZ-lif" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2933" y="-2997"/>
         </scene>
         <!--RememberDetail-->
         <scene sceneID="kdz-Sg-qbK">
@@ -1916,6 +1883,71 @@
             </objects>
             <point key="canvasLocation" x="2010" y="4262"/>
         </scene>
+        <!--ExploreInfo-->
+        <scene sceneID="4YU-Vo-nQ3">
+            <objects>
+                <viewController id="ARQ-U5-72I" userLabel="ExploreInfo" customClass="ExploreInfoViewController" customModule="Travel_Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0bV-3N-dg1">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="1020"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iEe-e6-rjL">
+                                <rect key="frame" x="8" y="895" width="464" height="34"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4x3-uL-98M" userLabel="wikipedia">
+                                        <rect key="frame" x="0.0" y="0.0" width="116" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Wikipedia"/>
+                                        <connections>
+                                            <action selector="openWikipedia:" destination="ARQ-U5-72I" eventType="touchUpInside" id="V8D-VJ-gvT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O26-Bk-dlR" userLabel="Wikivoyage">
+                                        <rect key="frame" x="116" y="0.0" width="116" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="WikiVoyage"/>
+                                        <connections>
+                                            <action selector="openWikiVoyage:" destination="ARQ-U5-72I" eventType="touchUpInside" id="Ubr-OR-k3B"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7B-0Q-6Gb" userLabel="Google">
+                                        <rect key="frame" x="232" y="2" width="116" height="30"/>
+                                        <state key="normal" title="Google"/>
+                                        <connections>
+                                            <action selector="openGoogle:" destination="ARQ-U5-72I" eventType="touchUpInside" id="Jzh-BF-moc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ej-8D-BR8" userLabel="Lonelyplanet">
+                                        <rect key="frame" x="348" y="2" width="116" height="30"/>
+                                        <state key="normal" title="Lonelyplanet"/>
+                                        <connections>
+                                            <action selector="openLonelyPlanet:" destination="ARQ-U5-72I" eventType="touchUpInside" id="oQJ-U3-aSa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XZI-V7-SKK" firstAttribute="trailing" secondItem="iEe-e6-rjL" secondAttribute="trailing" constant="8" id="ahl-yu-dVx"/>
+                            <constraint firstItem="XZI-V7-SKK" firstAttribute="bottom" secondItem="iEe-e6-rjL" secondAttribute="bottom" constant="8" id="n9b-17-LNG"/>
+                            <constraint firstItem="iEe-e6-rjL" firstAttribute="leading" secondItem="0bV-3N-dg1" secondAttribute="leading" constant="8" id="y7q-Fp-QF3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XZI-V7-SKK"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Info" id="141-Wz-gjd" userLabel="Info"/>
+                    <connections>
+                        <outlet property="googleButton" destination="T7B-0Q-6Gb" id="DGr-3Z-aBT"/>
+                        <outlet property="infoStack" destination="iEe-e6-rjL" id="nZf-e7-YGm"/>
+                        <outlet property="lonelyplanetButton" destination="1Ej-8D-BR8" id="GmI-kk-0F9"/>
+                        <outlet property="wikipediaButton" destination="4x3-uL-98M" id="thj-XO-Kvc"/>
+                        <outlet property="wikivoyageButton" destination="O26-Bk-dlR" id="O2j-pd-ha2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kr8-nR-low" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5823" y="-601"/>
+        </scene>
     </scenes>
     <resources>
         <image name="attraction" width="166.66667175292969" height="166.66667175292969"/>
@@ -1935,7 +1967,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9b4-KA-uEe"/>
-        <segue reference="JAe-Zd-6u7"/>
+        <segue reference="kVB-Ch-mgo"/>
         <segue reference="ayD-8x-SWh"/>
         <segue reference="tht-HB-B69"/>
         <segue reference="OXe-JL-v55"/>

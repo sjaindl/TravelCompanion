@@ -145,19 +145,17 @@ class PlanViewController: UIViewController, UITableViewDelegate, UITableViewData
             let controller = segue.destination as! UITabBarController
             let detailTargetController = controller.viewControllers![0] as! ExploreDetailViewController
             let photosTargetController = controller.viewControllers![1] as! ExplorePhotosViewController
-            let wikivoyagetargetController = controller.viewControllers![2] as! WikiViewController
-            let wikitargetController = controller.viewControllers![3] as! WikiViewController
+            let infoTargetController = controller.viewControllers![2] as! ExploreInfoViewController
             
             let pin = CoreDataClient.sharedInstance.findPinByName(plan.pinName, pins: pins)
             
             detailTargetController.pin = pin
             detailTargetController.dataController = dataController
+            
             photosTargetController.pin = pin
             photosTargetController.dataController = dataController
-            wikitargetController.pin = pin
-            wikitargetController.domain = WikiConstants.UrlComponents.domainWikipedia
-            wikivoyagetargetController.pin = pin
-            wikivoyagetargetController.domain = WikiConstants.UrlComponents.domainWikiVoyage
+            
+            infoTargetController.pin = pin
         }
     }
 }

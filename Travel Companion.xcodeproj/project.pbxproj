@@ -15,6 +15,8 @@
 		9A1AD4D62113AC20001D2517 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */; };
 		9A2E0FA221246A700090EB43 /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E0FA121246A700090EB43 /* Country+Extensions.swift */; };
 		9A2FC22922D3EA6C007D6828 /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */; };
+		9A2FC22B22D4FF7F007D6828 /* ExploreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FC22A22D4FF7F007D6828 /* ExploreInfoViewController.swift */; };
+		9A2FC22E22D50DFC007D6828 /* LonelyPlanetConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FC22D22D50DFC007D6828 /* LonelyPlanetConstants.swift */; };
 		9A368B3722C2BF950084F6E9 /* AddTransportOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */; };
 		9A368B3922C2D54C0084F6E9 /* AddTransportDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */; };
 		9A368B3B22C429030084F6E9 /* AddTransportDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */; };
@@ -138,7 +140,6 @@
 		9AE4C2912131CBE10056CD0D /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2902131CBE10056CD0D /* PlanViewController.swift */; };
 		9AE4C2942132A4110056CD0D /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2932132A4110056CD0D /* Plan.swift */; };
 		9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */; };
-		9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4C297213318F20056CD0D /* WikiViewController.swift */; };
 		9AF39BE12124CBB600D85DF2 /* TravelCompanion.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */; };
 		9AF39BE3212564AD00D85DF2 /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */; };
 		9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */; };
@@ -190,6 +191,8 @@
 		9A1AD4D52113AC20001D2517 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = "/Users/stefanjaindl/udacity/ios/TravelCompanion/Travel Companion/Controller/MainMenuViewController.swift"; sourceTree = "<absolute>"; };
 		9A2E0FA121246A700090EB43 /* Country+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Extensions.swift"; sourceTree = "<group>"; };
 		9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
+		9A2FC22A22D4FF7F007D6828 /* ExploreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreInfoViewController.swift; sourceTree = "<group>"; };
+		9A2FC22D22D50DFC007D6828 /* LonelyPlanetConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LonelyPlanetConstants.swift; sourceTree = "<group>"; };
 		9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportOriginViewController.swift; sourceTree = "<group>"; };
 		9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDestinationViewController.swift; sourceTree = "<group>"; };
 		9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransportDateViewController.swift; sourceTree = "<group>"; };
@@ -275,7 +278,6 @@
 		9AE4C2902131CBE10056CD0D /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
 		9AE4C2932132A4110056CD0D /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanViewController.swift; sourceTree = "<group>"; };
-		9AE4C297213318F20056CD0D /* WikiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiViewController.swift; sourceTree = "<group>"; };
 		9AF39BE02124CBB600D85DF2 /* TravelCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TravelCompanion.xcdatamodel; path = TravelCompanion.xcdatamodeld/TravelCompanion.xcdatamodel; sourceTree = "<group>"; };
 		9AF39BE2212564AD00D85DF2 /* RestCountriesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
 		9AF39BE4212564BD00D85DF2 /* RestCountriesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
@@ -336,6 +338,14 @@
 				91A28507DB762DEA476FC155 /* Pods_Travel_CompanionTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9A2FC22C22D50DEA007D6828 /* LonelyPlanet */ = {
+			isa = PBXGroup;
+			children = (
+				9A2FC22D22D50DFC007D6828 /* LonelyPlanetConstants.swift */,
+			);
+			path = LonelyPlanet;
 			sourceTree = "<group>";
 		};
 		9A5B699021117A7B00060790 = {
@@ -431,6 +441,7 @@
 		9A5B69D821117E4600060790 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9A2FC22C22D50DEA007D6828 /* LonelyPlanet */,
 				9A91D9D9213E4CC700249E83 /* Rome2Rio */,
 				9A94013E21334EF100178105 /* Wiki */,
 				9AA266AE2122C5FD00EE0F5C /* CoreData */,
@@ -570,7 +581,7 @@
 				9AA266A2211C0C5F00EE0F5C /* ExploreDetailViewController.swift */,
 				9AA266B22123558000EE0F5C /* ExplorePhotosViewController.swift */,
 				9AE4C27F212BD95B0056CD0D /* FetchType.swift */,
-				9AE4C297213318F20056CD0D /* WikiViewController.swift */,
+				9A2FC22A22D4FF7F007D6828 /* ExploreInfoViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -970,7 +981,6 @@
 				9A6186C6218A14FE002F59BC /* GooglePlaceType.swift in Sources */,
 				9A2FC22922D3EA6C007D6828 /* ChangeDateViewController.swift in Sources */,
 				9AA266A92122C3A800EE0F5C /* GoogleClient.swift in Sources */,
-				9AE4C298213318F20056CD0D /* WikiViewController.swift in Sources */,
 				9A368B3D22C429560084F6E9 /* Transport.swift in Sources */,
 				9AF39BEB2126CA4300D85DF2 /* GeoNamesClient.swift in Sources */,
 				9A1AD4D2211245AF001D2517 /* SecretConstants.swift in Sources */,
@@ -991,6 +1001,7 @@
 				9A5B69E621117E4700060790 /* Constants.swift in Sources */,
 				9A450F302185CE7000875B42 /* LocalizableString.swift in Sources */,
 				9AC023D22162CE590076A3C2 /* UiViewGestureAction.swift in Sources */,
+				9A2FC22B22D4FF7F007D6828 /* ExploreInfoViewController.swift in Sources */,
 				9AE4C2962132D0240056CD0D /* AddPlanViewController.swift in Sources */,
 				9A88223521463B0E00C333D4 /* AddTransportDetailViewController.swift in Sources */,
 				9A368B3722C2BF950084F6E9 /* AddTransportOriginViewController.swift in Sources */,
@@ -1023,6 +1034,7 @@
 				9A88226521563A3800C333D4 /* RememberPhotos.swift in Sources */,
 				9A5B69E821117E4700060790 /* GenericListDataSource.swift in Sources */,
 				9A5B69ED21117E4700060790 /* WebConstants.swift in Sources */,
+				9A2FC22E22D50DFC007D6828 /* LonelyPlanetConstants.swift in Sources */,
 				9A88224D21496D6800C333D4 /* PlannableFactory.swift in Sources */,
 				9AE4C2912131CBE10056CD0D /* PlanViewController.swift in Sources */,
 				9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */,

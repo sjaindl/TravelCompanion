@@ -12,11 +12,14 @@ class GoogleConstants {
     struct UrlComponents {
         static let urlProtocol = "https"
         static let domain = "maps.googleapis.com"
-        static let path = "/maps/api/place/"
-        static let pathNearbySearch = path + "nearbysearch/json"
+        static let pathPlace = "/maps/api/place/"
+        static let pathNearbySearch = pathPlace + "nearbysearch/json"
         static let pathPhotos = "https://maps.googleapis.com/maps/api/place/photo"
-        static let pathAutocomplete = path + "autocomplete/json"
-        static let pathPlaceDetail = path + "details/json"
+        static let pathAutocomplete = pathPlace + "autocomplete/json"
+        static let pathPlaceDetail = pathPlace + "details/json"
+        
+        static let domainSearch = "google.com"
+        static let pathSearch = "/search"
     }
     
     struct ParameterKeys {
@@ -37,6 +40,8 @@ class GoogleConstants {
         
         static let placeId = "placeid"
         static let fields = "fields"
+        
+        static let searchQuery = "q"
     }
     
     struct ParameterValues {
