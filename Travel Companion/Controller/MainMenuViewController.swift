@@ -37,6 +37,12 @@ class MainMenuViewController: UIViewController {
         configureGestureRecognizers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        isSignedIn = Auth.auth().currentUser != nil
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
