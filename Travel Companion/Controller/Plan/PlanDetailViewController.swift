@@ -146,7 +146,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             persistPhoto(photoData: data)
         } else if !plan.imageRef.isEmpty { //Is an image available in storage?
             
-            if let cachedImage = imageCache.object(forKey: plan.imageRef as NSString) {
+            if let cachedImage = imageCache.object(forKey: plan.imageRef + "-originalsize" as NSString) {
                 self.image.image = cachedImage
             } else {
             

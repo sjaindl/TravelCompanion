@@ -172,16 +172,20 @@ extension PlanViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planCell)!
         
+        cell.imageView?.image = nil
+        
         let plan = getSectionArray(for: indexPath.section)[indexPath.row]
         
         cell.textLabel?.text = plan.name
         cell.detailTextLabel?.text = FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
+        cell.imageView?.image = defaultImage()
+        resizeImage(cell: cell)
         
         if !plan.imageRef.isEmpty { //Is an image available in storage?
             
             if let cachedImage = imageCache.object(forKey: plan.imageRef as NSString) {
                 cell.imageView?.image = cachedImage
-                cell.setNeedsLayout()
+                resizeImage(cell: cell)
             } else {
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
                 
@@ -196,8 +200,12 @@ extension PlanViewController {
                         return
                     }
                     
-                    self.imageCache.setObject(image, forKey: plan.imageRef as NSString)
                     cell.imageView?.image = image
+                    self.imageCache.setObject(cell.imageView!.image!, forKey: plan.imageRef + "-originalsize" as NSString)
+                    
+                    self.resizeImage(cell: cell)
+                    
+                    self.imageCache.setObject(cell.imageView!.image!, forKey: plan.imageRef as NSString)
                 }
             }
         }
@@ -205,8 +213,24 @@ extension PlanViewController {
         return cell
     }
     
+    func defaultImage() -> UIImage {
+        return UIImage(named: "placeholder")!
+    }
+    
+    func resizeImage(cell: UITableViewCell) {
+        let itemSize = CGSize.init(width: 75, height: 75)
+        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale);
+        let imageRect = CGRect.init(origin: CGPoint.zero, size: itemSize)
+        cell.imageView?.image!.draw(in: imageRect)
+        cell.imageView?.image! = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "chooseAction".localized(), message: nil, preferredStyle: .alert)
+        
+        let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
+        let imageRef = plan.imageRef
         
         alert.addAction(UIAlertAction(title: "show".localized(), style: .default, handler: { _ in
             DispatchQueue.main.async { //need to dispatch async because of swift bug (otherwise segue takes some seconds)
@@ -225,9 +249,6 @@ extension PlanViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "delete".localized(), style: .default, handler: { _ in
-            let plan = self.getSectionArray(for: indexPath.section)[indexPath.row]
-            let imageRef = plan.imageRef
-            
             self.firestoreDbReference.document(plan.pinName).delete() { error in
                 if let error = error {
                     UiUtils.showError(error.localizedDescription, controller: self)
