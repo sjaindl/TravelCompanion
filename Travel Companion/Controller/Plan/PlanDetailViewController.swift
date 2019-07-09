@@ -72,7 +72,6 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         
-        addSwipeGestureRecognizers()
         addGestureRecognizer(selector: #selector(chooseImage), view: image)
         
         configureDatabase()
@@ -107,27 +106,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func changeDate() {
         performSegue(withIdentifier: Constants.Segues.planChangeDate, sender: nil)
     }
-    
-    func addSwipeGestureRecognizers() {
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeUp.direction = .up
-        self.view.addGestureRecognizer(swipeUp)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
-    }
-    
-    @objc
-    func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == UISwipeGestureRecognizer.Direction.up {
-            self.toolbar.isHidden = true
-        }
-        else if gesture.direction == UISwipeGestureRecognizer.Direction.down {
-            self.toolbar.isHidden = false
-        }
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -502,26 +481,6 @@ extension PlanDetailViewController {
         } else {
             return PlanConstants.TripDetails.TripTitles.attractions.rawValue.localized()
         }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let isBouncing = scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) //bottom bounce
-            || scrollView.contentOffset.y < 0 //top bounce
-        
-        if isBouncing {
-            return
-        }
-        
-        let scrollPos = scrollView.contentOffset.y
-        
-        var hidden = false
-        if scrollPos > lastScrollPos {
-            hidden = true
-        }
-        
-        self.toolbar.isHidden = hidden
-        
-        lastScrollPos = scrollPos
     }
 }
 
