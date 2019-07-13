@@ -239,6 +239,10 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - Firebase/Storage
   - FirebaseUI
+  - FirebaseUI/Auth
+  - FirebaseUI/Email
+  - FirebaseUI/Facebook
+  - FirebaseUI/Google
   - GoogleMaps
   - GooglePlaces
   - HTMLEntities (from `https://github.com/IBM-Swift/swift-html-entities.git`)
@@ -330,6 +334,6 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
 
-PODFILE CHECKSUM: 4a8408bd36bebae533e4ec8446838c2c94ac31f0
+PODFILE CHECKSUM: 1cc53138bd12feabc957192d1fd7638673acff2d
 
 COCOAPODS: 1.5.2

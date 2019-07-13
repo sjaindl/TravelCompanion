@@ -13,7 +13,14 @@ target 'Travel Companion' do
     pod 'Firebase/Performance'
     pod 'Firebase/RemoteConfig'
     pod 'Firebase/Storage'
+    
     pod 'FirebaseUI'
+    pod 'FirebaseUI/Auth'
+    pod 'FirebaseUI/Email'
+    pod 'FirebaseUI/Google'
+    pod 'FirebaseUI/Facebook'
+    pod 'FirebaseUI/Email'
+    
     pod 'CodableFirebase'
     pod 'Fabric', '~> 1.7.11'
     pod 'Crashlytics', '~> 3.10.7'
