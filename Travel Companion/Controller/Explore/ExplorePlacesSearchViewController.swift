@@ -50,9 +50,9 @@ class ExplorePlacesSearchViewController: UIViewController {
         
         let disposable = searchController.searchBar.rx.text
             .debug("rxAutocompleteGooglePlaces")
-            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter{$0 != nil && $0!.count >= 5}
+            .filter{$0 != nil && $0!.count >= Config.autocompletionMinChars}
             .flatMapLatest { query in
                 GoogleClient.sharedInstance.autocomplete(for: query!, token: self.sessionToken)
                     .startWith([]) // clears results on new search term
@@ -102,7 +102,7 @@ extension ExplorePlacesSearchViewController: UITableViewDelegate {
         
         detailDisposable = searchController.searchBar.rx.text
             .debug("rxGooglePlacesDetails")
-            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .flatMapLatest { query in
                 GoogleClient.sharedInstance.placeDetail(for: placeId, token: self.sessionToken)

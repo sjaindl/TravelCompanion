@@ -111,11 +111,7 @@ class ExploreInfoViewController: UIViewController, WKUIDelegate {
         
         let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: domain, forMethod: GoogleConstants.UrlComponents.pathSearch, withQueryItems: queryItems)
         
-        let request = URLRequest(url:url)
-        
-        DispatchQueue.main.async {
-            self.webView!.load(request)
-        }
+        loadUrl(url, queryItems: queryItems)
     }
     
     @IBAction func openLonelyPlanet(_ sender: Any) {
@@ -125,6 +121,10 @@ class ExploreInfoViewController: UIViewController, WKUIDelegate {
         
         let url = WebClient.sharedInstance.createUrl(forScheme: LonelyPlanetConstants.UrlComponents.urlProtocol, forHost: domain, forMethod: LonelyPlanetConstants.UrlComponents.pathSearch, withQueryItems: queryItems)
         
+        loadUrl(url, queryItems: queryItems)
+    }
+    
+    func loadUrl(_ url: URL, queryItems: [String: String]) {
         let request = URLRequest(url:url)
         
         DispatchQueue.main.async {

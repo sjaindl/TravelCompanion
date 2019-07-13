@@ -23,7 +23,7 @@ class AddTransportDateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.title = String(format: "addTransport".localized(), transportDelegate.description())
         
         date.datePickerMode = .date

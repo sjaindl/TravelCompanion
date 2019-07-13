@@ -51,9 +51,9 @@ class AddTransportDestinationViewController: UIViewController {
     func setupAutocompletion(for searchController: UISearchController) -> Disposable {
         let disposable = searchController.searchBar.rx.text
             .debug("rxAutocomplete")
-            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter{$0 != nil && $0!.count >= 5}
+            .filter{$0 != nil && $0!.count >= Config.autocompletionMinChars}
             .flatMapLatest { query in
                 Rome2RioClient.sharedInstance.autocomplete(with: query!)
                     .startWith([]) // clears results on new search term
@@ -87,9 +87,9 @@ class AddTransportDestinationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.Segues.planTransportDate {
             let controller = segue.destination as! AddTransportDateViewController
-            controller.firestoreDbReference = plan.firestorePublicTransportDbReference
-            controller.transportDelegate = AddPublicTransportDelegate()
-            controller.transportSearchDelegate = AddPublicTransportSearchDelegate()
+            controller.firestoreDbReference = firestoreDbReference
+            controller.transportDelegate = transportDelegate
+            controller.transportSearchDelegate = transportSearchDelegate
             controller.planDetailController = self.planDetailController
             controller.plan = plan
             controller.transport = sender as? Transport
