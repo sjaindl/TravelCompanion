@@ -69,6 +69,8 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "calendar"), style: .plain, target: self, action: #selector(changeDate))
         
+        layoutImage()
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -100,6 +102,13 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 previousController = controller
             }
         }
+    }
+    
+    func layoutImage() {
+        image.layer.cornerRadius = image.bounds.width / 2
+        image.layer.borderColor = UIColor.gray.cgColor
+        image.layer.borderWidth = 5
+        image.clipsToBounds = true
     }
     
     @objc
