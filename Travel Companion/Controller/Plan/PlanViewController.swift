@@ -179,13 +179,13 @@ extension PlanViewController {
         cell.textLabel?.text = plan.name
         cell.detailTextLabel?.text = FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
         cell.imageView?.image = defaultImage()
-        resizeImage(cell: cell)
+        UiUtils.resizeImage(cell: cell)
         
         if !plan.imageRef.isEmpty { //Is an image available in storage?
             
             if let cachedImage = imageCache.object(forKey: plan.imageRef as NSString) {
                 cell.imageView?.image = cachedImage
-                resizeImage(cell: cell)
+                UiUtils.resizeImage(cell: cell)
             } else {
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
                 
@@ -203,7 +203,7 @@ extension PlanViewController {
                     cell.imageView?.image = image
                     self.imageCache.setObject(cell.imageView!.image!, forKey: plan.imageRef + "-originalsize" as NSString)
                     
-                    self.resizeImage(cell: cell)
+                    UiUtils.resizeImage(cell: cell)
                     
                     self.imageCache.setObject(cell.imageView!.image!, forKey: plan.imageRef as NSString)
                 }
@@ -215,15 +215,6 @@ extension PlanViewController {
     
     func defaultImage() -> UIImage {
         return UIImage(named: "placeholder")!
-    }
-    
-    func resizeImage(cell: UITableViewCell) {
-        let itemSize = CGSize.init(width: 75, height: 75)
-        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale);
-        let imageRect = CGRect.init(origin: CGPoint.zero, size: itemSize)
-        cell.imageView?.image!.draw(in: imageRect)
-        cell.imageView?.image! = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

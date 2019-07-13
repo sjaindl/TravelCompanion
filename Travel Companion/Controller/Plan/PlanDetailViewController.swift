@@ -303,6 +303,7 @@ extension PlanDetailViewController {
         if let imageUrl = plannable.imageUrl(), let url = URL(string: imageUrl) {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.ReuseIds.planDetailWithImageCell)!
             ((try? cell.imageView?.image = UIImage(data: Data(contentsOf: url))) as ()??)
+            UiUtils.resizeImage(cell: cell)
         }
 
         cell.textLabel?.text = plannable.description()

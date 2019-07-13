@@ -76,4 +76,13 @@ class UiUtils {
         
         debugPrint("space: \(space), dimension: \(dimension), portraitmode: \(controller.isPortrait)")
     }
+    
+    static func resizeImage(cell: UITableViewCell) {
+        let itemSize = CGSize.init(width: 75, height: 75)
+        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale);
+        let imageRect = CGRect.init(origin: CGPoint.zero, size: itemSize)
+        cell.imageView?.image!.draw(in: imageRect)
+        cell.imageView?.image! = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+    }
 }
