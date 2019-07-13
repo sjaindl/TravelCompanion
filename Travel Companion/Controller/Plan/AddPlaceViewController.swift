@@ -69,13 +69,6 @@ class AddPlaceViewController: UIViewController {
 
 extension AddPlaceViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        let isFirstSearch = (selectedPlace == nil)
-        
-        if !isFirstSearch {
-            selectedPlace!.marker.map = nil
-            selectedPlace = nil
-        }
-        
         let marker = addPinToMap(with: coordinate)
         selectedPlace = SelectedPlace(marker: marker, coordinate: coordinate)
         
@@ -85,17 +78,6 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         }
         
         search()
-    }
-    
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        guard let reachability = Network.reachability, reachability.isReachable else {
-            UiUtils.showError("offline".localized(), controller: self)
-            return false
-        }
-        
-        search()
-        
-        return true
     }
     
     func addPinToMap(with coordinate: CLLocationCoordinate2D) -> GMSMarker {
@@ -115,5 +97,8 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         self.view.addSubview(placesSearchController.searchBar)
         
         present(placesSearchController, animated: true, completion: nil)
+        
+        selectedPlace!.marker.map = nil
+        selectedPlace = nil
     }
 }
