@@ -108,3 +108,36 @@
 "zoo" = "Zoo";
 "planTrip" = "Plan trip";
 "changeDate" = "Change Date";
+
+/* Storyboard strings */
+"planDetail" = "Plan your travel itineraries";
+"exploreDetail" = "Explore the world for new travel opportunities";
+"rememberDetail" = "Capture your memories in the travel gallery";
+"planning" = "Planen";
+"destination" = "Destination:";
+"displayName" = "Display name:";
+"startDate" = "Start Date:";
+"endDate" = "End Date:";
+"addTrip" = "Add Trip";
+"place" = "Place";
+"notav" = "Not available";
+"phone" = "Phone:";
+"url" = "URL:";
+"type" = "Type:";
+"location" = "Location";
+"rating" = "Rating";
+"capital" = "Capital:";
+"language" = "Language:";
+"currency" = "Currency:";
+"area" = "Area:";
+"population" = "Population:";
+"timezones" = "Timezones:";
+"region" = "Regions:";
+"isoCode" = "ISO code:";
+"callingCodes" = "Calling codes:";
+"domains" = "Domains:";
+"native" = "Native name:";
+"blocks" = "Regional blocks:";
+"country" = "Country";
+"place" = "Place";
+"changeDate" = "Change Date";

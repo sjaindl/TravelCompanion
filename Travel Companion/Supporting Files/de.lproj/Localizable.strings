@@ -13,7 +13,7 @@
 "noImageData" = "Keine Fotos verfügbar";
 "imageNotSaved" = "Konnte Fotos nicht speichern";
 "chooseAction" = "Wähle Aktion";
-"showPhoto" = "Zeite Foto";
+"showPhoto" = "Zeige Foto";
 "delete" = "Löschen";
 "cancel" = "Abbrechen";
 "addPlace" = "%@ hinzufügen";
@@ -107,4 +107,37 @@
 "travelAgency" = "Reiseagentur";
 "zoo" = "Zoo";
 "planTrip" = "Reise planen";
+"changeDate" = "Datum ändern";
+
+/* Storyboard strings */
+"planDetail" = "Plane deine Reisen";
+"exploreDetail" = "Erkunde die Welt nach neuen Reisemöglichkeiten";
+"rememberDetail" = "Halte deine Erinnerungen in der Reisegalerie fest";
+"planning" = "Planen";
+"destination" = "Reiseziel:";
+"displayName" = "Displayname:";
+"startDate" = "Startdatum:";
+"endDate" = "Enddatum:";
+"addTrip" = "Reise hinzufügen";
+"place" = "Platz";
+"notav" = "nicht verfügbar";
+"phone" = "Telefon:";
+"url" = "URL:";
+"type" = "Typ:";
+"location" = "Standort";
+"rating" = "Rating";
+"capital" = "Hauptstadt:";
+"language" = "Sprache:";
+"currency" = "Währung:";
+"area" = "Fläche:";
+"population" = "Einwohner:";
+"timezones" = "Zeitzonen:";
+"region" = "Regionen:";
+"isoCode" = "ISO code:";
+"callingCodes" = "Vorwahlen:";
+"domains" = "Domains:";
+"native" = "Heimischer Name:";
+"blocks" = "Regionale Blöcke:";
+"country" = "Land";
+"place" = "Platz";
 "changeDate" = "Datum ändern";
