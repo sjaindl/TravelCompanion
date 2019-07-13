@@ -95,6 +95,7 @@ class AddPlanViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         case .startDate:
             layoutButton(with: "addPlan".localized(), showDestination: false, showName: false, showStartDate: false, showEndDate: true)
             buttonState = ButtonState.endDate
+            endDate.minimumDate = startDate.date
         default:
             let originalName = selectedOriginalPinName ?? destinationText.text!
             

@@ -55,6 +55,7 @@ class ChangeDateViewController: UIViewController {
         case .startDate:
             layoutButton(with: "changeDate".localized(), showStartDate: false, showEndDate: true)
             buttonState = ButtonState.endDate
+            endDate.minimumDate = startDate.date
         default:
             
             plan.startDate = Timestamp(date: startDate.date)
