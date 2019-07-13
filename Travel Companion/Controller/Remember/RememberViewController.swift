@@ -10,7 +10,7 @@ import CoreData
 import Firebase
 import UIKit
 
-class RememberViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RememberViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -88,7 +88,7 @@ class RememberViewController: UIViewController, UITableViewDelegate, UITableView
     }
 }
 
-extension RememberViewController {
+extension RememberViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1 //past trips. Default is already 1. Just to make it clear.
     }
@@ -119,6 +119,7 @@ extension RememberViewController {
                 }
                 
                 cell.imageView?.image = UIImage(data: data)
+                UiUtils.resizeImage(cell: cell)
             }
         }
         
