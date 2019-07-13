@@ -25,7 +25,12 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var planLabel: UILabel!
     @IBOutlet weak var rememberLabel: UILabel!
     
+    @IBOutlet weak var exporeDetailLabel: UILabel!
+    @IBOutlet weak var planDetailLabel: UILabel!
+    @IBOutlet weak var rememberDetailLabel: UILabel!
+    
     @IBOutlet weak var signOutButton: UIBarButtonItem!
+    
     var dataController: DataController!
     
     override func viewDidLoad() {
@@ -52,10 +57,15 @@ class MainMenuViewController: UIViewController {
     func configureGestureRecognizers() {
         addGestureRecognizer(selector: #selector(explore), view: exploreImage)
         addGestureRecognizer(selector: #selector(explore), view: exploreLabel)
+        addGestureRecognizer(selector: #selector(explore), view: exporeDetailLabel)
+        
         addGestureRecognizer(selector: #selector(plan), view: planImage)
         addGestureRecognizer(selector: #selector(plan), view: planLabel)
+        addGestureRecognizer(selector: #selector(plan), view: planDetailLabel)
+        
         addGestureRecognizer(selector: #selector(remember), view: rememberImage)
         addGestureRecognizer(selector: #selector(remember), view: rememberLabel)
+        addGestureRecognizer(selector: #selector(remember), view: rememberDetailLabel)
     }
     
     func addGestureRecognizer(selector: Selector?, view: UIView) {
