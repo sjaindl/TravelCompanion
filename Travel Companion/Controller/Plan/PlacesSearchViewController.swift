@@ -35,7 +35,6 @@ class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     }
 }
 
-
 class GooglePlacesAutocompleteContainer: UITableViewController {
     
     private var apiKey: String = ""
@@ -47,6 +46,7 @@ class GooglePlacesAutocompleteContainer: UITableViewController {
     private var strictBounds: Bool = false
     private let cellIdentifier = "Cell"
     private var currentSearchText = ""
+    private var popToController: UIViewController!
     
     private var places = [GooglePlace]() {
         didSet {
@@ -107,34 +107,14 @@ extension GooglePlacesAutocompleteContainer {
     override open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = places[indexPath.row]
         
-        let docData = try! FirestoreEncoder().encode(place)
-        FirestoreClient.addData(collectionReference: firestoreDbReference, documentName: place.getId(), data: docData) { (error) in
-            if let error = error {
-                UiUtils.showToast(message: error.localizedDescription, view: self.view)
-            } else {
-                debugPrint("Document added")
-                
-                self.addPlaceToPlan(place)
-                
-                UiUtils.showToast(message: "addedPlace".localized(), view: self.view)
-                
-                //show toast for 1 second
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    self.dismiss(animated: true, completion: nil)
-                })
-            }
-        }
-    }
-    
-    func addPlaceToPlan(_ place: GooglePlace) {
-        if placeType == GooglePlaceType.lodging {
-            plan.hotels.append(place)
-        } else if placeType == GooglePlaceType.restaurant {
-            plan.restaurants.append(place)
-        } else {
-            //some attraction
-            plan.attractions.append(place)
-        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: Constants.ControllerIds.addPlacePreview) as! AddPlacePreviewViewController
+        viewController.googlePlace = place
+        viewController.searchedLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        viewController.firestoreDbReference = firestoreDbReference
+        viewController.plan = plan
+        viewController.placeType = placeType
+        self.present(viewController, animated: true)
     }
 }
 
@@ -148,7 +128,7 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
         
         currentSearchText = searchText
         
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), type: placeType.key) { (error, places) in
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), type: placeType.key, radius: String(radius)) { (error, places) in
             self.places = places
         }
     }

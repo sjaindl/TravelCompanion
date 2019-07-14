@@ -55,6 +55,10 @@ struct Constants {
         static let photoDetail = "photoDetail"
     }
     
+    struct ControllerIds {
+        static let addPlacePreview = "addPlacePreview"
+    }
+    
     struct CoreData {
         static let placeholderImage = "placeholder"
         static let sortKey = "creationDate"
@@ -72,6 +76,7 @@ struct Constants {
         static let zoomLevel = "zoomLevel"
         
         static let zoomLevelStandard = 6.0
+        static let zoomLevelStandardGooglePlaceAdd = 14.0
         //Coordinates of Apple headquarter
         static let mapLatitudeStandard = 37.33182
         static let mapLongitudeStandard = -122.03118
@@ -92,6 +97,5 @@ struct Constants {
             static let photoResizingWidth = 800
             static let transportSearchAutocomplete = true
         }
-        
     }
 }

@@ -108,6 +108,7 @@
 "zoo" = "Zoo";
 "planTrip" = "Plan trip";
 "changeDate" = "Change Date";
+"addPlaceSearch" = "Add Place";
 
 /* Storyboard strings */
 "planDetail" = "Plan your travel itineraries";
@@ -139,5 +140,10 @@
 "native" = "Native name:";
 "blocks" = "Regional blocks:";
 "country" = "Country";
-"place" = "Place";
 "changeDate" = "Change Date";
+"searchRadius" = "Search radius: ";
+ "select" = "Select";
+"distance" = "Distance: ";
+"noRating" = "No rating";
+"rating" = "Rating: ";
+"ratings" = "ratings";

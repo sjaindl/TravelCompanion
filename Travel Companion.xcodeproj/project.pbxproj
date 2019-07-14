@@ -27,6 +27,7 @@
 		9A450F2421859A9F00875B42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A450F2221859A9F00875B42 /* Localizable.strings */; };
 		9A52676922D9D9AB00A2B4ED /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676822D9D9AB00A2B4ED /* Config.swift */; };
 		9A52676B22DA75C800A2B4ED /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676A22DA75C800A2B4ED /* Localizable.swift */; };
+		9A52676D22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676C22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift */; };
 		9A5B69C021117A7C00060790 /* MainMenuUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* MainMenuUiTests.swift */; };
 		9A5B69E621117E4700060790 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D321117E4600060790 /* Constants.swift */; };
 		9A5B69E721117E4700060790 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69D521117E4600060790 /* AlbumCollectionViewCell.swift */; };
@@ -204,6 +205,7 @@
 		9A450F2B2185A54700875B42 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A52676822D9D9AB00A2B4ED /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9A52676A22DA75C800A2B4ED /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		9A52676C22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlacePreviewViewController.swift; sourceTree = "<group>"; };
 		9A5B699921117A7B00060790 /* Travel Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A5B69B021117A7C00060790 /* Travel CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A5B69B621117A7C00060790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -602,6 +604,8 @@
 			children = (
 				9A88225A214FFEC200C333D4 /* TransportDelegates */,
 				9AE4C2902131CBE10056CD0D /* PlanViewController.swift */,
+				9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */,
+				9A52676C22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift */,
 				9AE4C2952132D0240056CD0D /* AddPlanViewController.swift */,
 				9A2FC22822D3EA6C007D6828 /* ChangeDateViewController.swift */,
 				9A6A54BE2133C3B800B515E3 /* PlanDetailViewController.swift */,
@@ -609,7 +613,6 @@
 				9A88223421463B0E00C333D4 /* AddTransportDetailViewController.swift */,
 				9A882250214A2DCD00C333D4 /* NotesViewController.swift */,
 				9AD67E6D215A93F9004B077A /* PlacesSearchViewController.swift */,
-				9AD67E6F215AA9B5004B077A /* AddPlaceViewController.swift */,
 				9A368B3622C2BF950084F6E9 /* AddTransportOriginViewController.swift */,
 				9A368B3822C2D54C0084F6E9 /* AddTransportDestinationViewController.swift */,
 				9A368B3A22C429030084F6E9 /* AddTransportDateViewController.swift */,
@@ -1047,6 +1050,7 @@
 				9A6D6BFB2133C60500B98447 /* PlanConstants.swift in Sources */,
 				9A5B69EB21117E4700060790 /* FlickrClient.swift in Sources */,
 				9AF39BF12128CAA600D85DF2 /* PhotosDetailViewController.swift in Sources */,
+				9A52676D22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift in Sources */,
 				9ABA83BE21672A8500CDE128 /* Reachability.swift in Sources */,
 				9A5B69EF21117E4700060790 /* Photos+Extensions.swift in Sources */,
 			);

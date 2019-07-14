@@ -16,9 +16,9 @@ class GoogleClient {
     
     private init() {}
     
-    func searchPlaces(for text: String?, coordinate: CLLocationCoordinate2D, type: String, completionHandler: @escaping (_ errorString: String?, _ places: [GooglePlace]) -> Void) {
+    func searchPlaces(for text: String?, coordinate: CLLocationCoordinate2D, type: String, radius: String, completionHandler: @escaping (_ errorString: String?, _ places: [GooglePlace]) -> Void) {
         
-        let queryItems = buildPlaceSearchQueryItems(for: text, coordinate: coordinate, type: type)
+        let queryItems = buildPlaceSearchQueryItems(for: text, coordinate: coordinate, type: type, radius: radius)
         
         let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
             GoogleConstants.UrlComponents.pathNearbySearch, withQueryItems: queryItems)
@@ -53,10 +53,10 @@ class GoogleClient {
         }
     }
     
-    private func buildPlaceSearchQueryItems(for text: String?, coordinate: CLLocationCoordinate2D, type: String) -> [String: String] {
+    private func buildPlaceSearchQueryItems(for text: String?, coordinate: CLLocationCoordinate2D, type: String, radius: String) -> [String: String] {
         var parameters = [
             GoogleConstants.ParameterKeys.rankBy: GoogleConstants.ParameterValues.rankBy,
-            GoogleConstants.ParameterKeys.radius: GoogleConstants.ParameterValues.radius,
+            GoogleConstants.ParameterKeys.radius: radius,
             GoogleConstants.ParameterKeys.placeType: type,
             GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces,
             GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds

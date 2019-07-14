@@ -19,6 +19,7 @@ class GooglePlace: NSObject, Plannable {
     var reference: String
     var scope: String
     var types: [String]?
+    var userRatingsTotal: Int?
     var vicinity: String
     var geometry: Geometry?
     var photos: [Photo]?
@@ -27,7 +28,7 @@ class GooglePlace: NSObject, Plannable {
     var permanentlyClosed: Bool?
     var htmlAttributions: [String]? = []
     
-    public var notes: String?
+    var notes: String?
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -38,6 +39,7 @@ class GooglePlace: NSObject, Plannable {
         case reference
         case scope
         case types
+        case userRatingsTotal = "user_ratings_total"
         case vicinity
         case geometry
         case photos
@@ -120,8 +122,8 @@ struct Geometry: Codable {
 }
 
 struct Location: Codable {
-    var latitude: Double?
-    var longitude: Double?
+    var lat: Double?
+    var lng: Double?
 }
 
 struct Photo: Codable {

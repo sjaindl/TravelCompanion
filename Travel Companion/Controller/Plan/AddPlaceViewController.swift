@@ -18,6 +18,8 @@ class AddPlaceViewController: UIViewController {
     }
     
     @IBOutlet weak var map: GMSMapView!
+    @IBOutlet weak var radiusSlider: UISlider!
+    @IBOutlet weak var radiusLabel: UILabel!
     
     var selectedPlace: SelectedPlace?
     var searchView: UISearchBar?
@@ -32,8 +34,8 @@ class AddPlaceViewController: UIViewController {
             placeType: placeType,
             coordinate: (selectedPlace?.coordinate)!,
             firestoreDbReference: firestoreDbReference,
-            plan: plan
-            // Optional: radius: 10,
+            plan: plan,
+            radius: Double(radiusSlider!.value) * 1000 //convert from km to m
             // Optional: strictBounds: true,
             // Optional: searchBarPlaceholder: "Start typing..."
         )
@@ -44,6 +46,12 @@ class AddPlaceViewController: UIViewController {
         return controller
     }
     
+    @IBAction func radiusChanged(_ sender: UISlider) {
+        let currentValue = round(sender.value * 10) / 10 // round to 100 metres
+        radiusSlider.setValue(currentValue, animated: false)
+        radiusLabel.text = "searchRadius".localized() + "\(currentValue) km"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +59,8 @@ class AddPlaceViewController: UIViewController {
         
         map.delegate = self
         initCamera()
+        
+        radiusLabel.text = "searchRadius".localized() + "\(Int(radiusSlider.value)) km"
     }
     
     func initCamera() {
@@ -74,6 +84,8 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         
         guard let reachability = Network.reachability, reachability.isReachable else {
             UiUtils.showError("offline".localized(), controller: self)
+            selectedPlace?.marker.map = nil
+            selectedPlace = nil
             return
         }
         
@@ -98,7 +110,7 @@ extension AddPlaceViewController: GMSMapViewDelegate {
         
         present(placesSearchController, animated: true, completion: nil)
         
-        selectedPlace!.marker.map = nil
+        selectedPlace?.marker.map = nil
         selectedPlace = nil
     }
 }

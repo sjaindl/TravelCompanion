@@ -65,7 +65,7 @@
 "planExists" = "Plan %@ existiert. Pin kann nicht gelöscht werden.";
 "addTranport" = "Füge %@ hinzu";
 "addedRoute" = "Route erfolgreich hinzugefügt";
-"addedPlace" = "Platz erfolgreich hinzugefügt";
+"addedPlace" = "Ort erfolgreich hinzugefügt";
 "signOutError" = "Ausloggen nicht erfolgreich";
 "loginRequired" = "Login erforderlich";
 "accountRequired" = "Diese Funktionalität kann nur mit einem Konto genutzt werden. Bitte logge dich ein.";
@@ -119,7 +119,7 @@
 "startDate" = "Startdatum:";
 "endDate" = "Enddatum:";
 "addTrip" = "Reise hinzufügen";
-"place" = "Platz";
+"place" = "Ort";
 "notav" = "nicht verfügbar";
 "phone" = "Telefon:";
 "url" = "URL:";
@@ -139,5 +139,10 @@
 "native" = "Heimischer Name:";
 "blocks" = "Regionale Blöcke:";
 "country" = "Land";
-"place" = "Platz";
 "changeDate" = "Datum ändern";
+"searchRadius" = "Suchradius: ";
+"select" = "Auswählen";
+"distance" = "Entfernung: ";
+"noRating" = "Keine Bewertung";
+"rating" = "Bewertung: ";
+"ratings" = "Bewertungen";

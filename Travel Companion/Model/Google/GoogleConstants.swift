@@ -46,7 +46,6 @@ class GoogleConstants {
     
     struct ParameterValues {
         static let rankBy = "prominence"
-        static let radius = "25000"
         static let strictBounds = "true"
         
         static let maxWidth = "400"
