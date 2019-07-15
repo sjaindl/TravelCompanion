@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirestoreRemoteConfig.sharedInstance.activateFetched()
         startNetworkReachabilityListener()
         
+        let font: UIFont = UIFont.systemFont(ofSize: 16)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+        
         return true
     }
     

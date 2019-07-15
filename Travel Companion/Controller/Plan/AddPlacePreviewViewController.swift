@@ -27,8 +27,8 @@ class AddPlacePreviewViewController: UIViewController {
     var plan: Plan!
     var placeType: GooglePlaceType!
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         placeName.text = googlePlace.name
         
@@ -37,6 +37,21 @@ class AddPlacePreviewViewController: UIViewController {
         }
         
         distance.text = ""
+        
+        var ratingText = "noRating".localized()
+        if let googleRating = googlePlace.rating {
+            ratingText = "rating".localized() + String(googleRating) + "/5 *"
+            if let numberOfRatings = googlePlace.userRatingsTotal {
+                ratingText += " (" + String(numberOfRatings) + " " + "ratings".localized() + ")"
+            }
+        }
+        rating.text = ratingText
+        
+        address.text = googlePlace.vicinity
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         if let latitude = googlePlace.geometry?.location.lat, let longitude = googlePlace.geometry?.location.lng {
             let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
@@ -52,23 +67,10 @@ class AddPlacePreviewViewController: UIViewController {
             let locationDistance = searchedLocation.distance(from: placeLocation) / 1000
             distance.text = "distance".localized() + String(format: " %.01fkm", locationDistance) //Display the result in km
         }
-        
-        var ratingText = "noRating".localized()
-        if let googleRating = googlePlace.rating {
-            ratingText = "rating".localized() + String(googleRating) + "/5 *"
-            if let numberOfRatings = googlePlace.userRatingsTotal {
-                ratingText += " (" + String(numberOfRatings) + " " + "ratings".localized() + ")"
-            }
-        }
-        rating.text = ratingText
-        
-        address.text = googlePlace.vicinity
     }
     
     @IBAction func selectPlace(_ sender: Any) {
         persistPlace(googlePlace)
-        
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -86,8 +88,13 @@ class AddPlacePreviewViewController: UIViewController {
                 self.addPlaceToPlan(place)
                 
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
+                    
                     UiUtils.showToast(message: "addedPlace".localized(), view: self.view)
+                    
+                    //show toast for 1 second
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                        self.dismiss(animated: true, completion: nil)
+                    })
                 }
             }
         }
