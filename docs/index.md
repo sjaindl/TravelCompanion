@@ -2,6 +2,8 @@
 layout: default
 ---
 
+<head><meta name="google-site-verification" content="bAxo8AjWEk2W1vDTla7Td9zx6_rYJUA3pTxcOwcg9dc" /></head>
+
 <h1>Privacy Policy</h1>
 (<a href="https://github.com/sjaindl/TravelCompanion/blob/master/docs/PrivacyPolice_DE.md">German version</a>)
 
