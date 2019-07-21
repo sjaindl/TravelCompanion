@@ -35,6 +35,13 @@ class GoogleClient {
                     let decoder = JSONDecoder()
                     do {
                         let placesSearchResponse = try decoder.decode(PlacesNearbySearchResponse.self, from: data)
+                        
+                        if let error = placesSearchResponse.errorMessage {
+                            debugPrint(error)
+                            completionHandler(error, [])
+                            return
+                        }
+                        
                         let places = placesSearchResponse.results
                         
                         for place in places {

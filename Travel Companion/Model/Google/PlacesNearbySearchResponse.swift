@@ -13,11 +13,13 @@ class PlacesNearbySearchResponse: Codable {
     var nextPageToken: String?
     var results: [GooglePlace]
     var status: String
+    var errorMessage: String?
     
     private enum CodingKeys: String, CodingKey {
         case htmlAttributions = "html_attributions"
         case nextPageToken = "next_page_token"
         case results
         case status
+        case errorMessage = "error_message"
     }
 }
