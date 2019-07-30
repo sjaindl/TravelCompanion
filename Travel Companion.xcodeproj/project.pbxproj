@@ -25,7 +25,7 @@
 		9A368B4122CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4022CBCADA0084F6E9 /* PlacesAutocompleteResponse.swift */; };
 		9A368B4322CC139F0084F6E9 /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */; };
 		9A450F2421859A9F00875B42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A450F2221859A9F00875B42 /* Localizable.strings */; };
-		9A52676922D9D9AB00A2B4ED /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676822D9D9AB00A2B4ED /* Config.swift */; };
+		9A52676922D9D9AB00A2B4ED /* AutocompleteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676822D9D9AB00A2B4ED /* AutocompleteConfig.swift */; };
 		9A52676B22DA75C800A2B4ED /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676A22DA75C800A2B4ED /* Localizable.swift */; };
 		9A52676D22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52676C22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift */; };
 		9A5B69C021117A7C00060790 /* MainMenuUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5B69BF21117A7C00060790 /* MainMenuUiTests.swift */; };
@@ -203,7 +203,7 @@
 		9A368B4222CC139F0084F6E9 /* PlaceDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsResponse.swift; sourceTree = "<group>"; };
 		9A450F2321859A9F00875B42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A450F2B2185A54700875B42 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9A52676822D9D9AB00A2B4ED /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		9A52676822D9D9AB00A2B4ED /* AutocompleteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteConfig.swift; sourceTree = "<group>"; };
 		9A52676A22DA75C800A2B4ED /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		9A52676C22DB2C9E00A2B4ED /* AddPlacePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlacePreviewViewController.swift; sourceTree = "<group>"; };
 		9A5B699921117A7B00060790 /* Travel Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Travel Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -381,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5B6A3421117EFD00060790 /* Supporting Files */,
+				9A52676822D9D9AB00A2B4ED /* AutocompleteConfig.swift */,
 				9A5B69D321117E4600060790 /* Constants.swift */,
 				9A1AD4D1211245AF001D2517 /* SecretConstants.swift */,
 				9A5B69D821117E4600060790 /* Model */,
@@ -429,7 +430,6 @@
 		9A5B69D621117E4600060790 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9A52676822D9D9AB00A2B4ED /* Config.swift */,
 				9AA266B42123558600EE0F5C /* Explore */,
 				9AE4C28F2131CB3F0056CD0D /* Plan */,
 				9A88225D2151A0A500C333D4 /* Remember */,
@@ -973,7 +973,7 @@
 			files = (
 				9A6186C3218A0DE2002F59BC /* FormatUtils.swift in Sources */,
 				9AA266A52122C37500EE0F5C /* FirestoreClient.swift in Sources */,
-				9A52676922D9D9AB00A2B4ED /* Config.swift in Sources */,
+				9A52676922D9D9AB00A2B4ED /* AutocompleteConfig.swift in Sources */,
 				9AF39BE5212564BD00D85DF2 /* RestCountriesConstants.swift in Sources */,
 				9ABA83BC2165DE0B00CDE128 /* FirestoreRemoteConfig.swift in Sources */,
 				9AC023D0215ECFA60076A3C2 /* PlacesNearbySearchResponse.swift in Sources */,

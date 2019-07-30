@@ -81,6 +81,11 @@ class GoogleClient {
     }
     
     func autocomplete(for input: String, token: String) -> Observable<[PlacesPredictions]> {
+        if input.count < AutocompleteConfig.autocompletionMinChars {
+            let filterStrings: [PlacesPredictions] = []
+            return Observable.from(optional: filterStrings)
+        }
+        
         let queryItems = buildAutoCompleteQueryItems(for: input, token: token)
         
         let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:

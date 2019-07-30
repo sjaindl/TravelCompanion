@@ -50,9 +50,9 @@ class ExplorePlacesSearchViewController: UIViewController {
         
         let disposable = searchController.searchBar.rx.text
             .debug("rxAutocompleteGooglePlaces")
-            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(AutocompleteConfig.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter{$0 != nil && $0!.count >= Config.autocompletionMinChars}
+            //.filter{$0 != nil && $0!.count >= AutocompleteConfig.autocompletionMinChars}
             .flatMapLatest { query in
                 GoogleClient.sharedInstance.autocomplete(for: query!, token: self.sessionToken)
                     .startWith([]) // clears results on new search term
@@ -60,9 +60,7 @@ class ExplorePlacesSearchViewController: UIViewController {
             }
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { filterStrings in
-                if filterStrings.count > 0 {
-                    self.results.accept(filterStrings)
-                }
+                self.results.accept(filterStrings)
             })
         //.disposed(by: disposeBag) --> do not dispose immediately, as user may continue typing
         
@@ -102,7 +100,7 @@ extension ExplorePlacesSearchViewController: UITableViewDelegate {
         
         detailDisposable = searchController.searchBar.rx.text
             .debug("rxGooglePlacesDetails")
-            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(AutocompleteConfig.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .flatMapLatest { query in
                 GoogleClient.sharedInstance.placeDetail(for: placeId, token: self.sessionToken)
@@ -116,7 +114,7 @@ extension ExplorePlacesSearchViewController: UITableViewDelegate {
                     self.navigationController?.popViewController(animated: true)
                     self.callback.didPickPlace(result, for: placeId)
                 }
-                
             })
     }
+    
 }

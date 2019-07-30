@@ -51,9 +51,9 @@ class AddTransportDestinationViewController: UIViewController {
     func setupAutocompletion(for searchController: UISearchController) -> Disposable {
         let disposable = searchController.searchBar.rx.text
             .debug("rxAutocomplete")
-            .throttle(.milliseconds(Config.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(AutocompleteConfig.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .filter{$0 != nil && $0!.count >= Config.autocompletionMinChars}
+            //.filter{$0 != nil && $0!.count >= AutocompleteConfig.autocompletionMinChars}
             .flatMapLatest { query in
                 Rome2RioClient.sharedInstance.autocomplete(with: query!)
                     .startWith([]) // clears results on new search term
@@ -61,9 +61,7 @@ class AddTransportDestinationViewController: UIViewController {
             }
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { filterStrings in
-                if filterStrings.count > 0 {
-                    self.results.accept(filterStrings)
-                }
+                self.results.accept(filterStrings)
             })
         //.disposed(by: disposeBag) --> do not dispose immediately, as user may continue typing
         

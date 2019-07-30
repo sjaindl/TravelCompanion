@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Config {
+struct AutocompleteConfig {
     static let autocompletionDelayMilliseconds = 1000
     static let autocompletionMinChars = 4
 }

@@ -15,6 +15,10 @@ class Rome2RioClient {
     private init() {}
     
     func autocomplete(with query: String) -> Observable<[String]> {
+        if query.count < AutocompleteConfig.autocompletionMinChars {
+            let filterStrings: [String] = []
+            return Observable.from(optional: filterStrings)
+        }
         
         let queryItems = buildAutoCompleteQueryItems(query: query)
         
