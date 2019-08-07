@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseUI
 import GooglePlaces
+import shared
 
 class MainMenuViewController: UIViewController {
     
@@ -37,6 +38,7 @@ class MainMenuViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "mainMenuTitle".localized()
+        self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
         
         configureAuth()
         configureGestureRecognizers()
