@@ -12,6 +12,9 @@ Then install dependencies via command line:
 In the file SecretConstants.swift are only placeholder-values, that need to be exchanged with valid API keys/user names.
 A Google configuration file, associated with the above Google API key, must be added to under: Supporting Files/GoogleService-Info.plist
 
+Android/Kotlin needs gradle to work. You can install it with the command:
+gradle wrapper --gradle-version 3.4
+
 ## Licence
 
 This project is under exclusive copyright, see https://github.com/sjaindl/TravelCompanion/blob/master/LICENSE for license notes.
