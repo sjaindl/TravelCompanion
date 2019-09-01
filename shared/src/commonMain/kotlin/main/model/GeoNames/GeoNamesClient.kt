@@ -1,15 +1,14 @@
 import com.sjaindl.travelcompanion.model.GeoNames.GeoNamesConstants
 
-/*
 import io.ktor.client.engine.HttpClientEngine
 
-import io.ktor.client.features.json.JsonFeature
+//import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.takeFrom
 import io.ktor.client.HttpClient
-*/
+
 //  GeoNamesClient.swift
 //  Travel Companion
 //
@@ -20,31 +19,28 @@ import io.ktor.client.HttpClient
 
 class GeoNamesClient(/* private val engine: HttpClientEngine*/) {
     //val sharedInstance = GeoNamesClient()
-    /*
+
     private val client by lazy {
-        HttpClient(engine) {
-            install(JsonFeature) {
-                //serializer = KotlinxSerializer()
-            }
+        HttpClient() {
+            //install(JsonFeature)
         }
     }
-    */
 
     suspend fun fetchCountryCode(latitude: Double, longitude: Double, completionHandler: ( errorString: String?, result: String?) -> Unit) {
-/*
-        val client = HttpClient()
+
+        //val client = HttpClient()
         val builder = HttpRequestBuilder()
 
-        client.get<String> {
-            builder.url("baseUrl/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22")
+        val content = client.get<String> {
+            builder.url("https://secure.geonames.org/countryCode?lat=37.0856432&lng=25.1488318&username=jaindl.stefan")
         }
-*/
 
+        client.close()
 
         //val client = HttpClient(CIO)
         //val htmlContent = client.get<String>(GeoNamesConstants.UrlComponents().path)
 
-        completionHandler("error.localizedDescription", null)
+        completionHandler("error.localizedDescription", content)
         /*
         val method = GeoNamesConstants.UrlComponents().path
         val queryItems: Map<String, String> = mapOf(GeoNamesConstants.ParameterKeys().latitude to String(latitude), GeoNamesConstants.ParameterKeys().longitude to String(longitude), GeoNamesConstants.ParameterKeys().username to SecretConstants.userNameGeoNames)

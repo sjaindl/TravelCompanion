@@ -61,5 +61,7 @@ allprojects {
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
         implementation project(':shared')
+
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     }
 }
