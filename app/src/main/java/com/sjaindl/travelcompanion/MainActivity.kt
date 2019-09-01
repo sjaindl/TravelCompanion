@@ -16,7 +16,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.main_text).text = createApplicationScreenMessage()
 
         GlobalScope.launch {
-            fetchCode()
+            val code = fetchCode(37.0856432, 25.1488318)
+
+            runOnUiThread { findViewById<TextView>(R.id.main_text).setText(code) }
         }
 
     }
