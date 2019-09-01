@@ -39,7 +39,21 @@ class MainMenuViewController: UIViewController {
         
         self.navigationItem.title = "mainMenuTitle".localized()
         self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
-        self.navigationItem.title = CommonKt.fetchCode(37.0856432, 25.1488318) //just for testing kotlin
+        ActualKt.showHelloCoroutine()
+        ActualKt.fetchCodeCoroutine {
+            print($0)
+            self.navigationItem.title = $0
+            //return .init()
+        }
+        
+        //CommonKt.fetchCode(37.0856432, 25.1488318) //just for testing kotlin
+        /*
+        Api().request {
+            print($0)
+            self.navigationItem.title = $0
+            //return .init()
+        }
+ */
         
         configureAuth()
         configureGestureRecognizers()

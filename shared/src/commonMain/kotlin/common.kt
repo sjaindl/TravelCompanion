@@ -1,9 +1,10 @@
 package com.sjaindl.travelcompanion
 
-import io.ktor.client.*
 import GeoNamesClient
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.ktor.client.HttpClient
+import io.ktor.client.call.call
+import io.ktor.client.response.readText
+import io.ktor.http.HttpMethod
 
 expect fun platformName(): String
 
@@ -40,4 +41,19 @@ suspend fun fetchCode(latitude: Double, longitude: Double): String {
   */
 
   return "no"
+}
+
+internal suspend fun helloCoroutine() {
+    println("Hello Coroutines!")
+}
+
+class Api {
+  private val client = HttpClient()
+
+  internal suspend fun request(urlString: String): String {
+    val result: String = client.call(urlString) {
+      method = HttpMethod.Get
+    }.response.readText()
+    return result
+  }
 }
