@@ -1,7 +1,5 @@
 import io.ktor.client.call.TypeInfo
 import io.ktor.client.features.json.JsonSerializer
-import io.ktor.client.response.HttpResponse
-import io.ktor.client.response.readText
 import io.ktor.http.ContentType
 import io.ktor.http.content.OutgoingContent
 import io.ktor.http.content.TextContent
@@ -25,10 +23,6 @@ class JsonKotlinxSerializer : JsonSerializer {
     /**
      * Set mapping from [type] to generated [KSerializer].
      */
-    //fun <T : Any> setMapper(type: KClass<T>, serializer: KSerializer<T>) {
-    //    mappers[type as KClass<Any>] = serializer as KSerializer<Any>
-    //}
-
     inline fun <reified T> setMapper(serializer: KSerializer<T>) {
         mappers[T::class as KClass<Any>] = serializer as KSerializer<Any>
     }

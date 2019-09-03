@@ -12,6 +12,7 @@ import Firebase
 import FirebaseUI
 import GoogleMaps
 import UIKit
+import shared
 
 class ExploreViewController: UIViewController, PlacePicker {
     
@@ -211,14 +212,14 @@ class ExploreViewController: UIViewController, PlacePicker {
         let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
         setCamera(with: latitude, longitude: longitude, zoom: zoom)
         
-        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
-            var countryCode: String?
-            if let code = code {
-                countryCode = code
+        ActualKt.fetchGeoCodeCoroutine(latitude: latitude, longitude: longitude) {
+            if let error = $1 {
+                UiUtils.showToast(message: error, view: self.view)
+            } else if let countryCode = $0 {
+                let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
+                self.store(pin, in: marker)
+                _ = self.showPlaceDialog(marker: marker)
             }
-            let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
-            self.store(pin, in: marker)
-            _ = self.showPlaceDialog(marker: marker)
         }
     }
     

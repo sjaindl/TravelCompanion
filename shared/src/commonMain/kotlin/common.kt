@@ -1,10 +1,24 @@
 package com.sjaindl.travelcompanion
 
 import GeoNamesClient
+import JsonKotlinxSerializer
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
+import io.ktor.client.features.HttpCallValidator
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.JsonSerializer
 import io.ktor.client.response.readText
 import io.ktor.http.HttpMethod
+import main.model.GeoNames.Geocode
+
+private var client = HttpClient {
+  install(JsonFeature) {
+    serializer = JsonKotlinxSerializer().apply {
+      setMapper<Geocode>(Geocode.serializer())
+    }
+  }
+  install(HttpCallValidator)
+}
 
 expect fun platformName(): String
 
@@ -12,35 +26,15 @@ fun createApplicationScreenMessage(): String {
   return "Kotlin Rocks on ${platformName()}"
 }
 
-suspend fun fetchCode(latitude: Double, longitude: Double): String {
-  val client = GeoNamesClient()
+suspend fun fetchGeoCode(latitude: Double, longitude: Double): String {
 
-  //client.fetchCountryCode(37.0856432, 25.1488318)
+  val client = createClient(JsonKotlinxSerializer().apply {
+    setMapper<Geocode>(Geocode.serializer())
+  })
 
-  try {
-    client.fetchCountryCode(latitude, longitude)?.let { repositories ->
-
-      //val r = repositories
-      return repositories.countryCode
-      //view?.displayRepos(repositories)
+  GeoNamesClient.instance.fetchCountryCode(latitude, longitude, client)?.let { repositories ->
+    return repositories.countryCode
     }
-  }catch (e: Exception){
-    val err = e
-    //view?.showError(e)
-  }
-
-  /*
-  client.fetchCountryCode(0.0, 0.0) { error, result ->
-    val res = result
-    val err = error
-  }
-
-  GlobalScope.launch {
-
-  }
-  */
-
-  return "no"
 }
 
 internal suspend fun helloCoroutine() {
@@ -55,5 +49,14 @@ class Api {
       method = HttpMethod.Get
     }.response.readText()
     return result
+  }
+}
+
+fun createClient(jsonSerializer: JsonSerializer) : HttpClient {
+  return HttpClient {
+    install(JsonFeature) {
+      serializer = jsonSerializer
+    }
+    install(HttpCallValidator)
   }
 }

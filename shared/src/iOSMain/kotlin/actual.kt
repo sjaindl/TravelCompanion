@@ -7,7 +7,6 @@ import platform.darwin.dispatch_get_main_queue
 import kotlin.coroutines.CoroutineContext
 
 actual fun platformName(): String {
-
   return UIDevice.currentDevice.systemName() + UIDevice.currentDevice.systemVersion
 }
 
@@ -35,10 +34,15 @@ fun showHelloCoroutine() {
   }
 }
 
-fun fetchCodeCoroutine(completion: (String) -> Unit) {
+fun fetchGeoCodeCoroutine(latitude: Double, longitude: Double, completion: (String?, String?) -> Unit) {
   CoroutineMainDispatcher.CoroutineMainScope().launch {
-    val code = fetchCode(0.0, 0.0)
-    completion(code)
+    try {
+        val code = fetchGeoCode(latitude, longitude)
+        completion(code, null)
+    } catch (e: Throwable) {
+        completion(null, e.message)
+        //view?.showError(e)
+    }
   }
 }
 
