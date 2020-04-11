@@ -72,6 +72,9 @@ Pods
 SecretConstants.swift
 GoogleService-Info.plist
 
+#Kotlin
+SecretConstants.kt
+
 #Android
 # Built application files
 /*/build/
