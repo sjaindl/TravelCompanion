@@ -7,7 +7,7 @@
 */
 
 "anonymous" = "Anonym";
-"mainMenuTitle" = "Hauptmenü";
+"mainMenuTitle" = "Travel Companion";
 "photoDetail" = "Foto Detail";
 "remember" = "Festhalten";
 "noImageData" = "Keine Fotos verfügbar";
@@ -108,6 +108,7 @@
 "zoo" = "Zoo";
 "planTrip" = "Reise planen";
 "changeDate" = "Datum ändern";
+"welcome" = "Willkommen, %@";
 
 /* Storyboard strings */
 "planDetail" = "Plane deine Reisen";

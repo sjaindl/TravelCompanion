@@ -7,7 +7,7 @@
 */
 
 "anonymous" = "Anonymous";
-"mainMenuTitle" = "Main Menu";
+"mainMenuTitle" = "Travel Companion";
 "photoDetail" = "Photo Detail";
 "remember" = "Remember";
 "noImageData" = "No image data available";
@@ -109,6 +109,7 @@
 "planTrip" = "Plan trip";
 "changeDate" = "Change Date";
 "addPlaceSearch" = "Add Place";
+"welcome" = "Welcome, %@";
 
 /* Storyboard strings */
 "planDetail" = "Plan your travel itineraries";

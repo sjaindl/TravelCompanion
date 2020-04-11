@@ -14,7 +14,7 @@ class MainMenuViewController: UIViewController {
     
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var user: User?
-    var displayName = "anonymous".localized()
+    var displayName: String?
     var isSignedIn = false
     
     @IBOutlet weak var exploreImage: UIImageView!
@@ -36,9 +36,9 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "mainMenuTitle".localized()
-        self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
-        ActualKt.showHelloCoroutine() //just for testing kotlin
+        navigationItem.title = "mainMenuTitle".localized()
+        //self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
+        //ActualKt.showHelloCoroutine() //just for testing kotlin
         
         configureAuth()
         configureGestureRecognizers()
@@ -137,13 +137,14 @@ class MainMenuViewController: UIViewController {
             // check if there is a current user
             if let activeUser = user {
                 self.user = activeUser
-                self.signedInStatus(isSignedIn: true)
                 
                 if let displayName = activeUser.displayName {
                     self.displayName = displayName
                 } else if let email = user?.email {
                     self.displayName = email.components(separatedBy: "@")[0]
                 }
+                
+                self.signedInStatus(isSignedIn: true)
                 
                 let firestoreDbReference = FirestoreClient.userReference()
                 let data: [String: String] = [FirestoreConstants.Ids.User.userId: activeUser.uid,
@@ -164,8 +165,13 @@ class MainMenuViewController: UIViewController {
         self.isSignedIn = isSignedIn
         if isSignedIn {
             self.signOutButton.title = "signOut".localized()
+            if let displayName = displayName {
+                navigationItem.title = String(format: "welcome".localized(), displayName)
+            }
         } else {
             self.signOutButton.title = "signIn".localized()
+            navigationItem.title = "mainMenuTitle".localized()
+            displayName = nil
         }
     }
     
