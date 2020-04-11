@@ -6,7 +6,6 @@
 //  Copyright © 2019 Stefan Jaindl. All rights reserved.
 //
 
-import GooglePlaces
 import UIKit
 import RxCocoa
 import RxSwift

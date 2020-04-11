@@ -8,7 +8,6 @@
 import UIKit
 import Firebase
 import FirebaseUI
-import GooglePlaces
 import shared
 
 class MainMenuViewController: UIViewController {
@@ -126,34 +125,37 @@ class MainMenuViewController: UIViewController {
     }
     
     func configureAuth() {
-        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
+        if #available(iOS 13.0, *) {
+            FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth(), FUIOAuth.appleAuthProvider()]
+        } else {
+            FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
+        }
         
         // listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in
             
             // check if there is a current user
             if let activeUser = user {
-                // check if the current app user is the current FIRUser
-                if self.user != activeUser {
-                    self.user = activeUser
-                    self.signedInStatus(isSignedIn: true)
-                    let name = user!.email!.components(separatedBy: "@")[0]
-                    self.displayName = name
-                    
-                    let firestoreDbReference = FirestoreClient.userReference()
-                    let data: [String: String] = [FirestoreConstants.Ids.User.userId: activeUser.uid,
-                                                  FirestoreConstants.Ids.User.email: activeUser.email ?? "",
-                                                  FirestoreConstants.Ids.User.displayName: activeUser.displayName ?? "",
-                                                  FirestoreConstants.Ids.User.providerId: activeUser.providerID,
-                                                  FirestoreConstants.Ids.User.photoUrl: activeUser.photoURL?.absoluteString ?? "",
-                                                  FirestoreConstants.Ids.User.phoneNumber: activeUser.phoneNumber ?? ""]
-                    
-                    firestoreDbReference.setData(data)
+                self.user = activeUser
+                self.signedInStatus(isSignedIn: true)
+                
+                if let displayName = activeUser.displayName {
+                    self.displayName = displayName
+                } else if let email = user?.email {
+                    self.displayName = email.components(separatedBy: "@")[0]
                 }
+                
+                let firestoreDbReference = FirestoreClient.userReference()
+                let data: [String: String] = [FirestoreConstants.Ids.User.userId: activeUser.uid,
+                                              FirestoreConstants.Ids.User.email: activeUser.email ?? "",
+                                              FirestoreConstants.Ids.User.displayName: activeUser.displayName ?? "",
+                                              FirestoreConstants.Ids.User.providerId: activeUser.providerID,
+                                              FirestoreConstants.Ids.User.photoUrl: activeUser.photoURL?.absoluteString ?? "",
+                                              FirestoreConstants.Ids.User.phoneNumber: activeUser.phoneNumber ?? ""]
+                
+                firestoreDbReference.setData(data)
             } else {
-                // user must sign in
                 self.signedInStatus(isSignedIn: false)
-                self.loginSession()
             }
         }
     }
