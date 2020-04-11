@@ -16,6 +16,7 @@ target 'Travel Companion' do
     
     pod 'FirebaseUI'
     pod 'FirebaseUI/Auth'
+    pod 'FirebaseUI/OAuth'
     pod 'FirebaseUI/Email'
     pod 'FirebaseUI/Google'
     pod 'FirebaseUI/Facebook'
