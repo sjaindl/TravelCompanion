@@ -1,11 +1,25 @@
 use_frameworks!
 platform :ios, '9.0'
 
+def google_utilites
+  pod 'GoogleUtilities/AppDelegateSwizzler'
+  pod 'GoogleUtilities/Environment'
+  pod 'GoogleUtilities/ISASwizzler'
+  pod 'GoogleUtilities/Logger'
+  pod 'GoogleUtilities/MethodSwizzler'
+  pod 'GoogleUtilities/NSData+zlib'
+  pod 'GoogleUtilities/Network'
+  pod 'GoogleUtilities/Reachability'
+  pod 'GoogleUtilities/UserDefaults'
+end
+
 source 'https://github.com/CocoaPods/Specs.git'
 target 'Travel Companion' do
     
     pod 'RxSwift'
     pod 'RxCocoa'
+    
+    google_utilites
     
     pod 'Firebase/Auth'
     pod 'Firebase/Core'
@@ -33,6 +47,10 @@ target 'Travel Companion' do
 
     target 'Travel CompanionTests' do
         inherit! :search_paths
+        
+        google_utilites
+        
+        pod 'RxSwift'
         pod 'Firebase'
     end
 end

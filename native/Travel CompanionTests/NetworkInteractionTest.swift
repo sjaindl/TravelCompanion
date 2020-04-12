@@ -1,20 +1,19 @@
 //
-//  testNetworkInteractions.swift
+//  Travel_CompanionTests.swift
 //  Travel CompanionTests
 //
-//  Created by Stefan Jaindl on 20.08.18.
-//  Copyright © 2018 Stefan Jaindl. All rights reserved.
+//  Created by Stefan Jaindl on 12.04.20.
+//  Copyright © 2020 Stefan Jaindl. All rights reserved.
 //
 
 import CoreData
 import CoreLocation
 import Firebase
-import XCTest
 import RxSwift
+import XCTest
 
-//@testable import Travel_Companion
-
-class NetworkInteractionTests: XCTestCase {
+@testable import Travel_Companion
+class NetworkInteractionTest: XCTestCase {
     
     var mockDataController: DataController!
     var mockPersistantContainer: NSPersistentContainer!
@@ -360,7 +359,7 @@ class NetworkInteractionTests: XCTestCase {
         let promise = expectation(description: "Autocomplete results successfully returned")
         
         // when
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.key) { (error, places) in
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.key, radius: "10") { (error, places) in
             if let error = error {
                 errorResponse = error.description
             }
@@ -394,4 +393,5 @@ class NetworkInteractionTests: XCTestCase {
         
         try? mockPersistantContainer.viewContext.save()
     }
+
 }

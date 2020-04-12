@@ -27,7 +27,7 @@ class ExploreUiTests: XCTestCase {
     func testFindAndViewLocation() {
         let app = XCUIApplication()
         
-        var findLocationButton = app.toolbars["Toolbar"].buttons["Find new location"]
+        var findLocationButton = app.toolbars["Toolbar"].children(matching: .other).element.children(matching: .other).element.children(matching: .button).element
         XCTAssertTrue(findLocationButton.exists, "No find new location button in explore screen")
         findLocationButton.tap()
         
@@ -63,8 +63,6 @@ class ExploreUiTests: XCTestCase {
     //explore detail is tested via "show detail" in plan feature
     
     func goToExploreScreen() {
-        UiTestUtils.loginWithEmailIfNecessary(self)
-        
         let app = XCUIApplication()
         app.images["explore"].tap()
     }

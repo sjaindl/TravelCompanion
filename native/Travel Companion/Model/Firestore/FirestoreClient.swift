@@ -19,7 +19,6 @@ class FirestoreClient {
     static func newDatabaseInstance() -> Firestore {
         let firestoreDb = Firestore.firestore()
         let settings = firestoreDb.settings
-        settings.areTimestampsInSnapshotsEnabled = true
         firestoreDb.settings = settings
         return firestoreDb
     }

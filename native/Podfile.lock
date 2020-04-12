@@ -432,6 +432,15 @@ DEPENDENCIES:
   - FirebaseUI/OAuth
   - GoogleMaps
   - GooglePlaces
+  - GoogleUtilities/AppDelegateSwizzler
+  - GoogleUtilities/Environment
+  - GoogleUtilities/ISASwizzler
+  - GoogleUtilities/Logger
+  - GoogleUtilities/MethodSwizzler
+  - GoogleUtilities/Network
+  - "GoogleUtilities/NSData+zlib"
+  - GoogleUtilities/Reachability
+  - GoogleUtilities/UserDefaults
   - HTMLEntities (from `https://github.com/IBM-Swift/swift-html-entities.git`)
   - RxCocoa
   - RxSwift
@@ -541,6 +550,6 @@ SPEC CHECKSUMS:
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SDWebImage: 5d4cf6afccd9ac1d2ee701ed0c4917cbb1b80536
 
-PODFILE CHECKSUM: 78899880f3e447c049dfe70a28ab6e3d166441e3
+PODFILE CHECKSUM: efa0738d9266179e3113d453805eedeed9296059
 
 COCOAPODS: 1.8.4
