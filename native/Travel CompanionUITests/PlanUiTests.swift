@@ -31,17 +31,20 @@ class PlanUiTests: XCTestCase {
         addTrip()
         
         let app = XCUIApplication()
-        let searchedCell = app.filterCells(containing: ["Mountain View"]).element
-        XCTAssertTrue(searchedCell.exists, "Plan was not added")
+        let destinationImage = app.scrollViews.otherElements.images["placeholder"]
+        let exists = NSPredicate(format: "exists == 1")
+        expectation(for: exists, evaluatedWith: destinationImage, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testPlanShowDetail() {
         addTrip()
         
         let app = XCUIApplication()
+        app.navigationBars["Mountain View"].buttons["Add Plan"].tap()
         let searchedCell = app.filterCells(containing: ["Mountain View"]).element
-        
         searchedCell.tap()
+        Thread.sleep(forTimeInterval: 1)
         app.alerts["Choose action"].buttons["Show details"].tap()
         
         //check whether all detail elements are displayed correctly
@@ -57,24 +60,24 @@ class PlanUiTests: XCTestCase {
         XCTAssertTrue(elementsQuery.staticTexts["United States of America"].exists)
         let flag = scrollViewsQuery.otherElements.containing(.staticText, identifier:"Mountain View").children(matching: .other).element(boundBy: 1)
         XCTAssertTrue(flag.exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Capital: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Capital:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["Washington, D.C."].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Language: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Language:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["English"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Currency: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Currency:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["United States dollar (USD/$)"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Area: "].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Population: "].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Timezones: "].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Region: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Area:"].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Population:"].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Timezones:"].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Regions:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["Americas, Northern America"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["ISO code: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["ISO code:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["US"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Calling codes: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Calling codes:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["+1"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Domains: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Domains:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts[".us"].exists)
-        XCTAssertTrue(elementsQuery.staticTexts["Native name: "].exists)
+        XCTAssertTrue(elementsQuery.staticTexts["Native name:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["United States"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["Regional blocks:"].exists)
         XCTAssertTrue(elementsQuery.staticTexts["North American Free Trade Agreement (NAFTA)"].exists)
@@ -88,15 +91,19 @@ class PlanUiTests: XCTestCase {
         XCTAssertTrue(app.buttons["Location"].exists)
         placeButton.tap()
         app.collectionViews.children(matching: .cell).element(boundBy: 1).children(matching: .other).element.tap()
+        Thread.sleep(forTimeInterval: 1)
         
         //photo detail:
         let photoDetailNavigationBar = app.navigationBars["Photo Detail"]
-        XCTAssertTrue(photoDetailNavigationBar.otherElements["Photo Detail"].exists)
+        XCTAssertTrue(photoDetailNavigationBar.exists)
         photoDetailNavigationBar.buttons["Mountain View"].tap()
         
         //Wikis:
-        XCTAssertTrue(tabBarsQuery.buttons["WikiVoyage"].exists)
-        XCTAssertTrue(tabBarsQuery.buttons["Wikipedia"].exists)
+        tabBarsQuery.buttons["Info"].tap()
+        XCTAssertTrue(app.buttons["WikiVoyage"].exists)
+        XCTAssertTrue(app.buttons["Wikipedia"].exists)
+        XCTAssertTrue(app.buttons["Google"].exists)
+        XCTAssertTrue(app.buttons["Lonelyplanet"].exists)
     }
     
     func testPlanAddPlannableAndNote() {
@@ -109,6 +116,7 @@ class PlanUiTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
         
         searchedCell.tap()
+        Thread.sleep(forTimeInterval: 2)
         app.alerts["Choose action"].buttons["Show"].tap()
         
         let toolbar = app.toolbars["Toolbar"]
@@ -145,20 +153,23 @@ class PlanUiTests: XCTestCase {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let formattedDate = dateFormatter.string(from: Date())
-        
         let tablesQuery = app.tables
-        let element = tablesQuery.staticTexts["\(formattedDate), Graz - Zurich"].firstMatch
+        let element = tablesQuery.staticTexts["\(formattedDate), Graz - Frankfurt"].firstMatch
         XCTAssertTrue(element.exists)
         
         element.tap()
         Thread.sleep(forTimeInterval: 2)
         let addNoteButton = app.alerts["Choose action"].buttons["Add Note"]
         addNoteButton.tap()
+        Thread.sleep(forTimeInterval: 2)
         let noteField = app.textFields["Add notes.."]
+          
+        noteField.tap()
+        Thread.sleep(forTimeInterval: 2)
         UIPasteboard.general.string = "test"
-        noteField.doubleTap()
+        noteField.tap()
         app.menuItems.element(boundBy: 0).tap()
-        Thread.sleep(forTimeInterval: 1)
+        Thread.sleep(forTimeInterval: 2)
         
         let okButton = app.buttons["OK"]
         okButton.tap()
@@ -180,6 +191,7 @@ class PlanUiTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
         
         searchedCell.tap()
+        Thread.sleep(forTimeInterval: 2)
         app.alerts["Choose action"].buttons["Show"].tap()
         
         let dateFormatter = DateFormatter()
@@ -187,7 +199,7 @@ class PlanUiTests: XCTestCase {
         let formattedDate = dateFormatter.string(from: Date())
         
         let tablesQuery = app.tables
-        var element = tablesQuery.staticTexts["\(formattedDate), Graz - Zurich"].firstMatch
+        var element = tablesQuery.staticTexts["\(formattedDate), Graz - Frankfurt"].firstMatch
         exists = NSPredicate(format: "exists == 1")
         expectation(for: exists, evaluatedWith: element, handler: nil)
         waitForExpectations(timeout: 20, handler: nil)
@@ -200,40 +212,44 @@ class PlanUiTests: XCTestCase {
         
         Thread.sleep(forTimeInterval: 5)
         
-        element = tablesQuery.staticTexts["\(formattedDate), Graz - Zurich"].firstMatch
+        element = tablesQuery.staticTexts["\(formattedDate), Graz - Frankfurt"].firstMatch
         XCTAssertFalse(element.exists)
     }
     
     func addFlight() {
         let app = XCUIApplication()
         
-        let element = app.otherElements.containing(.navigationBar, identifier:"Add Flight").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
-        let originTextField = element.children(matching: .textField).element(boundBy: 0)
-        originTextField.tap()
-        UIPasteboard.general.string = "Graz, Austria"
-        originTextField.doubleTap()
-        app.menuItems.element(boundBy: 0).tap()
+        let addFlightNavigationBar = app.navigationBars["Add Flight"]
         
-        let destinationTextField = element.children(matching: .textField).element(boundBy: 1)
-        destinationTextField.tap()
-        UIPasteboard.general.string = "Los Angeles, California, USA"
-        destinationTextField.doubleTap()
-        app.menuItems.element(boundBy: 0).tap()
-        
-        Thread.sleep(forTimeInterval: 1)
-        
-        app.buttons["Search"].tap()
-        
-        Thread.sleep(forTimeInterval: 1)
-        
+        let searchForOriginSearchField = addFlightNavigationBar.searchFields["Search for Origin"]
+        searchForOriginSearchField.tap()
+        searchForOriginSearchField.typeText("Graz")
         let tablesQuery = app.tables
-        let searchedCell = tablesQuery.staticTexts["Fly to Los Angeles: Graz - Los Angeles"].firstMatch
+        let grazAustriaStaticText = tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Graz, Austria"]/*[[".cells.staticTexts[\"Graz, Austria\"]",".staticTexts[\"Graz, Austria\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        grazAustriaStaticText.tap()
+        
+        let searchForDestinationSearchField = addFlightNavigationBar.searchFields["Search for Destination"]
+        searchForDestinationSearchField.tap()
+        searchForDestinationSearchField.tap()
+        Thread.sleep(forTimeInterval: 1)
+        UIPasteboard.general.string = "Frankfurt"
+        searchForDestinationSearchField.tap()
+        app.menuItems.element(boundBy: 0).tap()
+        let destinationStaticText = tablesQuery.staticTexts["Frankfurt am Main, Germany"]
+        destinationStaticText.tap()
+        
+        XCTAssertTrue(app.datePickers.pickerWheels["April"].exists, "Date picker not shown")
+        app/*@START_MENU_TOKEN@*/.staticTexts["Search"]/*[[".buttons[\"Search\"].staticTexts[\"Search\"]",".staticTexts[\"Search\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        Thread.sleep(forTimeInterval: 1)
+        
+        let searchedCell = tablesQuery.staticTexts["Fly: Graz - Frankfurt am Main"].firstMatch
         var exists = NSPredicate(format: "exists == 1")
         expectation(for: exists, evaluatedWith: searchedCell, handler: nil)
         waitForExpectations(timeout: 20, handler: nil)
         searchedCell.tap()
         
-        let searchedFlight = tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["LX1513: Graz 10:45 - Zurich 12:05"]/*[[".cells.staticTexts[\"LX1513: Graz 10:45 - Zurich 12:05\"]",".staticTexts[\"LX1513: Graz 10:45 - Zurich 12:05\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        let searchedFlight = tablesQuery.staticTexts["Lufthansa, Airbus A319"]
         exists = NSPredicate(format: "exists == 1")
         expectation(for: exists, evaluatedWith: searchedFlight, handler: nil)
         waitForExpectations(timeout: 20, handler: nil)
@@ -244,24 +260,28 @@ class PlanUiTests: XCTestCase {
     }
 
     func goToPlanScreen() {
-        UiTestUtils.loginWithEmailIfNecessary(self)
-        
         let app = XCUIApplication()
         app.images["plan"].tap()
+        _ = UiTestUtils.loginWithEmailIfNecessary(self)
     }
     
     func addTrip() {
         let app = XCUIApplication()
         app.toolbars["Toolbar"].buttons["Add"].tap()
         
-        let elementsQuery = app.scrollViews.otherElements
-        elementsQuery.staticTexts["End Date: "].swipeUp()
-        elementsQuery.buttons["Add trip"].tap()
+        let scrollViews = app.scrollViews
         
-        let searchedCell = app.filterCells(containing: ["Mountain View"]).element
+        XCTAssertTrue(scrollViews.otherElements/*@START_MENU_TOKEN@*/.pickerWheels["Mountain View"]/*[[".pickers.pickerWheels[\"Mountain View\"]",".pickerWheels[\"Mountain View\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.exists, "Destination not shown")
+        let nextStaticText = scrollViews/*@START_MENU_TOKEN@*/.staticTexts["Next"]/*[[".buttons[\"Next\"].staticTexts[\"Next\"]",".staticTexts[\"Next\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        nextStaticText.tap()
         
-        let exists = NSPredicate(format: "exists == 1")
-        expectation(for: exists, evaluatedWith: searchedCell, handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertTrue(scrollViews.textFields["destination name"].exists, "Destination display name not shown")
+        nextStaticText.tap()
+        
+        XCTAssertTrue(scrollViews.datePickers/*@START_MENU_TOKEN@*/.pickerWheels["April"]/*[[".pickers.pickerWheels[\"April\"]",".pickerWheels[\"April\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.exists, "Start date not shown")
+        nextStaticText.tap()
+        
+        XCTAssertTrue(scrollViews.datePickers/*@START_MENU_TOKEN@*/.pickerWheels["April"]/*[[".pickers.pickerWheels[\"April\"]",".pickerWheels[\"April\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.exists, "End date not shown")
+        scrollViews/*@START_MENU_TOKEN@*/.staticTexts["Add Plan"]/*[[".buttons[\"Add Plan\"].staticTexts[\"Add Plan\"]",".staticTexts[\"Add Plan\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
     }
 }

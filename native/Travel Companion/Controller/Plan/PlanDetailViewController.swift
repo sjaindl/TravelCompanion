@@ -17,6 +17,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var tripDateLabel: UILabel!
     
     var plan: Plan!
     var pins: [Pin]!
@@ -83,7 +84,8 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        navigationItem.title = "\(plan.name), \(FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate))"
+        navigationItem.title = plan.name
+        tripDateLabel.text = FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

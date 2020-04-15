@@ -11,16 +11,18 @@ import XCTest
 
 class UiTestUtils {
     
-    static func loginWithEmailIfNecessary(_ testCase: XCTestCase) {
+    static func loginWithEmailIfNecessary(_ testCase: XCTestCase) -> Bool {
         let app = XCUIApplication()
-        let welcomeButton = app.navigationBars["Welcome"].otherElements["Welcome"]
+        let welcomeGreeting = app.navigationBars["Welcome"]
         
-        if welcomeButton.exists { //not signed in
-            app/*@START_MENU_TOKEN@*/.buttons["EmailButtonAccessibilityID"]/*[[".buttons[\"Sign in with email\"]",".buttons[\"EmailButtonAccessibilityID\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        if welcomeGreeting.exists { //not signed in
+            let signInEmailButton = app/*@START_MENU_TOKEN@*/.buttons["Sign in with email"]/*[[".buttons[\"Sign in with email\"]",".buttons[\"EmailButtonAccessibilityID\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
+            signInEmailButton.tap()
             
             let tablesQuery = app.tables
-            tablesQuery/*@START_MENU_TOKEN@*/.textFields["Enter your email"]/*[[".cells[\"EmailCellAccessibilityID\"].textFields[\"Enter your email\"]",".textFields[\"Enter your email\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            app.textFields["Enter your email"].typeText("tester@test.com")
+            let emailTextField = tablesQuery/*@START_MENU_TOKEN@*/.textFields["Enter your email"]/*[[".cells[\"EmailCellAccessibilityID\"].textFields[\"Enter your email\"]",".textFields[\"Enter your email\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+            emailTextField.tap()
+            emailTextField.typeText("tester@test.com")
             app.buttons["Next"].tap()
             
             let label = app.staticTexts["Password"]
@@ -29,8 +31,14 @@ class UiTestUtils {
             testCase.expectation(for: exists, evaluatedWith: label, handler: nil)
             testCase.waitForExpectations(timeout: 10, handler: nil)
             
-            tablesQuery/*@START_MENU_TOKEN@*/.secureTextFields["Enter your password"]/*[[".cells.secureTextFields[\"Enter your password\"]",".secureTextFields[\"Enter your password\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            tablesQuery/*@START_MENU_TOKEN@*/.secureTextFields["Enter your password"]/*[[".cells.secureTextFields[\"Enter your password\"]",".secureTextFields[\"Enter your password\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.typeText("test123")
+            let passwordTextField = tablesQuery/*@START_MENU_TOKEN@*/.secureTextFields["Enter your password"]/*[[".cells.secureTextFields[\"Enter your password\"]",".secureTextFields[\"Enter your password\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+            passwordTextField.tap()
+            
+            UIPasteboard.general.string = "test123"
+            passwordTextField.tap()
+            app.menuItems.element(boundBy: 0).tap()
+            Thread.sleep(forTimeInterval: 1)
+            
             app.navigationBars["Sign in"].buttons["Sign in"].tap()
             
             let exploreImage = app.images["explore"]
@@ -38,6 +46,10 @@ class UiTestUtils {
             
             testCase.expectation(for: exists, evaluatedWith: exploreImage, handler: nil)
             testCase.waitForExpectations(timeout: 15, handler: nil)
+            
+            return true
         }
+        
+        return false
     }
 }

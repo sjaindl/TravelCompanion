@@ -165,12 +165,8 @@ class MainMenuViewController: UIViewController {
         self.isSignedIn = isSignedIn
         if isSignedIn {
             self.signOutButton.title = "signOut".localized()
-            if let displayName = displayName {
-                navigationItem.title = String(format: "welcome".localized(), displayName)
-            }
         } else {
             self.signOutButton.title = "signIn".localized()
-            navigationItem.title = "mainMenuTitle".localized()
             displayName = nil
         }
     }

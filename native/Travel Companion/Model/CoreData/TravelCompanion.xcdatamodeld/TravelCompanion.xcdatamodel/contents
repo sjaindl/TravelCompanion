@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Country" representedClassName="Country" syncable="YES" codeGenerationType="class">
-        <attribute name="area" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="callingCodes" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="capital" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="currencies" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="domains" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="flag" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="isoCode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="languages" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nativeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="population" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="regionalBlocks" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timezones" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="pins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pin" inverseName="countryOfPin" inverseEntity="Pin" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Country" representedClassName=".Country" syncable="YES" codeGenerationType="class">
+        <attribute name="area" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="callingCodes" optional="YES" attributeType="String"/>
+        <attribute name="capital" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currencies" optional="YES" attributeType="String"/>
+        <attribute name="domains" optional="YES" attributeType="String"/>
+        <attribute name="flag" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="isoCode" optional="YES" attributeType="String"/>
+        <attribute name="languages" optional="YES" attributeType="String"/>
+        <attribute name="nativeName" optional="YES" attributeType="String"/>
+        <attribute name="population" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="region" optional="YES" attributeType="String"/>
+        <attribute name="regionalBlocks" optional="YES" attributeType="String"/>
+        <attribute name="timezones" optional="YES" attributeType="String"/>
+        <relationship name="pins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pin" inverseName="countryOfPin" inverseEntity="Pin"/>
     </entity>
-    <entity name="Photos" representedClassName="Photos" syncable="YES" codeGenerationType="class">
-        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin" syncable="YES"/>
+    <entity name="Photos" representedClassName=".Photos" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin"/>
     </entity>
-    <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="countryCode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="countryOfPin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="pins" inverseEntity="Country" syncable="YES"/>
-        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos" syncable="YES"/>
-        <relationship name="placetypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlaceType" inverseName="pin" inverseEntity="PlaceType" syncable="YES"/>
+    <entity name="Pin" representedClassName=".Pin" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="countryCode" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <attribute name="placeId" optional="YES" attributeType="String"/>
+        <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="countryOfPin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="pins" inverseEntity="Country"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos"/>
+        <relationship name="placetypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlaceType" inverseName="pin" inverseEntity="PlaceType"/>
     </entity>
-    <entity name="PlaceType" representedClassName="PlaceType" syncable="YES" codeGenerationType="class">
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="placetypes" inverseEntity="Pin" syncable="YES"/>
+    <entity name="PlaceType" representedClassName=".PlaceType" syncable="YES" codeGenerationType="class">
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="placetypes" inverseEntity="Pin"/>
     </entity>
     <elements>
-        <element name="Country" positionX="-947" positionY="782" width="128" height="285"/>
-        <element name="Photos" positionX="-360" positionY="954" width="128" height="135"/>
-        <element name="Pin" positionX="-684" positionY="909" width="128" height="253"/>
-        <element name="PlaceType" positionX="-981.2421875" positionY="1127.9375" width="128" height="73"/>
+        <element name="Country" positionX="-1032.12890625" positionY="809.15234375" width="128" height="283"/>
+        <element name="Photos" positionX="-320.19140625" positionY="912.24609375" width="128" height="133"/>
+        <element name="Pin" positionX="-725.203125" positionY="788.74609375" width="128" height="253"/>
+        <element name="PlaceType" positionX="-878.55859375" positionY="1245.75390625" width="128" height="73"/>
     </elements>
 </model>

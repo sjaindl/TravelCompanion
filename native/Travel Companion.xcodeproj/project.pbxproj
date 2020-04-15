@@ -108,6 +108,19 @@
 		9A762BB9244339C90068A5A5 /* NetworkInteractionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A762BB8244339C90068A5A5 /* NetworkInteractionTest.swift */; };
 		9AF2CF17230C95B50001FA21 /* shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2CEF2230C95B40001FA21 /* shared.framework */; };
 		9AF2CF18230C95B50001FA21 /* shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2CEF2230C95B40001FA21 /* shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9AFBAC25244671EC005E59BB /* TravelCompanion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66622FB717300AD939B /* TravelCompanion.xcdatamodeld */; };
+		9AFBAC26244672D4005E59BB /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66822FB717300AD939B /* Photos+Extensions.swift */; };
+		9AFBAC27244672D6005E59BB /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66922FB717300AD939B /* Country+Extensions.swift */; };
+		9AFBAC2A2446736D005E59BB /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65522FB717300AD939B /* WebConstants.swift */; };
+		9AFBAC2B24467370005E59BB /* WebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65622FB717300AD939B /* WebClient.swift */; };
+		9AFBAC2C24467398005E59BB /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65822FB717300AD939B /* PlaceDetailsResponse.swift */; };
+		9AFBAC2D244673A3005E59BB /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65B22FB717300AD939B /* PlacesAutocompleteResponse.swift */; };
+		9AFBAC2E244673E1005E59BB /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66322FB717300AD939B /* CoreDataClient.swift */; };
+		9AFBAC2F2446741C005E59BB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66522FB717300AD939B /* DataController.swift */; };
+		9AFBAC3024467422005E59BB /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65322FB717300AD939B /* FlickrConstants.swift */; };
+		9AFBAC31244749B7005E59BB /* Pin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66422FB717300AD939B /* Pin+Extensions.swift */; };
+		9AFBAC32244759BF005E59BB /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66B22FB717300AD939B /* RestCountriesClient.swift */; };
+		9AFBAC33244759C5005E59BB /* RestCountriesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66C22FB717300AD939B /* RestCountriesConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -7313,7 +7326,6 @@
 		9A4ED66B22FB717300AD939B /* RestCountriesClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
 		9A4ED66C22FB717300AD939B /* RestCountriesConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestCountriesConstants.swift; sourceTree = "<group>"; };
 		9A4ED66E22FB717300AD939B /* LonelyPlanetConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LonelyPlanetConstants.swift; sourceTree = "<group>"; };
-		9A4ED67022FB717300AD939B /* Travel_Companion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Travel_Companion.xcdatamodel; sourceTree = "<group>"; };
 		9A4ED67222FB717300AD939B /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		9A4ED67322FB717300AD939B /* Rome2RioClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rome2RioClient.swift; sourceTree = "<group>"; };
 		9A4ED67422FB717300AD939B /* SearchResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
@@ -19073,7 +19085,6 @@
 				9A4ED66222FB717300AD939B /* CoreData */,
 				9A4ED66A22FB717300AD939B /* RestCountries */,
 				9A4ED66D22FB717300AD939B /* LonelyPlanet */,
-				9A4ED66F22FB717300AD939B /* Travel_Companion.xcdatamodeld */,
 				9A4ED67122FB717300AD939B /* Rome2Rio */,
 				9A4ED67722FB717300AD939B /* PlannableFactory.swift */,
 			);
@@ -20065,7 +20076,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AFBAC25244671EC005E59BB /* TravelCompanion.xcdatamodeld in Sources */,
+				9AFBAC2F2446741C005E59BB /* DataController.swift in Sources */,
+				9AFBAC2C24467398005E59BB /* PlaceDetailsResponse.swift in Sources */,
 				9A762BB9244339C90068A5A5 /* NetworkInteractionTest.swift in Sources */,
+				9AFBAC2D244673A3005E59BB /* PlacesAutocompleteResponse.swift in Sources */,
+				9AFBAC2E244673E1005E59BB /* CoreDataClient.swift in Sources */,
+				9AFBAC3024467422005E59BB /* FlickrConstants.swift in Sources */,
+				9AFBAC32244759BF005E59BB /* RestCountriesClient.swift in Sources */,
+				9AFBAC31244749B7005E59BB /* Pin+Extensions.swift in Sources */,
+				9AFBAC27244672D6005E59BB /* Country+Extensions.swift in Sources */,
+				9AFBAC33244759C5005E59BB /* RestCountriesConstants.swift in Sources */,
+				9AFBAC26244672D4005E59BB /* Photos+Extensions.swift in Sources */,
+				9AFBAC2A2446736D005E59BB /* WebConstants.swift in Sources */,
+				9AFBAC2B24467370005E59BB /* WebClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20946,16 +20970,6 @@
 			);
 			currentVersion = 9A4ED66722FB717300AD939B /* TravelCompanion.xcdatamodel */;
 			path = TravelCompanion.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		9A4ED66F22FB717300AD939B /* Travel_Companion.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9A4ED67022FB717300AD939B /* Travel_Companion.xcdatamodel */,
-			);
-			currentVersion = 9A4ED67022FB717300AD939B /* Travel_Companion.xcdatamodel */;
-			path = Travel_Companion.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

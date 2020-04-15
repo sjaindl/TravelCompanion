@@ -19,9 +19,10 @@ extension Country {
     convenience init(result: [String: AnyObject], pin: Pin, insertInto context: NSManagedObjectContext!) {
         self.init(context: context)
         
-        var pins = self.pins?.allObjects as! [Pin]
-        pins.append(pin)
-        self.pins = NSSet(array: pins)
+        if var allPins = self.pins?.allObjects as? [Pin] {
+            allPins.append(pin)
+            self.pins = NSSet(array: allPins)
+        }
         
         pin.countryOfPin = self
         

@@ -31,27 +31,21 @@ class ExploreUiTests: XCTestCase {
         XCTAssertTrue(findLocationButton.exists, "No find new location button in explore screen")
         findLocationButton.tap()
         
-        app.navigationBars["Select a location"].buttons["Search"].tap()
-        app.navigationBars["searchBar"].searchFields["Search"].tap()
-        
-        let searchField = app.navigationBars["searchBar"].searchFields["Search"]
+        let searchField = app.navigationBars["Search for Place"].searchFields["Search for Place"]
         
         searchField.tap()
-        UIPasteboard.general.string = "Mountain View, CA, USA"
-        searchField.doubleTap()
-        app.menuItems.element(boundBy: 0).tap()
-    
+        searchField.typeText("Mountain View, CA, USA")
+        
         let tablesQuery = app.tables
-        let text = tablesQuery.staticTexts["CA, USA"]
+        let text = tablesQuery.staticTexts["Mountain View, CA, USA"]
         var exists = NSPredicate(format: "exists == 1")
         
         expectation(for: exists, evaluatedWith: text, handler: nil)
         waitForExpectations(timeout: 15, handler: nil)
         
-        tablesQuery.staticTexts["CA, USA"].tap()
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Mountain View, CA, USA"]/*[[".cells.staticTexts[\"Mountain View, CA, USA\"]",".staticTexts[\"Mountain View, CA, USA\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        text.tap()
         
-        findLocationButton = app.toolbars["Toolbar"].buttons["Find new location"]
+        findLocationButton = app.toolbars["Toolbar"].children(matching: .other).element.children(matching: .other).element.children(matching: .button).element
         exists = NSPredicate(format: "exists == 1")
         
         expectation(for: exists, evaluatedWith: findLocationButton, handler: nil)

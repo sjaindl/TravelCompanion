@@ -48,7 +48,10 @@ class NetworkInteractionTest: XCTestCase {
         mockDataController = DataController(persistentContainer: mockPersistantContainer)
         mockDataController.backgroundContext = mockPersistantContainer.newBackgroundContext()
         
-        FirebaseApp.configure()
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+        
     }
     
     override func tearDown() {
@@ -124,6 +127,13 @@ class NetworkInteractionTest: XCTestCase {
                 } else {
                     if let result = result {
                         let pin = Pin(context: self.mockDataController.viewContext)
+                        pin.latitude = 100
+                        pin.longitude = 100
+                        pin.name = "Graz"
+                        pin.address = "Adr"
+                        pin.countryCode = "AT"
+                        pin.country = "AT"
+                        
                         country = Country(result: result, pin: pin, insertInto: self.mockDataController.viewContext)
                         
                         try? self.mockDataController.save()
@@ -136,7 +146,7 @@ class NetworkInteractionTest: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 150, handler: nil)
         
         // then
         XCTAssertNil(errorResponse)
@@ -280,7 +290,7 @@ class NetworkInteractionTest: XCTestCase {
     
     func testRome2RioAutoCompleteClientResponse() {
         // given
-        let textToAutocomplete = "Gra"
+        let textToAutocomplete = "Sing"
         
         var response: [String]?
         var errorResponse: String?
@@ -349,8 +359,8 @@ class NetworkInteractionTest: XCTestCase {
     
     func testGooglePlacesClientResponse() {
         // given
-        let searchText = "Marina Bay Sands"
-        let coordinate = CLLocationCoordinate2D(latitude: 1.290270, longitude: 103.851959)
+        let searchText = "Marina"
+        let coordinate = CLLocationCoordinate2D(latitude: 1.2917922, longitude: 103.8571184)
         let placeType = GooglePlaceType.lodging
         
         var foundPlaces: [GooglePlace]?
@@ -359,7 +369,7 @@ class NetworkInteractionTest: XCTestCase {
         let promise = expectation(description: "Autocomplete results successfully returned")
         
         // when
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.key, radius: "10") { (error, places) in
+        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: coordinate, type: placeType.key, radius: "50") { (error, places) in
             if let error = error {
                 errorResponse = error.description
             }
@@ -373,25 +383,27 @@ class NetworkInteractionTest: XCTestCase {
             promise.fulfill()
         }
         
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 25, handler: nil)
         
         // then
         XCTAssertNil(errorResponse)
         XCTAssertNotNil(foundPlaces)
         
         XCTAssertTrue(foundPlaces!.count > 0)
-        XCTAssertTrue(foundPlaces![0].name.contains("Marina Bay Sands"))
+        XCTAssertTrue(foundPlaces![0].name.contains("Marina Bay"))
     }
     
     func flushData(for entity: String) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        let objs = try! mockPersistantContainer.viewContext.fetch(fetchRequest)
+        let objs = try? mockPersistantContainer.viewContext.fetch(fetchRequest)
         
-        for case let obj as NSManagedObject in objs {
-            mockPersistantContainer.viewContext.delete(obj)
+        if let objs = objs {
+            for case let obj as NSManagedObject in objs {
+                mockPersistantContainer.viewContext.delete(obj)
+            }
+            
+            try? mockPersistantContainer.viewContext.save()
         }
-        
-        try? mockPersistantContainer.viewContext.save()
     }
 
 }

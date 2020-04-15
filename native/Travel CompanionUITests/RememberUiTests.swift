@@ -50,15 +50,13 @@ class RememberUiTests: XCTestCase {
         expectation(for: exists, evaluatedWith: photoDetailNavigationBar, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         XCTAssertTrue(photoDetailNavigationBar.exists)
-        
-        app.otherElements.containing(.navigationBar, identifier:"Photo Detail").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.tap()
-        XCTAssertTrue(photoDetailNavigationBar.buttons["Mountain View"].exists)
     }
     
     func goToRememberScreen() {
-        UiTestUtils.loginWithEmailIfNecessary(self)
-        
         let app = XCUIApplication()
         app.images["remember"].tap()
+        if UiTestUtils.loginWithEmailIfNecessary(self) {
+            app.images["remember"].tap()
+        }
     }
 }

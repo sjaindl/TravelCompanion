@@ -38,64 +38,67 @@ class MainMenuUiTests: XCTestCase {
     }
     
     func testAuthenticationScreen() {
+        let signInButton = app.toolbars["Toolbar"].buttons["Sign in"]
+        XCTAssertTrue(signInButton.exists, "No sign-in button in main screen, but should be")
+        signInButton/*@START_MENU_TOKEN@*/.tap()/*[[".tap()",".press(forDuration: 0.5);"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
+        
         let cancelButton = app.navigationBars["Welcome"].buttons["Cancel"]
         let signInEmailButton = app/*@START_MENU_TOKEN@*/.buttons["Sign in with email"]/*[[".buttons[\"Sign in with email\"]",".buttons[\"EmailButtonAccessibilityID\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
         let signInWithFacebookButton = app.buttons["Sign in with Facebook"]
         let signInWithGoogleButton = app.buttons["Sign in with Google"]
-        
+        let signInWithAppleButton = app.buttons["Sign in with Apple"]
         XCTAssertTrue(cancelButton.exists, "No cancel button in authentication screen, but should be")
         XCTAssertTrue(signInEmailButton.exists, "No sign in with email button in authentication screen")
         XCTAssertTrue(signInWithFacebookButton.exists, "No sign in with Facebook button in authentication screen")
         XCTAssertTrue(signInWithGoogleButton.exists, "No sign in with Google button in authentication screen")
+        XCTAssertTrue(signInWithAppleButton.exists, "No sign in with Apple button in authentication screen")
     }
     
     func testMainMenuElementsPresent() {
-        UiTestUtils.loginWithEmailIfNecessary(self)
-        
-        let exploreLabel = app.staticTexts["EXPLORE"]
+        let exploreLabel = app.buttons["Explore"]
         let exploreImage = app.images["explore"]
-        let exploreDescription = app.staticTexts["Explore the world for new travel opportunities"]
+        let exploreDescription = app.buttons["Explore the world for new travel opportunities"]
         XCTAssertTrue(exploreLabel.exists, "No explore label in MainMenu screen")
         XCTAssertTrue(exploreImage.exists, "No explore image in MainMenu screen")
         XCTAssertTrue(exploreDescription.exists, "No explore description in MainMenu screen")
         
-        let planLabel = app.staticTexts["PLAN"]
+        let planLabel = app.buttons["Plan"]
         let planImage = app.images["plan"]
-        let planDescription = app.staticTexts["Plan your travel itineraries"]
+        let planDescription = app.buttons["Plan your travel itineraries"]
         XCTAssertTrue(planLabel.exists, "No plan label in MainMenu screen")
         XCTAssertTrue(planImage.exists, "No plan image in MainMenu screen")
         XCTAssertTrue(planDescription.exists, "No plan description in MainMenu screen")
         
-        let rememberLabel = app.staticTexts["REMEMBER"]
+        let rememberLabel = app.buttons["Remember"]
         let rememberImage = app.images["remember"]
-        let rememberDescription = app.staticTexts["Capture your memories in the travel gallery"]
+        let rememberDescription = app.buttons["Capture your memories in the travel gallery"]
         XCTAssertTrue(rememberLabel.exists, "No remember label in MainMenu screen")
         XCTAssertTrue(rememberImage.exists, "No remember image in MainMenu screen")
         XCTAssertTrue(rememberDescription.exists, "No remember description in MainMenu screen")
         
-        let signOutButton = app.toolbars["Toolbar"].buttons["Sign out"]
-        XCTAssertTrue(rememberDescription.exists, "No Sign out button")
+        let signInButton = app.toolbars["Toolbar"].buttons["Sign in"]
+        XCTAssertTrue(signInButton.exists, "No Sign in button")
         
-        signOutButton.tap()
+        signInButton.tap()
         
         let signInWithGoogleButton = app.buttons["Sign in with Google"]
         XCTAssertTrue(signInWithGoogleButton.exists, "Sign out did not forward to authentication screen")
     }
     
     func testLoginRequired() {
-        app.navigationBars["Welcome"].buttons["Cancel"].tap()
         app.images["plan"].tap()
         
-        let loginRequiredAlert = app.alerts["Login required"]
-        XCTAssertTrue(loginRequiredAlert.exists, "No login required alert shown for plan feature")
-        let okButton = loginRequiredAlert.buttons["OK"]
-        okButton.tap()
-        
+        var signInWithGoogleButton = app.buttons["Sign in with Google"]
+        XCTAssertTrue(signInWithGoogleButton.exists, "Plan did not forward to authentication screen")
+        app.navigationBars["Welcome"].buttons["Cancel"].tap()
+           
         app.images["remember"].tap()
-        XCTAssertTrue(loginRequiredAlert.exists, "No login required alert shown for remember feature")
-        okButton.tap()
+        signInWithGoogleButton = app.buttons["Sign in with Google"]
+        XCTAssertTrue(signInWithGoogleButton.exists, "Remember did not forward to authentication screen")
+        app.navigationBars["Welcome"].buttons["Cancel"].tap()
         
         app.images["explore"].tap()
-        XCTAssertFalse(loginRequiredAlert.exists, "Login required alert shown for explore feature, but shouldn't.")
+        signInWithGoogleButton = app.buttons["Sign in with Google"]
+        XCTAssertFalse(signInWithGoogleButton.exists, "Explore feature shouldn't require authentication.")
     }
 }
