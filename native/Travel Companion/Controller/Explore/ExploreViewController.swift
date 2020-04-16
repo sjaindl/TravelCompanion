@@ -186,7 +186,9 @@ class ExploreViewController: UIViewController, PlacePicker {
             ]) { (error) in
                 if let error = error {
                     debugPrint("Error adding document: \(error.localizedDescription)")
-                    UiUtils.showError(error.localizedDescription, controller: self)
+                    DispatchQueue.main.async {
+                        UiUtils.showError(error.localizedDescription, controller: self)
+                    }
                 } else {
                     debugPrint("Document added")
                 }
@@ -212,10 +214,13 @@ class ExploreViewController: UIViewController, PlacePicker {
         let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
         setCamera(with: latitude, longitude: longitude, zoom: zoom)
         
-        ActualKt.fetchGeoCodeCoroutine(latitude: latitude, longitude: longitude) {
-            if let error = $1 {
-                UiUtils.showToast(message: error, view: self.view)
-            } else if let countryCode = $0 {
+        GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
+        //ActualKt.fetchGeoCodeCoroutine(latitude: latitude, longitude: longitude) {
+            if let error = error {
+                DispatchQueue.main.async {
+                    UiUtils.showToast(message: error, view: self.view)
+                }
+            } else if let countryCode = code {
                 let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
                 self.store(pin, in: marker)
                 _ = self.showPlaceDialog(marker: marker)

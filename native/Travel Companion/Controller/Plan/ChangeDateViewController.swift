@@ -25,6 +25,7 @@ class ChangeDateViewController: UIViewController {
     
     var plan: Plan!
     var firestoreDbReference: DocumentReference!
+    weak var changeDateDelegate: ChangeDateDelegate?
     
     var buttonState = ButtonState.startDate
     
@@ -37,6 +38,9 @@ class ChangeDateViewController: UIViewController {
         
         UiUtils.layoutDatePicker(startDate)
         UiUtils.layoutDatePicker(endDate)
+        
+        startDate.date = plan.startDate.dateValue()
+        endDate.date = plan.endDate.dateValue()
         
         layoutButton(with: "next".localized(), showStartDate: true, showEndDate: false)
     }
@@ -76,11 +80,12 @@ class ChangeDateViewController: UIViewController {
             FirestoreConstants.Ids.Plan.startDate: plan.startDate,
             FirestoreConstants.Ids.Plan.endDate: plan.endDate
         ]) { error in
-                if let error = error {
-                    UiUtils.showError(error.localizedDescription, controller: self)
-                }
-                
-                self.dismiss(animated: true, completion: nil)
+            if let error = error {
+                UiUtils.showError(error.localizedDescription, controller: self)
             }
+                
+            self.dismiss(animated: true, completion: nil)
+            self.changeDateDelegate?.changedDate()
+        }
     }
 }

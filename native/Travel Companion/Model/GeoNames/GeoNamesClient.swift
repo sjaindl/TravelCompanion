@@ -38,8 +38,8 @@ class GeoNamesClient {
                     
                     completionHandler(nil, geocode.countryCode)
                 } catch {
-                    print("Error: \(error)")
-                    completionHandler(error.localizedDescription, nil)
+                    debugPrint("Error: \(error)")    
+                    completionHandler("No country code found", nil)
                 }
             }
         }

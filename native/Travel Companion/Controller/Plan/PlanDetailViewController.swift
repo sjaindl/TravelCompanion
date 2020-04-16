@@ -261,6 +261,7 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let controller = segue.destination as! ChangeDateViewController
             
             controller.plan = plan
+            controller.changeDateDelegate = self
         }
     }
     
@@ -513,4 +514,14 @@ extension PlanDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedPlaceType = supportedPlaceTypes[row]
     }
+}
+
+extension PlanDetailViewController: ChangeDateDelegate {
+    func changedDate() {
+        tripDateLabel.text = FormatUtils.formatTimestampRangeForDisplay(begin: plan.startDate, end: plan.endDate)
+    }
+}
+
+protocol ChangeDateDelegate: class {
+    func changedDate()
 }
