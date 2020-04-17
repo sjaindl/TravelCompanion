@@ -12,7 +12,7 @@ import Firebase
 import FirebaseUI
 import GoogleMaps
 import UIKit
-import shared
+//import shared
 
 class ExploreViewController: UIViewController, PlacePicker {
     

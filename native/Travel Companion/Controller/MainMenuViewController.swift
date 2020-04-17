@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseUI
-import shared
+//import shared
 
 class MainMenuViewController: UIViewController {
     

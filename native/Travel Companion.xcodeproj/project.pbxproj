@@ -106,8 +106,6 @@
 		9A4EE76022FB76A200AD939B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A4ED63D22FB717300AD939B /* Main.storyboard */; };
 		9A4EE78922FB78DE00AD939B /* Podfile.lock in Resources */ = {isa = PBXBuildFile; fileRef = 9A4EB8A122FB715200AD939B /* Podfile.lock */; };
 		9A762BB9244339C90068A5A5 /* NetworkInteractionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A762BB8244339C90068A5A5 /* NetworkInteractionTest.swift */; };
-		9AF2CF17230C95B50001FA21 /* shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2CEF2230C95B40001FA21 /* shared.framework */; };
-		9AF2CF18230C95B50001FA21 /* shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2CEF2230C95B40001FA21 /* shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9AFBAC25244671EC005E59BB /* TravelCompanion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66622FB717300AD939B /* TravelCompanion.xcdatamodeld */; };
 		9AFBAC26244672D4005E59BB /* Photos+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66822FB717300AD939B /* Photos+Extensions.swift */; };
 		9AFBAC27244672D6005E59BB /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66922FB717300AD939B /* Country+Extensions.swift */; };
@@ -469,7 +467,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9AF2CF18230C95B50001FA21 /* shared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7353,7 +7350,6 @@
 		9A762BB8244339C90068A5A5 /* NetworkInteractionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractionTest.swift; sourceTree = "<group>"; };
 		9A762BBA244339C90068A5A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9AB2A7D92442683900D68903 /* Travel Companion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Travel Companion.entitlements"; sourceTree = "<group>"; };
-		9AF2CEF2230C95B40001FA21 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = ../shared/build/bin/ios/debugFramework/shared.framework; sourceTree = "<group>"; };
 		BC9C7242DDAC37D81C7673CC /* Pods_Travel_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1AD8AE4D2D58D4453B6254E /* Pods-Travel Companion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Companion.debug.xcconfig"; path = "Target Support Files/Pods-Travel Companion/Pods-Travel Companion.debug.xcconfig"; sourceTree = "<group>"; };
 		D06282A5A9262AF65CFC428B /* Pods-Travel CompanionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel CompanionTests.release.xcconfig"; path = "Target Support Files/Pods-Travel CompanionTests/Pods-Travel CompanionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -7367,7 +7363,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46D29C991AE564B6279C29B0 /* Pods_Travel_Companion.framework in Frameworks */,
-				9AF2CF17230C95B50001FA21 /* shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19236,7 +19231,6 @@
 		9A5B699021117A7B00060790 = {
 			isa = PBXGroup;
 			children = (
-				9AF2CEF2230C95B40001FA21 /* shared.framework */,
 				9A4EB89922FB715200AD939B /* docs */,
 				9A4EB89F22FB715200AD939B /* google8d99ffde1132679d.html */,
 				9A4EB8A022FB715200AD939B /* LICENSE */,
