@@ -216,14 +216,14 @@ class ExploreViewController: UIViewController, PlacePicker {
         
         GeoNamesClient.sharedInstance.fetchCountryCode(latitude: latitude, longitude: longitude) { (error, code) in
         //ActualKt.fetchGeoCodeCoroutine(latitude: latitude, longitude: longitude) {
-            if let error = error {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if let error = error {
                     UiUtils.showToast(message: error, view: self.view)
+                } else if let countryCode = code {
+                        let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
+                        self.store(pin, in: marker)
+                        _ = self.showPlaceDialog(marker: marker)
                 }
-            } else if let countryCode = code {
-                let pin = self.persistPin(of: place, placeId: placeId, countryCode: countryCode)
-                self.store(pin, in: marker)
-                _ = self.showPlaceDialog(marker: marker)
             }
         }
     }
