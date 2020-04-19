@@ -12,11 +12,11 @@ import UIKit
 
 class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionViewCell>: NSObject, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
     
-    var fetchedResultsController: NSFetchedResultsController<ObjectType>!
+    var fetchedResultsController: NSFetchedResultsController<ObjectType>?
     var collectionView: UICollectionView!
     var cellReuseId: String
     
-    init(collectionView: UICollectionView, managedObjectContext: NSManagedObjectContext, fetchRequest: NSFetchRequest<ObjectType>, cellReuseId: String, cacheName: String) {
+    init(collectionView: UICollectionView, managedObjectContext: NSManagedObjectContext, fetchRequest: NSFetchRequest<ObjectType>, cellReuseId: String, cacheName: String?) {
         self.collectionView = collectionView
         self.cellReuseId = cellReuseId
         
@@ -24,11 +24,11 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
         
         super.init()
         
-        fetchedResultsController.delegate = self
+        fetchedResultsController?.delegate = self
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return fetchedResultsController.sections?.count ?? 1
+        return fetchedResultsController?.sections?.count ?? 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -38,23 +38,23 @@ class GenericListDataSource<ObjectType: NSManagedObject, CellType: UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }
     
     func fetchedObjects() -> [ObjectType]? {
-        return fetchedResultsController.fetchedObjects
+        return fetchedResultsController?.fetchedObjects
     }
     
     func performFetch() throws {
-        try fetchedResultsController.performFetch()
+        try fetchedResultsController?.performFetch()
     }
     
-    func object(at: IndexPath) -> ObjectType {
-        return fetchedResultsController.object(at: at)
+    func object(at: IndexPath) -> ObjectType? {
+        return fetchedResultsController?.object(at: at)
     }
     
     func count() -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {

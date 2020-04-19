@@ -22,9 +22,9 @@ class ExplorePhotosViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noPhotoLabel: UILabel!
     
-    var pin: Pin!
-    var dataController: DataController!
-    var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>!
+    var pin: Pin?
+    var dataController: DataController?
+    var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>?
     var fetchType: Int = FetchType.Country.rawValue
     
     var choosePhoto: Bool = false
@@ -33,7 +33,7 @@ class ExplorePhotosViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        dataSource.fetchedResultsController = nil
+        dataSource?.fetchedResultsController = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +48,7 @@ class ExplorePhotosViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBarController?.navigationItem.title = pin.name
+        self.tabBarController?.navigationItem.title = pin?.name
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,22 +85,36 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func resetFetchedResultsController() {
-        NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)")
-        dataSource.fetchedResultsController = nil
+        if let pin = pin {
+            NSFetchedResultsController<NSFetchRequestResult>.deleteCache(withName: "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)")
+        }
+       
+        dataSource?.fetchedResultsController = nil
         collectionView.reloadData()
     }
     
     func initResultsController() {
+        guard let dataController = dataController else {
+            debugPrint("dataController is nil, cannot init results controller")
+            return
+        }
+        
         let fetchRequest: NSFetchRequest<Photos> = Photos.fetchRequest()
         
         let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "pin = %@ AND type = %d", pin, fetchType)
+        if let pin = pin {
+            let predicate = NSPredicate(format: "pin = %@ AND type = %d", pin, fetchType)
+            fetchRequest.predicate = predicate
+        }
         
-        fetchRequest.predicate = predicate
+        var cacheName: String? = nil
+        if let pin = pin {
+            cacheName = "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)"
+        }
         
-        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.ReuseIds.albumCell, cacheName: "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)")
+        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.ReuseIds.albumCell, cacheName: cacheName)
     }
     
     func fetchData() {
@@ -110,8 +124,8 @@ class ExplorePhotosViewController: UIViewController {
         
         DispatchQueue.global().async {
             do {
-                try self.dataSource.performFetch()
-                if let result = self.dataSource.fetchedObjects() {
+                try self.dataSource?.performFetch()
+                if let result = self.dataSource?.fetchedObjects() {
                     if result.count == 0 {
                         self.fetchRemoteData()
                     } else {
@@ -140,16 +154,21 @@ class ExplorePhotosViewController: UIViewController {
     }
     
     func fetchDataFromGooglePlacePhotos() {
+        guard let placeId = pin?.placeId else {
+            debugPrint("Could not fetchDataFromGooglePlacePhotos")
+            return
+        }
+        
         DispatchQueue.main.async {
-            self.loadPhotosOfPlace(placeID: self.pin.placeId!)
+            self.loadPhotosOfPlace(placeID: placeId)
         }
     }
     
     func fetchDataFromFlickr() {
-        let latitude = pin.latitude
-        let longitude = pin.longitude
-        var country = pin.countryCode
-        if let countryName = pin.country {
+        let latitude = pin?.latitude
+        let longitude = pin?.longitude
+        var country = pin?.countryCode
+        if let countryName = pin?.country {
             country = countryName //search primarily by whole country name, if not available by country code
         }
         
@@ -168,6 +187,11 @@ class ExplorePhotosViewController: UIViewController {
                 
                 queryItems[FlickrConstants.ParameterKeys.text] = country
             } else if self.fetchType == FetchType.LatLong.rawValue {
+                guard let latitude = latitude, let longitude = longitude else {
+                    debugPrint("Could not fetch photos by latitude/longitude")
+                    return
+                }
+                
                 queryItems[FlickrConstants.ParameterKeys.boundingBox] = FlickrClient.sharedInstance.bboxString(latitude: latitude, longitude: longitude)
             }
             
@@ -186,8 +210,10 @@ class ExplorePhotosViewController: UIViewController {
                             return
                         }
                         
-                        for photo in photos {
-                            _ = CoreDataClient.sharedInstance.storePhoto(self.dataController, photo: photo, pin: self.pin, fetchType: self.fetchType)
+                        if let dataController = self.dataController, let pin = self.pin {
+                            for photo in photos {
+                                _ = CoreDataClient.sharedInstance.storePhoto(dataController, photo: photo, pin: pin, fetchType: self.fetchType)
+                            }
                         }
                         
                         self.enableUi(true)
@@ -207,10 +233,12 @@ class ExplorePhotosViewController: UIViewController {
                 return
             } else {
                 if let photos = photos?.results, photos.count > 0 {
-                    for photo in photos {
-                        CoreDataClient.sharedInstance.storePhoto(self.dataController, placePhoto: photo, pin: self.pin, fetchType: self.fetchType) { (error) in
-                            if let error = error {
-                                UiUtils.showError(error, controller: self)
+                    if let dataController = self.dataController, let pin = self.pin {
+                        for photo in photos {
+                            CoreDataClient.sharedInstance.storePhoto(dataController, placePhoto: photo, pin: pin, fetchType: self.fetchType) { (error) in
+                                if let error = error {
+                                    UiUtils.showError(error, controller: self)
+                                }
                             }
                         }
                     }
@@ -254,11 +282,11 @@ class ExplorePhotosViewController: UIViewController {
 
 extension ExplorePhotosViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dataSource.numberOfSections(in: collectionView)
+        return dataSource?.numberOfSections(in: collectionView) ?? 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.collectionView(collectionView, numberOfItemsInSection: section)
+        return dataSource?.collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -266,11 +294,11 @@ extension ExplorePhotosViewController: UICollectionViewDelegate, UICollectionVie
         
         cell.locationImage.image = UIImage(named: Constants.CoreData.placeholderImage)
         
-        if let imageData = dataSource.object(at: indexPath).imageData {
+        if let imageData = dataSource?.object(at: indexPath)?.imageData {
             cell.locationImage.image = UIImage(data: imageData)
         } else {
             
-            if let imagePath = dataSource.object(at: indexPath).imageUrl {
+            if let imagePath = dataSource?.object(at: indexPath)?.imageUrl {
                 
                 WebClient.sharedInstance.downloadImage(imagePath: imagePath) { (imageData, error) in
                     if let error = error {
@@ -293,16 +321,16 @@ extension ExplorePhotosViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photo = dataSource.fetchedResultsController.object(at: indexPath)
+        let photo = dataSource?.fetchedResultsController?.object(at: indexPath)
         
-        guard photo.imageData != nil else {
+        guard photo?.imageData != nil else {
             debugPrint("No image data to display")
             UiUtils.showToast(message: "waitForPhotos".localized(), view: self.view)
             return
         }
         
         if choosePhoto {
-            plan.imageData = photo.imageData
+            plan.imageData = photo?.imageData
             self.navigationController?.popViewController(animated: true)
         } else {
             performSegue(withIdentifier: Constants.Segues.photoDetail, sender: photo)
