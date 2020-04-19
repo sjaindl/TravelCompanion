@@ -32,6 +32,10 @@ class RememberDetailViewController: UIViewController, UIImagePickerControllerDel
         
         self.navigationItem.title = plan.name
         
+        if !UIImagePickerController.isSourceTypeAvailable(.camera) {
+            camera.isEnabled = false
+        }
+        
         // Do any additional setup after loading the view.
         firestorePhotoDbReference = FirestoreClient.userReference().collection(FirestoreConstants.Collections.plans).document(plan.pinName).collection(FirestoreConstants.Collections.photos)
         
