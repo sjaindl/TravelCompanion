@@ -390,7 +390,7 @@ class NetworkInteractionTest: XCTestCase {
         XCTAssertNotNil(foundPlaces)
         
         XCTAssertTrue(foundPlaces!.count > 0)
-        XCTAssertTrue(foundPlaces![0].name.contains("Marina Bay"))
+        XCTAssertTrue(foundPlaces![0].name.contains("Marina"))
     }
     
     func flushData(for entity: String) {

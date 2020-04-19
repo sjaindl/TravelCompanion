@@ -55,8 +55,6 @@ class RememberUiTests: XCTestCase {
     func goToRememberScreen() {
         let app = XCUIApplication()
         app.images["remember"].tap()
-        if UiTestUtils.loginWithEmailIfNecessary(self) {
-            app.images["remember"].tap()
-        }
+        _ = UiTestUtils.loginWithEmailIfNecessary(self)
     }
 }

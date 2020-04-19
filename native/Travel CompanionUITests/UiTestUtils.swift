@@ -41,11 +41,7 @@ class UiTestUtils {
             
             app.navigationBars["Sign in"].buttons["Sign in"].tap()
             
-            let exploreImage = app.images["explore"]
-            exists = NSPredicate(format: "exists == 1")
-            
-            testCase.expectation(for: exists, evaluatedWith: exploreImage, handler: nil)
-            testCase.waitForExpectations(timeout: 15, handler: nil)
+            Thread.sleep(forTimeInterval: 4)
             
             return true
         }

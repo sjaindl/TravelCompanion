@@ -34,6 +34,8 @@ class ExploreUiTests: XCTestCase {
         let searchField = app.navigationBars["Search for Place"].searchFields["Search for Place"]
         
         searchField.tap()
+        searchField.tap()
+        Thread.sleep(forTimeInterval: 1)
         searchField.typeText("Mountain View, CA, USA")
         
         let tablesQuery = app.tables
