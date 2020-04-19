@@ -33,6 +33,9 @@ class MainMenuViewController: UIViewController {
     
     var dataController: DataController!
     
+    var forwardToPlanScreen = false
+    var forwardToRememberScreen = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +51,7 @@ class MainMenuViewController: UIViewController {
         super.viewWillAppear(animated)
         
         isSignedIn = Auth.auth().currentUser != nil
+        handleAuthStateChanges()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +88,8 @@ class MainMenuViewController: UIViewController {
     @objc
     func plan() {
         if !isSignedIn {
+            forwardToPlanScreen = true
+            forwardToRememberScreen = false
             loginSession()
         } else {
             performSegue(withIdentifier: Constants.Segues.plan, sender: nil)
@@ -93,6 +99,8 @@ class MainMenuViewController: UIViewController {
     @objc
     func remember() {
         if !isSignedIn {
+            forwardToRememberScreen = true
+            forwardToPlanScreen = false
             loginSession()
         } else {
             performSegue(withIdentifier: Constants.Segues.remember, sender: nil)
@@ -125,12 +133,13 @@ class MainMenuViewController: UIViewController {
     }
     
     func configureAuth() {
+        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
         if #available(iOS 13.0, *) {
-            FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth(), FUIOAuth.appleAuthProvider()]
-        } else {
-            FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
+            FUIAuth.defaultAuthUI()?.providers.append(FUIOAuth.appleAuthProvider())
         }
-        
+    }
+    
+    func handleAuthStateChanges() {
         // listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener { (auth: Auth, user: User?) in
             
@@ -155,9 +164,18 @@ class MainMenuViewController: UIViewController {
                                               FirestoreConstants.Ids.User.phoneNumber: activeUser.phoneNumber ?? ""]
                 
                 firestoreDbReference.setData(data)
+                
+                if self.forwardToPlanScreen {
+                    self.plan()
+                } else if self.forwardToRememberScreen {
+                    self.remember()
+                }
             } else {
                 self.signedInStatus(isSignedIn: false)
             }
+            
+            self.forwardToPlanScreen = false
+            self.forwardToRememberScreen = false
         }
     }
     
