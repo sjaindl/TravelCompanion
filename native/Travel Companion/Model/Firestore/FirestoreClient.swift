@@ -8,6 +8,7 @@
 
 import CodableFirebase
 import Firebase
+import FirebaseStorage
 import Foundation
 
 class FirestoreClient {

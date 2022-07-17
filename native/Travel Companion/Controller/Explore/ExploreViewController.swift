@@ -9,7 +9,7 @@
 import CoreData
 import CoreLocation
 import Firebase
-import FirebaseUI
+import FirebaseAuthUI
 import GoogleMaps
 import UIKit
 //import shared

@@ -7,7 +7,11 @@
 
 import UIKit
 import Firebase
-import FirebaseUI
+import FirebaseAuthUI
+import FirebaseEmailAuthUI
+import FirebaseFacebookAuthUI
+import FirebaseGoogleAuthUI
+import FirebaseOAuthUI
 //import shared
 
 class MainMenuViewController: UIViewController {

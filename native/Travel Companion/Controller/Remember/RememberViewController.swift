@@ -8,6 +8,7 @@
 
 import CoreData
 import Firebase
+import FirebaseStorage
 import UIKit
 
 class RememberViewController: UIViewController {

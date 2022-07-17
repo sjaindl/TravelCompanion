@@ -39,7 +39,7 @@ class FirestoreRemoteConfig {
             }
             
             self.fetchRemoteConfigValues()
-            RemoteConfig.remoteConfig().activate(completionHandler: nil)
+            RemoteConfig.remoteConfig().activate()
         }
     }
     

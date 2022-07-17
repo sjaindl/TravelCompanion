@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import FirebaseStorage
 import Foundation
 
 class Plan {

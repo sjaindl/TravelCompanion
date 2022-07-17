@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import FirebaseStorage
 import UIKit
 
 class RememberDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {

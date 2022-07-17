@@ -8,6 +8,7 @@
 
 import CodableFirebase
 import Firebase
+import FirebaseStorage
 import UIKit
 
 class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {

@@ -208,7 +208,7 @@ public class ExploreDetailViewController: UIViewController {
             return
         }
         
-        RestCountriesClient.sharedInstance.fetchCountryDetails(of: newCountry) { (error, isEmpty, result) in
+        CountryApiClient.sharedInstance.fetchCountryDetails(of: newCountry) { (error, isEmpty, result) in
             DispatchQueue.main.async {
                 print(result.debugDescription)
                 if let error = error {

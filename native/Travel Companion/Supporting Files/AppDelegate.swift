@@ -8,14 +8,13 @@
 
 import CoreData
 import Firebase
-import FirebaseUI
+import FirebaseAuthUI
 import GoogleMaps
 import GooglePlaces
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
     let dataController: DataController = DataController(persistentContainer: NSPersistentContainer(name: "TravelCompanion"))
     
@@ -38,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google Places
         GMSServices.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google PlacePicker
         FirebaseApp.configure() //Firebase
-        Fabric.sharedSDK().debug = false
     }
     
     func initDataController() {
