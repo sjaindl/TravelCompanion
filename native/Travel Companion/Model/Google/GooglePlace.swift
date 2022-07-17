@@ -11,10 +11,10 @@ import Foundation
 import HTMLEntities
 
 class GooglePlace: NSObject, Plannable {
-    var id: String
+    var placeId: String
+    var businessStatus: String?
     var icon: String?
     var name: String
-    var placeId: String
     var rating: Double?
     var reference: String
     var scope: String
@@ -25,13 +25,13 @@ class GooglePlace: NSObject, Plannable {
     var photos: [Photo]?
     var plusCode: PlusCode?
     var priceLevel: Int? // 0: free, 1: inexpensive, 2: moderate, 3: expensive, 4: very Expensive
-    var permanentlyClosed: Bool?
     var htmlAttributions: [String]? = []
     
     var notes: String?
     
+    // https://developers.google.com/maps/documentation/places/web-service/search-nearby
     private enum CodingKeys: String, CodingKey {
-        case id
+        case businessStatus = "business_status"
         case icon
         case name
         case placeId = "place_id"
@@ -45,13 +45,12 @@ class GooglePlace: NSObject, Plannable {
         case photos
         case plusCode = "plus_code"
         case priceLevel = "price_level"
-        case permanentlyClosed = "permanently_closed"
         case htmlAttributions = "html_attributions"
         case notes
     }
     
-    init(id: String, name: String, placeId: String, reference: String, scope: String, vicinity: String) {
-        self.id = id
+    init(placeId: String, name: String, reference: String, scope: String, vicinity: String) {
+        self.placeId = placeId
         self.name = name
         self.placeId = placeId
         self.reference = reference

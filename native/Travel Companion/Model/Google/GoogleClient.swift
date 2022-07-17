@@ -31,30 +31,35 @@ class GoogleClient {
             if let webError = webError {
                 completionHandler(webError.localizedDescription, [])
             } else {
-                if let data = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let placesSearchResponse = try decoder.decode(PlacesNearbySearchResponse.self, from: data)
-                        
-                        if let error = placesSearchResponse.errorMessage {
-                            debugPrint(error)
-                            completionHandler(error, [])
-                            return
-                        }
-                        
-                        let places = placesSearchResponse.results
-                        
-                        for place in places {
-                            place.htmlAttributions = placesSearchResponse.htmlAttributions
-                        }
-                        
-                        completionHandler(nil, places)
-                    } catch {
-                        debugPrint(error)
-                        completionHandler(error.localizedDescription, [])
-                    }
-                } else {
+                guard let data = data else {
                     completionHandler("Search failed (no data).", [])
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                do {
+                    let placesSearchResponse = try decoder.decode(PlacesNearbySearchResponse.self, from: data)
+                    
+                    if let error = placesSearchResponse.errorMessage {
+                        debugPrint(error)
+                        completionHandler(error, [])
+                        return
+                    }
+                    
+                    let places = placesSearchResponse.results
+                    
+                    for place in places {
+                        place.htmlAttributions = placesSearchResponse.htmlAttributions
+                    }
+                    
+                    completionHandler(nil, places)
+                } catch {
+                    let strResponse = String(decoding: data, as: UTF8.self)
+                    
+                    debugPrint(error)
+                    debugPrint("Could not decode response: \(strResponse)")
+                    
+                    completionHandler(error.localizedDescription, [])
                 }
             }
         }
