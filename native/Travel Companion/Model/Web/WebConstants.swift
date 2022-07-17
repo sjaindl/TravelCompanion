@@ -20,6 +20,8 @@ struct WebConstants {
         
         static let status = "status"
         static let error = "error"
+        
+        static let authorization = "Authorization"
     }
     
     struct ParameterValues {

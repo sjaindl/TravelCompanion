@@ -16,7 +16,12 @@ class WebClient {
     
     private init() {}
     
-    func createUrl(forScheme scheme: String, forHost host: String, forMethod method: String, withQueryItems queryItems: [String: String]? = nil) -> URL {
+    func createUrl(
+        forScheme scheme: String,
+        forHost host: String,
+        forMethod method: String,
+        withQueryItems queryItems: [String: String]? = nil
+    ) -> URL {
         var urlComponent = URLComponents()
         
         urlComponent.scheme = scheme
@@ -35,11 +40,19 @@ class WebClient {
         return urlComponent.url!
     }
     
-    func buildRequest(withUrl url: URL, withHttpMethod httpMethod: String) -> URLRequest {
+    func buildRequest(
+        withUrl url: URL,
+        withHttpMethod httpMethod: String,
+        withAuth auth: String? = nil
+    ) -> URLRequest {
         var request = URLRequest(url: url)
         
         request.addValue(WebConstants.ParameterValues.typeJson, forHTTPHeaderField: WebConstants.ParameterKeys.acceptType)
         request.addValue(WebConstants.ParameterValues.typeJson, forHTTPHeaderField: WebConstants.ParameterKeys.contentType)
+        
+        if let auth = auth {
+            request.addValue(auth, forHTTPHeaderField: WebConstants.ParameterKeys.authorization)
+        }
         
         request.httpMethod = httpMethod
         
