@@ -9,12 +9,12 @@
 import CoreData
 import CoreLocation
 import Firebase
+import FirebaseStorage
 import RxSwift
+@testable import Travel_Companion
 import XCTest
 
-@testable import Travel_Companion
 class NetworkInteractionTest: XCTestCase {
-    
     var mockDataController: DataController!
     var mockPersistantContainer: NSPersistentContainer!
     
@@ -51,7 +51,6 @@ class NetworkInteractionTest: XCTestCase {
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
         }
-        
     }
     
     override func tearDown() {
@@ -98,20 +97,20 @@ class NetworkInteractionTest: XCTestCase {
         XCTAssertEqual(actualCountryCode, expectedCountryCode)
     }
     
-    func testRestCountriesClientResponse() {
+    func testRestCountryApiClientResponse() {
         // given
         let countryCode = "AT"
         
         let expectedCapital = "Vienna"
-        let expectedLanguage = "German"
+        let expectedLanguage = "Austro-Bavarian German"
         let expectedCurrency = "Euro (EUR/€)"
         let expectedArea: Float = 83871.0
         let expectedTimezones = "UTC+01:00"
-        let expectedRegion = "Europe, Western Europe"
+        let expectedRegion = "Europe, Central Europe"
         let expectedIsoCode = "AT"
         let expectedCallingCodes = "+43"
         let expectedDomains = ".at"
-        let expectedNativeName = "Österreich"
+        let expectedNativeName = "Republik Österreich"
         let expectedRegionalBlocks = "European Union (EU)"
         
         var country: Country?
@@ -120,7 +119,7 @@ class NetworkInteractionTest: XCTestCase {
         let promise = expectation(description: "Country data successfully returned")
         
         // when
-        RestCountriesClient.sharedInstance.fetchCountryDetails(of: countryCode) { (error, isEmpty, result) in
+        CountryApiClient.sharedInstance.fetchCountryDetails(of: countryCode) { (error, isEmpty, result) in
             DispatchQueue.main.async {
                 if let error = error {
                     errorResponse = error.description
@@ -206,10 +205,11 @@ class NetworkInteractionTest: XCTestCase {
         }
     }
     
+    // https://www.countryflags.io is down, using backed up github replacement
     func testCountryFlags() {
         // given
         let alphaCode = "AT"
-        let flag = "https://www.countryflags.io/\(alphaCode)/flat/64.png"
+        let flag = "https://github.com/nphotchkin/countryflags.io/blob/main/flags/\(alphaCode.lowercased()).png"
         var flagData: Data?
         
         // when
@@ -298,8 +298,8 @@ class NetworkInteractionTest: XCTestCase {
         let promise = expectation(description: "Autocomplete results successfully returned")
         
         // when
-        _ = Rome2RioClient.sharedInstance.autocomplete(with: textToAutocomplete).catchErrorJustReturn([])
-            .observeOn(MainScheduler.instance)
+        _ = Rome2RioClient.sharedInstance.autocomplete(with: textToAutocomplete).catchAndReturn([])
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { autoCompleteResponse in
                 
                 if autoCompleteResponse.count == 0 {
@@ -324,7 +324,7 @@ class NetworkInteractionTest: XCTestCase {
         // given
         let path = "test/" + FirestoreClient.storageByPath(path: FirestoreConstants.Collections.plans, fileName: "testFile")
         let storageRef = Storage.storage().reference()
-        let url = URL(string: "https://www.countryflags.io/AT/flat/64.png")
+        let url = URL(string: "https://www.countryflags.com/wp-content/uploads/flag-jpg-xl-10-2048x1365.jpg")
         let data = try! Data(contentsOf: url!)
             //FirestoreClient.newDatabaseInstance().collection("test").document("testDoc").collection(FirestoreConstants.Collections.plans)
         
@@ -359,7 +359,7 @@ class NetworkInteractionTest: XCTestCase {
     
     func testGooglePlacesClientResponse() {
         // given
-        let searchText = "Marina"
+        let searchText = "Marina" // location around Marina Bay Sands in Singapore
         let coordinate = CLLocationCoordinate2D(latitude: 1.2917922, longitude: 103.8571184)
         let placeType = GooglePlaceType.lodging
         
@@ -389,8 +389,8 @@ class NetworkInteractionTest: XCTestCase {
         XCTAssertNil(errorResponse)
         XCTAssertNotNil(foundPlaces)
         
-        XCTAssertTrue(foundPlaces!.count > 0)
-        XCTAssertTrue(foundPlaces![0].name.contains("Marina"))
+        XCTAssertFalse(foundPlaces?.isEmpty ?? true)
+        XCTAssertTrue(foundPlaces?.first?.name.contains("Marina") == true)
     }
     
     func flushData(for entity: String) {

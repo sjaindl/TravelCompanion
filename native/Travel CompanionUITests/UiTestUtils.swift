@@ -26,7 +26,7 @@ class UiTestUtils {
             app.buttons["Next"].tap()
             
             let label = app.staticTexts["Password"]
-            var exists = NSPredicate(format: "exists == 1")
+            let exists = NSPredicate(format: "exists == 1")
             
             testCase.expectation(for: exists, evaluatedWith: label, handler: nil)
             testCase.waitForExpectations(timeout: 10, handler: nil)
@@ -35,6 +35,7 @@ class UiTestUtils {
             passwordTextField.tap()
             
             UIPasteboard.general.string = "test123"
+            passwordTextField.tap()
             passwordTextField.tap()
             app.menuItems.element(boundBy: 0).tap()
             Thread.sleep(forTimeInterval: 1)

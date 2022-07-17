@@ -2,9 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Travel Companion.xcodeproj">
+      location = "group:../LICENSE">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:../docs">
+   </FileRef>
+   <FileRef
+      location = "group:../google8d99ffde1132679d.html">
+   </FileRef>
+   <FileRef
+      location = "group:../README.md">
+   </FileRef>
+   <FileRef
+      location = "group:Travel Companion.xcodeproj">
    </FileRef>
 </Workspace>
