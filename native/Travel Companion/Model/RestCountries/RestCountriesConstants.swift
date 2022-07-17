@@ -11,9 +11,14 @@ import Foundation
 class RestCountriesConstants {
     
     struct UrlComponents {
-        static let urlProtocol = "https"
-        static let domain = "restcountries.eu"
-        static let path = "/rest/v2/alpha/"
+        static let urlProtocol = "http"
+        static let domain = "api.countrylayer.com"
+        static let path = "/v2/alpha/"
+    }
+    
+    struct RequestKeys {
+        static let accessKey = "access_key"
+        static let code = "code"
     }
     
     struct ResponseKeys {

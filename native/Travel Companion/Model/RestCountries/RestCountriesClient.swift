@@ -14,9 +14,19 @@ class RestCountriesClient {
     
     private init() { }
     
-    func fetchCountryDetails(of country: String, completionHandler: @escaping (_ errorString: String?, _ isEmtpy: Bool, _ result: [String: AnyObject]?) -> Void) {
-        
-        let url = WebClient.sharedInstance.createUrl(forScheme: RestCountriesConstants.UrlComponents.urlProtocol, forHost: RestCountriesConstants.UrlComponents.domain, forMethod: RestCountriesConstants.UrlComponents.path + country)
+    func fetchCountryDetails(
+        of country: String,
+        completionHandler: @escaping (_ errorString: String?, _ isEmtpy: Bool, _ result: [String: AnyObject]?) -> Void
+    ) {
+        let url = WebClient.sharedInstance.createUrl(
+            forScheme: RestCountriesConstants.UrlComponents.urlProtocol,
+            forHost: RestCountriesConstants.UrlComponents.domain,
+            forMethod: RestCountriesConstants.UrlComponents.path,
+            withQueryItems: [
+                RestCountriesConstants.RequestKeys.accessKey: SecretConstants.restCountriesApiKey,
+                RestCountriesConstants.RequestKeys.code: country
+            ]
+        )
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
