@@ -1340,7 +1340,7 @@
 					"$(SRCROOT)/../shared/build/bin/ios/debugFramework",
 				);
 				INFOPLIST_FILE = "Travel Companion/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1371,7 +1371,7 @@
 					"$(SRCROOT)/../shared/build/bin/ios/releaseFramework",
 				);
 				INFOPLIST_FILE = "Travel Companion/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
