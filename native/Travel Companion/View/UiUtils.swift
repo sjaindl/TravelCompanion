@@ -53,12 +53,16 @@ class UiUtils {
     }
     
     static func layoutDatePicker(_ picker: UIDatePicker) {
-        picker.setValue(false, forKey: "highlightsToday");
+        if #available(iOS 13.4, *) {
+            picker.preferredDatePickerStyle = .wheels
+            picker.setValue(false, forKeyPath: "highlightsToday")
+        }
+        
         layoutView(picker)
     }
     
     static func layoutView(_ view: UIView) {
-        view.setValue(UIColor.cyan, forKey: "textColor");
+        view.setValue(UIColor.cyan, forKey: "textColor")
     }
     
     static func setupFlowLayout(for controller: UIViewController, view: UIView, flowLayout: UICollectionViewFlowLayout) {
@@ -79,7 +83,7 @@ class UiUtils {
     
     static func resizeImage(cell: UITableViewCell) {
         let itemSize = CGSize.init(width: 75, height: 75)
-        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale);
+        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale)
         let imageRect = CGRect.init(origin: CGPoint.zero, size: itemSize)
         cell.imageView?.image!.draw(in: imageRect)
         cell.imageView?.image! = UIGraphicsGetImageFromCurrentImageContext()!
