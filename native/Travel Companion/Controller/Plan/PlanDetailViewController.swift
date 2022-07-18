@@ -17,8 +17,14 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var toolbar: UIToolbar!
+    
     @IBOutlet weak var tripDateLabel: UILabel!
+    
+    @IBOutlet weak var flightButton: UIImageView!
+    @IBOutlet weak var publicTransportButton: UIImageView!
+    @IBOutlet weak var hotelButton: UIImageView!
+    @IBOutlet weak var restaurantButton: UIImageView!
+    @IBOutlet weak var attractionButton: UIImageView!
     
     var plan: Plan!
     var pins: [Pin]!
@@ -77,6 +83,12 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.dataSource = self
         
         addGestureRecognizer(selector: #selector(chooseImage), view: image)
+        
+        addGestureRecognizer(selector: #selector(addFlightAction), view: flightButton)
+        addGestureRecognizer(selector: #selector(addPublicTransportAction), view: publicTransportButton)
+        addGestureRecognizer(selector: #selector(addHotelAction), view: hotelButton)
+        addGestureRecognizer(selector: #selector(addAttractionAction), view: attractionButton)
+        addGestureRecognizer(selector: #selector(addRestaurantAction), view: restaurantButton)
         
         configureDatabase()
         configureStorage()
@@ -140,7 +152,6 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let cachedImage = imageCache.object(forKey: plan.imageRef + "-originalsize" as NSString) {
                 self.image.image = cachedImage
             } else {
-            
                 let storageImageRef = Storage.storage().reference(forURL: plan.imageRef)
                 storageImageRef.getData(maxSize: 2 * 1024 * 1024) { (data, error) in
                     if let error = error {
@@ -176,15 +187,28 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         firestorePlanDbReference = nil
     }
     
-    @IBAction func addHotel(_ sender: Any) {
+    @objc
+    func addFlightAction() {
+        performSegue(withIdentifier: Constants.Segues.planAddFlight, sender: nil)
+    }
+    
+    @objc
+    func addPublicTransportAction() {
+        performSegue(withIdentifier: Constants.Segues.planAddPublicTransport, sender: nil)
+    }
+    
+    @objc
+    func addHotelAction() {
         performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: GooglePlaceType.lodging)
     }
     
-    @IBAction func addRestaurant(_ sender: Any) {
+    @objc
+    func addRestaurantAction() {
         performSegue(withIdentifier: Constants.Segues.planAddPlace, sender: GooglePlaceType.restaurant)
     }
     
-    @IBAction func addAttraction(_ sender: Any) {
+    @objc
+    func addAttractionAction() {
         let viewController = UIViewController()
         viewController.preferredContentSize = CGSize(width: 250,height: 300)
         let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 300))
@@ -204,6 +228,26 @@ class PlanDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.present(editRadiusAlert, animated: true)
 
+    }
+    
+    @IBAction func addFlight(_ sender: Any) {
+        addFlightAction()
+    }
+    
+    @IBAction func addPublicTransport(_ sender: Any) {
+        addPublicTransportAction()
+    }
+    
+    @IBAction func addHotel(_ sender: Any) {
+        addHotelAction()
+    }
+    
+    @IBAction func addRestaurant(_ sender: Any) {
+        addRestaurantAction()
+    }
+    
+    @IBAction func addAttraction(_ sender: Any) {
+        addAttractionAction()
     }
     
     @objc
@@ -523,6 +567,6 @@ extension PlanDetailViewController: ChangeDateDelegate {
     }
 }
 
-protocol ChangeDateDelegate: class {
+protocol ChangeDateDelegate: AnyObject {
     func changedDate()
 }

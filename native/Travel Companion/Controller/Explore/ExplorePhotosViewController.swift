@@ -12,28 +12,27 @@ import GooglePlaces
 import UIKit
 
 class ExplorePhotosViewController: UIViewController {
-    
-    @IBOutlet weak var map: GMSMapView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var countryButton: UIButton!
-    @IBOutlet weak var placeButton: UIButton!
-    @IBOutlet weak var latlongButton: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var noPhotoLabel: UILabel!
+    @IBOutlet private var map: GMSMapView!
+    @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet private var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet private var countryButton: UIButton!
+    @IBOutlet private var placeButton: UIButton!
+    @IBOutlet private var latlongButton: UIButton!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var noPhotoLabel: UILabel!
     
     var pin: Pin?
     var dataController: DataController?
     var dataSource: GenericListDataSource<Photos, AlbumCollectionViewCell>?
     var fetchType: Int = FetchType.Country.rawValue
     
-    var choosePhoto: Bool = false
+    var choosePhoto = false
     var plan: Plan!
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override public func viewDidLoad() {
+        super.viewDidLoad()
         
-        dataSource?.fetchedResultsController = nil
+        self.tabBarController?.navigationItem.title = pin?.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,10 +44,10 @@ class ExplorePhotosViewController: UIViewController {
         setButtonState()
     }
     
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        self.tabBarController?.navigationItem.title = pin?.name
+        dataSource?.fetchedResultsController = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,7 +113,13 @@ class ExplorePhotosViewController: UIViewController {
             cacheName = "\(Constants.CoreData.cacheNamePhotos)-\(pin.objectID)"
         }
         
-        dataSource = GenericListDataSource(collectionView: collectionView, managedObjectContext: dataController.viewContext, fetchRequest: fetchRequest, cellReuseId: Constants.ReuseIds.albumCell, cacheName: cacheName)
+        dataSource = GenericListDataSource(
+            collectionView: collectionView,
+            managedObjectContext: dataController.viewContext,
+            fetchRequest: fetchRequest,
+            cellReuseId: Constants.ReuseIds.albumCell,
+            cacheName: cacheName
+        )
     }
     
     func fetchData() {
