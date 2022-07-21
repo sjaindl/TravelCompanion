@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		199AA96F287F2C77003256D5 /* GoogleMapsBase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA96C287F2C77003256D5 /* GoogleMapsBase.xcframework */; };
-		199AA971287F2C77003256D5 /* GoogleMaps.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA96D287F2C77003256D5 /* GoogleMaps.xcframework */; };
-		199AA973287F2C77003256D5 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA96E287F2C77003256D5 /* GoogleMapsCore.xcframework */; };
 		199AA978288008C1003256D5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 199AA977288008BF003256D5 /* GoogleMaps.bundle */; };
 		199AA98928800932003256D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA97928800932003256D5 /* CoreGraphics.framework */; };
 		199AA98A28800932003256D5 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA97A28800932003256D5 /* Metal.framework */; };
@@ -27,7 +24,6 @@
 		199AA99628800932003256D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA98628800932003256D5 /* libz.tbd */; };
 		199AA99728800932003256D5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA98728800932003256D5 /* CoreTelephony.framework */; };
 		199AA99828800932003256D5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA98828800932003256D5 /* CoreLocation.framework */; };
-		199AA99A2880274E003256D5 /* GooglePlaces.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199AA9992880274E003256D5 /* GooglePlaces.xcframework */; };
 		199AA99E28802795003256D5 /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 199AA99D28802795003256D5 /* GooglePlaces.bundle */; };
 		199AA99F288028A1003256D5 /* CountryApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C807C2287E207B00987432 /* CountryApiClient.swift */; };
 		199AA9A0288028A3003256D5 /* CountryApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C807C0287DD66600987432 /* CountryApiConstants.swift */; };
@@ -51,6 +47,10 @@
 		199AA9E128805634003256D5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 199AA9E028805634003256D5 /* RxCocoa */; };
 		199AA9E328805634003256D5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 199AA9E228805634003256D5 /* RxSwift */; };
 		199AA9E628805805003256D5 /* HTMLEntities in Frameworks */ = {isa = PBXBuildFile; productRef = 199AA9E528805805003256D5 /* HTMLEntities */; };
+		19C3948B28898C53001E3F16 /* GoogleMapsCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C3948828898C53001E3F16 /* GoogleMapsCore.xcframework */; };
+		19C3948D28898C53001E3F16 /* GoogleMaps.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C3948928898C53001E3F16 /* GoogleMaps.xcframework */; };
+		19C3948F28898C53001E3F16 /* GoogleMapsBase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C3948A28898C53001E3F16 /* GoogleMapsBase.xcframework */; };
+		19C3949328898CB4001E3F16 /* GooglePlaces.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C3949228898CB4001E3F16 /* GooglePlaces.xcframework */; };
 		19C807C1287DD66600987432 /* CountryApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C807C0287DD66600987432 /* CountryApiConstants.swift */; };
 		19C807C3287E207B00987432 /* CountryApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C807C2287E207B00987432 /* CountryApiClient.swift */; };
 		9A3AD725244327B5004301AA /* UiTestTableViewFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED68422FB717400AD939B /* UiTestTableViewFilter.swift */; };
@@ -207,6 +207,10 @@
 		199AA98828800932003256D5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		199AA9992880274E003256D5 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GooglePlaces.xcframework; path = "../../../Downloads/GooglePlaces-7.0.0-beta/GooglePlaces.xcframework"; sourceTree = "<group>"; };
 		199AA99D28802795003256D5 /* GooglePlaces.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlaces.bundle; sourceTree = "<group>"; };
+		19C3948828898C53001E3F16 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = "GoogleMaps-7.0.0-beta/GoogleMapsCore.xcframework"; sourceTree = "<group>"; };
+		19C3948928898C53001E3F16 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMaps.xcframework; path = "GoogleMaps-7.0.0-beta/GoogleMaps.xcframework"; sourceTree = "<group>"; };
+		19C3948A28898C53001E3F16 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = "GoogleMaps-7.0.0-beta/GoogleMapsBase.xcframework"; sourceTree = "<group>"; };
+		19C3949228898CB4001E3F16 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GooglePlaces.xcframework; path = "GooglePlaces-7.0.0-beta/GooglePlaces.xcframework"; sourceTree = "<group>"; };
 		19C807C0287DD66600987432 /* CountryApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryApiConstants.swift; sourceTree = "<group>"; };
 		19C807C2287E207B00987432 /* CountryApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryApiClient.swift; sourceTree = "<group>"; };
 		19DF6229285B26970052B62E /* Travel CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,14 +326,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19C3948B28898C53001E3F16 /* GoogleMapsCore.xcframework in Frameworks */,
 				199AA98928800932003256D5 /* CoreGraphics.framework in Frameworks */,
 				199AA98A28800932003256D5 /* Metal.framework in Frameworks */,
 				199AA98B28800932003256D5 /* CoreImage.framework in Frameworks */,
+				19C3949328898CB4001E3F16 /* GooglePlaces.xcframework in Frameworks */,
 				199AA98C28800932003256D5 /* OpenGLES.framework in Frameworks */,
 				199AA9CB28804DC2003256D5 /* FirebaseAnalyticsSwift in Frameworks */,
 				199AA98D28800932003256D5 /* libc++.tbd in Frameworks */,
 				199AA9E328805634003256D5 /* RxSwift in Frameworks */,
 				199AA98E28800932003256D5 /* QuartzCore.framework in Frameworks */,
+				19C3948D28898C53001E3F16 /* GoogleMaps.xcframework in Frameworks */,
+				19C3948F28898C53001E3F16 /* GoogleMapsBase.xcframework in Frameworks */,
 				199AA98F28800932003256D5 /* Accelerate.framework in Frameworks */,
 				199AA99028800932003256D5 /* CoreText.framework in Frameworks */,
 				199AA9BA28804567003256D5 /* FirebaseEmailAuthUI in Frameworks */,
@@ -356,11 +364,7 @@
 				199AA9CD28804DC2003256D5 /* FirebaseAuth in Frameworks */,
 				199AA99828800932003256D5 /* CoreLocation.framework in Frameworks */,
 				199AA9DB28804DC2003256D5 /* FirebaseStorage in Frameworks */,
-				199AA973287F2C77003256D5 /* GoogleMapsCore.xcframework in Frameworks */,
-				199AA971287F2C77003256D5 /* GoogleMaps.xcframework in Frameworks */,
-				199AA96F287F2C77003256D5 /* GoogleMapsBase.xcframework in Frameworks */,
 				199AA9CF28804DC2003256D5 /* FirebaseCrashlytics in Frameworks */,
-				199AA99A2880274E003256D5 /* GooglePlaces.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +398,9 @@
 			isa = PBXGroup;
 			children = (
 				9AB2A7D92442683900D68903 /* Travel Companion.entitlements */,
+				9A4ED63A22FB717300AD939B /* GoogleService-Info.plist */,
+				9A4EE70322FB72D000AD939B /* Info.plist */,
+				9A4ED63B22FB717300AD939B /* LaunchScreen.storyboard */,
 				9A4ED60A22FB717200AD939B /* Constants.swift */,
 				9A4ED60B22FB717200AD939B /* AutocompleteConfig.swift */,
 				9A4ED60C22FB717200AD939B /* Controller */,
@@ -480,13 +487,10 @@
 		9A4ED63222FB717300AD939B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9A4EE70322FB72D000AD939B /* Info.plist */,
 				9A4ED63322FB717300AD939B /* Main.strings */,
 				9A4ED63522FB717300AD939B /* Localizable.strings */,
 				9A4ED63722FB717300AD939B /* InfoPlist.strings */,
 				9A4ED63922FB717300AD939B /* Assets.xcassets */,
-				9A4ED63A22FB717300AD939B /* GoogleService-Info.plist */,
-				9A4ED63B22FB717300AD939B /* LaunchScreen.storyboard */,
 				9A4ED63D22FB717300AD939B /* Main.storyboard */,
 				9A4ED64122FB717300AD939B /* Reachability.swift */,
 				9A4ED64222FB717300AD939B /* AppDelegate.swift */,
@@ -650,6 +654,10 @@
 		9A4EE75822FB760600AD939B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19C3949228898CB4001E3F16 /* GooglePlaces.xcframework */,
+				19C3948928898C53001E3F16 /* GoogleMaps.xcframework */,
+				19C3948A28898C53001E3F16 /* GoogleMapsBase.xcframework */,
+				19C3948828898C53001E3F16 /* GoogleMapsCore.xcframework */,
 				199AA9992880274E003256D5 /* GooglePlaces.xcframework */,
 				199AA97F28800932003256D5 /* Accelerate.framework */,
 				199AA98228800932003256D5 /* CoreData.framework */,
@@ -1339,13 +1347,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../shared/build/bin/ios/debugFramework",
 				);
-				INFOPLIST_FILE = "Travel Companion/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Travel Companion/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.09;
+				MARKETING_VERSION = 1.11;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sjaindl.TravelCompanion;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
@@ -1370,13 +1378,13 @@
 					"$(SRCROOT)/../../SharedCode/build/xcode-frameworks",
 					"$(SRCROOT)/../shared/build/bin/ios/releaseFramework",
 				);
-				INFOPLIST_FILE = "Travel Companion/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Travel Companion/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.09;
+				MARKETING_VERSION = 1.11;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sjaindl.TravelCompanion;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
