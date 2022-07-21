@@ -7,6 +7,8 @@
 //
 
 import CoreData
+import FacebookCore
+import FacebookLogin
 import Firebase
 import FirebaseAuthUI
 import GoogleMaps
@@ -26,8 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirestoreRemoteConfig.sharedInstance.activateFetched()
         startNetworkReachabilityListener()
         
-        let font: UIFont = UIFont.systemFont(ofSize: 16)
+        let font = UIFont.systemFont(ofSize: 16)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+        
+        // Facebook
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         return true
     }
@@ -126,6 +131,6 @@ extension UIViewController {
 
 extension UIApplication {
     func topMostViewController() -> UIViewController? {
-        return self.keyWindow?.rootViewController?.topMostViewController()
+        self.keyWindow?.rootViewController?.topMostViewController()
     }
 }

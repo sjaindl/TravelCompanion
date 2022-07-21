@@ -15,7 +15,6 @@ import FirebaseOAuthUI
 //import shared
 
 class MainMenuViewController: UIViewController {
-    
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
     var user: User?
     var displayName: String?
@@ -137,10 +136,12 @@ class MainMenuViewController: UIViewController {
     }
     
     func configureAuth() {
-        FUIAuth.defaultAuthUI()?.providers = [FUIGoogleAuth(), FUIFacebookAuth(), FUIEmailAuth()]
-        if #available(iOS 13.0, *) {
-            FUIAuth.defaultAuthUI()?.providers.append(FUIOAuth.appleAuthProvider())
-        }
+        let authUI = FUIAuth.defaultAuthUI()!
+        
+        authUI.providers.append(FUIFacebookAuth(authUI: authUI))
+        authUI.providers.append(FUIEmailAuth.init())
+        authUI.providers.append(FUIGoogleAuth.init(authUI: authUI))
+        authUI.providers.append(FUIOAuth.appleAuthProvider())
     }
     
     func handleAuthStateChanges() {
