@@ -3,10 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string></string>
+	<string>production</string>
 	<key>com.apple.developer.applesignin</key>
 	<array>
 		<string>Default</string>
+	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.sjaindl.TravelCompanion</string>
 	</array>
 </dict>
 </plist>
