@@ -11,7 +11,7 @@ import UIKit
 
 public class ExploreDetailViewController: UIViewController {
     
-    var pin: Pin!
+    var pin: Pin?
     var dataController: DataController!
     
     var fetchedResultsController: NSFetchedResultsController<Country>!
@@ -42,13 +42,13 @@ public class ExploreDetailViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBarController?.navigationItem.title = pin.name
+        self.tabBarController?.navigationItem.title = pin?.name
         
         enableTabs(false)
         initResultsController()
         setPinData(pin)
         
-        if let country: Country = pin.countryOfPin {
+        if let country: Country = pin?.countryOfPin {
             setCountryData(country)
             enableTabs(true)
         } else {
@@ -56,10 +56,10 @@ public class ExploreDetailViewController: UIViewController {
         }
     }
     
-    func setPinData(_ pin: Pin) {
-        placeName.text = pin.name
+    func setPinData(_ pin: Pin?) {
+        placeName.text = pin?.name
         
-        if let placeTypes = pin.placetypes, let placeTypeArray = Array(placeTypes) as? [PlaceType], placeTypeArray.count > 0 {
+        if let placeTypes = pin?.placetypes, let placeTypeArray = Array(placeTypes) as? [PlaceType], placeTypeArray.count > 0 {
             placeType.text = ""
             
             for type in placeTypeArray {
@@ -68,18 +68,20 @@ public class ExploreDetailViewController: UIViewController {
             placeType.text = placeType.text?.trimmingCharacters(in: CharacterSet(charactersIn: ", "))
         }
         
-        if let phoneNumber = pin.phoneNumber {
+        if let phoneNumber = pin?.phoneNumber {
             phone.text = phoneNumber
         } else {
             phone.isHidden = true
             phoneTitle.isHidden = true
         }
         
-        let latitudePostfix = pin.latitude < 0 ? "south".localized() : "north".localized()
-        let longitudePostfix = pin.longitude < 0 ? "west".localized() : "east".localized()
-        latitudeLongitude.text = "\(pin.latitude)° \(latitudePostfix), \(pin.longitude)° \(longitudePostfix)"
+        if let pin = pin {
+            let latitudePostfix = pin.latitude < 0 ? "south".localized() : "north".localized()
+            let longitudePostfix = pin.longitude < 0 ? "west".localized() : "east".localized()
+            latitudeLongitude.text = "\(pin.latitude)° \(latitudePostfix), \(pin.longitude)° \(longitudePostfix)"
+        }
         
-        if let website = pin.url {
+        if let website = pin?.url {
             let linkString = NSMutableAttributedString(string: website)
             linkString.addAttribute(.link, value: URL(string: website) ?? website, range: NSMakeRange(0, website.count))
             url.attributedText = linkString
@@ -91,7 +93,7 @@ public class ExploreDetailViewController: UIViewController {
             urlTitle.isHidden = true
         }
         
-        countryName.text = pin.country
+        countryName.text = pin?.country
     }
     
     @objc
@@ -163,14 +165,14 @@ public class ExploreDetailViewController: UIViewController {
     
     func initResultsController() {
         var cacheName: String? = nil
-        if let countryCode = pin.countryCode {
+        if let countryCode = pin?.countryCode {
             cacheName = Constants.CoreData.cacheNameCountries + countryCode
         }
         
         let fetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: Constants.CoreData.sortKey, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.predicate = NSPredicate(format: "country == %@", pin.countryCode ?? "")
+        fetchRequest.predicate = NSPredicate(format: "country == %@", pin?.countryCode ?? "")
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: cacheName)
     }
 
@@ -180,7 +182,7 @@ public class ExploreDetailViewController: UIViewController {
             if let result = fetchedResultsController.fetchedObjects, result.count == 1 {
                 let country = result[0]
                 
-                pin.countryOfPin = country
+                pin?.countryOfPin = country
                 try? dataController.save()
                 
                 setCountryData(country)
@@ -202,7 +204,7 @@ public class ExploreDetailViewController: UIViewController {
     }
     
     func fetchNewCountryData() {
-        guard let newCountry = pin.countryCode else {
+        guard let pin = pin, let newCountry = pin.countryCode else {
             UiUtils.showToast(message: "noCountryDetails", view: self.view)
             self.enableTabs(true)
             return
@@ -220,7 +222,7 @@ public class ExploreDetailViewController: UIViewController {
                         return
                     }
                     
-                    let country = CoreDataClient.sharedInstance.storeCountry(self.dataController, pin: self.pin, result: result)
+                    let country = CoreDataClient.sharedInstance.storeCountry(self.dataController, pin: pin, result: result)
                     self.setCountryData(country)
                 }
                 
