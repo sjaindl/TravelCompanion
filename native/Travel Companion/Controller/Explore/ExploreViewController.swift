@@ -239,7 +239,6 @@ class ExploreViewController: UIViewController, PlacePicker {
     }
     
     func loginSession() {
-        
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
         present(authViewController, animated: true, completion: nil)
     }

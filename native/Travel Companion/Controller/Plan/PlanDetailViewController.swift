@@ -519,7 +519,7 @@ extension PlanDetailViewController {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = CustomColors.appTextColorDefault()
+        header.textLabel?.textColor = UIColor.appTextColorDefault()
         header.textLabel?.font = header.textLabel?.font.withSize(20)
     }
     

@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class CustomColors {
+public extension UIColor {
     static var appTextColorDefault = {
-        return UIColor(displayP3Red: 0.00784314, green: 0.8, blue: 0.729412, alpha: 1) //smooth cyan
+        UIColor(displayP3Red: 0.00784314, green: 0.8, blue: 0.729412, alpha: 1) //smooth cyan
     }
 }

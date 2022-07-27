@@ -110,6 +110,31 @@
 "changeDate" = "Change Date";
 "addPlaceSearch" = "Add Place";
 "welcome" = "Welcome, %@";
+"about" = "About";
+"settings" = "Settings";
+"permissions" = "Permissions";
+"notifications" = "Notifications";
+"profile" = "Profile";
+"createAccount" = "Konto erstellen";
+"account" = "Konto";
+
+"myProfile" = "My Profile";
+"yourPrivacyMatters" = "Your privacy matters. To see how your data is handled, don’t hesitate to read our open [Privacy Policy](%@).";
+"logout" = "Logout";
+"deleteAccount" = "Delete account";
+"yesDelete" = "Yes, delete";
+"cancel" = "Cancel";
+"pleaseWait" = "Please wait…";
+"accountDeleted" = "Account deleted";
+"ok" = "OK";
+"yourAccountHasBeenDeleted" = "Your account has been deleted";
+"doYouReallyWantToDeleteYourAccount" = "Do you really want to delete your account?";
+"personalInformation" = "Personal information";
+"nameAddressBirthday" = "Name, E-Mail";
+"requestAccountDeletion" = "Request account deletion";
+"email" = "E-Mail";
+"name" = "Name";
+"openSystemPreferences" = "Open system preferences";
 
 /* Storyboard strings */
 "planDetail" = "Plan your travel itineraries";

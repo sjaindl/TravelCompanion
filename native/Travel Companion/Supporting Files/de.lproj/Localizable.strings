@@ -109,6 +109,31 @@
 "planTrip" = "Reise planen";
 "changeDate" = "Datum ändern";
 "welcome" = "Willkommen, %@";
+"about" = "Über uns";
+"settings" = "Einstellungen";
+"permissions" = "Berechtigungen";
+"notifications" = "Benachrichtigungen";
+"profile" = "Profil";
+"createAccount" = "Create account";
+"account" = "Account";
+
+"myProfile" = "Mein Profil";
+"yourPrivacyMatters" = "Deine Privatsphäre ist uns sehr wichtig. Bitte werfe einen Blick in unsere [Datenschutzerklärung](%@), um zu sehen, wie deine Daten behandelt werden.";
+"logout" = "Ausloggen";
+"deleteAccount" = "Konto löschen";
+"yesDelete" = "Ja, löschen";
+"cancel" = "Abbrechen";
+"pleaseWait" = "Bitte warten…";
+"accountDeleted" = "Konto löschen";
+"ok" = "OK";
+"yourAccountHasBeenDeleted" = "Dein Konto wurde gelöscht";
+"doYouReallyWantToDeleteYourAccount" = "Möchtest du wirklichen dein Konto löschen?";
+"personalInformation" = "Persönliche Information";
+"nameAddressBirthday" = "Name, E-Mail";
+"requestAccountDeletion" = "Kontolöschung beantragen";
+"email" = "E-Mail";
+"name" = "Name";
+"openSystemPreferences" = "Systemeinstellungen öffnen";
 
 /* Storyboard strings */
 "planDetail" = "Plane deine Reisen";

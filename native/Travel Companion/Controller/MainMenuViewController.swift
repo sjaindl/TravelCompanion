@@ -42,9 +42,7 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "mainMenuTitle".localized()
-        //self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
-        //ActualKt.showHelloCoroutine() //just for testing kotlin
+        setupNavigation()
         
         configureAuth()
         configureGestureRecognizers()
@@ -61,6 +59,15 @@ class MainMenuViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         Auth.auth().removeStateDidChangeListener(_authHandle)
+    }
+    
+    func setupNavigation() {
+        navigationItem.title = "mainMenuTitle".localized()
+        navigationController?.navigationBar.backgroundColor = UIColor.gray
+        //self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
+        //ActualKt.showHelloCoroutine() //just for testing kotlin
+        
+        addUserProfileNavigationItem()
     }
     
     func configureGestureRecognizers() {
@@ -192,6 +199,8 @@ class MainMenuViewController: UIViewController {
             self.signOutButton.title = "signIn".localized()
             displayName = nil
         }
+        
+        addUserProfileNavigationItem()
     }
     
     func loginSession() {

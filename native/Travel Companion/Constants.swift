@@ -1,6 +1,6 @@
 //
 //  Constants.swift
-//  VirtualTourist
+//  Travel Companion
 //
 //  Created by Stefan Jaindl on 15.06.18.
 //  Copyright © 2018 Stefan Jaindl. All rights reserved.
@@ -57,6 +57,8 @@ struct Constants {
     
     struct ControllerIds {
         static let addPlacePreview = "addPlacePreview"
+        static let personalInformationViewController = "PersonalInformationViewController"
+        static let profileViewController = "ProfileViewController"
     }
     
     struct CoreData {

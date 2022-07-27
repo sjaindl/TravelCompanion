@@ -100,8 +100,8 @@ extension GooglePlacesAutocompleteContainer {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.darkGray
-        cell.textLabel?.textColor = CustomColors.appTextColorDefault()
-        cell.detailTextLabel?.textColor = CustomColors.appTextColorDefault()
+        cell.textLabel?.textColor = UIColor.appTextColorDefault()
+        cell.detailTextLabel?.textColor = UIColor.appTextColorDefault()
     }
     
     override open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

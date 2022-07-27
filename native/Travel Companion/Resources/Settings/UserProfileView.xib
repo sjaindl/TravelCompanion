@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserProfileView" customModule="Travel_Companion" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YT9-39-UEX">
+                    <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="YT9-39-UEX" secondAttribute="height" multiplier="1:1" id="1kl-rA-cnE"/>
+                    </constraints>
+                    <connections>
+                        <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="YDg-zX-DVY"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="YT9-39-UEX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lra-IV-FiW"/>
+                <constraint firstAttribute="bottom" secondItem="YT9-39-UEX" secondAttribute="bottom" id="t0I-aW-4h3"/>
+                <constraint firstItem="YT9-39-UEX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" id="vOR-WF-cX9"/>
+                <constraint firstAttribute="trailing" secondItem="YT9-39-UEX" secondAttribute="trailing" id="zfG-9t-aJJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="button" destination="YT9-39-UEX" id="lFb-XI-mWp"/>
+                <outlet property="buttonTrailingConstraint" destination="zfG-9t-aJJ" id="9jo-II-3ls"/>
+            </connections>
+            <point key="canvasLocation" x="33.600000000000001" y="-46.776611694152926"/>
+        </view>
+    </objects>
+</document>
