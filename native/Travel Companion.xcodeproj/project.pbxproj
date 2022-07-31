@@ -1704,7 +1704,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Travel Companion/Travel Companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MAJ9QA679A;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1735,7 +1735,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Travel Companion/Travel Companion.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = MAJ9QA679A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

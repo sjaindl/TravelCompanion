@@ -56,12 +56,11 @@ extension FormController {
         }
         cell.errorText = row.errorText
         cell.iconContainerView.isHidden = true
-        //cell.delegate = self
+        // cell.delegate = self
         cell.configuration = row.configuration
         cell.missing = row.missing
-        row.configure(cell.textField, cell: cell, accessoryView: row.accessoryView)
+        row.configure(cell.textField, cell: cell)
         cell.errorsEnabled = row.errorsEnabled
-        cell.validate()
         cell.isRequired = row.required
         
         return cell

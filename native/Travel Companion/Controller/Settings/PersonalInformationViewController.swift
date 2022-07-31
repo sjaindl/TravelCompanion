@@ -8,6 +8,7 @@
 import UIKit
 
 public final class PersonalInformationViewController: UIViewController, FormController {
+
     // MARK: Internal
 
     @IBOutlet private var tableView: UITableView!

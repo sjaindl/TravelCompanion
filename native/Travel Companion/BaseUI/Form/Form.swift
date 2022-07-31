@@ -64,28 +64,22 @@ public struct Form {
             placeHolder: String? = nil,
             keyboardType: UIKeyboardType = .default,
             returnKeyType: UIReturnKeyType = .default,
-            showKeyboardAccessoryView: Bool = false,
             isSecureTextEntry: Bool = false,
             required: Bool = false,
             readOnly: Bool = false,
             missing: Bool = false,
-            accessoryView: UIView? = nil,
             errorsEnabled: Bool = false,
-            errorText: String? = nil,
-            validator: @escaping (String?) -> Bool = { _ in true }
+            errorText: String? = nil
         ) {
             self.text = text
             self.configuration = configuration
             self.placeHolder = placeHolder
             self.keyboardType = keyboardType
             self.returnKeyType = returnKeyType
-            self.showKeyboardAccessoryView = showKeyboardAccessoryView
             self.isSecureTextEntry = isSecureTextEntry
             self.required = required
             self.readOnly = readOnly
-            self.validator = validator
             self.missing = missing
-            self.accessoryView = accessoryView
             self.errorsEnabled = errorsEnabled
             self.errorText = errorText ?? "" // L10n.pleaseFillInThisField
         }
@@ -97,13 +91,10 @@ public struct Form {
         public let placeHolder: String?
         public let keyboardType: UIKeyboardType
         public let returnKeyType: UIReturnKeyType
-        public let showKeyboardAccessoryView: Bool
         public let isSecureTextEntry: Bool
-        public let validator: (String?) -> Bool
         public let required: Bool
         public let readOnly: Bool
         public let missing: Bool
-        public let accessoryView: UIView?
         public var errorsEnabled: Bool
         public let errorText: String
     }
@@ -358,19 +349,14 @@ public struct Form {
 }
 
 public extension Form.InputRow {
-    func configure(_ inputField: FormTextField, cell _: FormCell, accessoryView: UIView? = nil) {
+    func configure(_ inputField: FormTextField, cell _: FormCell) {
         inputField.text = text
 
         inputField.placeholder = placeHolder?.addAsterisk(required: required)
         inputField.keyboardType = keyboardType
         inputField.isSecureTextEntry = isSecureTextEntry
         inputField.returnKeyType = returnKeyType
-        inputField.validator = validator
         inputField.isEnabled = !readOnly
-
-        if showKeyboardAccessoryView {
-            inputField.inputAccessoryView = accessoryView
-        }
     }
 }
 

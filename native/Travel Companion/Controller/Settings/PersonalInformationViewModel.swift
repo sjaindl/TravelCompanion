@@ -151,8 +151,7 @@ extension PersonalInformationViewModel {
                     configuration: .icon(UIImage(named: "icon-form-mail-blank")),
                     placeHolder: "email".localized(),
                     returnKeyType: .next,
-                    readOnly: true,
-                    validator: FormValidation.isValidEmail
+                    readOnly: true
                 )
             case .fullName:
                 return Form.InputRow(
@@ -160,8 +159,7 @@ extension PersonalInformationViewModel {
                     configuration: .icon(UIImage(named: "icon-form-traveller-blank")),
                     placeHolder: "name".localized(),
                     returnKeyType: .done,
-                    readOnly: true,
-                    validator: FormValidation.isValidName
+                    readOnly: true
                 )
             }
         }
