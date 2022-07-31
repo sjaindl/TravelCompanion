@@ -30,7 +30,7 @@
                                             <constraint firstAttribute="width" constant="96" id="Id2-d4-33n"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="5Dn-JJ-jKi">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cam" translatesAutoresizingMaskIntoConstraints="NO" id="5Dn-JJ-jKi">
                                         <rect key="frame" x="136" y="64" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="Hge-F4-OPc"/>
@@ -73,7 +73,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="camera" width="32" height="32"/>
+        <image name="cam" width="32" height="32"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

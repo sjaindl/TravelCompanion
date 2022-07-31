@@ -20,7 +20,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mB0-gI-ARn">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="447-ir-M9r" customClass="SeperatorView" customModule="DestinationBaseUI">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="447-ir-M9r" customClass="SeperatorView" customModule="Travel_Companion" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -50,7 +50,7 @@
                                         <constraint firstItem="seZ-dw-Zkk" firstAttribute="top" secondItem="QRC-zv-UZX" secondAttribute="top" constant="8" id="gtp-BD-nm7"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ixv-sx-3oS" customClass="SeperatorView" customModule="DestinationBaseUI">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ixv-sx-3oS" customClass="SeperatorView" customModule="Travel_Companion" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="57" width="414" height="1"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -67,7 +67,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dOK-iL-SXf">
                             <rect key="frame" x="0.0" y="66" width="414" height="128"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9jj-Op-v8a" customClass="UnselectableTextView" customModule="DestinationBaseUI">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9jj-Op-v8a">
                                     <rect key="frame" x="16" y="0.0" width="382" height="128"/>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
