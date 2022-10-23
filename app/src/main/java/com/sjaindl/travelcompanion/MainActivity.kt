@@ -1,13 +1,11 @@
 package com.sjaindl.travelcompanion
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +24,11 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (error: Exception) {
                 runOnUiThread {
-                    Toast.makeText(this@MainActivity.applicationContext, error.localizedMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@MainActivity.applicationContext,
+                        error.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
             }

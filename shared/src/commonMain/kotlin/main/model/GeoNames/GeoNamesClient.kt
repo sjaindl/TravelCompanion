@@ -3,10 +3,8 @@ import com.sjaindl.travelcompanion.model.GeoNames.GeoNamesConstants
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.request
-import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readText
 import io.ktor.http.*
-import kotlinx.io.core.use
 import kotlinx.serialization.json.Json
 import main.model.GeoNames.GeoCodeRepository
 import main.model.GeoNames.WebClient
@@ -38,6 +36,7 @@ class GeoNamesClient() {
     }
 */
 
+    /*
     suspend fun fetchCountryCode(latitude: Double, longitude: Double, client: HttpClient): GeoCodeRepository = client.request<HttpResponse> {
         method = HttpMethod.Get
 
@@ -63,4 +62,6 @@ class GeoNamesClient() {
 
         return@use list
     }
+
+     */
 }

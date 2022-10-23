@@ -1,9 +1,9 @@
 package main.model.GeoNames
 
-import io.ktor.client.response.HttpResponse
-import io.ktor.http.HttpStatusCode
+import io.ktor.client.response.*
+import io.ktor.http.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonException
+//import kotlinx.serialization.json.JsonException
 
 //  WebClient.swift
 //  Travel Companion
@@ -18,11 +18,13 @@ class WebClient() {
         val instance = WebClient()
     }
 
+    /*
     fun performBasicWebResponseChecks(response: HttpResponse, json: String) {
 
         if (response.status.value < HttpStatusCode.OK.value || response.status.value >= HttpStatusCode.MultipleChoices.value) {
 
-            var errorMessage = "Response returned status code ${response.status.value} (${response.status.description})"
+            var errorMessage =
+                "Response returned status code ${response.status.value} (${response.status.description})"
 
             try {
                 val error = Json.nonstrict.parse(ErrorRepository.serializer(), json)
@@ -33,7 +35,8 @@ class WebClient() {
 
             throw Exception(errorMessage)
         }
-
     }
+
+     */
 
 }
