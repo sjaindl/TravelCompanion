@@ -12,7 +12,7 @@ import main.model.GeoNames.Geocode
 private var client = HttpClient {
     install(JsonFeature) {
         serializer = JsonKotlinxSerializer().apply {
-            setMapper<Geocode>(Geocode.serializer())
+            //setMapper<Geocode>(Geocode.serializer())
         }
     }
     install(HttpCallValidator)
@@ -27,7 +27,7 @@ fun createApplicationScreenMessage(): String {
 suspend fun fetchGeoCode(latitude: Double, longitude: Double): String {
 
     val client = createClient(JsonKotlinxSerializer().apply {
-        setMapper<Geocode>(Geocode.serializer())
+        //setMapper<Geocode>(Geocode.serializer())
     })
 
     /*

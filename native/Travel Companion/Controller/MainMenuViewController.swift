@@ -12,7 +12,7 @@ import FirebaseEmailAuthUI
 import FirebaseFacebookAuthUI
 import FirebaseGoogleAuthUI
 import FirebaseOAuthUI
-//import shared
+import shared
 
 class MainMenuViewController: UIViewController {
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
@@ -64,8 +64,9 @@ class MainMenuViewController: UIViewController {
     func setupNavigation() {
         navigationItem.title = "mainMenuTitle".localized()
         navigationController?.navigationBar.backgroundColor = UIColor.gray
-        //self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
-        //ActualKt.showHelloCoroutine() //just for testing kotlin
+        
+        self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
+        ActualKt.showHelloCoroutine() //just for testing kotlin
         
         addUserProfileNavigationItem()
     }

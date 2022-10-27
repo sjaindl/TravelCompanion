@@ -2,8 +2,8 @@ val kotlin_version: String by extra
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.6.10"
-    id("com.squareup.sqldelight")
+    //kotlin("plugin.serialization") version "1.6.10"
+    // id("com.squareup.sqldelight")
 
     //kotlin("native.cocoapods")
     //id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
@@ -31,21 +31,14 @@ sqldelight {
 kotlin {
     android()
 
-    ios {
-        binaries {
-            framework {
-                baseName = "shared"
-            }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "shared"
         }
-    }
-
-    // Block from https://github.com/cashapp/sqldelight/issues/2044#issuecomment-721299517.
-
-    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
-    if (onPhone) {
-        iosArm64("ios")
-    } else {
-        iosX64("ios")
     }
 
     sourceSets {
@@ -63,8 +56,8 @@ kotlin {
                 implementation("com.jakewharton.timber:timber:$timberVersion")
 
                 // https://github.com/cashapp/sqldelight
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                //implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                //implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
 
                 // https://github.com/Kotlin/kotlinx-datetime
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
@@ -87,7 +80,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
                 implementation("io.ktor:ktor-client-gson:$ktorVersion")
 
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+                //implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
 
@@ -98,19 +91,32 @@ kotlin {
             }
         }
 
-        val iosMain by getting {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
             dependsOn(commonMain)
+
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("io.ktor:ktor-client-serialization-native:$ktorSerializationVersion")
+                //implementation("io.ktor:ktor-client-serialization-native:$ktorSerializationVersion")
 
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                //implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
             }
         }
-        val iosTest by getting {
+        val iosX64Test by getting
+        val iosArm64Test by getting
+        val iosSimulatorArm64Test by getting
+        val iosTest by creating {
             dependsOn(commonTest)
+            iosX64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+            iosSimulatorArm64Test.dependsOn(this)
         }
     }
 }
