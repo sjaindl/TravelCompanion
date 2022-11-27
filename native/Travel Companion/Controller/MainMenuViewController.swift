@@ -66,7 +66,6 @@ class MainMenuViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor.gray
         
         self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
-        ActualKt.showHelloCoroutine() //just for testing kotlin
         
         addUserProfileNavigationItem()
     }
