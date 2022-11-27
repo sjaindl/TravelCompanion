@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -17,10 +18,10 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             try {
-                val code = fetchGeoCode(37.0856432, 25.1488318)
+                val countryCode = GeoNamesClient().fetchCountryCode(37.0856432, 35.1488318)
                 //val code = fetchGeoCode(0.0, 0.0)
                 runOnUiThread {
-                    findViewById<TextView>(R.id.main_text).setText(code)
+                    findViewById<TextView>(R.id.main_text).text = countryCode
                 }
             } catch (error: Exception) {
                 runOnUiThread {
@@ -33,6 +34,5 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-
     }
 }

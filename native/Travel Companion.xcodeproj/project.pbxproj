@@ -167,9 +167,6 @@
 		9A4EE72822FB758F00AD939B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64122FB717300AD939B /* Reachability.swift */; };
 		9A4EE72922FB758F00AD939B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64222FB717300AD939B /* AppDelegate.swift */; };
 		9A4EE72A22FB758F00AD939B /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64322FB717300AD939B /* Localizable.swift */; };
-		9A4EE72B22FB758F00AD939B /* GeoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64722FB717300AD939B /* GeoCode.swift */; };
-		9A4EE72C22FB758F00AD939B /* GeoNamesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64822FB717300AD939B /* GeoNamesConstants.swift */; };
-		9A4EE72D22FB758F00AD939B /* GeoNamesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64922FB717300AD939B /* GeoNamesClient.swift */; };
 		9A4EE72E22FB758F00AD939B /* PublicTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64B22FB717300AD939B /* PublicTransport.swift */; };
 		9A4EE72F22FB758F00AD939B /* FirestoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64C22FB717300AD939B /* FirestoreClient.swift */; };
 		9A4EE73022FB758F00AD939B /* Plannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED64D22FB717300AD939B /* Plannable.swift */; };
@@ -401,9 +398,6 @@
 		9A4ED64122FB717300AD939B /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		9A4ED64222FB717300AD939B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A4ED64322FB717300AD939B /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
-		9A4ED64722FB717300AD939B /* GeoCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoCode.swift; sourceTree = "<group>"; };
-		9A4ED64822FB717300AD939B /* GeoNamesConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoNamesConstants.swift; sourceTree = "<group>"; };
-		9A4ED64922FB717300AD939B /* GeoNamesClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoNamesClient.swift; sourceTree = "<group>"; };
 		9A4ED64B22FB717300AD939B /* PublicTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicTransport.swift; sourceTree = "<group>"; };
 		9A4ED64C22FB717300AD939B /* FirestoreClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreClient.swift; sourceTree = "<group>"; };
 		9A4ED64D22FB717300AD939B /* Plannable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plannable.swift; sourceTree = "<group>"; };
@@ -797,7 +791,6 @@
 			isa = PBXGroup;
 			children = (
 				19C807BF287DD65800987432 /* CountryApi */,
-				9A4ED64622FB717300AD939B /* GeoNames */,
 				9A4ED64A22FB717300AD939B /* Firestore */,
 				9A4ED65122FB717300AD939B /* Flickr */,
 				9A4ED65422FB717300AD939B /* Web */,
@@ -810,16 +803,6 @@
 				9A4ED67722FB717300AD939B /* PlannableFactory.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		9A4ED64622FB717300AD939B /* GeoNames */ = {
-			isa = PBXGroup;
-			children = (
-				9A4ED64722FB717300AD939B /* GeoCode.swift */,
-				9A4ED64822FB717300AD939B /* GeoNamesConstants.swift */,
-				9A4ED64922FB717300AD939B /* GeoNamesClient.swift */,
-			);
-			path = GeoNames;
 			sourceTree = "<group>";
 		};
 		9A4ED64A22FB717300AD939B /* Firestore */ = {
@@ -1364,10 +1347,7 @@
 				19312198288FD891003BA66F /* ThemeTextStyle.swift in Sources */,
 				9A4EE72A22FB758F00AD939B /* Localizable.swift in Sources */,
 				19312158288F4B1B003BA66F /* ProfileViewModel.swift in Sources */,
-				9A4EE72B22FB758F00AD939B /* GeoCode.swift in Sources */,
-				9A4EE72C22FB758F00AD939B /* GeoNamesConstants.swift in Sources */,
 				19312157288F4B1B003BA66F /* PersonalInformationViewController.swift in Sources */,
-				9A4EE72D22FB758F00AD939B /* GeoNamesClient.swift in Sources */,
 				193121B3288FE901003BA66F /* UIColor+Hex.swift in Sources */,
 				9A4EE72E22FB758F00AD939B /* PublicTransport.swift in Sources */,
 				9A4EE72F22FB758F00AD939B /* FirestoreClient.swift in Sources */,
