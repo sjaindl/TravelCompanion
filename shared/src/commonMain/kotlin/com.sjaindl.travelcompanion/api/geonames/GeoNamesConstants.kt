@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.model.GeoNames
+package com.sjaindl.travelcompanion.api.geonames
 
 //
 //  GeoNamesConstants.swift
@@ -13,11 +13,13 @@ class GeoNamesConstants {
     data class UrlComponents(
         val urlProtocol: String = "https",
         val domain: String = "secure.geonames.org",
-        val path: String = "/countryCode")
+        val path: String = "/countryCode"
+    )
 
     data class ParameterKeys(
         val latitude: String = "lat",
         val longitude: String = "lng",
-        val username: String = "username")
+        val username: String = "username"
+    )
 
 }

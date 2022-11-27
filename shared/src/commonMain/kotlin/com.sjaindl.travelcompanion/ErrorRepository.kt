@@ -1,4 +1,4 @@
-package main.model.GeoNames
+package com.sjaindl.travelcompanion
 
 import kotlinx.serialization.Serializable
 
