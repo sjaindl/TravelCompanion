@@ -6,12 +6,12 @@
 //  Copyright © 2019 Stefan Jaindl. All rights reserved.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import shared
+import UIKit
 
 class ExplorePlacesSearchViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -46,14 +46,13 @@ class ExplorePlacesSearchViewController: UIViewController {
     }
     
     func setupAutocompletion(for searchController: UISearchController) -> Disposable {
-        
         let disposable = searchController.searchBar.rx.text
             .debug("rxAutocompleteGooglePlaces")
             .throttle(.milliseconds(AutocompleteConfig.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             //.filter{$0 != nil && $0!.count >= AutocompleteConfig.autocompletionMinChars}
             .flatMapLatest { query in
-                GoogleClient.sharedInstance.autocomplete(for: query!, token: self.sessionToken)
+                GoogleClient.sharedInstance.autocomplete(input: query!, token: self.sessionToken)
                     .startWith([]) // clears results on new search term
                     .catchErrorJustReturn([])
             }
@@ -92,6 +91,7 @@ class ExplorePlacesSearchViewController: UIViewController {
 extension ExplorePlacesSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = self.results.value[indexPath.row]
+        
         guard let placeId = place?.placeId else {
             debugPrint("no place id!")
             return
@@ -102,7 +102,7 @@ extension ExplorePlacesSearchViewController: UITableViewDelegate {
             .throttle(.milliseconds(AutocompleteConfig.autocompletionDelayMilliseconds), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .flatMapLatest { query in
-                GoogleClient.sharedInstance.placeDetail(for: placeId, token: self.sessionToken)
+                GoogleClient.sharedInstance.placeDetail(placeId: placeId, token: self.sessionToken)
                     .startWith(nil) // clears results on new search term
                     .catchErrorJustReturn(nil)
             }

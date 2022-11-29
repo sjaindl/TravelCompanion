@@ -9,6 +9,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import shared
 
 class WebClient {
     
@@ -28,12 +29,38 @@ class WebClient {
         urlComponent.host = host
         urlComponent.path = method
         
-        if let queryItems = queryItems {
+        if let queryItems {
             urlComponent.queryItems = [URLQueryItem]()
             
             for (key, value) in queryItems {
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
                 urlComponent.queryItems!.append(queryItem)
+            }
+        }
+        
+        return urlComponent.url!
+    }
+    
+    func createUrlWithKotlinQueryItems(
+        forScheme scheme: String,
+        forHost host: String,
+        forMethod method: String,
+        withQueryItems queryItems: [KotlinPair<NSString, NSString>]? = nil
+    ) -> URL {
+        var urlComponent = URLComponents()
+        
+        urlComponent.scheme = scheme
+        urlComponent.host = host
+        urlComponent.path = method
+        
+        if let queryItems {
+            urlComponent.queryItems = [URLQueryItem]()
+            
+            queryItems.forEach { item in
+                if let key = item.first as? String, let value = item.second as? String {
+                    let queryItem = URLQueryItem(name: key, value: "\(value)")
+                    urlComponent.queryItems?.append(queryItem)
+                }
             }
         }
         

@@ -9,6 +9,7 @@
 import CodableFirebase
 import Firebase
 import GoogleMaps
+import shared
 import UIKit
 
 class AddPlacePreviewViewController: UIViewController {
@@ -98,6 +99,7 @@ class AddPlacePreviewViewController: UIViewController {
                 }
             }
         }
+         
     }
     
     func addPlaceToPlan(_ place: GooglePlace) {

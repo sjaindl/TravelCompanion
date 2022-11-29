@@ -8,10 +8,10 @@
 
 import Firebase
 import GoogleMaps
+import shared
 import UIKit
 
 class AddPlaceViewController: UIViewController {
-    
     struct SelectedPlace {
         var marker: GMSMarker
         var coordinate: CLLocationCoordinate2D
@@ -55,7 +55,7 @@ class AddPlaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = String(format: "addPlace".localized(), placeType.description!)
+        self.navigationItem.title = String(format: "addPlace".localized(), placeType.description) // TODO: rename var
         
         map.delegate = self
         initCamera()

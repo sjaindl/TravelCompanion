@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190F52EC2934277F00A5BB70 /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F52EB2934277F00A5BB70 /* GoogleClient.swift */; };
+		190F52EE29342D3B00A5BB70 /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F52ED29342D3B00A5BB70 /* PlacesAutocompleteResponse.swift */; };
+		190F52F029342ECE00A5BB70 /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F52EF29342ECE00A5BB70 /* PlaceDetailsResponse.swift */; };
 		1931213E288F3A84003BA66F /* AssertNotNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931213D288F3A84003BA66F /* AssertNotNil.swift */; };
 		19312140288F40CE003BA66F /* CALayer+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931213F288F40CE003BA66F /* CALayer+Round.swift */; };
 		19312142288F41E3003BA66F /* UIImage+Initials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19312141288F41E3003BA66F /* UIImage+Initials.swift */; };
@@ -177,13 +180,7 @@
 		9A4EE73522FB758F00AD939B /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65322FB717300AD939B /* FlickrConstants.swift */; };
 		9A4EE73622FB758F00AD939B /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65522FB717300AD939B /* WebConstants.swift */; };
 		9A4EE73722FB758F00AD939B /* WebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65622FB717300AD939B /* WebClient.swift */; };
-		9A4EE73822FB758F00AD939B /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65822FB717300AD939B /* PlaceDetailsResponse.swift */; };
-		9A4EE73922FB758F00AD939B /* GoogleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65922FB717300AD939B /* GoogleConstants.swift */; };
-		9A4EE73A22FB758F00AD939B /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65A22FB717300AD939B /* GoogleClient.swift */; };
-		9A4EE73B22FB758F00AD939B /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65B22FB717300AD939B /* PlacesAutocompleteResponse.swift */; };
 		9A4EE73C22FB758F00AD939B /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65C22FB717300AD939B /* GooglePlace.swift */; };
-		9A4EE73D22FB758F00AD939B /* GooglePlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65D22FB717300AD939B /* GooglePlaceType.swift */; };
-		9A4EE73E22FB758F00AD939B /* PlacesNearbySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65E22FB717300AD939B /* PlacesNearbySearchResponse.swift */; };
 		9A4EE73F22FB758F00AD939B /* WikiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66022FB717300AD939B /* WikiConstants.swift */; };
 		9A4EE74022FB758F00AD939B /* WikiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66122FB717300AD939B /* WikiClient.swift */; };
 		9A4EE74122FB758F00AD939B /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66322FB717300AD939B /* CoreDataClient.swift */; };
@@ -219,8 +216,6 @@
 		9AFBAC27244672D6005E59BB /* Country+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66922FB717300AD939B /* Country+Extensions.swift */; };
 		9AFBAC2A2446736D005E59BB /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65522FB717300AD939B /* WebConstants.swift */; };
 		9AFBAC2B24467370005E59BB /* WebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65622FB717300AD939B /* WebClient.swift */; };
-		9AFBAC2C24467398005E59BB /* PlaceDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65822FB717300AD939B /* PlaceDetailsResponse.swift */; };
-		9AFBAC2D244673A3005E59BB /* PlacesAutocompleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65B22FB717300AD939B /* PlacesAutocompleteResponse.swift */; };
 		9AFBAC2E244673E1005E59BB /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66322FB717300AD939B /* CoreDataClient.swift */; };
 		9AFBAC2F2446741C005E59BB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED66522FB717300AD939B /* DataController.swift */; };
 		9AFBAC3024467422005E59BB /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ED65322FB717300AD939B /* FlickrConstants.swift */; };
@@ -247,6 +242,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190F52EB2934277F00A5BB70 /* GoogleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
+		190F52ED29342D3B00A5BB70 /* PlacesAutocompleteResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesAutocompleteResponse.swift; sourceTree = "<group>"; };
+		190F52EF29342ECE00A5BB70 /* PlaceDetailsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsResponse.swift; sourceTree = "<group>"; };
 		1931213D288F3A84003BA66F /* AssertNotNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertNotNil.swift; sourceTree = "<group>"; };
 		1931213F288F40CE003BA66F /* CALayer+Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Round.swift"; sourceTree = "<group>"; };
 		19312141288F41E3003BA66F /* UIImage+Initials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Initials.swift"; sourceTree = "<group>"; };
@@ -408,13 +406,7 @@
 		9A4ED65322FB717300AD939B /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		9A4ED65522FB717300AD939B /* WebConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebConstants.swift; sourceTree = "<group>"; };
 		9A4ED65622FB717300AD939B /* WebClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebClient.swift; sourceTree = "<group>"; };
-		9A4ED65822FB717300AD939B /* PlaceDetailsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsResponse.swift; sourceTree = "<group>"; };
-		9A4ED65922FB717300AD939B /* GoogleConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleConstants.swift; sourceTree = "<group>"; };
-		9A4ED65A22FB717300AD939B /* GoogleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
-		9A4ED65B22FB717300AD939B /* PlacesAutocompleteResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesAutocompleteResponse.swift; sourceTree = "<group>"; };
 		9A4ED65C22FB717300AD939B /* GooglePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
-		9A4ED65D22FB717300AD939B /* GooglePlaceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceType.swift; sourceTree = "<group>"; };
-		9A4ED65E22FB717300AD939B /* PlacesNearbySearchResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesNearbySearchResponse.swift; sourceTree = "<group>"; };
 		9A4ED66022FB717300AD939B /* WikiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiConstants.swift; sourceTree = "<group>"; };
 		9A4ED66122FB717300AD939B /* WikiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiClient.swift; sourceTree = "<group>"; };
 		9A4ED66322FB717300AD939B /* CoreDataClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
@@ -839,13 +831,10 @@
 		9A4ED65722FB717300AD939B /* Google */ = {
 			isa = PBXGroup;
 			children = (
-				9A4ED65822FB717300AD939B /* PlaceDetailsResponse.swift */,
-				9A4ED65922FB717300AD939B /* GoogleConstants.swift */,
-				9A4ED65A22FB717300AD939B /* GoogleClient.swift */,
-				9A4ED65B22FB717300AD939B /* PlacesAutocompleteResponse.swift */,
+				190F52EF29342ECE00A5BB70 /* PlaceDetailsResponse.swift */,
+				190F52ED29342D3B00A5BB70 /* PlacesAutocompleteResponse.swift */,
+				190F52EB2934277F00A5BB70 /* GoogleClient.swift */,
 				9A4ED65C22FB717300AD939B /* GooglePlace.swift */,
-				9A4ED65D22FB717300AD939B /* GooglePlaceType.swift */,
-				9A4ED65E22FB717300AD939B /* PlacesNearbySearchResponse.swift */,
 			);
 			path = Google;
 			sourceTree = "<group>";
@@ -1343,6 +1332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A4EE72822FB758F00AD939B /* Reachability.swift in Sources */,
+				190F52EE29342D3B00A5BB70 /* PlacesAutocompleteResponse.swift in Sources */,
 				9A4EE72922FB758F00AD939B /* AppDelegate.swift in Sources */,
 				19312198288FD891003BA66F /* ThemeTextStyle.swift in Sources */,
 				9A4EE72A22FB758F00AD939B /* Localizable.swift in Sources */,
@@ -1365,18 +1355,12 @@
 				9A4EE73622FB758F00AD939B /* WebConstants.swift in Sources */,
 				9A4EE73722FB758F00AD939B /* WebClient.swift in Sources */,
 				19312160288F5904003BA66F /* TableViewFooterView.swift in Sources */,
-				9A4EE73822FB758F00AD939B /* PlaceDetailsResponse.swift in Sources */,
-				9A4EE73922FB758F00AD939B /* GoogleConstants.swift in Sources */,
 				1931219A288FD947003BA66F /* NSAttributedString+Markdown.swift in Sources */,
 				1931218D288F5A72003BA66F /* ErrorView.swift in Sources */,
-				9A4EE73A22FB758F00AD939B /* GoogleClient.swift in Sources */,
-				9A4EE73B22FB758F00AD939B /* PlacesAutocompleteResponse.swift in Sources */,
 				19312150288F4A12003BA66F /* ProfileViewController.swift in Sources */,
 				19F039D8288E769400B1EA35 /* ProfileTableViewCell.swift in Sources */,
 				1931217B288F5A6D003BA66F /* MessageCell.swift in Sources */,
 				9A4EE73C22FB758F00AD939B /* GooglePlace.swift in Sources */,
-				9A4EE73D22FB758F00AD939B /* GooglePlaceType.swift in Sources */,
-				9A4EE73E22FB758F00AD939B /* PlacesNearbySearchResponse.swift in Sources */,
 				9A4EE73F22FB758F00AD939B /* WikiConstants.swift in Sources */,
 				1931214C288F4585003BA66F /* User+Initials.swift in Sources */,
 				9A4EE74022FB758F00AD939B /* WikiClient.swift in Sources */,
@@ -1438,6 +1422,7 @@
 				9A4EE71322FB757300AD939B /* AddPlanViewController.swift in Sources */,
 				19312176288F5A6D003BA66F /* ButtonTableViewCell.swift in Sources */,
 				19312177288F5A6D003BA66F /* MultiLineCell.swift in Sources */,
+				190F52EC2934277F00A5BB70 /* GoogleClient.swift in Sources */,
 				9A4EE71422FB757300AD939B /* ChangeDateViewController.swift in Sources */,
 				9A4EE71522FB757300AD939B /* NotesViewController.swift in Sources */,
 				9A4EE71622FB757300AD939B /* PlanDetailViewController.swift in Sources */,
@@ -1456,6 +1441,7 @@
 				9A4EE71C22FB757300AD939B /* FetchType.swift in Sources */,
 				193121B1288FE901003BA66F /* NSAttributedString+Trim.swift in Sources */,
 				9A4EE71D22FB757300AD939B /* ExploreInfoViewController.swift in Sources */,
+				190F52F029342ECE00A5BB70 /* PlaceDetailsResponse.swift in Sources */,
 				9A4EE71E22FB757300AD939B /* ExplorePlacesSearchViewController.swift in Sources */,
 				9A4EE71F22FB757300AD939B /* ExplorePhotosViewController.swift in Sources */,
 				19312144288F428D003BA66F /* PersonAvatarView.swift in Sources */,
@@ -1494,9 +1480,7 @@
 			files = (
 				9AFBAC25244671EC005E59BB /* TravelCompanion.xcdatamodeld in Sources */,
 				9AFBAC2F2446741C005E59BB /* DataController.swift in Sources */,
-				9AFBAC2C24467398005E59BB /* PlaceDetailsResponse.swift in Sources */,
 				9A762BB9244339C90068A5A5 /* NetworkInteractionTest.swift in Sources */,
-				9AFBAC2D244673A3005E59BB /* PlacesAutocompleteResponse.swift in Sources */,
 				9AFBAC2E244673E1005E59BB /* CoreDataClient.swift in Sources */,
 				199AA99F288028A1003256D5 /* CountryApiClient.swift in Sources */,
 				9AFBAC3024467422005E59BB /* FlickrConstants.swift in Sources */,

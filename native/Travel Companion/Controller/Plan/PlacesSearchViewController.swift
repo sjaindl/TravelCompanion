@@ -7,9 +7,10 @@
 //
 
 import CodableFirebase
-import Firebase
-import UIKit
 import CoreLocation
+import Firebase
+import shared
+import UIKit
 
 class PlacesSearchViewController: UISearchController, UISearchBarDelegate {
     
@@ -86,8 +87,8 @@ extension GooglePlacesAutocompleteContainer {
         
         let place = places[indexPath.row]
         
-        cell.textLabel?.text = place.description()
-        let detailText = place.details()
+        cell.textLabel?.text = "TODO description!" //place.description()
+        let detailText = NSMutableAttributedString(string: "TODO details!") // place.details()
         if let attributions = place.htmlAttributions, attributions.count > 0, let attribution = FormatUtils.getLinkAttributedText(attributions[0]) {
             detailText.append(NSAttributedString(string: "\n"))
             detailText.append(attribution)
@@ -128,8 +129,26 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
         
         currentSearchText = searchText
         
-        GoogleClient.sharedInstance.searchPlaces(for: searchText, coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude), type: placeType.key, radius: String(radius)) { (error, places) in
-            self.places = places
+        shared.GoogleClient().searchPlaces(
+            text: searchText,
+            latitude: KotlinDouble(value: self.coordinate.latitude),
+            longitude: KotlinDouble(value: self.coordinate.longitude),
+            type: self.placeType.key,
+            radius: String(self.radius)
+        ) { [weak self] response, error in
+            guard let self = self else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let error {
+                    UiUtils.showError(error.localizedDescription, controller: self)
+                } else if let response {
+                    self.places = response.results.map {
+                        GooglePlace(placeId: $0.placeId, name: $0.name, reference: $0.reference, scope: $0.scope, vicinity: $0.vicinity)
+                    }
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
 import CodableFirebase
 import Foundation
 import HTMLEntities
+import shared
 
 class GooglePlace: NSObject, Plannable {
     var placeId: String
@@ -98,7 +99,7 @@ class GooglePlace: NSObject, Plannable {
     
     func imageUrl() -> String? {
         if let photos = photos, photos.count > 0, let photoReference = photos[0].photoReference {
-            return "\(GoogleConstants.UrlComponents.pathPhotos)?\(GoogleConstants.ParameterKeys.maxWidth)=\(GoogleConstants.ParameterValues.maxWidth)&\(GoogleConstants.ParameterKeys.photoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys.key)=\(SecretConstants.apiKeyGooglePlaces)"
+            return "\(GoogleConstants.UrlComponents().pathPhotos)?\(GoogleConstants.ParameterKeys().maxWidth)=\(GoogleConstants.ParameterValues().maxWidth)&\(GoogleConstants.ParameterKeys().photoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys().key)=\(SecretConstants.apiKeyGooglePlaces)"
         }
         return ""
     }
@@ -148,30 +149,3 @@ struct PlusCode: Codable {
         case globalCode = "global_code"
     }
 }
-
-/*
- This would be the PlaceDetails, if it is used in future:
- 
-class PlaceDetails {
-    let formattedAddress: String
-    var name: String? = nil
-    
-    var streetNumber: String? = nil
-    var route: String? = nil
-    var postalCode: String? = nil
-    var country: String? = nil
-    var countryCode: String? = nil
-    
-    var locality: String? = nil
-    var subLocality: String? = nil
-    var administrativeArea: String? = nil
-    var administrativeAreaCode: String? = nil
-    var subAdministrativeArea: String? = nil
-    
-    var coordinate: CLLocationCoordinate2D? = nil
- 
- var description: String {
- return "\nAddress: \(formattedAddress)\ncoordinate: (\(coordinate?.latitude ?? 0), \(coordinate?.longitude ?? 0))\n"
- }
-}
-*/

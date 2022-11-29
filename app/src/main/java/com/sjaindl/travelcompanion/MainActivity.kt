@@ -5,6 +5,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
+import com.sjaindl.travelcompanion.api.google.GoogleClient
+import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -18,10 +20,21 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             try {
-                val countryCode = GeoNamesClient().fetchCountryCode(37.0856432, 35.1488318)
-                //val code = fetchGeoCode(0.0, 0.0)
+                val countryCode = GeoNamesClient().fetchCountryCode(34.380460, 118.14372588)
+                val result = GoogleClient().searchPlaces(
+                    "Los F",
+                    34.380460,
+                    118.14372588,
+                    GooglePlaceType.PointOfInterest.key,
+                    "500"
+                )
+
                 runOnUiThread {
-                    findViewById<TextView>(R.id.main_text).text = countryCode
+                    val tv = findViewById<TextView>(R.id.main_text)
+                    tv.text = countryCode
+                    result.results.forEach {
+                        tv.text = "${tv.text} + ${it.name}"
+                    }
                 }
             } catch (error: Exception) {
                 runOnUiThread {

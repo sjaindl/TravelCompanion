@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import shared
 import WebKit
 
 class ExploreInfoViewController: UIViewController, WKUIDelegate {
@@ -105,11 +106,16 @@ class ExploreInfoViewController: UIViewController, WKUIDelegate {
     }
     
     @IBAction func openGoogle(_ sender: Any) {
-        let domain = GoogleConstants.UrlComponents.domainSearch
+        let urlComponents = GoogleConstants.UrlComponents()
+        let domain = urlComponents.domainSearch
+        let queryItems: [String: String] = [GoogleConstants.ParameterKeys().searchQuery: placeName]
         
-        let queryItems: [String: String] = [GoogleConstants.ParameterKeys.searchQuery: placeName]
-        
-        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: domain, forMethod: GoogleConstants.UrlComponents.pathSearch, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrl(
+            forScheme: urlComponents.urlProtocol,
+            forHost: domain,
+            forMethod: urlComponents.pathSearch,
+            withQueryItems: queryItems
+        )
         
         loadUrl(url, queryItems: queryItems)
     }

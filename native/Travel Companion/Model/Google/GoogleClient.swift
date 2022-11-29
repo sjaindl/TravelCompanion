@@ -9,92 +9,32 @@
 import CoreLocation
 import Foundation
 import RxSwift
+import shared
 
+// TODO: Can we move it to shared?
 class GoogleClient {
     
     static let sharedInstance = GoogleClient()
     
     private init() {}
     
-    func searchPlaces(for text: String?, coordinate: CLLocationCoordinate2D, type: String, radius: String, completionHandler: @escaping (_ errorString: String?, _ places: [GooglePlace]) -> Void) {
-        
-        let queryItems = buildPlaceSearchQueryItems(for: text, coordinate: coordinate, type: type, radius: radius)
-        
-        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
-            GoogleConstants.UrlComponents.pathNearbySearch, withQueryItems: queryItems)
-        
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
-        
-        WebClient.sharedInstance.taskForDataWebRequest(request, errorDomain: "googlePlacesSearch") { (data, webError) in
-            
-            /* Send the desired value(s) to completion handler */
-            if let webError = webError {
-                completionHandler(webError.localizedDescription, [])
-            } else {
-                guard let data = data else {
-                    completionHandler("Search failed (no data).", [])
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                do {
-                    let placesSearchResponse = try decoder.decode(PlacesNearbySearchResponse.self, from: data)
-                    
-                    if let error = placesSearchResponse.errorMessage {
-                        debugPrint(error)
-                        completionHandler(error, [])
-                        return
-                    }
-                    
-                    let places = placesSearchResponse.results
-                    
-                    for place in places {
-                        place.htmlAttributions = placesSearchResponse.htmlAttributions
-                    }
-                    
-                    completionHandler(nil, places)
-                } catch {
-                    let strResponse = String(decoding: data, as: UTF8.self)
-                    
-                    debugPrint(error)
-                    debugPrint("Could not decode response: \(strResponse)")
-                    
-                    completionHandler(error.localizedDescription, [])
-                }
-            }
-        }
-    }
-    
-    private func buildPlaceSearchQueryItems(for text: String?, coordinate: CLLocationCoordinate2D, type: String, radius: String) -> [String: String] {
-        var parameters = [
-            GoogleConstants.ParameterKeys.rankBy: GoogleConstants.ParameterValues.rankBy,
-            GoogleConstants.ParameterKeys.radius: radius,
-            GoogleConstants.ParameterKeys.placeType: type,
-            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces,
-            GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds
-        ]
-        
-        if CLLocationCoordinate2DIsValid(coordinate) {
-            parameters[GoogleConstants.ParameterKeys.location] = "\(coordinate.latitude),\(coordinate.longitude)"
-        }
-        
-        if let text = text, text.count > 0, text != " " {
-            parameters[GoogleConstants.ParameterKeys.name] = text
-        }
-        
-        return parameters
-    }
-    
-    func autocomplete(for input: String, token: String) -> Observable<[PlacesPredictions]> {
+    func autocomplete(input: String, token: String) -> Observable<[PlacesPredictions]> {
         if input.count < AutocompleteConfig.autocompletionMinChars {
             let filterStrings: [PlacesPredictions] = []
             return Observable.from(optional: filterStrings)
         }
         
-        let queryItems = buildAutoCompleteQueryItems(for: input, token: token)
+        let sharedClient = shared.GoogleClient()
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
-            GoogleConstants.UrlComponents.pathAutocomplete, withQueryItems: queryItems)
+        let queryItems = sharedClient.buildAutoCompleteRequestParams(input: input, token: token)
+        let urlComponents = GoogleConstants.UrlComponents()
+        
+        let url = WebClient.sharedInstance.createUrlWithKotlinQueryItems(
+            forScheme: urlComponents.urlProtocol,
+            forHost: urlComponents.domain,
+            forMethod: urlComponents.pathAutocomplete,
+            withQueryItems: queryItems
+        )
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
@@ -117,24 +57,19 @@ class GoogleClient {
         }
     }
     
-    private func buildAutoCompleteQueryItems(for input: String, token: String) -> [String: String] {
-        let parameters = [
-            //GoogleConstants.ParameterKeys.radius: GoogleConstants.ParameterValues.radius,
-            GoogleConstants.ParameterKeys.types: GoogleConstants.ParameterValues.autocompletePlaceType,
-            GoogleConstants.ParameterKeys.input: input,
-            GoogleConstants.ParameterKeys.sessionToken: token,
-            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces,
-            //GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds
-        ]
+    func placeDetail(placeId: String, token: String) -> Observable<PlacesDetailsResponse?> {
+        let sharedClient = shared.GoogleClient()
         
-        return parameters
-    }
-    
-    func placeDetail(for placeId: String, token: String) -> Observable<PlacesDetailsResponse?> {
-        let queryItems = buildPlaceDetailQueryItems(for: placeId, token: token)
+        let queryItems = sharedClient.buildPlaceDetailRequestParams(placeId: placeId, token: token)
+        let urlComponents = GoogleConstants.UrlComponents()
         
-        let url = WebClient.sharedInstance.createUrl(forScheme: GoogleConstants.UrlComponents.urlProtocol, forHost: GoogleConstants.UrlComponents.domain, forMethod:
-            GoogleConstants.UrlComponents.pathPlaceDetail, withQueryItems: queryItems)
+        let url = WebClient.sharedInstance.createUrlWithKotlinQueryItems(
+            forScheme: urlComponents.urlProtocol,
+            forHost: urlComponents.domain,
+            forMethod:
+            urlComponents.pathPlaceDetail,
+            withQueryItems: queryItems
+        )
         
         let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
         
@@ -150,16 +85,5 @@ class GoogleClient {
                 return nil
             }
         }
-    }
-    
-    private func buildPlaceDetailQueryItems(for placeId: String, token: String) -> [String: String] {
-        let parameters = [
-            GoogleConstants.ParameterKeys.placeId: placeId,
-            GoogleConstants.ParameterKeys.fields: GoogleConstants.ParameterValues.placeDetailFields,
-            GoogleConstants.ParameterKeys.sessionToken: token,
-            GoogleConstants.ParameterKeys.key: SecretConstants.apiKeyGooglePlaces
-        ]
-        
-        return parameters
     }
 }

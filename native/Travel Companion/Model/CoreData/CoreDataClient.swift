@@ -9,6 +9,7 @@
 import CoreData
 import Foundation
 import GooglePlaces
+import shared
 
 class CoreDataClient {
     

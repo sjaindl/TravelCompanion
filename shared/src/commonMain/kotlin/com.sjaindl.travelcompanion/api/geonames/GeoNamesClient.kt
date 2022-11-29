@@ -1,9 +1,9 @@
 package com.sjaindl.travelcompanion.api.geonames
 
+import com.sjaindl.travelcompanion.SecretConstants
 import com.sjaindl.travelcompanion.api.HttpClientBuilder
 import com.sjaindl.travelcompanion.api.HttpResponseHandler
 import com.sjaindl.travelcompanion.api.logError
-import com.sjaindl.travelcompanion.SecretConstants
 import com.sjaindl.travelcompanion.util.Mockable
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -19,18 +19,18 @@ class GeoNamesClient() {
         .build()
 
     suspend fun fetchCountryCode(latitude: Double, longitude: Double): String? {
-        val urlComponents = GeoNamesConstants.UrlComponents()
+        val urlComponents = GeoNamesConstants.UrlComponents
         val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}/"
 
         val response = HttpResponseHandler(client).request(
             baseUrl = baseUrl,
-            urlString = GeoNamesConstants.UrlComponents().path,
+            urlString = urlComponents.path,
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = listOf(
-                Pair(GeoNamesConstants.ParameterKeys().latitude, latitude),
-                Pair(GeoNamesConstants.ParameterKeys().longitude, longitude),
-                Pair(GeoNamesConstants.ParameterKeys().username, SecretConstants().userNameGeoNames)
+                Pair(GeoNamesConstants.ParameterKeys.latitude, latitude),
+                Pair(GeoNamesConstants.ParameterKeys.longitude, longitude),
+                Pair(GeoNamesConstants.ParameterKeys.username, SecretConstants.userNameGeoNames)
             )
         )
 
