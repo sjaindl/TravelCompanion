@@ -1,19 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="3"
+        tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/explore"
+            layout="@layout/main_menu_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            bind:item="@{exploreItem}" />
+
+        <include
+            android:id="@+id/plan"
+            layout="@layout/main_menu_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            bind:item="@{planItem}" />
+
+        <include
+            android:id="@+id/remember"
+            layout="@layout/main_menu_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            bind:item="@{rememberItem}" />
+    </LinearLayout>
+
+    <!-- Alternative: RelativeLayout to align first top, second center, last bottom  -->
+    <!--
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="3"
+            tools:context=".MainActivity">
+
+            <include
+                android:id="@+id/explore"
+                layout="@layout/main_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                bind:item="@{exploreItem}" />
+
+            <include
+                android:id="@+id/plan"
+                layout="@layout/main_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                bind:item="@{planItem}" />
+
+            <include
+                android:id="@+id/remember"
+                layout="@layout/main_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                bind:item="@{rememberItem}" />
+        </RelativeLayout>
+    -->
+    <data>
+
+        <variable
+            name="exploreItem"
+            type="com.sjaindl.travelcompanion.MainMenuItem" />
+
+        <variable
+            name="planItem"
+            type="com.sjaindl.travelcompanion.MainMenuItem" />
+
+        <variable
+            name="rememberItem"
+            type="com.sjaindl.travelcompanion.MainMenuItem" />
+    </data>
+
+</layout>

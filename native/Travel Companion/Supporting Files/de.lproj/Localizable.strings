@@ -107,7 +107,6 @@
 "travelAgency" = "Reiseagentur";
 "zoo" = "Zoo";
 "planTrip" = "Reise planen";
-"changeDate" = "Datum ändern";
 "welcome" = "Willkommen, %@";
 "about" = "Über uns";
 "settings" = "Einstellungen";
@@ -122,7 +121,6 @@
 "logout" = "Ausloggen";
 "deleteAccount" = "Konto löschen";
 "yesDelete" = "Ja, löschen";
-"cancel" = "Abbrechen";
 "pleaseWait" = "Bitte warten…";
 "accountDeleted" = "Konto löschen";
 "ok" = "OK";
@@ -151,7 +149,6 @@
 "url" = "URL:";
 "type" = "Typ:";
 "location" = "Standort";
-"rating" = "Rating";
 "capital" = "Hauptstadt:";
 "language" = "Sprache:";
 "currency" = "Währung:";
