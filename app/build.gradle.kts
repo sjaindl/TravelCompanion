@@ -86,6 +86,7 @@ val firebaseBomVersion: String by extra
 val slf4jVersion: String by extra
 val logbackVersion: String by extra
 val kotlinxDatetimeVersion: String by extra
+val picassoVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -176,4 +177,7 @@ dependencies {
 
     // https://github.com/Kotlin/kotlinx-datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
+
+    // https://github.com/square/picasso
+    implementation ("com.squareup.picasso:picasso:$picassoVersion")
 }

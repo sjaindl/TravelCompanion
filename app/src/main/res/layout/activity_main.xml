@@ -1,88 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:weightSum="3"
-        tools:context=".MainActivity">
+        android:background="@color/darkGrey">
 
-        <include
-            android:id="@+id/explore"
-            layout="@layout/main_menu_item"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            bind:item="@{exploreItem}" />
-
-        <include
-            android:id="@+id/plan"
-            layout="@layout/main_menu_item"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            bind:item="@{planItem}" />
-
-        <include
-            android:id="@+id/remember"
-            layout="@layout/main_menu_item"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            bind:item="@{rememberItem}" />
-    </LinearLayout>
-
-    <!-- Alternative: RelativeLayout to align first top, second center, last bottom  -->
-    <!--
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="com.sjaindl.travelcompanion.MainFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="3"
-            tools:context=".MainActivity">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
 
-            <include
-                android:id="@+id/explore"
-                layout="@layout/main_menu_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                bind:item="@{exploreItem}" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/plan"
-                layout="@layout/main_menu_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                bind:item="@{planItem}" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/AppTheme.Toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/remember"
-                layout="@layout/main_menu_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                bind:item="@{rememberItem}" />
-        </RelativeLayout>
-    -->
-    <data>
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/navigationBarText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="@string/app_name" />
 
-        <variable
-            name="exploreItem"
-            type="com.sjaindl.travelcompanion.MainMenuItem" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/grid_32"
+                    android:layout_height="@dimen/grid_32"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/grid_16"
+                    app:cardCornerRadius="@dimen/grid_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        <variable
-            name="planItem"
-            type="com.sjaindl.travelcompanion.MainMenuItem" />
+                    <com.sjaindl.travelcompanion.settings.UserIconView
+                        android:id="@+id/imageViewUserIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_user_placeholder" />
 
-        <variable
-            name="rememberItem"
-            type="com.sjaindl.travelcompanion.MainMenuItem" />
-    </data>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

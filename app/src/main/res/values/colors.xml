@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#5CC9BA</color> <!-- 008577 -->
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="darkGrey">#555555</color>
     <color name="colorMain">#5CC9BA</color>
+    <color name="accentTint">#213856</color>
+    <color name="accentFill">#f7d107</color>
+    <color name="navigationBarText">#999999</color>
+    <color name="primaryDarkFill">#3C4559</color>
+    <color name="primaryFill">#236bc1</color>
+    <color name="defaultBackgroundFill">#ffffff</color>
+    <color name="textLight">#ffffff</color>
+    <color name="appBarBackground">#808080</color>
 </resources>

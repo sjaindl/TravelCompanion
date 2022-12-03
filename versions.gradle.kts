@@ -11,6 +11,7 @@ mapOf(
     "coreTestingVersion" to "2.1.0",
     "constraintLayoutVersion" to "2.1.4",
     "recyclerViewVersion" to "1.2.1",
+    "picassoVersion" to "2.8",
 
     "googleLocationVersion" to "17.0.0",
     "firebaseBomVersion" to "29.0.3",

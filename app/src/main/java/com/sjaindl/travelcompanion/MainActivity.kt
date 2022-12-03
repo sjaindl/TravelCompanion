@@ -3,8 +3,6 @@ package com.sjaindl.travelcompanion
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.databinding.DataBindingUtil
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
@@ -21,19 +19,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding.exploreItem = MainMenuItem(
-            getString(R.string.explore), getString(R.string.exploreDetail), AppCompatResources.getDrawable(this, R.drawable.explore)
-        )
-
-        binding.planItem = MainMenuItem(
-            getString(R.string.plan), getString(R.string.planDetail), AppCompatResources.getDrawable(this, R.drawable.plan)
-        )
-
-        binding.rememberItem = MainMenuItem(
-            getString(R.string.remember), getString(R.string.rememberDetail), AppCompatResources.getDrawable(this, R.drawable.remember)
-        )
+        setSupportActionBar(binding.toolbar)
 
         //findViewById<TextView>(R.id.main_text).text = createApplicationScreenMessage()
 

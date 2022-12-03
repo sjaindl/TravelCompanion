@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="36dp"
+                android:height="36dp" />
+            <solid android:color="@color/colorPrimary" />
+        </shape>
+    </item>
+
+    <item
+        android:width="12dp"
+        android:height="14dp"
+        android:drawable="@drawable/ic_user"
+        android:gravity="center" />
+</layer-list>
