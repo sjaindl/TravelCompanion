@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val googleMapsApiKey: String = gradleLocalProperties(rootDir).getProperty("googleMapsApiKey")
+        manifestPlaceholders["googleMapsApiKey"] = googleMapsApiKey
 
         /*
         kapt {
@@ -87,6 +92,8 @@ val slf4jVersion: String by extra
 val logbackVersion: String by extra
 val kotlinxDatetimeVersion: String by extra
 val picassoVersion: String by extra
+val mapsVersion: String by extra
+val googleMapsUtilsVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -179,5 +186,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
 
     // https://github.com/square/picasso
-    implementation ("com.squareup.picasso:picasso:$picassoVersion")
+    implementation("com.squareup.picasso:picasso:$picassoVersion")
+
+    implementation("com.google.android.gms:play-services-maps:$mapsVersion")
+    implementation("com.google.maps.android:android-maps-utils:$googleMapsUtilsVersion")
 }
