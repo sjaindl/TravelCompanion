@@ -41,7 +41,10 @@ mapOf(
     "kotlinxSerializationVersion" to "1.4.1",
 
     "sqlDelightVersion" to "1.5.3",
-    "kotlinxDatetimeVersion" to "0.4.0"
+    "kotlinxDatetimeVersion" to "0.4.0",
+
+    "mapsVersion" to "18.1.0",
+    "googleMapsUtilsVersion" to "2.4.0"
 ).forEach { (name, version) ->
     project.extra.set(name, version)
 }

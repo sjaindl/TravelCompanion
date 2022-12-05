@@ -1,27 +1,4 @@
 <resources>
 
-    <!-- Base application theme. -->
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.Toolbar" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-
-        <item name="android:background">@color/appBarBackground</item>
-
-        <item name="android:textColorPrimary">@color/navigationBarText</item>
-        <item name="android:textColorSecondary">@color/navigationBarText</item>
-        <item name="actionMenuTextColor">@color/navigationBarText</item>
-
-        <item name="colorSurface">@color/defaultBackgroundFill</item>
-
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:alertDialogStyle">@style/Theme.AppCompat.Light.Dialog.Alert</item>
-    </style>
 
 </resources>

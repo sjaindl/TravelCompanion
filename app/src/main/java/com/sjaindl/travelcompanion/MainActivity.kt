@@ -1,6 +1,5 @@
 package com.sjaindl.travelcompanion
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
@@ -9,8 +8,6 @@ import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
-data class MainMenuItem(val title: String, val subtitle: String, val drawable: Drawable?)
 
 class MainActivity : AppCompatActivity() {
 

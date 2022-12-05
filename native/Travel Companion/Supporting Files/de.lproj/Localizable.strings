@@ -163,6 +163,7 @@
 "blocks" = "Regionale Blöcke:";
 "country" = "Land";
 "changeDate" = "Datum ändern";
+"addPlaceSearch" = "Ort hinzufügen";
 "searchRadius" = "Suchradius: ";
 "select" = "Auswählen";
 "distance" = "Entfernung: ";

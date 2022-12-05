@@ -155,6 +155,7 @@
     <string name="blocks">Regionale Blöcke:</string>
     <string name="country">Land</string>
     <string name="changeDate">Datum ändern</string>
+    <string name="addPlaceSearch">Ort hinzufügen</string>
     <string name="searchRadius">Suchradius:</string>
     <string name="select">Auswählen</string>
     <string name="distance">Entfernung:</string>
