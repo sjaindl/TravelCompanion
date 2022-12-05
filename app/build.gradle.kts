@@ -56,13 +56,6 @@ android {
     namespace = "com.sjaindl.travelcompanion"
 }
 
-/*
-configurations.all {
-    resolutionStrategy.force("org.antlr:antlr4-runtime:4.5.3")
-    resolutionStrategy.force("org.antlr:antlr4-tool:4.5.3")
-}
- */
-
 //https://proandroiddev.com/dependencies-versions-in-gradle-kotlin-dsl-a8db15cedee2
 apply(from = "../versions.gradle.kts")
 val kotlinVersion: String by extra
