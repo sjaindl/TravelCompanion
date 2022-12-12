@@ -29,7 +29,11 @@ class ExploreActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
 
-            navController.navigate(R.id.action_explore_fragment_to_search_place_fragment)
+            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment(
+                15.4f, 10000.0f, 47.0f
+            )
+
+            navController.navigate(action)
         }
 
         navController.setGraph(R.navigation.navigation_explore, intent.extras)

@@ -21,7 +21,6 @@ data class MapLocationData(
 )
 
 class ExploreFragment : Fragment(), OnMapReadyCallback {
-
     private var binding: FragmentExploreBinding? = null
 
     private val latitude: Float?
@@ -32,8 +31,6 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
 
     private val radius: Float?
         get() = arguments?.getFloat(RADIUS)
-
-    private lateinit var mapView: MapView
 
     companion object {
         const val LATITUDE = "latitude"
@@ -55,6 +52,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         binding = FragmentExploreBinding.inflate(inflater, container, false)
 
         val mapFragment = childFragmentManager.findFragmentByTag("tag_map") as? SupportMapFragment
