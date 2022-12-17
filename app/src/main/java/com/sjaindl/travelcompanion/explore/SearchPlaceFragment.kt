@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
@@ -19,7 +21,6 @@ import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class SearchPlaceFragment : Fragment() {
     private var binding: FragmentSearchPlaceBinding? = null
@@ -123,7 +124,11 @@ class SearchPlaceFragment : Fragment() {
     }
 
     private fun onClickItem(item: SearchPlaceViewHolderType.Item) {
-        Snackbar.make(requireView(), "Add ${item.description}", Snackbar.LENGTH_LONG).show()
+        // Alternative using nav graph backstack:
+        // findNavController().currentBackStackEntry?.savedStateHandle?.set("place", item.description)
+        setFragmentResult("place", bundleOf("place" to item.description))
+
+        findNavController().popBackStack()
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {

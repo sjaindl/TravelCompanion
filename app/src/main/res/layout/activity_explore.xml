@@ -43,16 +43,5 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="32dp"
-            android:contentDescription="@string/search"
-            app:srcCompat="@android:drawable/ic_menu_search" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -24,18 +24,6 @@ class ExploreActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupActionBar()
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Add place", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
-
-            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment(
-                15.4f, 10000.0f, 47.0f
-            )
-
-            navController.navigate(action)
-        }
-
         navController.setGraph(R.navigation.navigation_explore, intent.extras)
     }
 

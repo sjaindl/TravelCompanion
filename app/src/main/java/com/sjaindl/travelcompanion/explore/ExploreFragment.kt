@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
 
@@ -60,6 +63,30 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
         mapFragment?.getMapAsync(this)
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding?.fab?.setOnClickListener { view ->
+            Snackbar.make(view, "Add place", Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.fab)
+                .setAction("Action", null)
+                .show()
+
+            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment(
+                15.4f, 10000.0f, 47.0f
+            )
+
+            findNavController().navigate(action)
+        }
+
+        setFragmentResultListener("place") { key, bundle ->
+            Snackbar.make(requireView(), "Picked $key via fragment result", Snackbar.LENGTH_LONG).show()
+        }
+
+        // Alternative using nav graph backstack:
+        //findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("place")?.observe(viewLifecycleOwner) {
     }
 
     override fun onDestroyView() {
