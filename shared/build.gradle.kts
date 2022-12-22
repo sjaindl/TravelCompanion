@@ -22,6 +22,7 @@ val sqlDelightVersion: String by extra
 val kotlinxDatetimeVersion: String by extra
 val kotlinxSerializationVersion: String by extra
 val jUnitVersion: String by extra
+val firebaseVersion: String by extra
 
 /*
 sqldelight {
@@ -68,6 +69,11 @@ kotlin {
 
                 // https://github.com/Kotlin/kotlinx.serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+
+                // https://github.com/GitLiveApp/firebase-kotlin-sdk
+                implementation("dev.gitlive:firebase-auth:$firebaseVersion")
+                implementation("dev.gitlive:firebase-config:$firebaseVersion")
+                implementation("dev.gitlive:firebase-firestore:$firebaseVersion")
 
                 // https://arkivanov.github.io/Decompose/getting-started/installation/
                 //implementation("com.arkivanov.decompose:decompose:0.5.1")

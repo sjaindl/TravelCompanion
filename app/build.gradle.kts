@@ -87,6 +87,7 @@ val kotlinxDatetimeVersion: String by extra
 val picassoVersion: String by extra
 val mapsVersion: String by extra
 val googleMapsUtilsVersion: String by extra
+val kotlinxSerializationVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -145,6 +146,9 @@ dependencies {
 
     // https://github.com/JakeWharton/timber
     implementation("com.jakewharton.timber:timber:$timberVersion")
+
+    // https://github.com/Kotlin/kotlinx.serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
     // https://github.com/square/leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion")

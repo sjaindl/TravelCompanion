@@ -44,7 +44,8 @@ mapOf(
     "kotlinxDatetimeVersion" to "0.4.0",
 
     "mapsVersion" to "18.1.0",
-    "googleMapsUtilsVersion" to "2.4.0"
+    "googleMapsUtilsVersion" to "2.4.0",
+    "firebaseVersion" to "1.6.2"
 ).forEach { (name, version) ->
     project.extra.set(name, version)
 }
