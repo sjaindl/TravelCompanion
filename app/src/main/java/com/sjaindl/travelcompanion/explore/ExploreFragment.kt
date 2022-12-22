@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -14,8 +16,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.api.google.GoogleClient
+import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
+import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 data class MapLocationData(
     val latitude: Double,
@@ -25,6 +32,7 @@ data class MapLocationData(
 
 class ExploreFragment : Fragment(), OnMapReadyCallback {
     private var binding: FragmentExploreBinding? = null
+    private var googleMap: GoogleMap? = null
 
     private val latitude: Float?
         get() = arguments?.getFloat(LATITUDE)
@@ -34,6 +42,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
 
     private val radius: Float?
         get() = arguments?.getFloat(RADIUS)
+
+    private val sessionToken = randomStringByKotlinRandom(32)
 
     companion object {
         const val LATITUDE = "latitude"
@@ -68,7 +78,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.fab?.setOnClickListener { view ->
+        binding?.fab?.setOnClickListener {
             Snackbar.make(view, "Add place", Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null)
@@ -81,12 +91,32 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
             findNavController().navigate(action)
         }
 
-        setFragmentResultListener("place") { key, bundle ->
-            Snackbar.make(requireView(), "Picked $key via fragment result", Snackbar.LENGTH_LONG).show()
+        setFragmentResultListener(SearchPlaceFragment.PLACE_RESULT) { key, bundle ->
+            val encodedPlaces = bundle.getString(SearchPlaceFragment.PLACE_RESULT) ?: return@setFragmentResultListener
+            val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
+            val placeId = placesPredictions.placeId ?: return@setFragmentResultListener
+
+            Snackbar.make(requireView(), "Picked ${placesPredictions.description} via fragment result of key $key", Snackbar.LENGTH_LONG)
+                .show()
+
+            lifecycleScope.launch {
+                fetchPlaceDetails(placeId)
+            }
         }
 
         // Alternative using nav graph backstack:
         //findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("place")?.observe(viewLifecycleOwner) {
+    }
+
+    private suspend fun fetchPlaceDetails(placeId: String) {
+        val details = GoogleClient().placeDetail(placeId, sessionToken)
+        val location = details.result.geometry.location
+        googleMap?.addMarker(
+            MarkerOptions()
+                .position(LatLng(location.lat, location.lng))
+        )
+
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
     }
 
     override fun onDestroyView() {
@@ -95,6 +125,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        this.googleMap = googleMap
+
         val latitude = latitude?.toDouble() ?: return
         val longitude = longitude?.toDouble() ?: return
         val radius = radius?.toDouble() ?: return

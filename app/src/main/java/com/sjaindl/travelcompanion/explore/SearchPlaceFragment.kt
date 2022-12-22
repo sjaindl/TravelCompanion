@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GoogleClient
-import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class SearchPlaceFragment : Fragment() {
     private var binding: FragmentSearchPlaceBinding? = null
@@ -46,6 +47,7 @@ class SearchPlaceFragment : Fragment() {
         const val LATITUDE = "latitude"
         const val LONGITUDE = "longitude"
         const val RADIUS = "radius"
+        const val PLACE_RESULT = "place"
 
         fun newInstance(mapLocationData: MapLocationData): SearchPlaceFragment {
             return SearchPlaceFragment().apply {
@@ -94,6 +96,7 @@ class SearchPlaceFragment : Fragment() {
                 val radius = radius?.toDouble() ?: return
 
                 lifecycleScope.launch {
+                    /*
                     val result = GoogleClient().searchPlaces(
                         s.toString(), latitude, longitude, GooglePlaceType.PointOfInterest.key, radius.toString()
                     )
@@ -102,13 +105,13 @@ class SearchPlaceFragment : Fragment() {
                         place.name
                     }
 
+                     */
+
                     val autocompleteResult = GoogleClient().autocomplete(
                         s.toString(), sessionToken
                     )
 
-                    val suggestions = autocompleteResult?.predictions?.map {
-                        it.description
-                    } ?: emptyList()
+                    val suggestions = autocompleteResult?.predictions ?: emptyList()
 
                     requireActivity().runOnUiThread {
                         println(suggestions)
@@ -124,9 +127,10 @@ class SearchPlaceFragment : Fragment() {
     }
 
     private fun onClickItem(item: SearchPlaceViewHolderType.Item) {
+        val encodedResult = Json.encodeToString(item.placesPredictions)
+        setFragmentResult(PLACE_RESULT, bundleOf(PLACE_RESULT to encodedResult))
         // Alternative using nav graph backstack:
         // findNavController().currentBackStackEntry?.savedStateHandle?.set("place", item.description)
-        setFragmentResult("place", bundleOf("place" to item.description))
 
         findNavController().popBackStack()
     }

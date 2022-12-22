@@ -19,7 +19,7 @@ data class PlacesPredictions(
     var terms: List<PlacesAutoCompleteTerm>
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class PlacesAutoCompleteTerm(
     var offset: Int, var value: String
 )

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.databinding.ViewholderSearchplaceItemBinding
 import kotlin.reflect.KClass
 
@@ -51,7 +52,7 @@ class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType.Item) -
 }
 
 sealed class SearchPlaceViewHolderType {
-    class Item(val description: String) : SearchPlaceViewHolderType()
+    class Item(val placesPredictions: PlacesPredictions) : SearchPlaceViewHolderType()
 }
 
 class SearchPlaceDiffUtilCallback : DiffUtil.ItemCallback<SearchPlaceViewHolderType>() {
@@ -61,7 +62,7 @@ class SearchPlaceDiffUtilCallback : DiffUtil.ItemCallback<SearchPlaceViewHolderT
 
     override fun areContentsTheSame(oldItem: SearchPlaceViewHolderType, newItem: SearchPlaceViewHolderType): Boolean {
         when (oldItem) {
-            is SearchPlaceViewHolderType.Item -> return newItem is SearchPlaceViewHolderType.Item && oldItem.description == newItem.description
+            is SearchPlaceViewHolderType.Item -> return newItem is SearchPlaceViewHolderType.Item && oldItem.placesPredictions == newItem.placesPredictions
         }
     }
 }
@@ -80,7 +81,7 @@ class SearchPlaceItemViewHolder(
     }
 
     fun configure(item: SearchPlaceViewHolderType.Item?) {
-        binding.viewholderSearchplaceText.text = item?.description
+        binding.viewholderSearchplaceText.text = item?.placesPredictions?.description
         this.item = item
         binding.executePendingBindings()
     }
