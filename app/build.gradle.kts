@@ -6,6 +6,7 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -41,6 +42,14 @@ android {
 
     dataBinding {
         enable = true
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0-alpha02"
     }
 
     // REMOVES ERROR Cannot inline bytecode built with JVM target 1.8 into bytecode that is being built with JVM target 1.6
@@ -87,6 +96,8 @@ val kotlinxDatetimeVersion: String by extra
 val picassoVersion: String by extra
 val mapsVersion: String by extra
 val googleMapsUtilsVersion: String by extra
+val ktorSerializationVersion: String by extra
+val kotlinxSerializationVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -146,6 +157,9 @@ dependencies {
     // https://github.com/JakeWharton/timber
     implementation("com.jakewharton.timber:timber:$timberVersion")
 
+    // https://github.com/Kotlin/kotlinx.serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+
     // https://github.com/square/leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion")
 
@@ -183,4 +197,25 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-maps:$mapsVersion")
     implementation("com.google.maps.android:android-maps-utils:$googleMapsUtilsVersion")
+
+    // Jetpack Compose:
+    val composeBom = platform("androidx.compose:compose-bom:2022.12.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation("androidx.compose.material3:material3")
+    // Android Studio Preview support
+
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    // UI Tests
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Optional - Add full set of material icons
+    implementation("androidx.compose.material:material-icons-extended")
+    // Optional - Integration with activities
+    implementation("androidx.activity:activity-compose:1.6.1")
+    // Optional - Integration with ViewModels
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    // Optional - Integration with LiveData
+    implementation("androidx.compose.runtime:runtime-livedata")
 }

@@ -33,5 +33,11 @@
             android:layout_marginBottom="32dp"
             android:contentDescription="@string/search"
             app:srcCompat="@android:drawable/ic_menu_search" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

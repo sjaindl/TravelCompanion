@@ -8,9 +8,8 @@
     <color name="accentTint">#213856</color>
     <color name="accentFill">#f7d107</color>
     <color name="navigationBarText">#999999</color>
-    <color name="primaryDarkFill">#3C4559</color>
     <color name="primaryFill">#236bc1</color>
     <color name="defaultBackgroundFill">#ffffff</color>
     <color name="textLight">#ffffff</color>
-    <color name="appBarBackground">#808080</color>
+    <color name="lightGrey">#DDD7D7</color>
 </resources>

@@ -1,13 +1,12 @@
 package com.sjaindl.travelcompanion.explore
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
@@ -60,7 +59,11 @@ class SearchPlaceFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentSearchPlaceBinding.inflate(inflater, container, false)
@@ -79,51 +82,48 @@ class SearchPlaceFragment : Fragment() {
     }
 
     private fun setupAutocompletion() {
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, emptyArray())
+        val adapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            emptyArray()
+        )
         binding?.autocompleteCountry?.setAdapter(adapter)
 
-        binding?.autocompleteCountry?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
+        binding?.autocompleteCountry?.doOnTextChanged { text, start, before, count ->
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            // update places
+            val latitude = latitude?.toDouble() ?: return@doOnTextChanged
+            val longitude = longitude?.toDouble() ?: return@doOnTextChanged
+            val radius = radius?.toDouble() ?: return@doOnTextChanged
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // update places
-                val latitude = latitude?.toDouble() ?: return
-                val longitude = longitude?.toDouble() ?: return
-                val radius = radius?.toDouble() ?: return
+            lifecycleScope.launch {
+                /*
+                val result = GoogleClient().searchPlaces(
+                    s.toString(), latitude, longitude, GooglePlaceType.PointOfInterest.key, radius.toString()
+                )
 
-                lifecycleScope.launch {
-                    /*
-                    val result = GoogleClient().searchPlaces(
-                        s.toString(), latitude, longitude, GooglePlaceType.PointOfInterest.key, radius.toString()
-                    )
+                val names = result.results.forEach { place ->
+                    place.name
+                }
 
-                    val names = result.results.forEach { place ->
-                        place.name
+                 */
+
+                val autocompleteResult = GoogleClient().autocomplete(
+                    text.toString(), sessionToken
+                )
+
+                val suggestions = autocompleteResult?.predictions ?: emptyList()
+
+                requireActivity().runOnUiThread {
+                    println(suggestions)
+
+                    val viewHolders = suggestions.map {
+                        SearchPlaceViewHolderType.Item(it)
                     }
-
-                     */
-
-                    val autocompleteResult = GoogleClient().autocomplete(
-                        s.toString(), sessionToken
-                    )
-
-                    val suggestions = autocompleteResult?.predictions ?: emptyList()
-
-                    requireActivity().runOnUiThread {
-                        println(suggestions)
-
-                        val viewHolders = suggestions.map {
-                            SearchPlaceViewHolderType.Item(it)
-                        }
-                        searchPlaceAdapter.submitList(viewHolders)
-                    }
+                    searchPlaceAdapter.submitList(viewHolders)
                 }
             }
-        })
+        }
     }
 
     private fun onClickItem(item: SearchPlaceViewHolderType.Item) {
@@ -137,7 +137,12 @@ class SearchPlaceFragment : Fragment() {
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addItemDecoration(CustomDividerItemDecoration(requireContext(), R.drawable.divider))
+        recyclerView.addItemDecoration(
+            CustomDividerItemDecoration(
+                requireContext(),
+                R.drawable.divider
+            )
+        )
         recyclerView.adapter = searchPlaceAdapter
     }
 }

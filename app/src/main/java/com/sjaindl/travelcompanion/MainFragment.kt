@@ -32,7 +32,9 @@ class MainFragment : Fragment() {
         )
 
         fragmentBinding.planItem = MainMenuItem(
-            getString(R.string.plan), getString(R.string.planDetail), AppCompatResources.getDrawable(requireContext(), R.drawable.plan)
+            getString(R.string.plan),
+            getString(R.string.planDetail),
+            AppCompatResources.getDrawable(requireContext(), R.drawable.plan)
         )
 
         fragmentBinding.rememberItem = MainMenuItem(
@@ -53,9 +55,18 @@ class MainFragment : Fragment() {
     private fun setListeners() {
         val binding = binding ?: return
 
-        val exploreViews = listOf(binding.explore.mainTitle, binding.explore.mainSubtitle, binding.explore.imageView)
-        val planViews = listOf(binding.plan.mainTitle, binding.plan.mainSubtitle, binding.plan.imageView)
-        val rememberViews = listOf(binding.remember.mainTitle, binding.remember.mainSubtitle, binding.remember.imageView)
+        val exploreViews = listOf(
+            binding.explore.mainTitle,
+            binding.explore.mainSubtitle,
+            binding.explore.imageView
+        )
+        val planViews =
+            listOf(binding.plan.mainTitle, binding.plan.mainSubtitle, binding.plan.imageView)
+        val rememberViews = listOf(
+            binding.remember.mainTitle,
+            binding.remember.mainSubtitle,
+            binding.remember.imageView
+        )
 
         exploreViews.forEach {
             it.setOnClickListener {
@@ -77,7 +88,8 @@ class MainFragment : Fragment() {
     }
 
     private fun navigateToExplore() {
-        val action = MainFragmentDirections.actionMainFragmentToExploreActivity(20.0f, 50.0f, 1000.0f)
+        val action =
+            MainFragmentDirections.actionMainFragmentToExploreActivity(20.0f, 50.0f, 1000.0f)
         findNavController().navigate(action)
     }
 
