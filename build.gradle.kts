@@ -11,7 +11,7 @@ buildscript {
     val sqlDelightVersion: String by extra
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.android.tools.build:gradle:7.4.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion")
@@ -22,6 +22,8 @@ buildscript {
         classpath("com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion")
 
         classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
+
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
     }
 }
 
