@@ -1,0 +1,86 @@
+{
+  "name": "Saudi Arabia",
+  "topLevelDomain": [
+    ".sa"
+  ],
+  "alpha2Code": "SA",
+  "alpha3Code": "SAU",
+  "callingCodes": [
+    "966"
+  ],
+  "capital": "Riyadh",
+  "altSpellings": [
+    "SA",
+    "Kingdom of Saudi Arabia",
+    "Al-Mamlakah al-‘Arabiyyah as-Su‘ūdiyyah"
+  ],
+  "subregion": "Western Asia",
+  "region": "Asia",
+  "population": 34813867,
+  "latlng": [
+    25.0,
+    45.0
+  ],
+  "demonym": "Saudi Arabian",
+  "area": 2149690.0,
+  "timezones": [
+    "UTC+03:00"
+  ],
+  "borders": [
+    "IRQ",
+    "JOR",
+    "KWT",
+    "OMN",
+    "QAT",
+    "ARE",
+    "YEM"
+  ],
+  "nativeName": "العربية السعودية",
+  "numericCode": "682",
+  "flags": {
+    "svg": "https://flagcdn.com/sa.svg",
+    "png": "https://flagcdn.com/w320/sa.png"
+  },
+  "currencies": [
+    {
+      "code": "SAR",
+      "name": "Saudi riyal",
+      "symbol": "ر.س"
+    }
+  ],
+  "languages": [
+    {
+      "iso639_1": "ar",
+      "iso639_2": "ara",
+      "name": "Arabic",
+      "nativeName": "العربية"
+    }
+  ],
+  "translations": {
+    "br": "Arabia Saoudat",
+    "pt": "Arábia Saudita",
+    "nl": "Saoedi-Arabië",
+    "hr": "Saudijska Arabija",
+    "fa": "عربستان سعودی",
+    "de": "Saudi-Arabien",
+    "es": "Arabia Saudí",
+    "fr": "Arabie Saoudite",
+    "ja": "サウジアラビア",
+    "it": "Arabia Saudita",
+    "hu": "Szaúd-Arábia"
+  },
+  "flag": "https://flagcdn.com/sa.svg",
+  "regionalBlocs": [
+    {
+      "acronym": "AL",
+      "name": "Arab League",
+      "otherNames": [
+        "جامعة الدول العربية",
+        "Jāmiʻat ad-Duwal al-ʻArabīyah",
+        "League of Arab States"
+      ]
+    }
+  ],
+  "cioc": "KSA",
+  "independent": true
+}

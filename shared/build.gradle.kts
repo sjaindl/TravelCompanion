@@ -1,9 +1,9 @@
-val kotlin_version: String by extra
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.7.21"
     id("com.squareup.sqldelight")
+    id("com.goncalossilva.resources") version "0.2.5"
 
     // https://medium.com/21buttons-tech/mocking-kotlin-classes-with-mockito-the-fast-way-631824edd5ba
     id("kotlin-allopen")
@@ -13,6 +13,7 @@ plugins {
 }
 
 apply(from = "../versions.gradle.kts")
+val kotlin_version: String by extra
 val ktorVersion: String by extra
 val ktorSerializationVersion: String by extra
 val coroutineVersion: String by extra
@@ -21,15 +22,16 @@ val timberVersion: String by extra
 val sqlDelightVersion: String by extra
 val kotlinxDatetimeVersion: String by extra
 val kotlinxSerializationVersion: String by extra
+val resourcesGeneratorVersion: String by extra
+val okioVersion: String by extra
 val jUnitVersion: String by extra
+val kotlinxResources: String by extra
 
-/*
 sqldelight {
     database("TravelCompanionDatabase") {
         packageName = "com.sjaindl.travelcompanion.sqldelight"
     }
 }
- */
 
 kotlin {
     android()
@@ -41,6 +43,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            export("dev.icerock.moko:resources:$resourcesGeneratorVersion")
         }
     }
 
@@ -69,6 +72,12 @@ kotlin {
                 // https://github.com/Kotlin/kotlinx.serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
+                // https://github.com/icerockdev/moko-resources
+                implementation("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+
+                // https://github.com/square/okio
+                implementation("com.squareup.okio:okio:$okioVersion")
+
                 // https://arkivanov.github.io/Decompose/getting-started/installation/
                 //implementation("com.arkivanov.decompose:decompose:0.5.1")
             }
@@ -78,6 +87,10 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+
+                implementation("com.squareup.okio:okio-fakefilesystem:$okioVersion")
+                implementation("dev.icerock.moko:resources-test:$resourcesGeneratorVersion")
+                implementation("com.goncalossilva:resources:$kotlinxResources")
             }
         }
 
@@ -88,6 +101,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-gson:$ktorVersion")
 
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+                implementation("dev.icerock.moko:resources-compose:$resourcesGeneratorVersion")
             }
         }
 
@@ -111,6 +125,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                implementation("dev.icerock.moko:resources:$resourcesGeneratorVersion")
             }
         }
 

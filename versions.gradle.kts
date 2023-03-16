@@ -22,6 +22,7 @@ mapOf(
     "gsonVersion" to "2.9.1",
     "timberVersion" to "5.0.1",
     "okhttpVersion" to "4.10.0",
+    "coilVersion" to "2.2.2",
 
     "jetbrainsAnnotations" to "16.0.1",
 
@@ -42,9 +43,15 @@ mapOf(
 
     "sqlDelightVersion" to "1.5.3",
     "kotlinxDatetimeVersion" to "0.4.0",
+    "okioVersion" to "3.3.0",
+    "resourcesGeneratorVersion" to "0.20.1",
+    "kotlinxResources" to "0.2.5",
 
     "mapsVersion" to "18.1.0",
-    "googleMapsUtilsVersion" to "2.4.0"
+    "googleMapsUtilsVersion" to "2.4.0",
+
+    "accompanistVersion" to "0.28.0",
+    "composeNavigationVersion" to "2.5.3"
 ).forEach { (name, version) ->
     project.extra.set(name, version)
 }
