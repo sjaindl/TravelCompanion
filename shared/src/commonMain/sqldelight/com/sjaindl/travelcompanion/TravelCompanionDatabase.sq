@@ -1,0 +1,142 @@
+import com.sjaindl.travelcompanion.model.Currency;
+import com.sjaindl.travelcompanion.model.Flag;
+import com.sjaindl.travelcompanion.model.Language;
+import com.sjaindl.travelcompanion.model.RegionalBlock;
+import kotlin.collections.List;
+import kotlin.collections.Map;
+import kotlinx.datetime.Instant;
+
+CREATE TABLE Pin (
+id INTEGER NOT NULL PRIMARY KEY,
+address TEXT,
+country TEXT,
+countryCode TEXT,
+creationDate INTEGER AS Instant NOT NULL,
+latitude REAL,
+longitude REAL,
+name TEXT,
+phoneNumber TEXT,
+placeId TEXT,
+rating REAL,
+url TEXT
+);
+
+CREATE TABLE Country (
+countryCode TEXT NOT NULL PRIMARY KEY,
+name TEXT,
+topLevelDomain TEXT AS List<String>,
+alpha2Code TEXT,
+alpha3Code TEXT,
+callingCodes TEXT AS List<String>,
+capital TEXT,
+altSpellings TEXT AS List<String>,
+subregion TEXT,
+region TEXT,
+population INTEGER AS Integer,
+latlng TEXT AS List<Double>,
+demonym TEXT,
+area REAL AS Float,
+gini REAL AS Float,
+timezones TEXT AS List<String>,
+borders TEXT AS List<String>,
+nativeName TEXT,
+numericCode TEXT,
+-- flag_id TEXT,
+-- currency_id TEXT,
+-- language_id TEXT,
+flags TEXT AS Flag,
+currency TEXT AS List<Currency>,
+language TEXT AS List<Language>,
+translations TEXT AS Map<String, String>,
+flag TEXT,
+-- regional_block_id TEXT,
+regionalBlock TEXT AS List<RegionalBlock>,
+cioc TEXT,
+independent INTEGER AS Boolean DEFAULT 0
+-- FOREIGN KEY (flag_id) REFERENCES Flag(id) ON DELETE CASCADE,
+-- FOREIGN KEY (language_id) REFERENCES Language(id) ON DELETE CASCADE,
+-- FOREIGN KEY (currency_id) REFERENCES Currency(id) ON DELETE CASCADE,
+-- FOREIGN KEY (regional_block_id) REFERENCES RegionalBlock(id) ON DELETE CASCADE
+);
+
+-- CREATE TABLE Flag (
+-- id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+-- svg TEXT,
+-- png TEXT
+-- );
+
+-- CREATE TABLE Language (
+-- id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+-- iso639_1 TEXT,
+-- iso639_2 TEXT,
+-- name TEXT,
+-- nativeName TEXT
+-- );
+
+-- CREATE TABLE RegionalBlock (
+-- id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+-- acronym TEXT,
+-- name TEXT
+-- );
+
+-- CREATE TABLE Currency (
+-- id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+-- code TEXT,
+-- name TEXT,
+-- symbold TEXT
+-- );
+
+insertPin:
+INSERT INTO Pin(id, address, country, countryCode, creationDate, latitude, longitude, name, phoneNumber, placeId, rating, url)
+VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updatePin:
+UPDATE Pin SET
+id = ?, address = ?, country = ?,countryCode = ?, creationDate = ?, latitude = ?, longitude = ?, name = ?, phoneNumber = ?, placeId = ?, rating = ?, url = ?
+WHERE id = ?;
+
+removeAllPins:
+DELETE FROM Pin;
+
+removePinById:
+DELETE FROM Pin
+WHERE id = ?;
+
+selectPinById:
+SELECT * FROM Pin
+WHERE id = ?;
+
+selectPinByName:
+SELECT * FROM Pin
+WHERE name = ?;
+
+selectLastId:
+SELECT MAX(id) FROM Pin;
+
+selectAllPins:
+SELECT * FROM Pin;
+
+insertCountry:
+INSERT INTO Country(countryCode, name, topLevelDomain, alpha2Code, alpha3Code, callingCodes,
+capital, altSpellings, subregion, region, population, latlng, demonym, area, gini, timezones,
+borders, nativeName, numericCode, flags, currency, language, translations, flag,
+regionalBlock, cioc, independent)
+VALUES(?, ?, ?, ?, ?, ?, ?,
+?, ?, ?, ?, ?, ?, ?, ?, ?,
+?, ?, ?, ?, ?, ?, ?, ?,
+?, ?, ?);
+
+updateCountry:
+UPDATE Country SET
+countryCode = ?, name = ?, topLevelDomain = ?, alpha2Code = ?, alpha3Code = ?, callingCodes = ?,
+capital = ?, altSpellings = ?, subregion = ?, region = ?, population = ?, latlng = ?, demonym = ?,
+area = ?, gini = ?, timezones = ?, borders = ?, nativeName = ?, numericCode = ?, flags = ?,
+currency = ?, language = ?, translations = ?, flag = ?, regionalBlock = ?, cioc = ?, independent = ?
+WHERE countryCode = ?;
+
+selectCountryByCountryCode:
+SELECT * FROM Country
+WHERE countryCode = ?;
+
+removeAllCountries:
+DELETE FROM Country;
