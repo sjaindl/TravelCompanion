@@ -25,7 +25,7 @@ class RestCountriesClient {
         )
 
         return try {
-            response.body()
+            Result.success(response.body())
         } catch (exception: NoTransformationFoundException) {
             Result.failure(exception)
         }
