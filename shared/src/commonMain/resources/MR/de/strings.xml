@@ -52,7 +52,7 @@
     <string name="north">N</string>
     <string name="west">W</string>
     <string name="east">O</string>
-    <string name="km_219aa621e9e5f2b32f81b2402a2a634f">km²</string>
+    <string name="km2">km²</string>
     <string name="noCountryData">Keine Länderdaten verfügbar</string>
     <string name="explore">Erkunden</string>
     <string name="showDetails">Details anzeigen</string>
@@ -107,8 +107,8 @@
     <string name="permissions">Berechtigungen</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="profile">Profil</string>
-    <string name="createAccount">Create account</string>
-    <string name="account">Account</string>
+    <string name="createAccount">Konto erstellen</string>
+    <string name="account">Konto</string>
     <string name="myProfile">Mein Profil</string>
     <string name="yourPrivacyMatters">Deine Privatsphäre ist uns sehr wichtig. Bitte werfe einen Blick in unsere [Datenschutzerklärung](%s), um zu sehen, wie deine Daten behandelt werden.</string>
     <string name="logout">Ausloggen</string>
@@ -151,7 +151,7 @@
     <string name="isoCode">ISO code:</string>
     <string name="callingCodes">Vorwahlen:</string>
     <string name="domains">Domains:</string>
-    <string name="_native">Heimischer Name:</string>
+    <string name="native_name">Heimischer Name:</string>
     <string name="blocks">Regionale Blöcke:</string>
     <string name="country">Land</string>
     <string name="changeDate">Datum ändern</string>
@@ -162,4 +162,10 @@
     <string name="noRating">Keine Bewertung</string>
     <string name="rating">Bewertung:</string>
     <string name="ratings">Bewertungen</string>
+
+    <string name="detail">Detail</string>
+    <string name="photos">Fotos</string>
+    <string name="info">Info</string>
+
+    <string name="couldNotRetrieveData">Daten konnten nicht ermittelt werden</string>
 </resources>

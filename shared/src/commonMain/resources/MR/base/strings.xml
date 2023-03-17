@@ -54,7 +54,7 @@
     <string name="north">N</string>
     <string name="west">W</string>
     <string name="east">E</string>
-    <string name="km_219aa621e9e5f2b32f81b2402a2a634f">km²</string>
+    <string name="km2">km²</string>
     <string name="noCountryData">No country data available.</string>
     <string name="explore">Explore</string>
     <string name="showDetails">Show details</string>
@@ -111,8 +111,8 @@
     <string name="permissions">Permissions</string>
     <string name="notifications">Notifications</string>
     <string name="profile">Profile</string>
-    <string name="createAccount">Konto erstellen</string>
-    <string name="account">Konto</string>
+    <string name="createAccount">Create account</string>
+    <string name="account">Account</string>
     <string name="myProfile">My Profile</string>
     <string name="yourPrivacyMatters">Your privacy matters. To see how your data is handled, don’t hesitate to read our open [Privacy Policy](%s).</string>
     <string name="logout">Logout</string>
@@ -155,7 +155,7 @@
     <string name="isoCode">ISO code:</string>
     <string name="callingCodes">Calling codes:</string>
     <string name="domains">Domains:</string>
-    <string name="_native">Native name:</string>
+    <string name="native_name">Native name:</string>
     <string name="blocks">Regional blocks:</string>
     <string name="country">Country</string>
     <string name="searchRadius">Search radius:</string>
@@ -163,11 +163,11 @@
     <string name="distance">Distance:</string>
     <string name="noRating">No rating</string>
     <string name="rating">Rating:</string>
-    <string name="ratings">ratings</string>
+    <string name="ratings">Ratings</string>
 
-    <!-- Strings used for testing fragments for navigation: Remove! -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="previous">Previous</string>
+    <string name="detail">Detail</string>
+    <string name="photos">Photos</string>
+    <string name="info">Info</string>
 
+    <string name="couldNotRetrieveData">Could not retrieve data</string>
 </resources>

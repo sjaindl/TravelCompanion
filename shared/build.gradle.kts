@@ -1,19 +1,22 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+
     kotlin("plugin.serialization") version "1.7.21"
     id("com.squareup.sqldelight")
-    id("com.goncalossilva.resources") version "0.2.5"
+
+    id("dev.icerock.mobile.multiplatform-resources")
+    // id("dev.icerock.mobile.multiplatform.ios-framework")
+    // id("com.goncalossilva.resources") version "0.2.5"
 
     // https://medium.com/21buttons-tech/mocking-kotlin-classes-with-mockito-the-fast-way-631824edd5ba
     id("kotlin-allopen")
 
     //kotlin("native.cocoapods")
-    //id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+    // id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
 }
 
 apply(from = "../versions.gradle.kts")
-val kotlin_version: String by extra
 val ktorVersion: String by extra
 val ktorSerializationVersion: String by extra
 val coroutineVersion: String by extra
@@ -138,6 +141,10 @@ kotlin {
 android {
     compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
+    // Needed for now as workaround for issue: https://github.com/icerockdev/moko-resources/issues/353
+    sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
+
     defaultConfig {
         minSdk = 24
         targetSdk = 33
@@ -145,6 +152,17 @@ android {
     namespace = "com.sjaindl.travelcompanion"
 }
 
+dependencies {
+    commonMainApi("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+}
+
+
 allOpen {
     annotation("com.sjaindl.travelcompanion.util.Mockable")
+}
+
+// https://github.com/icerockdev/moko-resources
+multiplatformResources {
+    multiplatformResourcesPackage = "com.sjaindl.travelcompanion"
+    disableStaticFrameworkWarning = true
 }
