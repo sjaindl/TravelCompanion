@@ -7,7 +7,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.databinding.ActivityExploreBinding
 

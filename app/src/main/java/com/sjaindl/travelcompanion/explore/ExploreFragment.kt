@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.explore
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +20,19 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
+import com.sjaindl.travelcompanion.explore.ExploreDetailActivity.Companion.PIN_ID
 import com.sjaindl.travelcompanion.explore.views.PlaceActionDialog
+import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
+import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
+import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
 data class MapLocationData(
@@ -49,7 +56,15 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
     private val sessionToken = randomStringByKotlinRandom(32)
 
-    private val viewModel by viewModels<ExploreViewModel>()
+    private val consumeDatabase by lazy {
+        DatabaseWrapper(DatabaseDriverFactory(requireContext().applicationContext))
+    }
+
+    private val dataRepository by lazy {
+        DataRepositoryImpl(consumeDatabase.dbQueries)
+    }
+
+    private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModelFactory(dataRepository) })
 
     companion object {
         const val LATITUDE = "latitude"
@@ -102,10 +117,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         }
 
         setFragmentResultListener(SearchPlaceFragment.PLACE_RESULT) { key, bundle ->
-            val encodedPlaces = bundle.getString(SearchPlaceFragment.PLACE_RESULT)
-                ?: return@setFragmentResultListener
-            val placesPredictions =
-                Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
+            val encodedPlaces = bundle.getString(SearchPlaceFragment.PLACE_RESULT) ?: return@setFragmentResultListener
+            val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
             val placeId = placesPredictions.placeId ?: return@setFragmentResultListener
 
             Snackbar.make(
@@ -114,11 +127,30 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 Snackbar.LENGTH_LONG
             ).show()
 
-            fetchPlaceDetails(placeId)
+            fetchPlaceDetails(placeId = placeId)
         }
 
         // Alternative using nav graph backstack:
         //findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("place")?.observe(viewLifecycleOwner) {
+        setObservers()
+    }
+
+    private fun setObservers() {
+        lifecycleScope.launch {
+            //repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.onShowDetails.collect { pinId ->
+                if (pinId > 0) {
+                    viewModel.clickedOnDetails()
+
+                    val intent = Intent(requireActivity(), ExploreDetailActivity::class.java).apply {
+                        putExtra(PIN_ID, pinId)
+                    }
+
+                    requireActivity().startActivity(intent)
+                }
+            }
+            // }
+        }
     }
 
     private fun fetchPlaceDetails(placeId: String) = lifecycleScope.launch {
@@ -132,7 +164,35 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
 
+        try {
+            val countryCode = GeoNamesClient().fetchCountryCode(latitude = location.lat, longitude = location.lng)
 
+            val component = details.result.addressComponents?.firstOrNull {
+                it.types.contains("country")
+            }
+
+            dataRepository.insertPin(
+                id = 0,
+                address = details.result.formattedAddress,
+                country = component?.longName,
+                countryCode = countryCode,
+                creationDate = Clock.System.now(),
+                latitude = details.result.geometry.location.lat,
+                longitude = details.result.geometry.location.lng,
+                name = details.result.name,
+                phoneNumber = null,
+                placeId = placeId,
+                rating = null,
+                url = details.result.url,
+            )
+
+        } catch (exception: Exception) {
+            Snackbar.make(
+                requireView(),
+                exception.localizedMessage ?: "Could not fetch country code",
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
     }
 
     override fun onDestroyView() {
@@ -156,7 +216,21 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 .title("Marker")
         )
 
+        addPersistedPinsToMap()
+
         googleMap.setOnMarkerClickListener(this)
+    }
+
+    private fun addPersistedPinsToMap() {
+        dataRepository.allPins().forEach {
+            val lat = it.latitude ?: return@forEach
+            val lng = it.longitude ?: return@forEach
+            googleMap?.addMarker(
+                MarkerOptions()
+                    .position(LatLng(lat, lng))
+                    .title(it.name)
+            )
+        }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

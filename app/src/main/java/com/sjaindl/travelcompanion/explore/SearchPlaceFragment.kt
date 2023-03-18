@@ -43,20 +43,7 @@ class SearchPlaceFragment : Fragment() {
     }
 
     companion object {
-        const val LATITUDE = "latitude"
-        const val LONGITUDE = "longitude"
-        const val RADIUS = "radius"
         const val PLACE_RESULT = "place"
-
-        fun newInstance(mapLocationData: MapLocationData): SearchPlaceFragment {
-            return SearchPlaceFragment().apply {
-                arguments = Bundle().apply {
-                    putDouble(LATITUDE, mapLocationData.latitude)
-                    putDouble(LONGITUDE, mapLocationData.longitude)
-                    putDouble(RADIUS, mapLocationData.radius)
-                }
-            }
-        }
     }
 
     override fun onCreateView(
