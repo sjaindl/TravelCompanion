@@ -84,6 +84,7 @@ val gsonVersion: String by extra
 val okhttpVersion: String by extra
 val timberVersion: String by extra
 val leakCanaryVersion: String by extra
+val coilVersion: String by extra
 val jUnitVersion: String by extra
 val testRunnerVersion: String by extra
 val espressoVersion: String by extra
@@ -98,6 +99,8 @@ val mapsVersion: String by extra
 val googleMapsUtilsVersion: String by extra
 val ktorSerializationVersion: String by extra
 val kotlinxSerializationVersion: String by extra
+val accompanistVersion: String by extra
+val composeNavigationVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -160,6 +163,9 @@ dependencies {
     // https://github.com/Kotlin/kotlinx.serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
+    implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation("io.coil-kt:coil-svg:$coilVersion")
+
     // https://github.com/square/leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion")
 
@@ -218,4 +224,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
+
+    implementation("androidx.navigation:navigation-compose:$composeNavigationVersion")
+
+    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-pager-indicators:$accompanistVersion")
 }
