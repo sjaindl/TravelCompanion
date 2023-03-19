@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sjaindl.travelcompanion.explore.details.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.BottomNavItem.Companion.pinIdArg
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailHomeScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailInfoScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailPhotosScreen
@@ -14,30 +15,53 @@ import com.sjaindl.travelcompanion.explore.details.ExploreDetailPhotosScreen
 fun TCNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    pinId: Long,
+    startDestinationPinId: Long,
 ) {
+    val exploreDetailHome = BottomNavItem.ExploreDetailHome()
+    val exploreDetailPhotos = BottomNavItem.ExploreDetailPhotos()
+    val exploreDetailInfo = BottomNavItem.ExploreDetailInfo()
+
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.ExploreDetailHome().route,
+        startDestination = exploreDetailHome.routeWithArgs,
         modifier = modifier
     ) {
-        val exploreDetailHome = BottomNavItem.ExploreDetailHome()
+
+        // Hack: need to set arg of startDestination as default value:
+        // https://stackoverflow.com/questions/70404038/jetpack-compose-navigation-pass-argument-to-startdestination
+        val pinArgsWithDefault = BottomNavItem.pinArgsWithDefaultValue(startDestinationPinId)
 
         composable(
-            route = exploreDetailHome.route,
-            arguments = exploreDetailHome.arguments
+            route = exploreDetailHome.routeWithArgs,
+            arguments = pinArgsWithDefault,
         ) { navBackStackEntry ->
-            //val pinId = navBackStackEntry.arguments?.getLong(BottomNavItem.pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailHomeScreen(pinId)
+            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            ExploreDetailHomeScreen(pinId = pinId)
         }
-        composable(route = BottomNavItem.ExploreDetailPhotos().route) {
-            ExploreDetailPhotosScreen()
+        composable(
+            route = exploreDetailPhotos.routeWithArgs,
+            arguments = exploreDetailPhotos.arguments,
+        ) { navBackStackEntry ->
+            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            ExploreDetailPhotosScreen(pinId = pinId)
         }
-        composable(route = BottomNavItem.ExploreDetailInfo().route) {
-            ExploreDetailInfoScreen()
+        composable(
+            route = exploreDetailInfo.routeWithArgs,
+            arguments = exploreDetailInfo.arguments,
+        ) { navBackStackEntry ->
+            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            ExploreDetailInfoScreen(pinId = pinId)
         }
     }
 }
 
 fun NavHostController.navigateSingleTopTo(route: String) =
-    this.navigate(route) { launchSingleTop = true }
+    this.navigate(route) {
+        graph.startDestinationRoute?.let {
+            popUpTo(it) {
+                saveState = true
+            }
+        }
+        launchSingleTop = true
+        restoreState = true
+    }

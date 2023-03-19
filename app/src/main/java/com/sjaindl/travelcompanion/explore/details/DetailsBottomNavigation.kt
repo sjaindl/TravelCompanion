@@ -4,26 +4,19 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Photo
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
-import androidx.navigation.NavType
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.navigateSingleTopTo
 
 @Composable
-fun DetailsBottomNavigation(navController: NavController) {
+fun DetailsBottomNavigation(navController: NavHostController, pinId: Long) {
     val items = listOf(
         BottomNavItem.ExploreDetailHome(),
         BottomNavItem.ExploreDetailPhotos(),
@@ -49,16 +42,7 @@ fun DetailsBottomNavigation(navController: NavController) {
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { screenRoute ->
-                            popUpTo(screenRoute) {
-                                saveState = true
-                            }
-
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(pinId))
                 }
             )
         }

@@ -17,17 +17,28 @@ interface DestinationItem {
     var icon: ImageVector
     var route: String
     var arguments: List<NamedNavArgument>
+    val routeWithArgs: String
+
+    fun routeWithSetArguments(vararg arguments: Any): String
 }
 
 sealed class BottomNavItem : DestinationItem {
     companion object {
-        private const val pinIdArg = "pinId"
+        const val pinIdArg = "pinId"
 
+        val pinArg = "pin"
         val pinArgs = listOf(navArgument(pinIdArg) { type = NavType.LongType })
 
         private const val exploreDetailsHomeRoute = "exploreDetailsHome"
         private const val exploreDetailsPhotosRoute = "exploreDetailsPhoto"
         private const val exploreDetailsInfoRoute = "exploreDetailsInfo"
+
+        fun pinArgsWithDefaultValue(value: Long): List<NamedNavArgument> {
+            return listOf(navArgument(pinIdArg) {
+                type = NavType.LongType
+                defaultValue = value
+            })
+        }
     }
 
     data class ExploreDetailHome(
@@ -35,19 +46,40 @@ sealed class BottomNavItem : DestinationItem {
         override var icon: ImageVector = Icons.Rounded.Place,
         override var route: String = exploreDetailsHomeRoute,
         override var arguments: List<NamedNavArgument> = pinArgs,
-    ) : BottomNavItem()
+        override var routeWithArgs: String = "${route}/{${pinArg}}",
+    ) : BottomNavItem() {
+        override fun routeWithSetArguments(vararg arguments: Any): String {
+            val pinArg = arguments.firstOrNull() as? Long ?: return route
+
+            return "${route}/{${pinArg}}"
+        }
+    }
 
     data class ExploreDetailPhotos(
         override var titleRes: Int = R.string.photos,
         override var icon: ImageVector = Icons.Rounded.Photo,
         override var route: String = exploreDetailsPhotosRoute,
         override var arguments: List<NamedNavArgument> = emptyList(),
-    ) : BottomNavItem()
+        override var routeWithArgs: String = "${route}/{${pinArg}}",
+    ) : BottomNavItem() {
+        override fun routeWithSetArguments(vararg arguments: Any): String {
+            val pinArg = arguments.firstOrNull() as? Long ?: return route
+
+            return "${route}/{${pinArg}}"
+        }
+    }
 
     data class ExploreDetailInfo(
         override var titleRes: Int = R.string.info,
         override var icon: ImageVector = Icons.Rounded.Info,
         override var route: String = exploreDetailsInfoRoute,
         override var arguments: List<NamedNavArgument> = emptyList(),
-    ) : BottomNavItem()
+        override var routeWithArgs: String = "${route}/{${pinArg}}",
+    ) : BottomNavItem() {
+        override fun routeWithSetArguments(vararg arguments: Any): String {
+            val pinArg = arguments.firstOrNull() as? Long ?: return route
+
+            return "${route}/{${pinArg}}"
+        }
+    }
 }

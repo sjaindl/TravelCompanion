@@ -13,12 +13,12 @@ fun ExploreDetailContainer(pinId: Long) {
     val navController = rememberNavController()
     TravelCompanionTheme {
         Scaffold(
-            bottomBar = { DetailsBottomNavigation(navController = navController) }
+            bottomBar = { DetailsBottomNavigation(navController = navController, pinId = pinId) }
         ) { innerPadding ->
             TCNavHost(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
-                pinId = pinId,
+                startDestinationPinId = pinId,
             )
         }
     }

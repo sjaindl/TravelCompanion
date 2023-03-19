@@ -17,7 +17,7 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-fun ExploreDetailInfoScreen() {
+fun ExploreDetailInfoScreen(pinId: Long) {
     TravelCompanionTheme {
         Column(
             modifier = Modifier
