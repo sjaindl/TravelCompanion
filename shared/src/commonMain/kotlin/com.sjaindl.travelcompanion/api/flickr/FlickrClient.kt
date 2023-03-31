@@ -7,6 +7,7 @@ import com.sjaindl.travelcompanion.util.Mockable
 import io.ktor.client.call.*
 import io.ktor.http.*
 
+// TODO: Pagination
 @Mockable
 class FlickrClient {
     private val client = HttpClientBuilder()
@@ -14,41 +15,40 @@ class FlickrClient {
         .withLogging()
         .build()
 
-    suspend fun fetchPhotos(text: String): Result<String> { // TODO:  Result
+    suspend fun fetchPhotos(text: String): Result<FlickrPhotoResponse> {
         val requestParams = buildQueryItems()
         requestParams.add(FlickrConstants.ParameterKeys.text to text)
 
         return fetch(requestParams = requestParams)
     }
 
-    suspend fun fetchPhotos(latitude: Double, longitude: Double): Result<String> { // TODO:  Result
+    suspend fun fetchPhotos(latitude: Double, longitude: Double): Result<FlickrPhotoResponse> {
         val requestParams = buildQueryItems()
-        requestParams.add(FlickrConstants.ParameterKeys.boundingBox to bboxString(latitude = latitude, longitude = longitude))
+        requestParams.add(FlickrConstants.ParameterKeys.boundingBox to boundingBoxString(latitude = latitude, longitude = longitude))
 
         return fetch(requestParams = requestParams)
     }
 
-    private suspend fun fetch(requestParams: List<Pair<String, String>>): Result<String> { // TODO:  Result
+    private suspend fun fetch(requestParams: List<Pair<String, String>>): Result<FlickrPhotoResponse> {
         val urlComponents = FlickrConstants.UrlComponents
         val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}"
 
-        val response = HttpResponseHandler(client).request(
-            baseUrl = baseUrl,
-            urlString = urlComponents.path,
-            httpMethod = HttpMethod.Get,
-            requestHeaders = HttpResponseHandler.defaultHeaders,
-            requestParams = requestParams,
-        )
-
         return try {
+            val response = HttpResponseHandler(client).request(
+                baseUrl = baseUrl,
+                urlString = urlComponents.path,
+                httpMethod = HttpMethod.Get,
+                requestHeaders = HttpResponseHandler.defaultHeaders,
+                requestParams = requestParams,
+            )
+
             Result.success(response.body())
-        } catch (exception: NoTransformationFoundException) {
+        } catch (exception: Exception) {
             Result.failure(exception)
         }
     }
 
-
-    fun buildQueryItems(): MutableList<Pair<String, String>> {
+    private fun buildQueryItems(): MutableList<Pair<String, String>> {
         return mutableListOf(
             FlickrConstants.ParameterKeys.method to FlickrConstants.ParameterValues.searchMethod,
             FlickrConstants.ParameterKeys.apiKey to SecretConstants.apiKeyFlickr,
@@ -61,13 +61,13 @@ class FlickrClient {
         )
     }
 
-    fun bboxString(latitude: Double, longitude: Double): String {
-        // ensure bbox is bounded by minimum and maximums
+    private fun boundingBoxString(latitude: Double, longitude: Double): String {
+        // ensure bounding box is bound by minimum and maximum
         val location = FlickrConstants.Location
         val minimumLon = (longitude - location.searchBBoxHalfWidth).coerceAtLeast(location.searchLongitudeRange.first)
         val minimumLat = (latitude - location.searchBBoxHalfHeight).coerceAtLeast(location.searchLatitudeRange.first)
-        val maximumLon = (longitude + location.searchBBoxHalfWidth).coerceAtLeast(location.searchLongitudeRange.second)
-        val maximumLat = (latitude + location.searchBBoxHalfHeight).coerceAtLeast(location.searchLatitudeRange.second)
+        val maximumLon = (longitude + location.searchBBoxHalfWidth).coerceAtMost(location.searchLongitudeRange.second)
+        val maximumLat = (latitude + location.searchBBoxHalfHeight).coerceAtMost(location.searchLatitudeRange.second)
         return "$minimumLon,$minimumLat,$maximumLon,$maximumLat"
     }
 }
