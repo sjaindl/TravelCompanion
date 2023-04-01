@@ -1,4 +1,6 @@
 mapOf(
+    "gradleVersion" to "7.3.1",
+    "gradleSecretsVersion" to "2.0.1",
     "kotlinVersion" to "1.7.21",
     "coroutineVersion" to "1.6.4",
     "coreVersion" to "1.9.0",
@@ -14,7 +16,9 @@ mapOf(
     "picassoVersion" to "2.8",
 
     "googleLocationVersion" to "17.0.0",
+    "googleServicesVersion" to "4.3.15",
     "firebaseBomVersion" to "29.0.3",
+    "crashlyticsVersion" to "2.9.4",
 
     "leakCanaryVersion" to "2.9.1",
 

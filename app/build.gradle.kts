@@ -22,14 +22,6 @@ android {
 
         val googleMapsApiKey: String = gradleLocalProperties(rootDir).getProperty("googleMapsApiKey")
         manifestPlaceholders["googleMapsApiKey"] = googleMapsApiKey
-
-        /*
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
-        }
-         */
     }
 
     buildTypes {
@@ -203,6 +195,8 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-maps:$mapsVersion")
     implementation("com.google.maps.android:android-maps-utils:$googleMapsUtilsVersion")
+
+    implementation("com.google.android.libraries.places:places:3.0.0")
 
     // Jetpack Compose:
     val composeBom = platform("androidx.compose:compose-bom:2022.12.00")
