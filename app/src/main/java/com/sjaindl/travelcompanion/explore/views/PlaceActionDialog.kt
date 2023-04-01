@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.explore.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
@@ -45,7 +46,7 @@ fun PlaceActionDialog(
             },
             content = {
                 Surface(
-                    color = colorResource(id = R.color.darkGrey),
+                    color = colors.background,
                     shape = RoundedCornerShape(8)
                 ) {
                     Column(
