@@ -6,10 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sjaindl.travelcompanion.explore.details.BottomNavItem
-import com.sjaindl.travelcompanion.explore.details.BottomNavItem.Companion.pinIdArg
+import com.sjaindl.travelcompanion.explore.details.BottomNavItem.Companion.pinArg
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailHomeScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailInfoScreen
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailPhotosScreen
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailPhotosMainScreen
 
 @Composable
 fun TCNavHost(
@@ -23,33 +23,36 @@ fun TCNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = exploreDetailHome.routeWithArgs,
+        startDestination = exploreDetailHome.route,
         modifier = modifier
     ) {
-
-        // Hack: need to set arg of startDestination as default value:
-        // https://stackoverflow.com/questions/70404038/jetpack-compose-navigation-pass-argument-to-startdestination
-        val pinArgsWithDefault = BottomNavItem.pinArgsWithDefaultValue(startDestinationPinId)
+        composable(
+            route = exploreDetailHome.route,
+        ) {
+            ExploreDetailHomeScreen(pinId = startDestinationPinId)
+        }
 
         composable(
             route = exploreDetailHome.routeWithArgs,
-            arguments = pinArgsWithDefault,
+            arguments = exploreDetailHome.arguments,
         ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
             ExploreDetailHomeScreen(pinId = pinId)
         }
+
         composable(
             route = exploreDetailPhotos.routeWithArgs,
             arguments = exploreDetailPhotos.arguments,
         ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailPhotosScreen(pinId = pinId)
+            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            ExploreDetailPhotosMainScreen(pinId = pinId)
         }
+
         composable(
             route = exploreDetailInfo.routeWithArgs,
             arguments = exploreDetailInfo.arguments,
         ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinIdArg) ?: throw java.lang.IllegalStateException("No pinId given")
+            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
             ExploreDetailInfoScreen(pinId = pinId)
         }
     }
@@ -65,3 +68,6 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         launchSingleTop = true
         restoreState = true
     }
+
+// Compile-time safe navigation annotation processing lib (had some issues with kotlin versioning, though):
+// https://proandroiddev.com/safe-compose-arguments-an-improved-way-to-navigate-in-jetpack-compose-95c84722eec2
