@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Country
-import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.country.RestCountriesClient
 import com.sjaindl.travelcompanion.mapper.PinAndCountryToCountryUiMapper
@@ -27,7 +26,7 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
     private val client = RestCountriesClient()
     private val mapper = PinAndCountryToCountryUiMapper()
 
-    private var pin: Pin? = dataRepository.singlePin(pinId)
+    private var pin = dataRepository.singlePin(pinId)
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     var state = _state.asStateFlow()

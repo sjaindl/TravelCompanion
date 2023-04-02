@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.explore.details
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -11,13 +12,16 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 @Composable
 fun ExploreDetailContainer(pinId: Long) {
     val navController = rememberNavController()
+
     TravelCompanionTheme {
         Scaffold(
-            bottomBar = { DetailsBottomNavigation(navController = navController, pinId = pinId) }
+            bottomBar = { DetailsBottomNavigation(navController = navController, pinId = pinId) },
         ) { innerPadding ->
             TCNavHost(
                 navController = navController,
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
                 startDestinationPinId = pinId,
             )
         }
