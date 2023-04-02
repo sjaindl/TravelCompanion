@@ -19,7 +19,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".explore.ExploreDetailActivity"
+            android:name=".explore.details.ExploreDetailActivity"
             android:exported="false"
             android:label="@string/exploreDetail"
             android:theme="@style/AppTheme">

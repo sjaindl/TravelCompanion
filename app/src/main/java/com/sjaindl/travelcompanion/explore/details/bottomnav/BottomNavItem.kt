@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.details
+package com.sjaindl.travelcompanion.explore.details.bottomnav
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
@@ -46,7 +46,7 @@ sealed class BottomNavItem : DestinationItem {
         override fun routeWithSetArguments(vararg arguments: Any): String {
             val pinId = arguments.firstOrNull() as? Long ?: return route
 
-            return "$route?${pinArg}=$pinId"
+            return "$route?$pinArg=$pinId"
         }
     }
 
@@ -74,7 +74,7 @@ sealed class BottomNavItem : DestinationItem {
         override fun routeWithSetArguments(vararg arguments: Any): String {
             val pinId = arguments.firstOrNull() as? Long ?: return route
 
-            return "$route?${pinArg}=$pinId"
+            return "$route?$pinArg=$pinId"
         }
     }
 }

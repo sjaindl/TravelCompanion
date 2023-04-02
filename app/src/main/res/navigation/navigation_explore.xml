@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/SearchPlaceFragment"
-        android:name="com.sjaindl.travelcompanion.explore.SearchPlaceFragment"
+        android:name="com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search_place">
 

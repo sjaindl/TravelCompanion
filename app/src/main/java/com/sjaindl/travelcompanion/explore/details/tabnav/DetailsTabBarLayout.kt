@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.details
+package com.sjaindl.travelcompanion.explore.details.tabnav
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

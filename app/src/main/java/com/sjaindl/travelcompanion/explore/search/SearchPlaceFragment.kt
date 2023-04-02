@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore
+package com.sjaindl.travelcompanion.explore.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
+import com.sjaindl.travelcompanion.explore.ExploreFragment
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch

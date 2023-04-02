@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.sjaindl.travelcompanion.TCNavHost
+import com.sjaindl.travelcompanion.explore.details.bottomnav.DetailsBottomNavigation
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable

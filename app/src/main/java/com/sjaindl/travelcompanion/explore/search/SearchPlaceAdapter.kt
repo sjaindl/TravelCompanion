@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore
+package com.sjaindl.travelcompanion.explore.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

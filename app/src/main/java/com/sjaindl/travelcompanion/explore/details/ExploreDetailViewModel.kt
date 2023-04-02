@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore
+package com.sjaindl.travelcompanion.explore.details
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel

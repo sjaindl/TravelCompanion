@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.details
+package com.sjaindl.travelcompanion.explore.details.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,8 +25,9 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCLink
-import com.sjaindl.travelcompanion.explore.ExploreDetailViewModel
-import com.sjaindl.travelcompanion.explore.ExploreDetailViewModelFactory
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailEntry
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModel
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModelFactory
 import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
 import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
 import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper

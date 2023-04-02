@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.views
+package com.sjaindl.travelcompanion.explore.search
 
 
 import androidx.compose.foundation.layout.*

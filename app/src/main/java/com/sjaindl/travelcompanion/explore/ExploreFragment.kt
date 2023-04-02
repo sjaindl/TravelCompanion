@@ -24,8 +24,10 @@ import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
-import com.sjaindl.travelcompanion.explore.ExploreDetailActivity.Companion.PIN_ID
-import com.sjaindl.travelcompanion.explore.views.PlaceActionDialog
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity.Companion.PIN_ID
+import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
+import com.sjaindl.travelcompanion.explore.search.PlaceActionDialog
 import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
 import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
 import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper

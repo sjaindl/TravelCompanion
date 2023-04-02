@@ -5,11 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.sjaindl.travelcompanion.explore.details.BottomNavItem
-import com.sjaindl.travelcompanion.explore.details.BottomNavItem.Companion.pinArg
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailHomeScreen
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailInfoScreen
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailPhotosMainScreen
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.Companion.pinArg
+import com.sjaindl.travelcompanion.explore.details.home.ExploreDetailHomeScreen
+import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoScreen
+import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 
 @Composable
 fun TCNavHost(

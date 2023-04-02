@@ -1,9 +1,8 @@
-package com.sjaindl.travelcompanion.explore
+package com.sjaindl.travelcompanion.explore.details
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
 
 class ExploreDetailActivity : ComponentActivity() {
 

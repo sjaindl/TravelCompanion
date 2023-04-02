@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.details
+package com.sjaindl.travelcompanion.explore.details.bottomnav
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
