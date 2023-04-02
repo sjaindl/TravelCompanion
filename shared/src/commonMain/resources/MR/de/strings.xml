@@ -35,17 +35,20 @@
     <string name="addPublicTransport">Transport hinzufügen</string>
     <string name="addroute">Möchtest du die Route hinzufügen?</string>
     <string name="addRoute">Route hinzufügen</string>
-    <string name="addstoporroute">Möchtest du den einzelnen Stop oder die gesamte Route hinzufügen?</string>
+    <string name="addstoporroute">Möchtest du den einzelnen Stop oder die gesamte Route
+        hinzufügen?
+    </string>
     <string name="singleStop">Einzelner Stop</string>
     <string name="wholeRoute">Gesamte Route</string>
     <string name="flightDetail">≈%1$.2f km, %2$d Stunden, %3$d Minuten</string>
     <string name="addFlight">Flug hinzufügen</string>
-    <string name="addflight">Möchtest du den Zwischenflug oder die gesamte Route hinzufügen?</string>
+    <string name="addflight">Möchtest du den Zwischenflug oder die gesamte Route hinzufügen?
+    </string>
     <string name="singleFlight">Zwischenflug</string>
     <string name="wholeLeg">Gesamte Route</string>
     <string name="noPage">Keine Website gefunden</string>
-    <string name="noCountryPhotos">Dieser Ort kein Land. Keine Fotos verfügbar.</string>
-    <string name="noCountryDetails">Dieser Ort kein Land. Keine Länderdetails verfügbar.</string>
+    <string name="noCountryPhotos">Dieser Ort ist kein Land. Keine Fotos verfügbar.</string>
+    <string name="noCountryDetails">Dieser Ort ist kein Land. Keine Länderdetails verfügbar.</string>
     <string name="errorDownloadImage">Fehler beim Herunterladen der Fotos</string>
     <string name="waitForPhotos">Bitte warte bis das Herunterladen der Fotos fertig ist</string>
     <string name="south">S</string>
@@ -62,7 +65,9 @@
     <string name="addedPlace">Ort erfolgreich hinzugefügt</string>
     <string name="signOutError">Ausloggen nicht erfolgreich</string>
     <string name="loginRequired">Login erforderlich</string>
-    <string name="accountRequired">Diese Funktionalität kann nur mit einem Konto genutzt werden. Bitte logge dich ein.</string>
+    <string name="accountRequired">Diese Funktionalität kann nur mit einem Konto genutzt werden.
+        Bitte logge dich ein.
+    </string>
     <string name="signOut">Ausloggen</string>
     <string name="signIn">Einloggen</string>
     <string name="next">Weiter</string>
@@ -110,7 +115,9 @@
     <string name="createAccount">Konto erstellen</string>
     <string name="account">Konto</string>
     <string name="myProfile">Mein Profil</string>
-    <string name="yourPrivacyMatters">Deine Privatsphäre ist uns sehr wichtig. Bitte werfe einen Blick in unsere [Datenschutzerklärung](%s), um zu sehen, wie deine Daten behandelt werden.</string>
+    <string name="yourPrivacyMatters">Deine Privatsphäre ist uns sehr wichtig. Bitte werfe einen
+        Blick in unsere [Datenschutzerklärung](%s), um zu sehen, wie deine Daten behandelt werden.
+    </string>
     <string name="logout">Ausloggen</string>
     <string name="deleteAccount">Konto löschen</string>
     <string name="yesDelete">Ja, löschen</string>
@@ -118,7 +125,8 @@
     <string name="accountDeleted">Konto löschen</string>
     <string name="ok">OK</string>
     <string name="yourAccountHasBeenDeleted">Dein Konto wurde gelöscht</string>
-    <string name="doYouReallyWantToDeleteYourAccount">Möchtest du wirklichen dein Konto löschen?</string>
+    <string name="doYouReallyWantToDeleteYourAccount">Möchtest du wirklichen dein Konto löschen?
+    </string>
     <string name="personalInformation">Persönliche Information</string>
     <string name="nameAddressBirthday">Name, E-Mail</string>
     <string name="requestAccountDeletion">Kontolöschung beantragen</string>
@@ -168,4 +176,7 @@
     <string name="info">Info</string>
 
     <string name="couldNotRetrieveData">Daten konnten nicht ermittelt werden</string>
+    <string name="loading">Wird geladen...</string>
+    <string name="around">Rund um %s</string>
+    <string name="noPhotosFor">Keine Fotos für %s</string>
 </resources>
