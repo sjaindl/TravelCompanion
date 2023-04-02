@@ -17,7 +17,7 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-private fun TabScreen(
+fun TabScreen(
     text: String,
 ) {
     TravelCompanionTheme {
@@ -32,24 +32,6 @@ private fun TabScreen(
         }
     }
 }
-
-val tabRowItems = listOf(
-    TabItem(
-        title = "Tab 1",
-        screen = { TabScreen(text = stringResource(id = R.string.detail)) },
-        icon = Icons.Rounded.Place,
-    ),
-    TabItem(
-        title = "Tab 2",
-        screen = { TabScreen(text = stringResource(id = R.string.photos)) },
-        icon = Icons.Rounded.Photo,
-    ),
-    TabItem(
-        title = "Tab 3",
-        screen = { TabScreen(text = stringResource(id = R.string.info)) },
-        icon = Icons.Rounded.Info,
-    )
-)
 
 @Preview
 @Composable
