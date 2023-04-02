@@ -16,11 +16,11 @@ import kotlinx.datetime.Instant
 
 open class DataRepositoryImpl(private val dbQueries: TravelCompanionDatabaseQueries) : DataRepository {
     override fun singlePin(id: Long): Pin? {
-        return dbQueries.selectPinById(id).executeAsOne()
+        return dbQueries.selectPinById(id).executeAsList().lastOrNull()
     }
 
     override fun singlePin(name: String): Pin? {
-        return dbQueries.selectPinByName(name).executeAsList().last()
+        return dbQueries.selectPinByName(name).executeAsList().lastOrNull()
     }
 
     override fun lastPinId(): Long? {
