@@ -2,12 +2,7 @@ package com.sjaindl.travelcompanion
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
-import com.sjaindl.travelcompanion.api.google.GoogleClient
-import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,43 +15,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-
-        //findViewById<TextView>(R.id.main_text).text = createApplicationScreenMessage()
-
-        GlobalScope.launch {
-            try {
-                val countryCode = GeoNamesClient().fetchCountryCode(34.380460, 118.14372588)
-                val result = GoogleClient().searchPlaces(
-                    "Los F",
-                    34.380460,
-                    118.14372588,
-                    GooglePlaceType.PointOfInterest.key,
-                    "500"
-                )
-
-                runOnUiThread {
-
-                    /*
-                    val tv = findViewById<TextView>(R.id.main_text)
-                    tv.text = countryCode
-                    result.results.forEach {
-                        tv.text = "${tv.text} + ${it.name}"
-                    }
-
-                     */
-                }
-            } catch (error: Exception) {
-                /*
-                runOnUiThread {
-                    Toast.makeText(
-                        this@MainActivity.applicationContext,
-                        error.localizedMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                 */
-            }
-        }
     }
 }

@@ -179,4 +179,9 @@
     <string name="loading">Wird geladen...</string>
     <string name="around">Rund um %s</string>
     <string name="noPhotosFor">Keine Fotos für %s</string>
+
+    <string name="wikipedia">Wikipedia</string>
+    <string name="wikivoyage">Wiki Voyage</string>
+    <string name="google">Google</string>
+    <string name="lonelyplanet">Lonely Planet</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.Companion.pinArg
 import com.sjaindl.travelcompanion.explore.details.home.ExploreDetailHomeScreen
-import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoScreen
+import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoMainScreen
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 
 @Composable
@@ -53,7 +53,7 @@ fun TCNavHost(
             arguments = exploreDetailInfo.arguments,
         ) { navBackStackEntry ->
             val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailInfoScreen(pinId = pinId)
+            ExploreDetailInfoMainScreen(pinId = pinId)
         }
     }
 }

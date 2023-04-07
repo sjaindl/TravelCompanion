@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.explore.details.tabnav
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -25,7 +28,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun DetailsTabBarLayout(tabRowItems: List<TabItem>) {
+fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -49,13 +52,17 @@ fun DetailsTabBarLayout(tabRowItems: List<TabItem>) {
                             }
                         },
                         icon = {
-                            Icon(imageVector = item.icon, contentDescription = "")
+                            item.icon?.let {
+                                Icon(imageVector = item.icon, contentDescription = "")
+                            }
                         },
                         text = {
                             Text(
+                                fontSize = 12.sp,
                                 text = item.title,
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis,
+                                softWrap = true,
                             )
                         }
                     )
@@ -64,10 +71,11 @@ fun DetailsTabBarLayout(tabRowItems: List<TabItem>) {
 
             HorizontalPager(
                 count = tabRowItems.size,
-                state = pagerState,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.background)
+                    .background(colors.background),
+                state = pagerState,
+                userScrollEnabled = userScrollEnabled,
             ) {
                 tabRowItems[pagerState.currentPage].screen()
             }
@@ -95,6 +103,7 @@ fun DetailsTabBarLayoutPreview() {
                 screen = { TabScreen(text = stringResource(id = R.string.info)) },
                 icon = Icons.Rounded.Info,
             )
-        )
+        ),
+        userScrollEnabled = true,
     )
 }

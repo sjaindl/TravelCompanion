@@ -33,6 +33,6 @@ fun ExploreDetailPhotosMainScreen(pinId: Long) {
     )
 
     TravelCompanionTheme {
-        DetailsTabBarLayout(tabRowItems = tabRowItems)
+        DetailsTabBarLayout(tabRowItems = tabRowItems, userScrollEnabled = true)
     }
 }

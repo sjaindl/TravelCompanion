@@ -173,4 +173,9 @@
     <string name="loading">Loading...</string>
     <string name="around">Around %s</string>
     <string name="noPhotosFor">No photos for %s</string>
+
+    <string name="wikipedia">Wikipedia</string>
+    <string name="wikivoyage">Wiki Voyage</string>
+    <string name="google">Google</string>
+    <string name="lonelyplanet">Lonely Planet</string>
 </resources>
