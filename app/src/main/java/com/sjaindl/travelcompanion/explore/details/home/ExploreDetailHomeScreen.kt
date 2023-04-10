@@ -25,12 +25,10 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCLink
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailEntry
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModel
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModelFactory
-import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
-import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
-import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.text.NumberFormat
@@ -41,8 +39,7 @@ fun ExploreDetailHomeScreen(
     viewModel: ExploreDetailViewModel = viewModel(
         factory = ExploreDetailViewModelFactory(
             pinId = pinId,
-            // TODO: Introduce Hilt for DI
-            dataRepository = DataRepositoryImpl(DatabaseWrapper(DatabaseDriverFactory(LocalContext.current)).dbQueries)
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         ),
     )
 ) {

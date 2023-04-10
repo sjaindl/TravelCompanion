@@ -1,5 +1,5 @@
 mapOf(
-    "gradleVersion" to "7.3.1",
+    "gradleVersion" to "7.4.0",
     "gradleSecretsVersion" to "2.0.1",
     "kotlinVersion" to "1.7.21",
     "coroutineVersion" to "1.6.4",
@@ -50,6 +50,7 @@ mapOf(
     "okioVersion" to "3.3.0",
     "resourcesGeneratorVersion" to "0.20.1",
     "kotlinxResources" to "0.2.5",
+    "kodein" to "7.20.1",
 
     "mapsVersion" to "18.1.0",
     "googleMapsUtilsVersion" to "2.4.0",

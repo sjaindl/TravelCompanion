@@ -20,10 +20,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
-import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
-import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
-import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
@@ -36,8 +34,7 @@ fun ExploreDetailInfoScreen(
         factory = ExploreInfoViewModelFactory(
             pinId = pinId,
             infoType = infoType,
-            // TODO: Introduce Hilt for DI
-            dataRepository = DataRepositoryImpl(DatabaseWrapper(DatabaseDriverFactory(LocalContext.current)).dbQueries),
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     )
 ) {

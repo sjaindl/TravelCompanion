@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Country
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.country.RestCountriesClient
+import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.mapper.PinAndCountryToCountryUiMapper
 import com.sjaindl.travelcompanion.model.CountryUi
 import com.sjaindl.travelcompanion.repository.DataRepository
@@ -22,8 +22,10 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
         data class Error(val message: String? = null, @StringRes val stringRes: Int? = null) : State()
     }
 
-    // TODO: Hilt
-    private val client = RestCountriesClient()
+    private val client by lazy {
+        TCInjector.restCountriesClient
+    }
+
     private val mapper = PinAndCountryToCountryUiMapper()
 
     private var pin = dataRepository.singlePin(pinId)

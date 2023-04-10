@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.api.google.GoogleConstants
 import com.sjaindl.travelcompanion.api.lonelyplanet.LonelyPlanetConstants
-import com.sjaindl.travelcompanion.api.wiki.WikiClient
 import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.domainWikiVoyage
 import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.domainWikipedia
 import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.urlProtocol
 import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.wikiLinkPath
+import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,9 +29,8 @@ class ExploreInfoViewModel(
         object NoData : State()
     }
 
-    // TODO: Hilt
     private var pin: Pin? = dataRepository.singlePin(pinId)
-    private var wikiClient = WikiClient()
+    private var wikiClient = TCInjector.wikiClient
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     var state = _state.asStateFlow()

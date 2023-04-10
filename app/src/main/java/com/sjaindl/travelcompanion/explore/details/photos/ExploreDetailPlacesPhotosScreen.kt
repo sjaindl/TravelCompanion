@@ -20,10 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlacesClientImpl
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
-import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
-import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
-import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
@@ -34,8 +32,7 @@ fun ExploreDetailPlacesPhotosScreen(
     viewModel: ExplorePlacesPhotosViewModel = viewModel(
         factory = ExplorePlacesPhotosViewModelFactory(
             pinId = pinId,
-            // TODO: Introduce Hilt for DI
-            dataRepository = DataRepositoryImpl(DatabaseWrapper(DatabaseDriverFactory(LocalContext.current)).dbQueries),
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
             client = GooglePlacesClientImpl(LocalContext.current),
         )
     )

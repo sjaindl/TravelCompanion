@@ -22,12 +22,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoInfo
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
-import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
-import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
-import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
@@ -41,8 +39,7 @@ fun ExploreDetailFlickrPhotosScreen(
         factory = ExploreFlickrPhotosViewModelFactory(
             pinId = pinId,
             photoType = photoType,
-            // TODO: Introduce Hilt for DI
-            dataRepository = DataRepositoryImpl(DatabaseWrapper(DatabaseDriverFactory(LocalContext.current)).dbQueries),
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     )
 ) {

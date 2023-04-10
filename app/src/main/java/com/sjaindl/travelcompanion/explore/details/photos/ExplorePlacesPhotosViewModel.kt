@@ -25,7 +25,6 @@ class ExplorePlacesPhotosViewModel(
         data class Error(val throwable: Throwable) : State()
     }
 
-    // TODO: Hilt
     private var pin: Pin? = dataRepository.singlePin(pinId)
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Pin
-import com.sjaindl.travelcompanion.api.flickr.FlickrClient
 import com.sjaindl.travelcompanion.api.flickr.FlickrPhotoResponse
+import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,9 +25,11 @@ class ExploreFlickrPhotosViewModel(
         data class Error(val throwable: Throwable) : State()
     }
 
-    // TODO: Hilt
     private var pin: Pin? = dataRepository.singlePin(pinId)
-    private var flickrClient = FlickrClient()
+
+    private val flickrClient by lazy {
+        TCInjector.flickrClient
+    }
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     var state = _state.asStateFlow()

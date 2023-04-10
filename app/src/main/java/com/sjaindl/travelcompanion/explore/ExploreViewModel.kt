@@ -6,7 +6,6 @@ import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-// TODO: Replace with HILT DI / or dagger (MP)
 class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel() {
     private val _showDialog = MutableStateFlow(false)
     val showDialog = _showDialog.asStateFlow()

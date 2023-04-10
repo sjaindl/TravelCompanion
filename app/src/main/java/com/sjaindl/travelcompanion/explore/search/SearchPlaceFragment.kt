@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
+import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.ExploreFragment
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
@@ -41,6 +41,10 @@ class SearchPlaceFragment : Fragment() {
         SearchPlaceAdapter {
             onClickItem(it)
         }
+    }
+
+    private val googleClient by lazy {
+        TCInjector.googleClient
     }
 
     companion object {
@@ -78,25 +82,8 @@ class SearchPlaceFragment : Fragment() {
         binding?.autocompleteCountry?.setAdapter(adapter)
 
         binding?.autocompleteCountry?.doOnTextChanged { text, start, before, count ->
-
-            // update places
-            val latitude = latitude?.toDouble() ?: return@doOnTextChanged
-            val longitude = longitude?.toDouble() ?: return@doOnTextChanged
-            val radius = radius?.toDouble() ?: return@doOnTextChanged
-
             lifecycleScope.launch {
-                /*
-                val result = GoogleClient().searchPlaces(
-                    s.toString(), latitude, longitude, GooglePlaceType.PointOfInterest.key, radius.toString()
-                )
-
-                val names = result.results.forEach { place ->
-                    place.name
-                }
-
-                 */
-
-                val autocompleteResult = GoogleClient().autocomplete(
+                val autocompleteResult = googleClient.autocomplete(
                     text.toString(), sessionToken
                 )
 

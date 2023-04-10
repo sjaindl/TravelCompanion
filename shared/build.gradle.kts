@@ -29,6 +29,7 @@ val resourcesGeneratorVersion: String by extra
 val okioVersion: String by extra
 val jUnitVersion: String by extra
 val kotlinxResources: String by extra
+val kodein: String by extra
 
 sqldelight {
     database("TravelCompanionDatabase") {
@@ -80,6 +81,9 @@ kotlin {
 
                 // https://github.com/square/okio
                 implementation("com.squareup.okio:okio:$okioVersion")
+
+                // https://github.com/kosi-libs/Kodein
+                implementation("org.kodein.di:kodein-di:$kodein")
 
                 // https://arkivanov.github.io/Decompose/getting-started/installation/
                 //implementation("com.arkivanov.decompose:decompose:0.5.1")

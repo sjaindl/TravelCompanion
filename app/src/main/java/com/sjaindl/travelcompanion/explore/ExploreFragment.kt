@@ -20,17 +20,14 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
-import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.PlacesPredictions
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
+import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity.Companion.PIN_ID
-import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
 import com.sjaindl.travelcompanion.explore.search.PlaceActionDialog
-import com.sjaindl.travelcompanion.repository.DataRepositoryImpl
-import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
-import com.sjaindl.travelcompanion.sqldelight.DatabaseWrapper
+import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
@@ -58,12 +55,16 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
     private val sessionToken = randomStringByKotlinRandom(32)
 
-    private val consumeDatabase by lazy {
-        DatabaseWrapper(DatabaseDriverFactory(requireContext().applicationContext))
+    private val dataRepository by lazy {
+        AndroidPersistenceInjector(requireContext().applicationContext).shared.dataRepository
     }
 
-    private val dataRepository by lazy {
-        DataRepositoryImpl(consumeDatabase.dbQueries)
+    private val geoNamesClient by lazy {
+        TCInjector.geoNamesClient
+    }
+
+    private val googleClient by lazy {
+        TCInjector.googleClient
     }
 
     private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModelFactory(dataRepository) })
@@ -156,7 +157,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun fetchPlaceDetails(placeId: String) = lifecycleScope.launch {
-        val details = GoogleClient().placeDetail(placeId, sessionToken)
+        val details = googleClient.placeDetail(placeId, sessionToken)
         val location = details.result.geometry.location
         googleMap?.addMarker(
             MarkerOptions()
@@ -167,7 +168,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
 
         try {
-            val countryCode = GeoNamesClient().fetchCountryCode(latitude = location.lat, longitude = location.lng)
+            val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
 
             val component = details.result.addressComponents?.firstOrNull {
                 it.types.contains("country")
