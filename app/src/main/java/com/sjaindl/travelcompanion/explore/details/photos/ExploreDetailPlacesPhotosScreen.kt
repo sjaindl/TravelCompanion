@@ -3,6 +3,8 @@ package com.sjaindl.travelcompanion.explore.details.photos
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.*
@@ -28,6 +30,8 @@ import com.sjaindl.travelcompanion.util.LoadingAnimation
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreDetailPlacesPhotosScreen(
+    modifier: Modifier = Modifier,
+    showGrids: Boolean,
     pinId: Long,
     viewModel: ExplorePlacesPhotosViewModel = viewModel(
         factory = ExplorePlacesPhotosViewModelFactory(
@@ -41,7 +45,7 @@ fun ExploreDetailPlacesPhotosScreen(
         val state by viewModel.state.collectAsState()
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(colors.background),
             contentAlignment = Alignment.Center,
@@ -63,15 +67,9 @@ fun ExploreDetailPlacesPhotosScreen(
                             fontSize = 20.sp
                         )
                     } else {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(colors.background)
-                                .fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                        ) {
-                            stickyHeader {
+
+                        if (showGrids) {
+                            Column {
                                 Text(
                                     text = viewModel.place ?: stringResource(id = R.string.place),
                                     fontWeight = FontWeight.Bold,
@@ -83,18 +81,64 @@ fun ExploreDetailPlacesPhotosScreen(
                                     textAlign = TextAlign.Center,
                                     fontSize = 20.sp
                                 )
-                            }
-                            photos.forEach {
-                                item {
-                                    Image(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 12.dp),
-                                        bitmap = it.first.asImageBitmap(),
-                                        contentDescription = it.second,
-                                    )
 
-                                    PlaceAttribution(link = it.second)
+                                LazyVerticalStaggeredGrid(
+                                    columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(colors.background),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                ) {
+                                    photos.forEach {
+                                        item {
+                                            Image(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(vertical = 12.dp),
+                                                bitmap = it.first.asImageBitmap(),
+                                                contentDescription = it.second,
+                                            )
+
+                                            PlaceAttribution(link = it.second)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(colors.background)
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+                                stickyHeader {
+                                    Text(
+                                        text = viewModel.place ?: stringResource(id = R.string.place),
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White,
+                                        modifier = Modifier
+                                            .background(colors.background)
+                                            .fillMaxWidth()
+                                            .padding(vertical = 16.dp),
+                                        textAlign = TextAlign.Center,
+                                        fontSize = 20.sp
+                                    )
+                                }
+                                photos.forEach {
+                                    item {
+                                        Image(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 12.dp),
+                                            bitmap = it.first.asImageBitmap(),
+                                            contentDescription = it.second,
+                                        )
+
+                                        PlaceAttribution(link = it.second)
+                                    }
                                 }
                             }
                         }

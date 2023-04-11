@@ -3,6 +3,8 @@ package com.sjaindl.travelcompanion.explore.details.photos
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.*
@@ -32,6 +34,8 @@ import com.sjaindl.travelcompanion.util.LoadingAnimation
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreDetailFlickrPhotosScreen(
+    modifier: Modifier = Modifier,
+    showGrids: Boolean,
     pinId: Long,
     photoType: PhotoType,
     viewModel: ExploreFlickrPhotosViewModel = viewModel(
@@ -47,7 +51,7 @@ fun ExploreDetailFlickrPhotosScreen(
         val state by viewModel.state.collectAsState()
 
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(colors.background),
             contentAlignment = Alignment.Center,
@@ -81,19 +85,15 @@ fun ExploreDetailFlickrPhotosScreen(
                         }
 
                         if (photoInfo.isNotEmpty()) {
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(colors.background),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                stickyHeader {
-                                    val place = viewModel.place ?: stringResource(id = R.string.place)
-                                    val placeText = stringResource(id = R.string.around, place)
-                                    val countryText = viewModel.country ?: stringResource(id = R.string.country)
-                                    val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
+                            // https://medium.com/mobile-app-development-publication/staggeredverticalgrid-of-android-jetpack-compose-fa565e5363e1
+                            if (showGrids) {
+                                val place = viewModel.place ?: stringResource(id = R.string.place)
+                                val placeText = stringResource(id = R.string.around, place)
+                                val countryText = viewModel.country ?: stringResource(id = R.string.country)
+                                val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
+
+                                Column {
                                     Text(
                                         text = text,
                                         fontWeight = FontWeight.Bold,
@@ -105,33 +105,96 @@ fun ExploreDetailFlickrPhotosScreen(
                                         textAlign = TextAlign.Center,
                                         fontSize = 20.sp
                                     )
+
+                                    LazyVerticalStaggeredGrid(
+                                        columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(colors.background),
+                                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    ) {
+                                        photoInfo.forEach {
+                                            item {
+                                                val model = ImageRequest.Builder(LocalContext.current)
+                                                    .data(it.url)
+                                                    .size(width = it.width, height = it.height)
+                                                    //.size(Size.ORIGINAL)
+                                                    .placeholder(android.R.drawable.gallery_thumb)
+                                                    .crossfade(true)
+                                                    .build()
+
+                                                val painter = rememberAsyncImagePainter(model)
+
+                                                Image(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(bottom = 12.dp),
+                                                    painter = painter,
+                                                    contentDescription = it.info,
+                                                    alignment = Alignment.Center,
+                                                    contentScale = ContentScale.FillWidth,
+                                                )
+                                            }
+
+                                        }
+                                    }
                                 }
 
-                                photoInfo.forEach {
-                                    item {
-                                        val model = ImageRequest.Builder(LocalContext.current)
-                                            .data(it.url)
-                                            .size(width = it.width, height = it.height)
-                                            //.size(Size.ORIGINAL)
-                                            .placeholder(android.R.drawable.gallery_thumb)
-                                            .crossfade(true)
-                                            .build()
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(colors.background),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center,
+                                ) {
+                                    stickyHeader {
+                                        val place = viewModel.place ?: stringResource(id = R.string.place)
+                                        val placeText = stringResource(id = R.string.around, place)
+                                        val countryText = viewModel.country ?: stringResource(id = R.string.country)
+                                        val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
-                                        val painter = rememberAsyncImagePainter(model)
-
-                                        Image(
+                                        Text(
+                                            text = text,
+                                            fontWeight = FontWeight.Bold,
+                                            color = Color.White,
                                             modifier = Modifier
+                                                .background(colors.background)
                                                 .fillMaxWidth()
-                                                .padding(bottom = 12.dp),
-                                            painter = painter,
-                                            contentDescription = it.info,
-                                            alignment = Alignment.Center,
-                                            contentScale = ContentScale.FillWidth,
+                                                .padding(vertical = 16.dp),
+                                            textAlign = TextAlign.Center,
+                                            fontSize = 20.sp
                                         )
                                     }
 
+                                    photoInfo.forEach {
+                                        item {
+                                            val model = ImageRequest.Builder(LocalContext.current)
+                                                .data(it.url)
+                                                .size(width = it.width, height = it.height)
+                                                //.size(Size.ORIGINAL)
+                                                .placeholder(android.R.drawable.gallery_thumb)
+                                                .crossfade(true)
+                                                .build()
+
+                                            val painter = rememberAsyncImagePainter(model)
+
+                                            Image(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(bottom = 12.dp),
+                                                painter = painter,
+                                                contentDescription = it.info,
+                                                alignment = Alignment.Center,
+                                                contentScale = ContentScale.FillWidth,
+                                            )
+                                        }
+
+                                    }
                                 }
                             }
+
 
                         }
                     }
@@ -162,6 +225,6 @@ fun ExploreDetailFlickrPhotosScreen(
 @Composable
 fun ExploreDetailFlickrPhotosScreenPreview() {
     TravelCompanionTheme {
-        ExploreDetailFlickrPhotosScreen(pinId = 1, photoType = PhotoType.COUNTRY)
+        ExploreDetailFlickrPhotosScreen(modifier = Modifier, pinId = 1, showGrids = false, photoType = PhotoType.COUNTRY)
     }
 }
