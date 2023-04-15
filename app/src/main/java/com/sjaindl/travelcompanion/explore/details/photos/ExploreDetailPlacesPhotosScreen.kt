@@ -1,10 +1,14 @@
 package com.sjaindl.travelcompanion.explore.details.photos
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.rounded.*
@@ -27,7 +31,7 @@ import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun ExploreDetailPlacesPhotosScreen(
     modifier: Modifier = Modifier,
@@ -90,18 +94,16 @@ fun ExploreDetailPlacesPhotosScreen(
                                     verticalArrangement = Arrangement.spacedBy(4.dp),
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                 ) {
-                                    photos.forEach {
-                                        item {
-                                            Image(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(vertical = 12.dp),
-                                                bitmap = it.first.asImageBitmap(),
-                                                contentDescription = it.second,
-                                            )
+                                    items(photos) {
+                                        Image(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 12.dp),
+                                            bitmap = it.first.asImageBitmap(),
+                                            contentDescription = it.second,
+                                        )
 
-                                            PlaceAttribution(link = it.second)
-                                        }
+                                        PlaceAttribution(link = it.second)
                                     }
                                 }
                             }
@@ -127,18 +129,17 @@ fun ExploreDetailPlacesPhotosScreen(
                                         fontSize = 20.sp
                                     )
                                 }
-                                photos.forEach {
-                                    item {
-                                        Image(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 12.dp),
-                                            bitmap = it.first.asImageBitmap(),
-                                            contentDescription = it.second,
-                                        )
 
-                                        PlaceAttribution(link = it.second)
-                                    }
+                                items(photos) {
+                                    Image(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 12.dp),
+                                        bitmap = it.first.asImageBitmap(),
+                                        contentDescription = it.second,
+                                    )
+
+                                    PlaceAttribution(link = it.second)
                                 }
                             }
                         }
