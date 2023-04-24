@@ -6,18 +6,17 @@ import com.sjaindl.travelcompanion.util.Mockable
 import io.ktor.client.call.*
 import io.ktor.http.*
 
-// TODO: Pagination
 @Mockable
-class FlickrClientImpl(private val responseHandler: HttpResponseHandler): FlickrClient {
-    override suspend fun fetchPhotos(text: String): Result<FlickrPhotoResponse> {
-        val requestParams = buildQueryItems()
+class FlickrClientImpl(private val responseHandler: HttpResponseHandler) : FlickrClient {
+    override suspend fun fetchPhotos(text: String, offset: Int, limit: Int): Result<FlickrPhotoResponse> {
+        val requestParams = buildQueryItems(offset = offset, limit = limit)
         requestParams.add(FlickrConstants.ParameterKeys.text to text)
 
         return fetch(requestParams = requestParams)
     }
 
-    override suspend fun fetchPhotos(latitude: Double, longitude: Double): Result<FlickrPhotoResponse> {
-        val requestParams = buildQueryItems()
+    override suspend fun fetchPhotos(latitude: Double, longitude: Double, offset: Int, limit: Int): Result<FlickrPhotoResponse> {
+        val requestParams = buildQueryItems(offset = offset, limit = limit)
         requestParams.add(FlickrConstants.ParameterKeys.boundingBox to boundingBoxString(latitude = latitude, longitude = longitude))
 
         return fetch(requestParams = requestParams)
@@ -42,7 +41,7 @@ class FlickrClientImpl(private val responseHandler: HttpResponseHandler): Flickr
         }
     }
 
-    private fun buildQueryItems(): MutableList<Pair<String, String>> {
+    private fun buildQueryItems(offset: Int, limit: Int): MutableList<Pair<String, String>> {
         return mutableListOf(
             FlickrConstants.ParameterKeys.method to FlickrConstants.ParameterValues.searchMethod,
             FlickrConstants.ParameterKeys.apiKey to SecretConstants.apiKeyFlickr,
@@ -51,6 +50,8 @@ class FlickrClientImpl(private val responseHandler: HttpResponseHandler): Flickr
             FlickrConstants.ParameterKeys.format to FlickrConstants.ParameterValues.responseFormat,
             FlickrConstants.ParameterKeys.noJsonCallback to FlickrConstants.ParameterValues.disableJsonCallback,
             FlickrConstants.ParameterKeys.sortOrder to FlickrConstants.ParameterValues.sortOrder,
+            FlickrConstants.ParameterKeys.offset to offset.toString(),
+            FlickrConstants.ParameterKeys.limit to limit.toString(),
             //"tags": "1025fav" //wow
         )
     }

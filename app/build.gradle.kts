@@ -93,6 +93,8 @@ val ktorSerializationVersion: String by extra
 val kotlinxSerializationVersion: String by extra
 val accompanistVersion: String by extra
 val composeNavigationVersion: String by extra
+val pagingVersion: String by extra
+val pagingComposeVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -224,4 +226,9 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-pager-indicators:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-webview:$accompanistVersion")
+
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    // without Android dependencies for tests
+    testImplementation("androidx.paging:paging-common:$pagingVersion")
+    implementation("androidx.paging:paging-compose:$pagingComposeVersion")
 }

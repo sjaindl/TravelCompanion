@@ -24,6 +24,9 @@ object FlickrConstants {
         const val safeSearch = "safe_search"
         const val text = "text"
         const val boundingBox = "bbox"
+
+        const val limit = "per_page"
+        const val offset = "page"
     }
 
     object ParameterValues {
@@ -33,6 +36,8 @@ object FlickrConstants {
         const val imageSize = "url_m"
         const val useSafeSearch = "1"
         const val sortOrder = "relevance"
+
+        const val limit = 20
     }
 
     object ResponseKeys {
