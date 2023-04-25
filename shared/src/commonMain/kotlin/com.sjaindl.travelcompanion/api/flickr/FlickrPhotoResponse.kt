@@ -18,7 +18,7 @@ data class FlickrPhotosMetaData(
     val perPage: Int,
     val total: Int,
     @SerialName("photo")
-    val photos: List<FlickrPhoto>
+    var photos: List<FlickrPhoto>
 )
 
 @Serializable

@@ -51,7 +51,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
         )
     )
 ) {
-    val pagingData = viewModel.fetchPhotos().collectAsLazyPagingItems()
+    val pagingData = viewModel.fetchPhotosFlow().collectAsLazyPagingItems()
 
     TravelCompanionTheme {
         LazyColumn(
