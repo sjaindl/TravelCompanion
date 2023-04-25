@@ -95,15 +95,18 @@ fun ExploreDetailPlacesPhotosScreen(
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                 ) {
                                     items(photos) {
-                                        Image(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 12.dp),
-                                            bitmap = it.first.asImageBitmap(),
-                                            contentDescription = it.second,
-                                        )
+                                        Column {
+                                            Image(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(vertical = 12.dp),
+                                                bitmap = it.first.asImageBitmap(),
+                                                contentDescription = it.second,
+                                            )
 
-                                        PlaceAttribution(link = it.second)
+                                            PlaceAttribution(link = it.second)
+                                        }
+
                                     }
                                 }
                             }
