@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sjaindl.travelcompanion.databinding.FragmentMainBinding
+import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 data class MainMenuItem(
     val title: String,
@@ -18,6 +22,10 @@ data class MainMenuItem(
 
 class MainFragment : Fragment() {
     private var binding: FragmentMainBinding? = null
+
+    private val prefs by lazy {
+        MapLocationDataPrefs(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,9 +96,17 @@ class MainFragment : Fragment() {
     }
 
     private fun navigateToExplore() {
-        val action =
-            MainFragmentDirections.actionMainFragmentToExploreActivity(20.0f, 50.0f, 1000.0f)
-        findNavController().navigate(action)
+        lifecycleScope.launch {
+            val location = prefs.lastLocationFlow.first()
+
+            val action = MainFragmentDirections.actionMainFragmentToExploreActivity(
+                latitude = location.latitude,
+                longitude = location.longitude,
+                radius = location.radius,
+            )
+
+            findNavController().navigate(action)
+        }
     }
 
     private fun navigateToPlan() {

@@ -13,18 +13,7 @@
 
         <action
             android:id="@+id/action_explore_fragment_to_search_place_fragment"
-            app:destination="@id/SearchPlaceFragment">
-            <argument
-                android:name="longitude"
-                app:argType="float" />
-            <argument
-                android:name="radius"
-                app:argType="float" />
-
-            <argument
-                android:name="latitude"
-                app:argType="float" />
-        </action>
+            app:destination="@id/SearchPlaceFragment" />
 
         <argument
             android:name="longitude"
@@ -47,15 +36,5 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/explore_fragment" />
 
-        <argument
-            android:name="longitude"
-            app:argType="float" />
-        <argument
-            android:name="radius"
-            app:argType="float" />
-
-        <argument
-            android:name="latitude"
-            app:argType="float" />
     </fragment>
 </navigation>

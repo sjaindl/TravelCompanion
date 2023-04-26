@@ -95,6 +95,7 @@ val accompanistVersion: String by extra
 val composeNavigationVersion: String by extra
 val pagingVersion: String by extra
 val pagingComposeVersion: String by extra
+val datastoreVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -231,4 +232,6 @@ dependencies {
     // without Android dependencies for tests
     testImplementation("androidx.paging:paging-common:$pagingVersion")
     implementation("androidx.paging:paging-compose:$pagingComposeVersion")
+
+    implementation("androidx.datastore:datastore-preferences:$datastoreVersion")
 }

@@ -28,19 +28,14 @@ import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity.Companion.PIN_ID
 import com.sjaindl.travelcompanion.explore.search.PlaceActionDialog
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
+import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
-data class MapLocationData(
-    val latitude: Double,
-    val longitude: Double,
-    val radius: Double
-)
-
-class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener {
     private var binding: FragmentExploreBinding? = null
     private var googleMap: GoogleMap? = null
 
@@ -68,6 +63,12 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModelFactory(dataRepository) })
+
+    private val prefs by lazy {
+        MapLocationDataPrefs(requireContext())
+    }
+
+    private var cameraMoveInProgress = false
 
     companion object {
         const val LATITUDE = "latitude"
@@ -112,10 +113,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 .setAction("Action", null)
                 .show()
 
-            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment(
-                15.4f, 10000.0f, 47.0f
-            )
-
+            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment()
             findNavController().navigate(action)
         }
 
@@ -213,15 +211,10 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         val cameraUpdate = GoogleMapsUtil.getCameraUpdate(latitude, longitude, radius)
         googleMap.moveCamera(cameraUpdate)
 
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(LatLng(latitude, longitude))
-                .title("Marker")
-        )
-
         addPersistedPinsToMap()
 
         googleMap.setOnMarkerClickListener(this)
+        googleMap.setOnCameraIdleListener(this)
     }
 
     private fun addPersistedPinsToMap() {
@@ -239,5 +232,18 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     override fun onMarkerClick(marker: Marker): Boolean {
         viewModel.clickedOnPlace(marker.title)
         return true
+    }
+
+    override fun onCameraIdle() {
+        val cameraPosition = googleMap?.cameraPosition ?: return
+
+        lifecycleScope.launch {
+            cameraMoveInProgress = false
+            prefs.updateLastLocation(
+                latitude = cameraPosition.target.latitude.toFloat(),
+                longitude = cameraPosition.target.longitude.toFloat(),
+                radius = cameraPosition.zoom,
+            )
+        }
     }
 }

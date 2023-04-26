@@ -46,6 +46,7 @@ import com.sjaindl.travelcompanion.util.LoadingAnimation
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+// https://stackoverflow.com/questions/73276953/android-jetpack-compose-pagination-pagination-not-working-with-staggered-layou
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreDetailFlickrLazyGridPhotosScreen(

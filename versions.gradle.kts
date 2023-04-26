@@ -58,7 +58,8 @@ mapOf(
     "accompanistVersion" to "0.28.0",
     "composeNavigationVersion" to "2.5.3",
     "pagingVersion" to "3.2.0-alpha04",
-    "pagingComposeVersion" to "1.0.0-alpha18"
+    "pagingComposeVersion" to "1.0.0-alpha18",
+    "datastoreVersion" to "1.0.0",
 
 ).forEach { (name, version) ->
     project.extra.set(name, version)

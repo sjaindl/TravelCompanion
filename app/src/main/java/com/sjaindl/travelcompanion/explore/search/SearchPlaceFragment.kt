@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.di.TCInjector
-import com.sjaindl.travelcompanion.explore.ExploreFragment
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
@@ -25,15 +24,6 @@ import kotlinx.serialization.json.Json
 
 class SearchPlaceFragment : Fragment() {
     private var binding: FragmentSearchPlaceBinding? = null
-
-    private val latitude: Float?
-        get() = arguments?.getFloat(ExploreFragment.LATITUDE)
-
-    private val longitude: Float?
-        get() = arguments?.getFloat(ExploreFragment.LONGITUDE)
-
-    private val radius: Float?
-        get() = arguments?.getFloat(ExploreFragment.RADIUS)
 
     private val sessionToken = randomStringByKotlinRandom(32)
 

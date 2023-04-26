@@ -71,7 +71,6 @@ fun ExploreDetailPlacesPhotosScreen(
                             fontSize = 20.sp
                         )
                     } else {
-
                         if (showGrids) {
                             Column {
                                 Text(
