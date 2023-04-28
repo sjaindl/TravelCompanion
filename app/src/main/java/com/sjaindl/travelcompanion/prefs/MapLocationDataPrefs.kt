@@ -18,7 +18,7 @@ class MapLocationDataPrefs(private val context: Context) {
     val lastLocationFlow: Flow<MapLocationData> = context.settingsDataStore.data.map { preferences ->
         preferences[LOCATION_KEY]?.let { encoded ->
             Json.decodeFromString(encoded)
-        } ?: MapLocationData(latitude = 37.38605f, longitude = -122.083855f, radius = 50.0f)
+        } ?: MapLocationData.default
     }
 
     suspend fun updateLastLocation(latitude: Float, longitude: Float, radius: Float) {

@@ -26,7 +26,7 @@ import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity.Companion.PIN_ID
-import com.sjaindl.travelcompanion.explore.search.PlaceActionDialog
+import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
 import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
@@ -91,6 +91,18 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             val showDialogState = viewModel.showDialog.collectAsState()
             val title = viewModel.dialogTitle.collectAsState()
 
+            binding?.fab?.visibility = if (showDialogState.value) View.GONE else View.VISIBLE
+
+            PlaceActionBottomSheet(
+                show = showDialogState.value,
+                title = title.value,
+                onShowDetails = viewModel::onShowDetails,
+                onPlanTrip = viewModel::onPlanTrip,
+                onDelete = viewModel::onDelete,
+                onCancel = viewModel::onDismiss,
+            )
+
+            /*
             PlaceActionDialog(
                 show = showDialogState.value,
                 title = title.value,
@@ -99,6 +111,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 onDelete = viewModel::onDelete,
                 onCancel = viewModel::onDismiss,
             )
+             */
         }
 
         return binding?.root
