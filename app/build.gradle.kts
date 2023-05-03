@@ -7,6 +7,8 @@ plugins {
     kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -22,6 +24,11 @@ android {
 
         val googleMapsApiKey: String = gradleLocalProperties(rootDir).getProperty("googleMapsApiKey")
         manifestPlaceholders["googleMapsApiKey"] = googleMapsApiKey
+
+        val facebookClientToken: String = gradleLocalProperties(rootDir).getProperty("facebookClientToken")
+        manifestPlaceholders["facebookClientToken"] = facebookClientToken
+
+        resourceConfigurations.addAll(listOf("en", "de"))
     }
 
     buildTypes {
@@ -96,6 +103,8 @@ val composeNavigationVersion: String by extra
 val pagingVersion: String by extra
 val pagingComposeVersion: String by extra
 val datastoreVersion: String by extra
+val firebaseUIVersion: String by extra
+val facebookVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -234,4 +243,15 @@ dependencies {
     implementation("androidx.paging:paging-compose:$pagingComposeVersion")
 
     implementation("androidx.datastore:datastore-preferences:$datastoreVersion")
+
+    // FirebaseUI for Cloud Firestore
+    implementation("com.firebaseui:firebase-ui-firestore:$firebaseUIVersion")
+
+    // FirebaseUI for Cloud Storage
+    implementation("com.firebaseui:firebase-ui-storage:$firebaseUIVersion")
+
+    // FirebaseUI for Firebase Auth
+    implementation("com.firebaseui:firebase-ui-auth:$firebaseUIVersion")
+    // Required for Facebook login: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
+    implementation("com.facebook.android:facebook-login:$facebookVersion")
 }

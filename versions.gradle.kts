@@ -61,6 +61,9 @@ mapOf(
     "pagingComposeVersion" to "1.0.0-alpha18",
     "datastoreVersion" to "1.0.0",
 
+    "firebaseUIVersion" to "8.0.2",
+    "facebookVersion" to "16.0.1",
+
 ).forEach { (name, version) ->
     project.extra.set(name, version)
 }
