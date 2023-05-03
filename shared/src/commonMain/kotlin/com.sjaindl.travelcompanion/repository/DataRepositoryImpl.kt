@@ -276,7 +276,7 @@ open class DataRepositoryImpl(private val dbQueries: TravelCompanionDatabaseQuer
         )
     }
 
-    override fun deletePins(id: Long) {
+    override fun deletePin(id: Long) {
         dbQueries.removePinById(id)
     }
 

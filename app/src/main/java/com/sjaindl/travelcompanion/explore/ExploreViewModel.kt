@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.maps.model.Marker
 import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,8 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     private val _onShowDetails = MutableStateFlow(0L)
     var onShowDetails = _onShowDetails.asStateFlow()
 
+    val markers: MutableMap<Long, Marker> = mutableMapOf()
+
     fun onShowDetails() {
         _showDialog.value = false
 
@@ -26,6 +29,14 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
 
     fun onDelete() {
         _showDialog.value = false
+
+        val pin = dataRepository.singlePin(name = dialogTitle.value) ?: return
+
+        markers[pin.id]?.isVisible = false
+        markers[pin.id]?.remove()
+        markers.remove(pin.id)
+
+        dataRepository.deletePin(pin.id)
     }
 
     fun onPlanTrip() {

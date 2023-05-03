@@ -170,7 +170,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private fun fetchPlaceDetails(placeId: String) = lifecycleScope.launch {
         val details = googleClient.placeDetail(placeId, sessionToken)
         val location = details.result.geometry.location
-        googleMap?.addMarker(
+        val marker = googleMap?.addMarker(
             MarkerOptions()
                 .position(LatLng(location.lat, location.lng))
                 .title(details.result.name)
@@ -184,6 +184,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             val component = details.result.addressComponents?.firstOrNull {
                 it.types.contains("country")
             }
+            val name = details.result.name
 
             dataRepository.insertPin(
                 id = 0,
@@ -193,13 +194,18 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 creationDate = Clock.System.now(),
                 latitude = details.result.geometry.location.lat,
                 longitude = details.result.geometry.location.lng,
-                name = details.result.name,
+                name = name,
                 phoneNumber = null,
                 placeId = placeId,
                 rating = null,
                 url = details.result.url,
             )
 
+            if (name != null && marker != null) {
+                dataRepository.singlePin(name = name)?.let { pin ->
+                    viewModel.markers[pin.id] = marker
+                }
+            }
         } catch (exception: Exception) {
             Snackbar.make(
                 requireView(),
@@ -231,14 +237,19 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun addPersistedPinsToMap() {
-        dataRepository.allPins().forEach {
-            val lat = it.latitude ?: return@forEach
-            val lng = it.longitude ?: return@forEach
-            googleMap?.addMarker(
+        dataRepository.allPins().forEach { pin ->
+            val lat = pin.latitude ?: return@forEach
+            val lng = pin.longitude ?: return@forEach
+
+            val marker = googleMap?.addMarker(
                 MarkerOptions()
                     .position(LatLng(lat, lng))
-                    .title(it.name)
+                    .title(pin.name)
             )
+
+            marker?.let {
+                viewModel.markers[pin.id] = it
+            }
         }
     }
 

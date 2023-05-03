@@ -100,7 +100,7 @@ interface DataRepository {
         independent: Boolean?,
     )
 
-    fun deletePins(id: Long)
+    fun deletePin(id: Long)
 
     fun clearDatabase()
 }
