@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +25,7 @@ import com.sjaindl.travelcompanion.R
 @Composable
 fun PlaceActionContent(
     modifier: Modifier = Modifier,
+    shape: Shape,
     title: String,
     onShowDetails: () -> Unit,
     onPlanTrip: () -> Unit,
@@ -37,7 +39,7 @@ fun PlaceActionContent(
 
     Surface(
         color = MaterialTheme.colors.background,
-        shape = RoundedCornerShape(8)
+        shape = shape,
     ) {
         Column(
             modifier = modifier
@@ -91,10 +93,10 @@ fun PlaceActionContent(
 fun PlaceActionContentPreview() {
     PlaceActionContent(
         title = "Test Location",
+        shape = RoundedCornerShape(percent = 8),
         onShowDetails = { },
         onPlanTrip = { },
         onDelete = { },
         onCancel = { },
     )
 }
-

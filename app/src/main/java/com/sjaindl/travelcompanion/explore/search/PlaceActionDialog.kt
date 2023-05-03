@@ -1,6 +1,7 @@
 package com.sjaindl.travelcompanion.explore.search
 
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +31,7 @@ fun PlaceActionDialog(
             content = {
                 PlaceActionContent(
                     modifier = modifier,
+                    shape = RoundedCornerShape(percent = 8),
                     title = title,
                     onShowDetails = onShowDetails,
                     onPlanTrip = onPlanTrip,
