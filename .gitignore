@@ -74,6 +74,7 @@ GoogleService-Info.plist
 
 #Kotlin
 SecretConstants.kt
+google-services.json
 
 #Android
 # Built application files

@@ -179,5 +179,8 @@
     <string name="google">Google</string>
     <string name="lonelyplanet">Lonely Planet</string>
 
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="unknown_error">Unknown error</string>
+
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 </resources>

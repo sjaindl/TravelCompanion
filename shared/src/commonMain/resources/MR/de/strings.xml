@@ -184,4 +184,7 @@
     <string name="wikivoyage">Wiki Voyage</string>
     <string name="google">Google</string>
     <string name="lonelyplanet">Lonely Planet</string>
+
+    <string name="sign_in_cancelled">Anmeldung abgebrochen</string>
+    <string name="unknown_error">Unbekannter Fehler</string>
 </resources>
