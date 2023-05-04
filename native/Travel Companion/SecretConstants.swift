@@ -14,4 +14,6 @@ class SecretConstants {
     static let apiKeyFlickr = "placeholder"
     static let apiKeyRomeToRio = "placeholder"
     static let userNameGeoNames = "placeholder"
+    static let restCountriesApiKey = "placeholder"
+    static let countryApiApiKey = "placeholder"
 }
