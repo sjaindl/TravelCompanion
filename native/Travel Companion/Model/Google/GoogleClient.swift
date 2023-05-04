@@ -24,7 +24,7 @@ class GoogleClient {
             return Observable.from(optional: filterStrings)
         }
         
-        let sharedClient = shared.GoogleClient()
+        let sharedClient = TCInjector.shared.googleClient
         
         let queryItems = sharedClient.buildAutoCompleteRequestParams(input: input, token: token)
         let urlComponents = GoogleConstants.UrlComponents()
@@ -58,7 +58,7 @@ class GoogleClient {
     }
     
     func placeDetail(placeId: String, token: String) -> Observable<PlacesDetailsResponse?> {
-        let sharedClient = shared.GoogleClient()
+        let sharedClient = TCInjector.shared.googleClient
         
         let queryItems = sharedClient.buildPlaceDetailRequestParams(placeId: placeId, token: token)
         let urlComponents = GoogleConstants.UrlComponents()

@@ -12,4 +12,14 @@ interface GoogleClient {
     suspend fun autocomplete(input: String, token: String): PlacesAutoCompleteResponse?
 
     suspend fun placeDetail(placeId: String, token: String): PlacesDetailsResponse
+
+    fun buildAutoCompleteRequestParams(
+        input: String,
+        token: String
+    ): List<Pair<String, String>>
+
+    fun buildPlaceDetailRequestParams(
+        placeId: String,
+        token: String
+    ): List<Pair<String, String>>
 }

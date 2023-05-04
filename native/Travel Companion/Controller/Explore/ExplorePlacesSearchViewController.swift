@@ -54,9 +54,9 @@ class ExplorePlacesSearchViewController: UIViewController {
             .flatMapLatest { query in
                 GoogleClient.sharedInstance.autocomplete(input: query!, token: self.sessionToken)
                     .startWith([]) // clears results on new search term
-                    .catchErrorJustReturn([])
+                    .catchAndReturn([])
             }
-            .observeOn(MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { filterStrings in
                 self.results.accept(filterStrings)
             })

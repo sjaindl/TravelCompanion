@@ -129,7 +129,7 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
         
         currentSearchText = searchText
         
-        shared.GoogleClient().searchPlaces(
+        TCInjector.shared.googleClient.searchPlaces(
             text: searchText,
             latitude: KotlinDouble(value: self.coordinate.latitude),
             longitude: KotlinDouble(value: self.coordinate.longitude),

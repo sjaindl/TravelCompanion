@@ -214,7 +214,7 @@ class ExploreViewController: UIViewController, PlacePicker {
         let zoom = UserDefaults.standard.float(forKey: Constants.UserDefaults.zoomLevel)
         setCamera(with: latitude, longitude: longitude, zoom: zoom)
         
-        GeoNamesClient().fetchCountryCode(latitude: latitude, longitude: longitude) { countryCode, error in
+        TCInjector.shared.geoNamesClient.fetchCountryCode(latitude: latitude, longitude: longitude) { countryCode, error in
             DispatchQueue.main.async {
                 if let error {
                     UiUtils.showToast(message: error.localizedDescription, view: self.view)

@@ -47,7 +47,7 @@ mapOf(
 
     "sqlDelightVersion" to "1.5.3",
     "kotlinxDatetimeVersion" to "0.4.0",
-    "okioVersion" to "3.3.0",
+    "okioVersion" to "3.2.0",
     "resourcesGeneratorVersion" to "0.20.1",
     "kotlinxResources" to "0.2.5",
     "kodein" to "7.20.1",

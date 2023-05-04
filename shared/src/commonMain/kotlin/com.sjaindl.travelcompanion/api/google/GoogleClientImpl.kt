@@ -70,7 +70,7 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         ).body()
     }
 
-    private fun buildAutoCompleteRequestParams(
+    override fun buildAutoCompleteRequestParams(
         input: String,
         token: String
     ): List<Pair<String, String>> {
@@ -81,6 +81,18 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
             GoogleConstants.ParameterKeys.sessionToken to token,
             GoogleConstants.ParameterKeys.key to SecretConstants.apiKeyGooglePlaces
             //GoogleConstants.ParameterKeys.strictBounds: GoogleConstants.ParameterValues.strictBounds
+        )
+    }
+
+    override fun buildPlaceDetailRequestParams(
+        placeId: String,
+        token: String
+    ): List<Pair<String, String>> {
+        return listOf(
+            GoogleConstants.ParameterKeys.placeId to placeId,
+            GoogleConstants.ParameterKeys.fields to GoogleConstants.ParameterValues.placeDetailFields,
+            GoogleConstants.ParameterKeys.sessionToken to token,
+            GoogleConstants.ParameterKeys.key to SecretConstants.apiKeyGooglePlaces
         )
     }
 
@@ -109,17 +121,5 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         }
 
         return parameters
-    }
-
-    private fun buildPlaceDetailRequestParams(
-        placeId: String,
-        token: String
-    ): List<Pair<String, String>> {
-        return listOf(
-            GoogleConstants.ParameterKeys.placeId to placeId,
-            GoogleConstants.ParameterKeys.fields to GoogleConstants.ParameterValues.placeDetailFields,
-            GoogleConstants.ParameterKeys.sessionToken to token,
-            GoogleConstants.ParameterKeys.key to SecretConstants.apiKeyGooglePlaces
-        )
     }
 }
