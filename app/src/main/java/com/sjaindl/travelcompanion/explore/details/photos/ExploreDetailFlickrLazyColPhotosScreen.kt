@@ -103,7 +103,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                         //.size(width = photo.width!!, height = photo.height!!)
                         .size(Size.ORIGINAL)
                         .placeholder(android.R.drawable.gallery_thumb)
-                        .crossfade(true)
+                        .crossfade(enable = true)
                         .build()
 
                     val painter = rememberAsyncImagePainter(model)

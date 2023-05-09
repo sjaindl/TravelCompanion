@@ -15,7 +15,7 @@ android {
     compileSdk = 33
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -45,6 +45,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     composeOptions {
@@ -166,6 +167,7 @@ dependencies {
 
     // https://github.com/Kotlin/kotlinx.serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-properties:$kotlinxSerializationVersion")
 
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-svg:$coilVersion")
@@ -193,7 +195,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
-
+    implementation("com.google.firebase:firebase-config-ktx")
 
     // https://github.com/tony19/logback-android
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
