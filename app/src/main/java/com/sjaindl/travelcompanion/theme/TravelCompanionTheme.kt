@@ -32,6 +32,7 @@ private val LightColors = lightColors(
     onSecondary = Color.White,
     error = Cyan800,
     background = Color(0xFF555555),
+    onBackground = Color(0xFFDDD7D7)
 )
 
 private val DarkColors = darkColors(
@@ -42,6 +43,7 @@ private val DarkColors = darkColors(
     onSecondary = Color.Black,
     error = Cyan200,
     background = Color(0xFF555555),
+    onBackground = Color(0xFFDDD7D7),
 )
 
 @Composable

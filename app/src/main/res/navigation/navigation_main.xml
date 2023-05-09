@@ -11,6 +11,12 @@
         android:label="@string/explore"
         tools:layout="@layout/activity_explore" />
 
+    <activity
+        android:id="@+id/plan_activity"
+        android:name="com.sjaindl.travelcompanion.plan.PlanActivity"
+        android:label="@string/plan"
+        tools:layout="@layout/activity_plan" />
+
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.sjaindl.travelcompanion.MainFragment"
@@ -30,6 +36,10 @@
                 android:name="radius"
                 app:argType="float" />
         </action>
+
+        <action
+            android:id="@+id/action_main_fragment_to_plan_activity"
+            app:destination="@id/plan_activity" />
     </fragment>
 
     <include app:graph="@navigation/navigation_explore" />

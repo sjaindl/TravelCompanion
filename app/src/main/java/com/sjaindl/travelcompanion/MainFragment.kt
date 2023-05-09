@@ -110,7 +110,7 @@ class MainFragment : Fragment() {
     }
 
     private fun navigateToPlan() {
-        // TODO
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToPlanActivity())
     }
 
     private fun navigateToRemember() {

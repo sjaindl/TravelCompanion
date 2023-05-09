@@ -75,6 +75,7 @@ kotlin {
 
                 // https://github.com/Kotlin/kotlinx.serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-properties:$kotlinxSerializationVersion")
 
                 // https://github.com/icerockdev/moko-resources
                 implementation("dev.icerock.moko:resources:$resourcesGeneratorVersion")
@@ -150,7 +151,7 @@ android {
     sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
     }
     namespace = "com.sjaindl.travelcompanion"

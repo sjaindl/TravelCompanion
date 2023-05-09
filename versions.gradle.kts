@@ -43,7 +43,7 @@ mapOf(
 
     "ktorVersion" to "2.1.3",
     "ktorSerializationVersion" to "1.3.1",
-    "kotlinxSerializationVersion" to "1.4.1",
+    "kotlinxSerializationVersion" to "1.5.0",
 
     "sqlDelightVersion" to "1.5.3",
     "kotlinxDatetimeVersion" to "0.4.0",
