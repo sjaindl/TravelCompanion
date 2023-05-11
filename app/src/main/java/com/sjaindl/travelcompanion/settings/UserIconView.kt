@@ -1,11 +1,18 @@
 package com.sjaindl.travelcompanion.settings
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.Typeface
 import android.text.TextPaint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.R
 
 class UserIconView @JvmOverloads constructor(
@@ -34,6 +41,17 @@ class UserIconView @JvmOverloads constructor(
             field = value
             updateView()
         }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        FirebaseAuth.getInstance().addAuthStateListener { auth ->
+            val name = auth.currentUser?.displayName
+            initials = name?.split(" ")?.take(2)?.joinToString(separator = "") {
+                it.first().toString()
+            }
+        }
+    }
 
     private fun updateView() {
         val initialsBitmap = initials?.takeIf { it.isNotEmpty() }?.let { bitmapFromText(it.uppercase()) }
