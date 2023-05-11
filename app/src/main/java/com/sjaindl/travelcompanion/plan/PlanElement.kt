@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.plan
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,12 +38,16 @@ fun PlanElement(
     startDate: Date,
     endDate: Date,
     imagePath: Uri?,
+    onClick: () -> Unit,
 ) {
     TravelCompanionTheme {
         Row(
             modifier = modifier
                 .background(colors.background)
-                .padding(vertical = 4.dp),
+                .padding(vertical = 4.dp)
+                .clickable {
+                    onClick()
+                },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val data = imagePath ?: Icons.Default.Place
@@ -110,6 +115,7 @@ fun PlanElementPreview() {
         name = "Graz",
         startDate = Date(),
         endDate = Date(),
-        imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png")
+        imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
+        onClick = {  }
     )
 }

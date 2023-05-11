@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.search
+package com.sjaindl.travelcompanion.plan
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +21,12 @@ import kotlinx.coroutines.launch
 // https://proandroiddev.com/bottom-sheet-in-jetpack-compose-d7e106422606
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PlaceActionBottomSheet(
+fun PlanActionBottomSheet(
     modifier: Modifier = Modifier,
     show: Boolean,
     title: String,
+    onShow: () -> Unit,
     onShowDetails: () -> Unit,
-    onPlanTrip: () -> Unit,
     onDelete: () -> Unit,
     onCancel: () -> Unit,
 ) {
@@ -57,13 +57,14 @@ fun PlaceActionBottomSheet(
             sheetState = modalSheetState,
             sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
             sheetContent = {
-                PlaceActionContent(
+                PlanActionContent(
                     modifier = modifier
-                        .fillMaxWidth().padding(horizontal = 8.dp),
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
                     shape = RectangleShape,
                     title = title,
+                    onShow = onShow,
                     onShowDetails = onShowDetails,
-                    onPlanTrip = onPlanTrip,
                     onDelete = onDelete,
                     onCancel = onCancel,
                 )
@@ -80,12 +81,12 @@ fun PlaceActionBottomSheet(
 
 @Preview
 @Composable
-fun PlaceActionBottomSheetPreview() {
-    PlaceActionBottomSheet(
+fun PlanActionBottomSheetPreview() {
+    PlanActionBottomSheet(
         show = true,
         title = "Test Location",
+        onShow = { },
         onShowDetails = { },
-        onPlanTrip = { },
         onDelete = { },
         onCancel = { },
     )

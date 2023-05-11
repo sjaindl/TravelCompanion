@@ -12,6 +12,7 @@ import com.sjaindl.travelcompanion.explore.details.home.ExploreDetailHomeScreen
 import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoMainScreen
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
+import com.sjaindl.travelcompanion.plan.PlanHomeScreen
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
 import com.sjaindl.travelcompanion.profile.ProfileScreen
 
@@ -22,13 +23,16 @@ val exploreDetailInfo = BottomNavItem.ExploreDetailInfo()
 val profileHome = ProfileHome()
 val personalInfo = PersonalInfo()
 
+val planHome = PlanHome()
+
 @Composable
 fun TCNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String? = null,
     startDestinationPinId: Long = 0,
-    onClose: () -> Unit = { }
+    onClose: () -> Unit = { },
+    onShowDetails: (Long) -> Unit = { },
 ) {
     NavHost(
         navController = navController,
@@ -82,6 +86,13 @@ fun TCNavHost(
         ) {
             PersonalInfoScreen()
         }
+
+        composable(
+            route = planHome.route,
+            arguments = emptyList(),
+        ) {
+            PlanHomeScreen(onShowDetails = onShowDetails)
+        }
     }
 }
 
@@ -103,6 +114,8 @@ fun NavHostController.navigateSingleTopTo(route: String) =
 private const val profileRoute = "profile"
 private const val personalInfoRoute = "personalInfo"
 
+private const val planRoute = "plan"
+
 data class ProfileHome(
     override var route: String = profileRoute,
     override var arguments: List<NamedNavArgument> = emptyList(),
@@ -115,6 +128,16 @@ data class ProfileHome(
 
 data class PersonalInfo(
     override var route: String = personalInfoRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
+
+data class PlanHome(
+    override var route: String = planRoute,
     override var arguments: List<NamedNavArgument> = emptyList(),
     override var routeWithArgs: String = route,
 ) : DestinationItem {

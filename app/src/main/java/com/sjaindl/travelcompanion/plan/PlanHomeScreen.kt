@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,8 +42,11 @@ fun PlanHomeScreen(
         factory = PlanViewModelFactory(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
-    )
+    ),
+    onShowDetails: (Long) -> Unit
 ) {
+    var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
+
     TravelCompanionTheme {
         val upcomingTrips by viewModel.upcomingTripsFlow.collectAsState()
         val pastTrips by viewModel.pastTripsFlow.collectAsState()
@@ -111,7 +117,10 @@ fun PlanHomeScreen(
                             name = it.name,
                             startDate = it.startDate,
                             endDate = it.endDate,
-                            imagePath = it.imagePath
+                            imagePath = it.imagePath,
+                            onClick = {
+                                showDialogForPlan = it
+                            }
                         )
                     }
 
@@ -138,7 +147,10 @@ fun PlanHomeScreen(
                             name = it.name,
                             startDate = it.startDate,
                             endDate = it.endDate,
-                            imagePath = it.imagePath
+                            imagePath = it.imagePath,
+                            onClick = {
+                                showDialogForPlan = it
+                            }
                         )
                     }
 
@@ -147,11 +159,37 @@ fun PlanHomeScreen(
         }
     }
 
+    PlanActionBottomSheet(
+        show = showDialogForPlan != null,
+        title = stringResource(id = R.string.chooseAction),
+        onShow = {
+            viewModel.onShow()
+            showDialogForPlan = null
+        },
+        onShowDetails = {
+            showDialogForPlan?.let {
+                viewModel.getPinId(it.pinName)?.let { pinId ->
+                    onShowDetails(pinId)
+                }
+            }
+            showDialogForPlan = null
+        },
+        onDelete = {
+            showDialogForPlan?.let {
+                viewModel.onDelete(plan = it)
+            }
+            showDialogForPlan = null
+        },
+        onCancel = {
+            showDialogForPlan = null
+        }
+    )
 }
-
 
 @Composable
 @Preview
 fun PlanHomeScreenPreview() {
-    PlanHomeScreen()
+    PlanHomeScreen(
+        onShowDetails = { }
+    )
 }

@@ -17,15 +17,13 @@ class PlannableFactory {
             return try FirestoreDecoder().decode(Flight.self, from: data)
         case Constants.Plannables.publicTransport:
             return try FirestoreDecoder().decode(PublicTransport.self, from: data)
-        // TODO
-        /*
         case Constants.Plannables.attraction:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
         case Constants.Plannables.hotel:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
         case Constants.Plannables.restaurant:
             return try FirestoreDecoder().decode(GooglePlace.self, from: data)
-         */
+         
         default:
             throw NSError(domain: "Plannable type not supported", code: -1, userInfo: [:])
         }
