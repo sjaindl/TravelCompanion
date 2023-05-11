@@ -17,6 +17,12 @@
         android:label="@string/plan"
         tools:layout="@layout/activity_plan" />
 
+    <activity
+        android:id="@+id/profile_activity"
+        android:name="com.sjaindl.travelcompanion.profile.ProfileActivity"
+        android:label="@string/profile"
+        tools:layout="@layout/activity_profile" />
+
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.sjaindl.travelcompanion.MainFragment"
@@ -40,6 +46,10 @@
         <action
             android:id="@+id/action_main_fragment_to_plan_activity"
             app:destination="@id/plan_activity" />
+
+        <action
+            android:id="@+id/action_main_fragment_to_profile"
+            app:destination="@id/profile_activity" />
     </fragment>
 
     <include app:graph="@navigation/navigation_explore" />

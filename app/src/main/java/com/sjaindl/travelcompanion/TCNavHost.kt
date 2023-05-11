@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,20 +11,28 @@ import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.Compa
 import com.sjaindl.travelcompanion.explore.details.home.ExploreDetailHomeScreen
 import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoMainScreen
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
+import com.sjaindl.travelcompanion.navigation.DestinationItem
+import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
+import com.sjaindl.travelcompanion.profile.ProfileScreen
+
+val exploreDetailHome = BottomNavItem.ExploreDetailHome()
+val exploreDetailPhotos = BottomNavItem.ExploreDetailPhotos()
+val exploreDetailInfo = BottomNavItem.ExploreDetailInfo()
+
+val profileHome = ProfileHome()
+val personalInfo = PersonalInfo()
 
 @Composable
 fun TCNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestinationPinId: Long,
+    startDestination: String? = null,
+    startDestinationPinId: Long = 0,
+    onClose: () -> Unit = { }
 ) {
-    val exploreDetailHome = BottomNavItem.ExploreDetailHome()
-    val exploreDetailPhotos = BottomNavItem.ExploreDetailPhotos()
-    val exploreDetailInfo = BottomNavItem.ExploreDetailInfo()
-
     NavHost(
         navController = navController,
-        startDestination = exploreDetailHome.route,
+        startDestination = startDestination ?: exploreDetailHome.route,
         modifier = modifier
     ) {
         composable(
@@ -55,6 +64,24 @@ fun TCNavHost(
             val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
             ExploreDetailInfoMainScreen(pinId = pinId)
         }
+
+        composable(
+            route = profileHome.route,
+            arguments = emptyList(),
+        ) {
+            ProfileScreen(
+                onClose = onClose,
+                goToPersonalInfo = {
+                    navController.navigateSingleTopTo(personalInfoRoute)
+                })
+        }
+
+        composable(
+            route = personalInfo.route,
+            arguments = emptyList(),
+        ) {
+            PersonalInfoScreen()
+        }
     }
 }
 
@@ -71,3 +98,27 @@ fun NavHostController.navigateSingleTopTo(route: String) =
 
 // Compile-time safe navigation annotation processing lib (had some issues with kotlin versioning, though):
 // https://proandroiddev.com/safe-compose-arguments-an-improved-way-to-navigate-in-jetpack-compose-95c84722eec2
+
+
+private const val profileRoute = "profile"
+private const val personalInfoRoute = "personalInfo"
+
+data class ProfileHome(
+    override var route: String = profileRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
+
+data class PersonalInfo(
+    override var route: String = personalInfoRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}

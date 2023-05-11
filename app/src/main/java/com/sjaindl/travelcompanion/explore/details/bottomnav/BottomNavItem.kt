@@ -9,20 +9,11 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.navigation.NamedDestinationItem
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
 
-interface DestinationItem {
-    var titleRes: Int
-    var icon: ImageVector
-    var route: String
-    var arguments: List<NamedNavArgument>
-    val routeWithArgs: String
-
-    fun routeWithSetArguments(vararg arguments: Any): String
-}
-
-sealed class BottomNavItem : DestinationItem {
+sealed class BottomNavItem : NamedDestinationItem {
     companion object {
         const val pinArg = "pin"
 

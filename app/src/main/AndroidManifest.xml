@@ -32,6 +32,13 @@
 
         </activity>
         <activity
+            android:name=".profile.ProfileActivity"
+            android:exported="false"
+            android:label="@string/profile"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

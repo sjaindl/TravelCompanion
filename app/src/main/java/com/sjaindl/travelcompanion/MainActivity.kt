@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
             // already signed in
+            navigateToProfile()
         } else {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -78,5 +80,9 @@ class MainActivity : AppCompatActivity() {
 
             signInLauncher.launch(signInIntent)
         }
+    }
+
+    private fun navigateToProfile() {
+        findNavController(this, R.id.fragmentContainerView).navigate(MainFragmentDirections.actionMainFragmentToProfile())
     }
 }
