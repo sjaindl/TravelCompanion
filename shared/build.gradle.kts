@@ -16,21 +16,6 @@ plugins {
     // id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
 }
 
-apply(from = "../versions.gradle.kts")
-val ktorVersion: String by extra
-val ktorSerializationVersion: String by extra
-val coroutineVersion: String by extra
-val gsonVersion: String by extra
-val timberVersion: String by extra
-val sqlDelightVersion: String by extra
-val kotlinxDatetimeVersion: String by extra
-val kotlinxSerializationVersion: String by extra
-val resourcesGeneratorVersion: String by extra
-val okioVersion: String by extra
-val jUnitVersion: String by extra
-val kotlinxResources: String by extra
-val kodein: String by extra
-
 sqldelight {
     database("TravelCompanionDatabase") {
         packageName = "com.sjaindl.travelcompanion.sqldelight"
@@ -47,7 +32,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            export("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+            export(libs.resources)
         }
     }
 
@@ -159,9 +144,8 @@ android {
 }
 
 dependencies {
-    commonMainApi("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+    commonMainApi(libs.resources)
 }
-
 
 allOpen {
     annotation("com.sjaindl.travelcompanion.util.Mockable")

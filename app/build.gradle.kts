@@ -67,45 +67,7 @@ android {
 
 //https://proandroiddev.com/dependencies-versions-in-gradle-kotlin-dsl-a8db15cedee2
 apply(from = "../versions.gradle.kts")
-val kotlinVersion: String by extra
-val coroutineVersion: String by extra
-val coreVersion: String by extra
 val roomVersion: String by extra
-val appcompatVersion: String by extra
-val materialVersion: String by extra
-val navigationVersion: String by extra
-val constraintLayoutVersion: String by extra
-val lifecycleExtensionsVersion: String by extra
-val lifecycleVersion: String by extra
-val coreTestingVersion: String by extra
-val recyclerViewVersion: String by extra
-val retrofitVersion: String by extra
-val gsonVersion: String by extra
-val okhttpVersion: String by extra
-val timberVersion: String by extra
-val leakCanaryVersion: String by extra
-val coilVersion: String by extra
-val jUnitVersion: String by extra
-val testRunnerVersion: String by extra
-val espressoVersion: String by extra
-val mockitoVersion: String by extra
-val mockitoKotlinVersion: String by extra
-val firebaseBomVersion: String by extra
-val slf4jVersion: String by extra
-val logbackVersion: String by extra
-val kotlinxDatetimeVersion: String by extra
-val picassoVersion: String by extra
-val mapsVersion: String by extra
-val googleMapsUtilsVersion: String by extra
-val ktorSerializationVersion: String by extra
-val kotlinxSerializationVersion: String by extra
-val accompanistVersion: String by extra
-val composeNavigationVersion: String by extra
-val pagingVersion: String by extra
-val pagingComposeVersion: String by extra
-val datastoreVersion: String by extra
-val firebaseUIVersion: String by extra
-val facebookVersion: String by extra
 
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
