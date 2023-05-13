@@ -1,5 +1,5 @@
 mapOf(
-    "gradleVersion" to "7.4.0",
+    "gradleVersion" to "8.2.0-alpha03",
     "gradleSecretsVersion" to "2.0.1",
     "kotlinVersion" to "1.7.21",
     "coroutineVersion" to "1.6.4",
