@@ -54,37 +54,37 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
-                implementation("io.ktor:ktor-client-auth:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation(libs.ktor.client.auth)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.serialization.kotlinx.json)
 
                 // https://github.com/google/gson
-                implementation("com.google.code.gson:gson:$gsonVersion")
+                implementation(libs.gson)
 
                 // https://github.com/JakeWharton/timber
-                implementation("com.jakewharton.timber:timber:$timberVersion")
+                implementation(libs.timber)
 
                 // https://github.com/cashapp/sqldelight
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation(libs.sqldelight.coroutines.extensions)
+                implementation(libs.sqldelight.runtime)
 
                 // https://github.com/Kotlin/kotlinx-datetime
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
+                implementation(libs.kotlinx.datetime)
 
                 // https://github.com/Kotlin/kotlinx.serialization
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-properties:$kotlinxSerializationVersion")
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.serialization.properties)
 
                 // https://github.com/icerockdev/moko-resources
-                implementation("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+                implementation(libs.resources)
 
                 // https://github.com/square/okio
-                implementation("com.squareup.okio:okio:$okioVersion")
+                implementation(libs.okio)
 
                 // https://github.com/kosi-libs/Kodein
-                implementation("org.kodein.di:kodein-di:$kodein")
+                implementation(libs.kodein)
 
                 // https://arkivanov.github.io/Decompose/getting-started/installation/
                 //implementation("com.arkivanov.decompose:decompose:0.5.1")
@@ -96,27 +96,28 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
 
-                implementation("com.squareup.okio:okio-fakefilesystem:$okioVersion")
-                implementation("dev.icerock.moko:resources-test:$resourcesGeneratorVersion")
-                implementation("com.goncalossilva:resources:$kotlinxResources")
+                implementation(libs.okio.fakefilesystem)
+                implementation(libs.resources.test)
+                implementation(libs.resources.goncalossilva)
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
-                implementation("io.ktor:ktor-client-gson:$ktorVersion")
+                implementation(libs.ktor.client.android)
+                implementation(libs.ktor.client.gson)
 
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
-                implementation("dev.icerock.moko:resources-compose:$resourcesGeneratorVersion")
+                implementation(libs.kotlinx.coroutines.android)
+
+                implementation(libs.android.driver)
+                implementation(libs.resources.compose)
             }
         }
 
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:$jUnitVersion")
+                implementation(libs.junit)
             }
         }
 
@@ -131,9 +132,9 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
-                implementation("dev.icerock.moko:resources:$resourcesGeneratorVersion")
+                implementation(libs.ktor.client.ios)
+                implementation(libs.sqldelight.native.driver)
+                implementation(libs.resources)
             }
         }
 

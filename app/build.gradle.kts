@@ -114,7 +114,7 @@ dependencies {
     implementation(libs.kotlin.reflect)
 
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
     // https://developer.android.com/jetpack/androidx/releases/core
@@ -166,8 +166,8 @@ dependencies {
     implementation(libs.timber)
 
     // https://github.com/Kotlin/kotlinx.serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-properties:$kotlinxSerializationVersion")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.properties)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
@@ -183,7 +183,7 @@ dependencies {
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.mockito.android)
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion") {
+    androidTestImplementation(libs.kotlinx.coroutines.test) {
         // conflicts with mockito due to direct inclusion of byte buddy
         // exclude group : "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
@@ -192,7 +192,7 @@ dependencies {
     androidTestImplementation(libs.runner)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
+    implementation(platform(libs.firebase.bom))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
@@ -202,7 +202,7 @@ dependencies {
     implementation(libs.logback.android)
 
     // https://github.com/Kotlin/kotlinx-datetime
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
+    implementation(libs.kotlinx.datetime)
 
     // https://github.com/square/picasso
     implementation(libs.picasso)
@@ -246,7 +246,7 @@ dependencies {
 
     implementation(libs.androidx.datastore.preferences)
 
-    // FirebaseUI for Cloud Firestore
+    // FirebaseUI for Cloud FireStore
     implementation(libs.firebase.ui.firestore)
 
     // FirebaseUI for Cloud Storage
