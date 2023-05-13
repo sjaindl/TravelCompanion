@@ -5,33 +5,23 @@ buildscript {
         mavenCentral()
     }
 
-    apply(from = "versions.gradle.kts")
-    val gradleVersion: String by extra
-    val kotlinVersion: String by extra
-    val navigationVersion: String by extra
-    val sqlDelightVersion: String by extra
-    val resourcesGeneratorVersion: String by extra
-    val crashlyticsVersion: String by extra
-    val googleServicesVersion: String by extra
-    val gradleSecretsVersion: String by extra
-
     dependencies {
-        classpath("com.android.tools.build:gradle:$gradleVersion")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath(libs.gradle)
+        classpath(libs.kotlin.gradle.plugin)
 
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion")
-        classpath("com.google.gms:google-services:$googleServicesVersion")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:$crashlyticsVersion")
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+        classpath(libs.google.services)
+        classpath(libs.firebase.crashlytics.gradle)
 
         // https://github.com/cashapp/sqldelight
-        classpath("com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion")
+        classpath(libs.gradle.plugin)
 
-        classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
+        classpath(libs.kotlin.allopen)
 
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:$gradleSecretsVersion")
+        classpath(libs.secrets.gradle.plugin)
 
         // https://github.com/icerockdev/moko-resources
-        classpath("dev.icerock.moko:resources-generator:$resourcesGeneratorVersion")
+        classpath(libs.resources.generator)
     }
 }
 

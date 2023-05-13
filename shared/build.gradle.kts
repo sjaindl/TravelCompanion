@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
 
-    kotlin("plugin.serialization") version "1.7.21"
+    alias(libs.plugins.kotlin.serialization)
     id("com.squareup.sqldelight")
 
     id("dev.icerock.mobile.multiplatform-resources")

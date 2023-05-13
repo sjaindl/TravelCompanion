@@ -10,16 +10,16 @@ constraintLayoutVersion = "2.1.4"
 coreTestingVersion = "2.1.0"
 coreVersion = "1.9.0"
 coroutineVersion = "1.6.4"
-crashlyticsVersion = "2.9.4"
 datastoreVersion = "1.0.0"
 datetimeVersion = "0.4.0"
 espressoVersion = "3.4.0"
 facebookVersion = "16.0.1"
 firebaseBomVersion = "29.0.3"
+firebaseCrashlyticsGradleVersion = "2.9.4"
 firebaseUIVersion = "8.0.2"
 googleMapsUtilsVersion = "2.4.0"
-googleServices = "4.3.15"
-gradleSecretsVersion = "2.0.1"
+googleServicesVersion = "4.3.15"
+gradle = "8.2.0-alpha03"
 gradleVersion = "7.4.0"
 gsonVersion = "2.9.1"
 jUnitVersion = "4.13.2"
@@ -48,6 +48,7 @@ resourcesGeneratorVersion = "0.20.1"
 retrofitVersion = "2.9.0"
 roomVersion = "2.4.3"
 runnerVersion = "1.0.2"
+secretsGradlePluginVersion = "2.0.1"
 serializationVersion = "1.5.0"
 slf4jApiVersion = "1.7.36"
 sqlDelightVersion = "1.5.3"
@@ -75,6 +76,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigationVersion" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationVersion" }
+androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationVersion" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingVersion" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingComposeVersion" }
@@ -137,14 +139,24 @@ sqldelight-native-driver = { module = "com.squareup.sqldelight:native-driver", v
 support-annotations = { module = "com.android.support:support-annotations", version.ref = "supportAnnotationsVersion" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 
+# Plugins or classpath:
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradleVersion" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelightVersion" }
+kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlinVersion" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+resources-generator = { module = "dev.icerock.moko:resources-generator", version.ref = "resourcesGeneratorVersion" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
+
 [plugins]
-# TODO: plugins seems to be still buggy currently
-firebase-crashlytics = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlyticsVersion" }
-google-services = { id = "com.google.gms:google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradleVersion" }
+google-services = { id = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle-tools = { id = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
 kotlin-allopen = { id = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlinVersion" }
 kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 navigation-safe-args = { id = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationVersion" }
 resources-generator = { id = "dev.icerock.moko:resources-generator", version.ref = "resourcesGeneratorVersion" }
-secrets-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "gradleSecretsVersion" }
+secrets-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
 sqlDelight = { id = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelightVersion" }
