@@ -111,85 +111,85 @@ dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(project(":shared"))
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation(libs.kotlin.reflect)
 
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
+    implementation(libs.kotlinx.coroutines.android)
 
     // https://developer.android.com/jetpack/androidx/releases/core
-    implementation("androidx.core:core-ktx:$coreVersion")
+    implementation(libs.core.ktx)
 
     // https://developer.android.com/jetpack/androidx/releases/room
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation(libs.room.ktx)
+    implementation(libs.androidx.room.runtime)
     kapt("androidx.room:room-compiler:$roomVersion")
-    testImplementation("androidx.room:room-testing:$roomVersion")
+    testImplementation(libs.androidx.room.testing)
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation("androidx.appcompat:appcompat:$appcompatVersion")
+    implementation(libs.androidx.appcompat)
 
     // https://material.io/develop/android/docs/getting-started/
-    implementation("com.google.android.material:material:$materialVersion")
+    implementation(libs.material)
 
     // https://developer.android.com/jetpack/androidx/releases/navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     //https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
+    implementation(libs.androidx.constraintlayout)
 
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
-    implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.common.java8)
 
     // activity, fragment
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    testImplementation("androidx.arch.core:core-testing:$coreTestingVersion")
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    testImplementation(libs.androidx.core.testing)
 
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
-    implementation("androidx.recyclerview:recyclerview:$recyclerViewVersion")
+    implementation(libs.androidx.recyclerview)
 
     // https://github.com/square/retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // https://github.com/google/gson
-    implementation("com.google.code.gson:gson:$gsonVersion")
+    implementation(libs.gson)
 
     //https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+    implementation(libs.logging.interceptor)
 
     // https://github.com/JakeWharton/timber
-    implementation("com.jakewharton.timber:timber:$timberVersion")
+    implementation(libs.timber)
 
     // https://github.com/Kotlin/kotlinx.serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-properties:$kotlinxSerializationVersion")
 
-    implementation("io.coil-kt:coil-compose:$coilVersion")
-    implementation("io.coil-kt:coil-svg:$coilVersion")
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
 
     // https://github.com/square/leakcanary
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion")
+    debugImplementation(libs.leakcanary.android)
 
-    testImplementation("junit:junit:$jUnitVersion")
+    testImplementation(libs.junit)
 
-    androidTestImplementation("androidx.test:runner:$testRunnerVersion")
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
-    androidTestImplementation("androidx.arch.core:core-testing:$coreTestingVersion")
-    androidTestImplementation("org.mockito:mockito-core:$mockitoVersion")
-    androidTestImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion")
-    androidTestImplementation("org.mockito:mockito-android:2.24.5")
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockito.android)
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion") {
         // conflicts with mockito due to direct inclusion of byte buddy
         // exclude group : "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
 
-    androidTestImplementation("com.android.support:support-annotations:28.0.0")
-    androidTestImplementation("com.android.support.test:runner:1.0.2")
+    androidTestImplementation(libs.support.annotations)
+    androidTestImplementation(libs.runner)
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
@@ -198,19 +198,19 @@ dependencies {
     implementation("com.google.firebase:firebase-config-ktx")
 
     // https://github.com/tony19/logback-android
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
-    implementation("com.github.tony19:logback-android:$logbackVersion")
+    implementation(libs.slf4j.api)
+    implementation(libs.logback.android)
 
     // https://github.com/Kotlin/kotlinx-datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
 
     // https://github.com/square/picasso
-    implementation("com.squareup.picasso:picasso:$picassoVersion")
+    implementation(libs.picasso)
 
-    implementation("com.google.android.gms:play-services-maps:$mapsVersion")
-    implementation("com.google.maps.android:android-maps-utils:$googleMapsUtilsVersion")
+    implementation(libs.play.services.maps)
+    implementation(libs.android.maps.utils)
 
-    implementation("com.google.android.libraries.places:places:3.0.0")
+    implementation(libs.places)
 
     // Jetpack Compose:
     val composeBom = platform("androidx.compose:compose-bom:2022.12.00")
@@ -227,33 +227,33 @@ dependencies {
     // Optional - Add full set of material icons
     implementation("androidx.compose.material:material-icons-extended")
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
 
-    implementation("androidx.navigation:navigation-compose:$composeNavigationVersion")
+    implementation(libs.androidx.navigation.compose)
 
-    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
-    implementation("com.google.accompanist:accompanist-pager-indicators:$accompanistVersion")
-    implementation("com.google.accompanist:accompanist-webview:$accompanistVersion")
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+    implementation(libs.accompanist.webview)
 
-    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    implementation(libs.androidx.paging.runtime)
     // without Android dependencies for tests
-    testImplementation("androidx.paging:paging-common:$pagingVersion")
-    implementation("androidx.paging:paging-compose:$pagingComposeVersion")
+    testImplementation(libs.androidx.paging.common)
+    implementation(libs.androidx.paging.compose)
 
-    implementation("androidx.datastore:datastore-preferences:$datastoreVersion")
+    implementation(libs.androidx.datastore.preferences)
 
     // FirebaseUI for Cloud Firestore
-    implementation("com.firebaseui:firebase-ui-firestore:$firebaseUIVersion")
+    implementation(libs.firebase.ui.firestore)
 
     // FirebaseUI for Cloud Storage
-    implementation("com.firebaseui:firebase-ui-storage:$firebaseUIVersion")
+    implementation(libs.firebase.ui.storage)
 
     // FirebaseUI for Firebase Auth
-    implementation("com.firebaseui:firebase-ui-auth:$firebaseUIVersion")
+    implementation(libs.firebase.ui.auth)
     // Required for Facebook login: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
-    implementation("com.facebook.android:facebook-login:$facebookVersion")
+    implementation(libs.facebook.login)
 }

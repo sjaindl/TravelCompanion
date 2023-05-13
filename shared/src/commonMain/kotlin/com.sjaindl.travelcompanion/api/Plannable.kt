@@ -1,6 +1,6 @@
 package com.sjaindl.travelcompanion.api
 
-internal interface Plannable {
+interface Plannable {
     fun description(): String
 
     // fun details(): NSMutableAttributedString
