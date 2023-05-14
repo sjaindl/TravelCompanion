@@ -8,15 +8,17 @@ import com.sjaindl.travelcompanion.Constants
 import com.sjaindl.travelcompanion.api.Plannable
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import timber.log.Timber
-import java.util.*
+import java.util.Date
 
 class Plan(
     val name: String,
     val pinName: String,
     val startDate: Date,
     val endDate: Date,
-    val imagePath: Uri?,
+    var imagePath: Uri?,
 ) {
+    var imageData: ByteArray? = null
+
     var hotels: MutableList<Plannable> = mutableListOf()
     var restaurants: MutableList<Plannable> = mutableListOf()
     var attractions: MutableList<Plannable> = mutableListOf()

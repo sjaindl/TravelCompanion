@@ -1,14 +1,14 @@
-package com.sjaindl.travelcompanion.plan
+package com.sjaindl.travelcompanion.plan.detail
 
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -27,28 +27,13 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 @Composable
-fun PlanElement(
-    modifier: Modifier,
-    name: String,
-    startDate: Date,
-    endDate: Date,
-    imagePath: Uri?,
-    onClick: () -> Unit,
-) {
+fun PlanDetailElement(imagePath: Uri?, title: String, details: String, attribution: String) {
     TravelCompanionTheme {
         Row(
-            modifier = modifier
-                .background(colors.background)
-                .padding(vertical = 4.dp)
-                .clickable {
-                    onClick()
-                },
-            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.background(colors.background),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             val data = imagePath ?: Icons.Default.Place
             val model = ImageRequest.Builder(LocalContext.current)
@@ -62,61 +47,65 @@ fun PlanElement(
 
             Image(
                 modifier = Modifier
-                    .weight(2f),
+                    .weight(1f),
                 painter = painter,
-                contentDescription = name,
+                contentDescription = null,
                 alignment = Alignment.Center,
                 contentScale = ContentScale.FillWidth,
             )
 
             Column(
-                modifier = Modifier
-                    .weight(3f)
-                    .padding(horizontal = 4.dp),
                 horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .weight(2f)
+                    .padding(horizontal = 4.dp)
             ) {
                 Text(
-                    text = name,
+                    text = title,
                     fontWeight = FontWeight.Bold,
                     color = colors.primary,
                     modifier = Modifier
                         .background(colors.background)
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 4.dp, end = 4.dp),
+                        .padding(top = 4.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,
                     fontSize = 18.sp,
                 )
 
-                val formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.systemDefault())
-
-                val formattedStartDate = formatter.format(startDate.toInstant())
-                val formattedEndDate = formatter.format(endDate.toInstant())
+                Text(
+                    text = details,
+                    color = colors.primary,
+                    modifier = Modifier
+                        .background(MaterialTheme.colors.background)
+                        .fillMaxWidth()
+                        .padding(top = 4.dp, start = 4.dp, end = 4.dp),
+                    textAlign = TextAlign.Start,
+                    fontSize = 16.sp,
+                )
 
                 Text(
-                    text = "$formattedStartDate - $formattedEndDate",
+                    text = attribution,
                     color = colors.primary,
                     modifier = Modifier
                         .background(colors.background)
                         .fillMaxWidth()
-                        .padding(top = 8.dp, bottom = 16.dp, start = 4.dp, end = 4.dp),
+                        .padding(top = 4.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                 )
             }
         }
     }
 }
 
-@Preview
 @Composable
-fun PlanElementPreview() {
-    PlanElement(
-        modifier = Modifier,
-        name = "Graz",
-        startDate = Date(),
-        endDate = Date(),
+@Preview
+fun PlanDetailElementPreview() {
+    PlanDetailElement(
         imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
-        onClick = {  }
+        title = "Hard Rock Café Bali",
+        details = "Jalan Pantai Kuta",
+        attribution = "Hard Rock Hotel Bali"
     )
 }

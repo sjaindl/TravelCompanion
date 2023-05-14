@@ -29,7 +29,7 @@ class FireStoreClient {
         fun addData(
             collectionReference: CollectionReference,
             documentName: String,
-            data: Map<String, Any>,
+            data: Map<String, Any?>,
             completion: (Exception?) -> Unit,
         ) {
             collectionReference.document(documentName).set(data).addOnCompleteListener { task ->

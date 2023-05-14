@@ -42,11 +42,12 @@ import com.sjaindl.travelcompanion.util.LoadingAnimation
 fun PlanHomeScreen(
     modifier: Modifier = Modifier,
     viewModel: PlanViewModel = viewModel(
-        factory = PlanViewModelFactory(
+        factory = PlanViewModel.PlanViewModelFactory(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
-    onShowDetails: (Long) -> Unit
+    onShowDetails: (Long) -> Unit,
+    onShowPlan: (String) -> Unit,
 ) {
     var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
 
@@ -178,6 +179,9 @@ fun PlanHomeScreen(
         title = stringResource(id = R.string.chooseAction),
         onShow = {
             viewModel.onShow()
+            showDialogForPlan?.let {
+                onShowPlan(it.name)
+            }
             showDialogForPlan = null
         },
         onShowDetails = {
@@ -204,6 +208,7 @@ fun PlanHomeScreen(
 @Preview
 fun PlanHomeScreenPreview() {
     PlanHomeScreen(
-        onShowDetails = { }
+        onShowDetails = { },
+        onShowPlan = { },
     )
 }

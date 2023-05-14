@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import timber.log.Timber
-import java.util.*
+import java.util.Date
 
 class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
     sealed class State {
@@ -55,6 +55,8 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
     }
 
     fun fetchPlans() {
+        if (!_upcomingTrips.isEmpty() || !_pastTrips.isEmpty()) return // already loaded
+        
         fireStoreDbReference.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.result) {
@@ -177,14 +179,14 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
             )
         }
     }
-}
 
-class PlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return PlanViewModel(dataRepository) as T
+    class PlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return PlanViewModel(dataRepository) as T
+            }
+            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }
-        throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
     }
 }
