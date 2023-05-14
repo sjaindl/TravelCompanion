@@ -64,12 +64,13 @@ private val pinArgs = listOf(navArgument(pinArg) {
     // defaultValue = 0
 })
 
+// https://developer.android.com/jetpack/compose/navigation#nested-nav
+// https://medium.com/google-developer-experts/modular-navigation-with-jetpack-compose-fda9f6b2bef7
 @Composable
 fun TCNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String? = null,
-    startDestinationPinId: Long = 0,
     onClose: () -> Unit = { },
     onShowDetails: (Long) -> Unit = { },
     onClickedProfile: () -> Unit = { },
