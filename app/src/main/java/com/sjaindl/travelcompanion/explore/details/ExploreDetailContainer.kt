@@ -7,7 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.sjaindl.travelcompanion.explore.details.bottomnav.DetailsBottomNavigation
+import com.sjaindl.travelcompanion.explore.details.bottomnav.ExploreDetailsBottomNavigation
+import com.sjaindl.travelcompanion.explore.navigation.ExploreDetailNavHost
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
@@ -17,7 +18,7 @@ fun ExploreDetailContainer(pinId: Long) {
     TravelCompanionTheme {
         Scaffold(
             bottomBar = {
-                DetailsBottomNavigation(navController = navController, pinId = pinId)
+                ExploreDetailsBottomNavigation(navController = navController, pinId = pinId)
             },
         ) { innerPadding ->
             ExploreDetailNavHost(

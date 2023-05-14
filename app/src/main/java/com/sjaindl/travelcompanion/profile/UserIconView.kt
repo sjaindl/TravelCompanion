@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.settings
+package com.sjaindl.travelcompanion.profile
 
 import android.content.Context
 import android.graphics.Bitmap

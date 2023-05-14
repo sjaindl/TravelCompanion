@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.details.bottomnav
+package com.sjaindl.travelcompanion.plan.detail.bottomnav
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -13,14 +13,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.navigateSingleTopTo
+import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
 @Composable
-fun DetailsBottomNavigation(navController: NavHostController, pinId: Long) {
+fun PlanDetailsBottomNavigation(navController: NavHostController, planName: String) {
     val items = listOf(
-        BottomNavItem.ExploreDetailHome(),
-        BottomNavItem.ExploreDetailPhotos(),
-        BottomNavItem.ExploreDetailInfo(),
+        PlanBottomNavItem.PlanDetailAddHotel(),
+        PlanBottomNavItem.PlanDetailAddRestaurant(),
+        PlanBottomNavItem.PlanDetailAddAttraction(),
     )
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.colorMain),
@@ -30,9 +30,7 @@ fun DetailsBottomNavigation(navController: NavHostController, pinId: Long) {
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = {
-                    Icon(imageVector = item.icon, contentDescription = "")
-                },
+                icon = { Icon(imageVector = item.icon, contentDescription = "") },
                 label = {
                     Text(
                         text = stringResource(id = item.titleRes),
@@ -44,7 +42,7 @@ fun DetailsBottomNavigation(navController: NavHostController, pinId: Long) {
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(pinId))
+                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(planName))
                 }
             )
         }

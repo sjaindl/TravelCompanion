@@ -22,7 +22,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.settings.UserIconView
+import com.sjaindl.travelcompanion.profile.UserIconView
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
