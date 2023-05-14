@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.sjaindl.travelcompanion.TCNavHost
 import com.sjaindl.travelcompanion.explore.details.bottomnav.DetailsBottomNavigation
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
@@ -16,15 +16,23 @@ fun ExploreDetailContainer(pinId: Long) {
 
     TravelCompanionTheme {
         Scaffold(
-            bottomBar = { DetailsBottomNavigation(navController = navController, pinId = pinId) },
+            bottomBar = {
+                DetailsBottomNavigation(navController = navController, pinId = pinId)
+            },
         ) { innerPadding ->
-            TCNavHost(
+            ExploreDetailNavHost(
                 navController = navController,
+                pinId = pinId,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
-                startDestinationPinId = pinId,
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun ExploreDetailContainerPreview() {
+    ExploreDetailContainer(pinId = 1)
 }

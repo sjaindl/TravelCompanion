@@ -30,7 +30,9 @@ fun DetailsBottomNavigation(navController: NavHostController, pinId: Long) {
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(imageVector = item.icon, contentDescription = "") },
+                icon = {
+                    Icon(imageVector = item.icon, contentDescription = "")
+                },
                 label = {
                     Text(
                         text = stringResource(id = item.titleRes),

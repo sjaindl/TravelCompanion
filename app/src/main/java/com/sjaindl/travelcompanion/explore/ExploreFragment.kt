@@ -1,6 +1,5 @@
 package com.sjaindl.travelcompanion.explore
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,8 +22,6 @@ import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.di.TCInjector
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailActivity.Companion.PIN_ID
 import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
 import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
@@ -126,8 +122,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 .setAction("Action", null)
                 .show()
 
-            val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment()
-            findNavController().navigate(action)
+            // val action = ExploreFragmentDirections.actionExploreFragmentToSearchPlaceFragment()
+            // findNavController().navigate(action)
         }
 
         setFragmentResultListener(SearchPlaceFragment.PLACE_RESULT) { key, bundle ->
@@ -156,11 +152,11 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 if (pinId > 0) {
                     viewModel.clickedOnDetails()
 
-                    val intent = Intent(requireActivity(), ExploreDetailActivity::class.java).apply {
-                        putExtra(PIN_ID, pinId)
-                    }
+                    // val intent = Intent(requireActivity(), ExploreDetailActivity::class.java).apply {
+                    //  putExtra(PIN_ID, pinId)
+                    // }
 
-                    requireActivity().startActivity(intent)
+                    // requireActivity().startActivity(intent)
                 }
             }
             // }
@@ -203,7 +199,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
             if (name != null && marker != null) {
                 dataRepository.singlePin(name = name)?.let { pin ->
-                    viewModel.markers[pin.id] = marker
+                    // viewModel.markers[pin.id] = marker
                 }
             }
         } catch (exception: Exception) {
@@ -248,7 +244,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
             )
 
             marker?.let {
-                viewModel.markers[pin.id] = it
+                // viewModel.markers[pin.id] = it
             }
         }
     }

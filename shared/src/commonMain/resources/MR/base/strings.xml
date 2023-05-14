@@ -46,8 +46,11 @@
     <string name="singleFlight">Single flight</string>
     <string name="wholeLeg">Whole leg</string>
     <string name="noPage">No page found</string>
-    <string name="noCountryPhotos">This location is not in a country. Can\'t fetch country photos.</string>
-    <string name="noCountryDetails">This location is not in a country. Can\'t fetch country details.</string>
+    <string name="noCountryPhotos">This location is not in a country. Can\'t fetch country photos.
+    </string>
+    <string name="noCountryDetails">This location is not in a country. Can\'t fetch country
+        details.
+    </string>
     <string name="errorDownloadImage">Could not download image</string>
     <string name="waitForPhotos">Please wait for photo downloads to finish</string>
     <string name="south">S</string>
@@ -114,7 +117,9 @@
     <string name="createAccount">Create account</string>
     <string name="account">Account</string>
     <string name="myProfile">My Profile</string>
-    <string name="yourPrivacyMatters">Your privacy matters. To see how your data is handled, don’t hesitate to read our open [Privacy Policy](%s).</string>
+    <string name="yourPrivacyMatters">Your privacy matters. To see how your data is handled, don’t
+        hesitate to read our open [Privacy Policy](%s).
+    </string>
     <string name="logout">Logout</string>
     <string name="deleteAccount">Delete account</string>
     <string name="yesDelete">Yes, delete</string>
@@ -122,7 +127,8 @@
     <string name="accountDeleted">Account deleted</string>
     <string name="ok">OK</string>
     <string name="yourAccountHasBeenDeleted">Your account has been deleted</string>
-    <string name="doYouReallyWantToDeleteYourAccount">Do you really want to delete your account?</string>
+    <string name="doYouReallyWantToDeleteYourAccount">Do you really want to delete your account?
+    </string>
     <string name="personalInformation">Personal information</string>
     <string name="nameAddressBirthday">Name, E-Mail</string>
     <string name="requestAccountDeletion">Request account deletion</string>
@@ -181,6 +187,9 @@
 
     <string name="sign_in_cancelled">Sign in cancelled</string>
     <string name="unknown_error">Unknown error</string>
+
+    <string name="back">Back</string>
+    <string name="picked">Picked %s</string>
 
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 </resources>

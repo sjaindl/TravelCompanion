@@ -132,7 +132,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                                 .fillMaxSize()
                                 .background(colors.background),
                             state = gridState,
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalItemSpacing = 4.dp,
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
 

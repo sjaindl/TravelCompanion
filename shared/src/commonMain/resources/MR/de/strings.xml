@@ -48,7 +48,8 @@
     <string name="wholeLeg">Gesamte Route</string>
     <string name="noPage">Keine Website gefunden</string>
     <string name="noCountryPhotos">Dieser Ort ist kein Land. Keine Fotos verfügbar.</string>
-    <string name="noCountryDetails">Dieser Ort ist kein Land. Keine Länderdetails verfügbar.</string>
+    <string name="noCountryDetails">Dieser Ort ist kein Land. Keine Länderdetails verfügbar.
+    </string>
     <string name="errorDownloadImage">Fehler beim Herunterladen der Fotos</string>
     <string name="waitForPhotos">Bitte warte bis das Herunterladen der Fotos fertig ist</string>
     <string name="south">S</string>
@@ -187,4 +188,6 @@
 
     <string name="sign_in_cancelled">Anmeldung abgebrochen</string>
     <string name="unknown_error">Unbekannter Fehler</string>
+    <string name="back">Zurück</string>
+    <string name="picked">%s ausgewählt</string>
 </resources>

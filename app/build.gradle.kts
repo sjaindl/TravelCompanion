@@ -170,6 +170,7 @@ dependencies {
 
     implementation(libs.play.services.maps)
     implementation(libs.android.maps.utils)
+    implementation(libs.maps.compose)
 
     implementation(libs.places)
 
@@ -193,6 +194,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
+
+    implementation(libs.androidx.compose.ui)
 
     implementation(libs.androidx.navigation.compose)
 

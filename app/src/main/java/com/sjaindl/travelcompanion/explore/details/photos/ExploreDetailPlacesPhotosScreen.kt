@@ -90,7 +90,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .background(colors.background),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalItemSpacing = 4.dp,
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                 ) {
                                     items(photos) {

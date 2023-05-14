@@ -5,7 +5,7 @@ accompanistVersion = "0.28.0"
 activityComposeVersion = "1.6.1"
 appcompatVersion = "1.5.1"
 coilVersion = "2.2.2"
-composeNavigationVersion = "2.5.3"
+composeUIVersion = "1.4.3"
 constraintLayoutVersion = "2.1.4"
 coreTestingVersion = "2.1.0"
 coreVersion = "1.9.0"
@@ -30,12 +30,13 @@ leakCanaryVersion = "2.9.1"
 lifecycleExtensionsVersion = "2.2.0"
 lifecycleVersion = "2.5.1"
 logbackVersion = "2.0.0"
+mapsComposeVersion = "2.7.2"
 mapsVersion = "18.1.0"
 materialVersion = "1.6.1"
 mockitoAndroidVersion = "2.24.5"
 mockitoKotlinVersion = "2.2.0"
 mockitoVersion = "4.8.0"
-navigationVersion = "2.5.2"
+navigationVersion = "2.5.3"
 okhttpVersion = "4.10.0"
 okioVersion = "3.2.0"
 pagingComposeVersion = "1.0.0-alpha19"
@@ -64,6 +65,7 @@ android-driver = { module = "com.squareup.sqldelight:android-driver", version.re
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "googleMapsUtilsVersion" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui-viewbinding", version.ref = "composeUIVersion" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayoutVersion" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTestingVersion" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreVersion" }
@@ -74,7 +76,7 @@ androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-lived
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleVersion" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigationVersion" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationVersion" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationVersion" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationVersion" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
@@ -116,6 +118,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanaryVersion" }
 logback-android = { module = "com.github.tony19:logback-android", version.ref = "logbackVersion" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttpVersion" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsComposeVersion" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoAndroidVersion" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }

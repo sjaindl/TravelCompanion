@@ -4,26 +4,65 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.Companion.pinArg
-import com.sjaindl.travelcompanion.explore.details.home.ExploreDetailHomeScreen
-import com.sjaindl.travelcompanion.explore.details.info.ExploreDetailInfoMainScreen
-import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
+import androidx.navigation.navArgument
+import com.google.firebase.auth.FirebaseAuth
+import com.sjaindl.travelcompanion.explore.ExploreScreen
+import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
+import com.sjaindl.travelcompanion.explore.search.SearchPlaceScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.PlanHomeScreen
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
 import com.sjaindl.travelcompanion.profile.ProfileScreen
 
-val exploreDetailHome = BottomNavItem.ExploreDetailHome()
-val exploreDetailPhotos = BottomNavItem.ExploreDetailPhotos()
-val exploreDetailInfo = BottomNavItem.ExploreDetailInfo()
+private val tcHome by lazy {
+    TCHome()
+}
 
-val profileHome = ProfileHome()
-val personalInfo = PersonalInfo()
+private val profileHome by lazy {
+    ProfileHome()
+}
 
-val planHome = PlanHome()
+private val personalInfo by lazy {
+    PersonalInfo()
+}
+
+private val exploreHome by lazy {
+    ExploreHome()
+}
+
+private val searchPlace by lazy {
+    SearchPlace()
+}
+
+private val exploreDetailContainer by lazy {
+    ExploreDetailContainer()
+}
+
+private val planHome by lazy {
+    PlanHome()
+}
+
+private const val pinArg = "pin"
+private const val planArg = "plan"
+private const val placesArg = "places"
+
+private val planArgs = listOf(navArgument(planArg) {
+    type = NavType.StringType
+    nullable = true
+})
+
+private val placesArgs = listOf(navArgument(placesArg) {
+    type = NavType.StringType
+    nullable = true
+})
+
+private val pinArgs = listOf(navArgument(pinArg) {
+    type = NavType.LongType
+    // defaultValue = 0
+})
 
 @Composable
 fun TCNavHost(
@@ -33,40 +72,45 @@ fun TCNavHost(
     startDestinationPinId: Long = 0,
     onClose: () -> Unit = { },
     onShowDetails: (Long) -> Unit = { },
+    onClickedProfile: () -> Unit = { },
+    openProfile: Boolean = false,
+    onAuthenticateAndOpenPlan: () -> Unit = { },
+    openPlan: Boolean = false,
 ) {
+    if (openProfile) {
+        navController.navigateSingleTopTo(profileHome.route)
+    }
+
+    if (openPlan) {
+        navController.navigateSingleTopTo(planHome.route)
+    }
+
     NavHost(
         navController = navController,
-        startDestination = startDestination ?: exploreDetailHome.route,
+        startDestination = startDestination ?: tcHome.route,
         modifier = modifier
     ) {
         composable(
-            route = exploreDetailHome.route,
+            route = tcHome.route
         ) {
-            ExploreDetailHomeScreen(pinId = startDestinationPinId)
-        }
-
-        composable(
-            route = exploreDetailHome.routeWithArgs,
-            arguments = exploreDetailHome.arguments,
-        ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailHomeScreen(pinId = pinId)
-        }
-
-        composable(
-            route = exploreDetailPhotos.routeWithArgs,
-            arguments = exploreDetailPhotos.arguments,
-        ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailPhotosMainScreen(pinId = pinId)
-        }
-
-        composable(
-            route = exploreDetailInfo.routeWithArgs,
-            arguments = exploreDetailInfo.arguments,
-        ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw java.lang.IllegalStateException("No pinId given")
-            ExploreDetailInfoMainScreen(pinId = pinId)
+            MainScreen(
+                onNavigateToExplore = {
+                    navController.navigateSingleTopTo(exploreHome.route)
+                },
+                onNavigateToPlan = {
+                    if (FirebaseAuth.getInstance().currentUser != null) {
+                        navController.navigateSingleTopTo(planHome.route)
+                    } else {
+                        onAuthenticateAndOpenPlan()
+                    }
+                },
+                onNavigateToRemember = {
+                    // TODO
+                },
+                onNavigateToProfile = {
+                    onClickedProfile()
+                },
+            )
         }
 
         composable(
@@ -76,7 +120,7 @@ fun TCNavHost(
             ProfileScreen(
                 onClose = onClose,
                 goToPersonalInfo = {
-                    navController.navigateSingleTopTo(personalInfoRoute)
+                    navController.navigate(personalInfo.route)
                 })
         }
 
@@ -88,6 +132,43 @@ fun TCNavHost(
         }
 
         composable(
+            route = exploreHome.routeWithArgs,
+            arguments = exploreHome.arguments,
+        ) { navBackStackEntry ->
+            val encodedPlaces = navBackStackEntry.arguments?.getString(placesArg)
+            ExploreScreen(
+                encodedPlaces = encodedPlaces,
+                onSearch = {
+                    navController.navigate(searchPlace.route)
+                },
+                onNavigateToExploreDetails = { pinId ->
+                    navController.navigate(exploreDetailContainer.routeWithSetArguments(pinId))
+                }
+            )
+        }
+
+        composable(
+            route = searchPlace.route,
+        ) {
+            SearchPlaceScreen(
+                onPickedPlace = { place ->
+                    navController.popBackStack()
+                    navController.navigate(route = exploreHome.routeWithSetArguments(place)) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = exploreDetailContainer.routeWithArgs,
+            arguments = exploreDetailContainer.arguments,
+        ) { navBackStackEntry ->
+            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw IllegalStateException("No pinId given")
+            ExploreDetailContainer(pinId = pinId)
+        }
+
+        composable(
             route = planHome.route,
             arguments = emptyList(),
         ) {
@@ -96,9 +177,9 @@ fun TCNavHost(
     }
 }
 
-fun NavHostController.navigateSingleTopTo(route: String) =
+fun NavHostController.navigateSingleTopTo(route: String, popToRoute: String? = graph.startDestinationRoute) =
     this.navigate(route) {
-        graph.startDestinationRoute?.let {
+        popToRoute?.let {
             popUpTo(it) {
                 saveState = true
             }
@@ -110,11 +191,25 @@ fun NavHostController.navigateSingleTopTo(route: String) =
 // Compile-time safe navigation annotation processing lib (had some issues with kotlin versioning, though):
 // https://proandroiddev.com/safe-compose-arguments-an-improved-way-to-navigate-in-jetpack-compose-95c84722eec2
 
-
+private const val tcHomeRoute = "tcHome"
 private const val profileRoute = "profile"
 private const val personalInfoRoute = "personalInfo"
 
+private const val exploreRoute = "explore"
+private const val searchPlaceRoute = "searchPlaces"
+private const val exploreDetailsContainerRoute = "exploreDetailsContainer"
+
 private const val planRoute = "plan"
+
+data class TCHome(
+    override var route: String = tcHomeRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
 
 data class ProfileHome(
     override var route: String = profileRoute,
@@ -128,6 +223,40 @@ data class ProfileHome(
 
 data class PersonalInfo(
     override var route: String = personalInfoRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
+
+data class ExploreHome(
+    override var route: String = exploreRoute,
+    override var arguments: List<NamedNavArgument> = placesArgs,
+    override var routeWithArgs: String = "$route?$placesArg={$placesArg}",
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        val encodedPlaces = arguments.firstOrNull() as? String ?: return route
+
+        return "$route?$placesArg=$encodedPlaces"
+    }
+}
+
+data class ExploreDetailContainer(
+    override var route: String = exploreDetailsContainerRoute,
+    override var arguments: List<NamedNavArgument> = pinArgs,
+    override var routeWithArgs: String = "$route/{$pinArg}",
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        val pinId = arguments.firstOrNull() as? Long ?: return route
+
+        return "$route/$pinId"
+    }
+}
+
+data class SearchPlace(
+    override var route: String = searchPlaceRoute,
     override var arguments: List<NamedNavArgument> = emptyList(),
     override var routeWithArgs: String = route,
 ) : DestinationItem {

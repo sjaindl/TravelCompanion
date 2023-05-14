@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,11 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PlanHomeScreen(
     modifier: Modifier = Modifier,
@@ -48,112 +51,123 @@ fun PlanHomeScreen(
     var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
 
     TravelCompanionTheme {
-        val upcomingTrips by viewModel.upcomingTripsFlow.collectAsState()
-        val pastTrips by viewModel.pastTripsFlow.collectAsState()
-        val state by viewModel.state.collectAsState()
+        Scaffold(
+            topBar = {
+                TCAppBar(
+                    title = stringResource(R.string.plan),
+                )
+            },
+        ) { paddingValues ->
+            val upcomingTrips by viewModel.upcomingTripsFlow.collectAsState()
+            val pastTrips by viewModel.pastTripsFlow.collectAsState()
+            val state by viewModel.state.collectAsState()
 
-        LaunchedEffect(Unit) {
-            viewModel.fetchPlans()
-        }
-
-        when (state) {
-            PlanViewModel.State.Loading -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(colors.background)
-                        .padding(all = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    LoadingAnimation()
-                }
+            LaunchedEffect(Unit) {
+                viewModel.fetchPlans()
             }
 
-            is PlanViewModel.State.Error -> {
-                val exception = (state as PlanViewModel.State.Error).exception
-
-                val errorMessage = exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(colors.background)
-                        .padding(all = 16.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = errorMessage,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        fontSize = 20.sp,
-                    )
+            when (state) {
+                PlanViewModel.State.Loading -> {
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .fillMaxSize()
+                            .background(colors.background)
+                            .padding(all = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        LoadingAnimation()
+                    }
                 }
-            }
 
-            PlanViewModel.State.Finished -> {
-                LazyColumn(modifier = modifier) {
-                    stickyHeader {
-                        Text(
-                            text = stringResource(id = R.string.upcomingTrips) + " (${upcomingTrips.size})",
-                            fontWeight = FontWeight.Bold,
-                            color = colors.background,
-                            modifier = Modifier
-                                .background(colors.onBackground)
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp
-                        )
-                    }
+                is PlanViewModel.State.Error -> {
+                    val exception = (state as PlanViewModel.State.Error).exception
 
-                    items(
-                        items = upcomingTrips,
-                        key = { plan -> plan.name }
+                    val errorMessage =
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .fillMaxSize()
+                            .background(colors.background)
+                            .padding(all = 16.dp),
+                        verticalArrangement = Arrangement.Center,
                     ) {
-                        PlanElement(
-                            modifier = Modifier,
-                            name = it.name,
-                            startDate = it.startDate,
-                            endDate = it.endDate,
-                            imagePath = it.imagePath,
-                            onClick = {
-                                showDialogForPlan = it
-                            }
-                        )
-                    }
-
-                    stickyHeader {
                         Text(
-                            text = stringResource(id = R.string.pastTrips) + " (${pastTrips.size})",
+                            text = errorMessage,
                             fontWeight = FontWeight.Bold,
-                            color = colors.background,
-                            modifier = Modifier
-                                .background(colors.onBackground)
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 20.sp,
                         )
                     }
+                }
 
-                    items(
-                        items = pastTrips,
-                        key = { plan -> plan.name }
-                    ) {
-                        PlanElement(
-                            modifier = Modifier,
-                            name = it.name,
-                            startDate = it.startDate,
-                            endDate = it.endDate,
-                            imagePath = it.imagePath,
-                            onClick = {
-                                showDialogForPlan = it
-                            }
-                        )
+                PlanViewModel.State.Finished -> {
+                    LazyColumn(modifier = modifier.padding(paddingValues)) {
+                        stickyHeader {
+                            Text(
+                                text = stringResource(id = R.string.upcomingTrips) + " (${upcomingTrips.size})",
+                                fontWeight = FontWeight.Bold,
+                                color = colors.background,
+                                modifier = Modifier
+                                    .background(colors.onBackground)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 20.sp
+                            )
+                        }
+
+                        items(
+                            items = upcomingTrips,
+                            key = { plan -> plan.name }
+                        ) {
+                            PlanElement(
+                                modifier = Modifier,
+                                name = it.name,
+                                startDate = it.startDate,
+                                endDate = it.endDate,
+                                imagePath = it.imagePath,
+                                onClick = {
+                                    showDialogForPlan = it
+                                }
+                            )
+                        }
+
+                        stickyHeader {
+                            Text(
+                                text = stringResource(id = R.string.pastTrips) + " (${pastTrips.size})",
+                                fontWeight = FontWeight.Bold,
+                                color = colors.background,
+                                modifier = Modifier
+                                    .background(colors.onBackground)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 20.sp
+                            )
+                        }
+
+                        items(
+                            items = pastTrips,
+                            key = { plan -> plan.name }
+                        ) {
+                            PlanElement(
+                                modifier = Modifier,
+                                name = it.name,
+                                startDate = it.startDate,
+                                endDate = it.endDate,
+                                imagePath = it.imagePath,
+                                onClick = {
+                                    showDialogForPlan = it
+                                }
+                            )
+                        }
+
                     }
-
                 }
             }
         }
