@@ -11,11 +11,12 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 fun MainContainer(
     onClickedProfile: () -> Unit,
     openProfile: Boolean,
+    profileOpened: () -> Unit = { },
     onAuthenticateAndOpenPlan: () -> Unit,
     openPlan: Boolean,
 ) {
     val navController = rememberNavController()
-
+    
     TravelCompanionTheme {
         TCNavHost(
             navController = navController,
@@ -23,6 +24,7 @@ fun MainContainer(
                 .fillMaxSize(),
             onClickedProfile = onClickedProfile,
             openProfile = openProfile,
+            profileOpened = profileOpened,
             onAuthenticateAndOpenPlan = onAuthenticateAndOpenPlan,
             openPlan = openPlan,
             onClose = {
@@ -38,6 +40,7 @@ fun MainContainerPreview() {
     MainContainer(
         onClickedProfile = { },
         openProfile = false,
+        profileOpened = { },
         onAuthenticateAndOpenPlan = { },
         openPlan = false,
     )

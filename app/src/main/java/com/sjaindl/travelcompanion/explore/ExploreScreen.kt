@@ -62,6 +62,8 @@ fun ExploreScreen(
     ),
     onSearch: () -> Unit,
     onNavigateToExploreDetails: (Long) -> Unit,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
@@ -142,6 +144,8 @@ fun ExploreScreen(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.explore),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
                 )
             },
             floatingActionButton = {
@@ -242,5 +246,6 @@ fun ExploreScreenPreview() {
     ExploreScreen(
         onSearch = { },
         onNavigateToExploreDetails = { },
+        canNavigateBack = true,
     )
 }

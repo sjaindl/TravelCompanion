@@ -21,14 +21,19 @@ fun MainScreen(
     onNavigateToPlan: () -> Unit,
     onNavigateToRemember: () -> Unit,
     onNavigateToProfile: () -> Unit,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
+
 
     TravelCompanionTheme {
         Scaffold(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.app_name),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
                     showProfile = true,
                     onClickProfile = onNavigateToProfile,
                 )
@@ -101,5 +106,6 @@ fun MainScreenPreview() {
         onNavigateToPlan = { },
         onNavigateToRemember = { },
         onNavigateToProfile = { },
+        canNavigateBack = false,
     )
 }

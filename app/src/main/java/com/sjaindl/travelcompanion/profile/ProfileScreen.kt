@@ -40,6 +40,8 @@ fun ProfileScreen(
     onClose: () -> Unit = { },
     goToPersonalInfo: () -> Unit = { },
     viewModel: ProfileViewModel = viewModel(),
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -48,6 +50,8 @@ fun ProfileScreen(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.profile),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
                 )
             },
         ) { paddingValues ->

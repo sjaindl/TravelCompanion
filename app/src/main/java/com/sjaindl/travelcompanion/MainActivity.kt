@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 },
                 openProfile = openProfile,
+                profileOpened = {
+                    openProfile = false
+                },
                 onAuthenticateAndOpenPlan = {
                     openPlan = startSignIn {
                         Timber.d(tag, "Successfully signed in")

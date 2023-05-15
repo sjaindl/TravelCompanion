@@ -54,7 +54,9 @@ fun NavGraphBuilder.planGraph(navController: NavController, onShowDetails: (Long
                 onShowDetails = onShowDetails,
                 onShowPlan = { plan ->
                     navController.navigate(planDetailsContainer.routeWithSetArguments(plan))
-                }
+                },
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
             )
         }
 

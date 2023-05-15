@@ -31,11 +31,13 @@ fun TCNavHost(
     onShowDetails: (Long) -> Unit = { },
     onClickedProfile: () -> Unit = { },
     openProfile: Boolean = false,
+    profileOpened: () -> Unit = { },
     onAuthenticateAndOpenPlan: () -> Unit = { },
     openPlan: Boolean = false,
 ) {
     if (openProfile) {
         navController.navigateSingleTopTo(profileNavigation)
+        profileOpened()
     }
 
     if (openPlan) {
@@ -66,6 +68,10 @@ fun TCNavHost(
                 },
                 onNavigateToProfile = {
                     onClickedProfile()
+                },
+                canNavigateBack = false,
+                navigateUp = {
+                    navController.navigateUp()
                 },
             )
         }

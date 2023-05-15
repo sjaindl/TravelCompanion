@@ -53,14 +53,20 @@ fun NavGraphBuilder.profileGraph(navController: NavController, onClose: () -> Un
                 onClose = onClose,
                 goToPersonalInfo = {
                     navController.navigate(personalInfo.route)
-                })
+                },
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
+            )
         }
 
         composable(
             route = personalInfo.route,
             arguments = emptyList(),
         ) {
-            PersonalInfoScreen()
+            PersonalInfoScreen(
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
+            )
         }
     }
 }

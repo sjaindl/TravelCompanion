@@ -91,7 +91,9 @@ fun NavGraphBuilder.exploreGraph(navController: NavController) {
                 },
                 onNavigateToExploreDetails = { pinId ->
                     navController.navigate(exploreDetailContainer.routeWithSetArguments(pinId))
-                }
+                },
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
             )
         }
 

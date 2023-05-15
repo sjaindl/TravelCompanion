@@ -48,6 +48,8 @@ fun PlanHomeScreen(
     ),
     onShowDetails: (Long) -> Unit,
     onShowPlan: (String) -> Unit,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
 
@@ -56,6 +58,8 @@ fun PlanHomeScreen(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.plan),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
                 )
             },
         ) { paddingValues ->
@@ -210,5 +214,6 @@ fun PlanHomeScreenPreview() {
     PlanHomeScreen(
         onShowDetails = { },
         onShowPlan = { },
+        canNavigateBack = true,
     )
 }

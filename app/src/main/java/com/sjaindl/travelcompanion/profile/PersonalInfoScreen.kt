@@ -25,13 +25,17 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonalInfoScreen(
-    viewModel: PersonalInfoViewModel = viewModel()
+    viewModel: PersonalInfoViewModel = viewModel(),
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     TravelCompanionTheme {
         Scaffold(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.personalInformation),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
                 )
             },
         ) { paddingValues ->
@@ -62,5 +66,7 @@ fun PersonalInfoScreen(
 @Preview
 @Composable
 fun PersonalInfoScreenPreview() {
-    PersonalInfoScreen()
+    PersonalInfoScreen(
+        canNavigateBack = true,
+    )
 }

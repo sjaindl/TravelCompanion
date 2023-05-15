@@ -12,15 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.profile.UserIconView
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
@@ -29,13 +26,12 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 @Composable
 fun TCAppBar(
     title: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
     showProfile: Boolean = false,
     onClickProfile: () -> Unit = { },
 ) {
     val context = LocalContext.current
-    val navController = rememberNavController()
-
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
     TravelCompanionTheme {
         TopAppBar(
@@ -44,9 +40,8 @@ fun TCAppBar(
             },
             modifier = Modifier,
             navigationIcon = {
-                // TODO: fix this
-                if (true || navController.previousBackStackEntry != null) {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                if (canNavigateBack) {
+                    IconButton(onClick = { navigateUp() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(id = R.string.back),
@@ -80,6 +75,8 @@ fun TCAppBar(
 fun TCAppBarPreview() {
     TCAppBar(
         title = stringResource(R.string.app_name),
+        canNavigateBack = true,
+        navigateUp = {},
         showProfile = true,
         onClickProfile = { },
     )
