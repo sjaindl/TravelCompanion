@@ -37,7 +37,7 @@ private val searchPlace by lazy {
     SearchPlace()
 }
 
-private val exploreDetailContainer by lazy {
+val exploreDetailContainer by lazy {
     ExploreDetailContainer()
 }
 

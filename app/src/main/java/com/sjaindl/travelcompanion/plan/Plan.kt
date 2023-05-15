@@ -8,6 +8,8 @@ import com.sjaindl.travelcompanion.Constants
 import com.sjaindl.travelcompanion.api.Plannable
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import timber.log.Timber
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class Plan(
@@ -31,20 +33,16 @@ class Plan(
 
     private val tag = "Plan"
 
+    val formattedDate: String
+        get() {
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.systemDefault())
+            val formattedStartDate = formatter.format(startDate.toInstant())
+            val formattedEndDate = formatter.format(endDate.toInstant())
+            return "$formattedStartDate - $formattedEndDate"
+        }
+
     init {
         configureDatabase()
-    }
-
-    private fun configureDatabase() {
-        val planReference = FirebaseFirestore.getInstance()
-            .collection(FireStoreConstants.Collections.plans)
-            .document(name)
-
-        fireStoreHotelDbReference = planReference.collection(FireStoreConstants.Collections.hotels)
-        fireStoreRestaurantDbReference = planReference.collection(FireStoreConstants.Collections.restaurants)
-        fireStoreAttractionDbReference = planReference.collection(FireStoreConstants.Collections.attractions)
-
-        fireStoreRememberPhotosDbReference = planReference.collection(FireStoreConstants.Collections.photos)
     }
 
     fun loadPlannables(completion: (exception: Exception?) -> Unit) {
@@ -158,6 +156,18 @@ class Plan(
             .addOnSuccessListener {
                 println("Document successfully removed!")
             }
+    }
+
+    private fun configureDatabase() {
+        val planReference = FirebaseFirestore.getInstance()
+            .collection(FireStoreConstants.Collections.plans)
+            .document(name)
+
+        fireStoreHotelDbReference = planReference.collection(FireStoreConstants.Collections.hotels)
+        fireStoreRestaurantDbReference = planReference.collection(FireStoreConstants.Collections.restaurants)
+        fireStoreAttractionDbReference = planReference.collection(FireStoreConstants.Collections.attractions)
+
+        fireStoreRememberPhotosDbReference = planReference.collection(FireStoreConstants.Collections.photos)
     }
 
     private fun reset() {

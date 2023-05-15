@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.plan
 
 import android.net.Uri
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,32 +10,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
+import com.sjaindl.travelcompanion.plan.detail.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 @Composable
 fun PlanElement(
     modifier: Modifier,
     name: String,
-    startDate: Date,
-    endDate: Date,
+    dateString: String,
     imagePath: Uri?,
     onClick: () -> Unit,
 ) {
@@ -50,23 +39,11 @@ fun PlanElement(
                 },
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val data = imagePath ?: Icons.Default.Place
-            val model = ImageRequest.Builder(LocalContext.current)
-                .data(data)
-                .size(Size.ORIGINAL)
-                .placeholder(android.R.drawable.gallery_thumb)
-                .crossfade(enable = true)
-                .build()
-
-            val painter = rememberAsyncImagePainter(model)
-
-            Image(
+            PlanImageElement(
+                bitmap = null,
+                imagePath = imagePath,
                 modifier = Modifier
-                    .weight(2f),
-                painter = painter,
-                contentDescription = name,
-                alignment = Alignment.Center,
-                contentScale = ContentScale.FillWidth,
+                    .weight(2f)
             )
 
             Column(
@@ -88,13 +65,8 @@ fun PlanElement(
                     fontSize = 18.sp,
                 )
 
-                val formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.systemDefault())
-
-                val formattedStartDate = formatter.format(startDate.toInstant())
-                val formattedEndDate = formatter.format(endDate.toInstant())
-
                 Text(
-                    text = "$formattedStartDate - $formattedEndDate",
+                    text = dateString,
                     color = colors.primary,
                     modifier = Modifier
                         .background(colors.background)
@@ -114,9 +86,8 @@ fun PlanElementPreview() {
     PlanElement(
         modifier = Modifier,
         name = "Graz",
-        startDate = Date(),
-        endDate = Date(),
+        dateString = "23.06.2023 - 27.06.2023",
         imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
-        onClick = {  }
+        onClick = { },
     )
 }

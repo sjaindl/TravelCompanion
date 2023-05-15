@@ -12,7 +12,11 @@ import com.sjaindl.travelcompanion.plan.navigation.PlanDetailNavHost
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-fun PlanDetailHomeScreen(planName: String) {
+fun PlanDetailHomeScreen(
+    planName: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
+) {
     val navController = rememberNavController()
 
     TravelCompanionTheme {
@@ -25,6 +29,8 @@ fun PlanDetailHomeScreen(planName: String) {
                     .fillMaxSize()
                     .padding(innerPadding),
                 plan = planName,
+                canNavigateBack = canNavigateBack,
+                navigateUp = navigateUp,
             )
         }
     }
@@ -33,5 +39,8 @@ fun PlanDetailHomeScreen(planName: String) {
 @Preview
 @Composable
 fun PlanDetailContainerPreview() {
-    PlanDetailHomeScreen(planName = "Graz")
+    PlanDetailHomeScreen(
+        planName = "Graz",
+        canNavigateBack = false,
+    )
 }

@@ -7,8 +7,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
@@ -34,7 +39,8 @@ fun LoadingAnimation(
                 animation = tween(
                     durationMillis = animationDelay
                 )
-            )
+            ),
+            label = "loadingAnimation"
         )
 
         // This is called when the animation is launched
@@ -49,7 +55,7 @@ fun LoadingAnimation(
                 .scale(scale = circleScaleAnimate.value)
                 .border(
                     width = 4.dp,
-                    color = MaterialTheme.colors.primary.copy(alpha = 1 - circleScaleAnimate.value),
+                    color = colors.primary.copy(alpha = 1 - circleScaleAnimate.value),
                     shape = CircleShape
                 )
         )

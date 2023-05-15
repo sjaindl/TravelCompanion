@@ -133,8 +133,7 @@ fun PlanHomeScreen(
                             PlanElement(
                                 modifier = Modifier,
                                 name = it.name,
-                                startDate = it.startDate,
-                                endDate = it.endDate,
+                                dateString = it.formattedDate,
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it
@@ -163,8 +162,7 @@ fun PlanHomeScreen(
                             PlanElement(
                                 modifier = Modifier,
                                 name = it.name,
-                                startDate = it.startDate,
-                                endDate = it.endDate,
+                                dateString = it.formattedDate,
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it

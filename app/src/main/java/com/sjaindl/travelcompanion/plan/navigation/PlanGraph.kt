@@ -65,7 +65,11 @@ fun NavGraphBuilder.planGraph(navController: NavController, onShowDetails: (Long
             arguments = planDetailsContainer.arguments,
         ) { navBackStackEntry ->
             val plan = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
-            PlanDetailHomeScreen(planName = plan)
+            PlanDetailHomeScreen(
+                planName = plan,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
+            )
         }
     }
 }

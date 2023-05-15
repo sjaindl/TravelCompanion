@@ -40,6 +40,8 @@ fun PlanDetailNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     plan: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
 ) {
     NavHost(
         navController = navController,
@@ -51,7 +53,11 @@ fun PlanDetailNavHost(
             route = planDetail.route,
             arguments = emptyList(),
         ) {
-            PlanDetailScreen(planName = plan)
+            PlanDetailScreen(
+                planName = plan,
+                canNavigateBack = canNavigateBack,
+                navigateUp = { navigateUp() },
+            )
         }
 
         composable(
@@ -59,7 +65,11 @@ fun PlanDetailNavHost(
             arguments = planArgs
         ) { navBackStackEntry ->
             val planArg = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
-            PlanDetailScreen(planName = planArg)
+            PlanDetailScreen(
+                planName = planArg,
+                canNavigateBack = canNavigateBack,
+                navigateUp = { navigateUp() },
+            )
         }
     }
 }
