@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
+import com.sjaindl.travelcompanion.explore.navigation.exploreDetailContainer
 import com.sjaindl.travelcompanion.explore.navigation.exploreGraph
 import com.sjaindl.travelcompanion.explore.navigation.exploreNavigation
 import com.sjaindl.travelcompanion.navigation.DestinationItem
@@ -28,7 +29,11 @@ fun TCNavHost(
     modifier: Modifier = Modifier,
     startDestination: String? = null,
     onClose: () -> Unit = { },
-    onShowDetails: (Long) -> Unit = { },
+    onShowDetails: (Long) -> Unit = { pin ->
+        navController.navigate(exploreDetailContainer.routeWithSetArguments(pin)) {
+            launchSingleTop = true
+        }
+    },
     onClickedProfile: () -> Unit = { },
     openProfile: Boolean = false,
     profileOpened: () -> Unit = { },
