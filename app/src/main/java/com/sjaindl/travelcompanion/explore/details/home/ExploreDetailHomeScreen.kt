@@ -1,7 +1,14 @@
 package com.sjaindl.travelcompanion.explore.details.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme.colors
@@ -28,7 +35,6 @@ import com.sjaindl.travelcompanion.baseui.TCLink
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailEntry
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModel
-import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModelFactory
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.text.NumberFormat
@@ -37,7 +43,7 @@ import java.text.NumberFormat
 fun ExploreDetailHomeScreen(
     pinId: Long,
     viewModel: ExploreDetailViewModel = viewModel(
-        factory = ExploreDetailViewModelFactory(
+        factory = ExploreDetailViewModel.ExploreDetailViewModelFactory(
             pinId = pinId,
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         ),
@@ -76,7 +82,7 @@ fun ExploreDetailHomeScreen(
                     ExploreDetailEntry(title = null, value = countryUiData.latitudeLongitude)
 
                     countryUiData.website?.let { link ->
-                        TCLink(link)
+                        TCLink(url = link, title = link)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 

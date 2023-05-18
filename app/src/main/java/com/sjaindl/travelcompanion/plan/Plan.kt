@@ -5,8 +5,13 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.Constants
-import com.sjaindl.travelcompanion.api.Plannable
+import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
+import com.sjaindl.travelcompanion.api.google.Plannable
+import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
+import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
+import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
+import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.RESTAURANT
 import timber.log.Timber
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -21,15 +26,15 @@ class Plan(
 ) {
     var imageData: ByteArray? = null
 
-    var hotels: MutableList<Plannable> = mutableListOf()
-    var restaurants: MutableList<Plannable> = mutableListOf()
-    var attractions: MutableList<Plannable> = mutableListOf()
+    var hotels: List<Plannable> = emptyList()
+    var restaurants: List<Plannable> = emptyList()
+    var attractions: List<Plannable> = emptyList()
 
-    var fireStoreHotelDbReference: CollectionReference? = null
-    var fireStoreRestaurantDbReference: CollectionReference? = null
-    var fireStoreAttractionDbReference: CollectionReference? = null
+    private var fireStoreHotelDbReference: CollectionReference? = null
+    private var fireStoreRestaurantDbReference: CollectionReference? = null
+    private var fireStoreAttractionDbReference: CollectionReference? = null
 
-    var fireStoreRememberPhotosDbReference: CollectionReference? = null
+    private var fireStoreRememberPhotosDbReference: CollectionReference? = null
 
     private val tag = "Plan"
 
@@ -47,10 +52,9 @@ class Plan(
 
     fun loadPlannables(completion: (exception: Exception?) -> Unit) {
         reset()
-
-        loadPlannables(hotels, fireStoreHotelDbReference, Constants.Plannables.hotel, completion)
-        loadPlannables(restaurants, fireStoreRestaurantDbReference, Constants.Plannables.restaurant, completion)
-        loadPlannables(attractions, fireStoreAttractionDbReference, Constants.Plannables.attraction, completion)
+        hotels.ifEmpty { loadPlannables(HOTEL, fireStoreHotelDbReference, Constants.Plannables.hotel, completion) }
+        restaurants.ifEmpty { loadPlannables(RESTAURANT, fireStoreRestaurantDbReference, Constants.Plannables.restaurant, completion) }
+        attractions.ifEmpty { loadPlannables(ATTRACTION, fireStoreAttractionDbReference, Constants.Plannables.attraction, completion) }
     }
 
     fun resetReferences() {
@@ -62,7 +66,7 @@ class Plan(
     }
 
     fun loadPlannables(
-        plannables: MutableList<Plannable>,
+        type: PlanDetailItemType,
         collectionReference: CollectionReference?,
         plannableType: String,
         completion: (exception: Exception?) -> Unit
@@ -70,7 +74,32 @@ class Plan(
         collectionReference?.get()?.addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->
                 println("${document.id} => ${document.data}")
-                plannables.add(PlannableFactory.makePlannable(plannableType, document.data))
+                val plannable = PlannableFactory.makePlannable(plannableType, document.data)
+                when (type) {
+                    HOTEL -> {
+                        apply {
+                            val list = hotels.toMutableList()
+                            list.add(plannable)
+                            hotels = list
+                        }
+                    }
+
+                    RESTAURANT -> {
+                        apply {
+                            val list = restaurants.toMutableList()
+                            list.add(plannable)
+                            restaurants = list
+                        }
+                    }
+
+                    ATTRACTION -> {
+                        apply {
+                            val list = attractions.toMutableList()
+                            list.add(plannable)
+                            attractions = list
+                        }
+                    }
+                }
             }
 
             completion(null)
@@ -159,9 +188,7 @@ class Plan(
     }
 
     private fun configureDatabase() {
-        val planReference = FirebaseFirestore.getInstance()
-            .collection(FireStoreConstants.Collections.plans)
-            .document(name)
+        val planReference = FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(name)
 
         fireStoreHotelDbReference = planReference.collection(FireStoreConstants.Collections.hotels)
         fireStoreRestaurantDbReference = planReference.collection(FireStoreConstants.Collections.restaurants)
@@ -171,8 +198,8 @@ class Plan(
     }
 
     private fun reset() {
-        hotels.clear()
-        restaurants.clear()
-        attractions.clear()
+        hotels = emptyList()
+        restaurants = emptyList()
+        attractions = emptyList()
     }
 }

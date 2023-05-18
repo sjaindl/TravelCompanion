@@ -56,7 +56,7 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
     fun fetchPlans() {
         if (!_upcomingTrips.isEmpty() || !_pastTrips.isEmpty()) return // already loaded
-        
+
         fireStoreDbReference.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.result) {
@@ -74,13 +74,6 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
                         Timber.tag(tag).d("fetched imagePath: $imagePath")
                         if (name != null && pinName != null && startDate != null && endDate != null) {
                             val plan = Plan(name, pinName, startDate, endDate, imagePath)
-
-                            // preload subdocuments of plan
-                            plan.loadPlannables { exception ->
-                                if (exception != null) {
-                                    _state.value = State.Error(exception)
-                                }
-                            }
 
                             if (endDate > Date()) {
                                 _upcomingTrips.add(plan)

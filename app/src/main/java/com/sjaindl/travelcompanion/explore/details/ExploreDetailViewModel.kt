@@ -62,9 +62,9 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
 
         return dataRepository.singleCountry(countryCode)
     }
-}
 
-class ExploreDetailViewModelFactory(private val pinId: Long, private val dataRepository: DataRepository) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = ExploreDetailViewModel(pinId, dataRepository) as T
+    class ExploreDetailViewModelFactory(private val pinId: Long, private val dataRepository: DataRepository) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = ExploreDetailViewModel(pinId, dataRepository) as T
+    }
 }

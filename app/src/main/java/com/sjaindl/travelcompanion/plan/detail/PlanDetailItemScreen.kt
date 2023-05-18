@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.plan
+package com.sjaindl.travelcompanion.plan.detail
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -18,14 +18,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sjaindl.travelcompanion.baseui.TCLink
+import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
+data class PlanDetailItem(
+    val title: String,
+    val details: String,
+    val attributionWithText: AttributionWithText?,
+    val imagePath: Uri?,
+)
+
 @Composable
-fun PlanElement(
+fun PlanDetailItemScreen(
     modifier: Modifier,
-    name: String,
-    dateString: String,
-    imagePath: Uri?,
+    planDetailItem: PlanDetailItem,
     onClick: () -> Unit,
 ) {
     TravelCompanionTheme {
@@ -40,9 +47,10 @@ fun PlanElement(
         ) {
             PlanImageElement(
                 bitmap = null,
-                imagePath = imagePath,
+                imagePath = planDetailItem.imagePath,
                 modifier = Modifier
                     .weight(2f)
+                    .padding(start = 4.dp)
             )
 
             Column(
@@ -53,7 +61,7 @@ fun PlanElement(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = name,
+                    text = planDetailItem.title,
                     fontWeight = FontWeight.Bold,
                     color = colors.primary,
                     modifier = Modifier
@@ -65,7 +73,7 @@ fun PlanElement(
                 )
 
                 Text(
-                    text = dateString,
+                    text = planDetailItem.details,
                     color = colors.primary,
                     modifier = Modifier
                         .background(colors.background)
@@ -74,6 +82,18 @@ fun PlanElement(
                     textAlign = TextAlign.Start,
                     fontSize = 12.sp,
                 )
+
+                planDetailItem.attributionWithText?.let {
+                    TCLink(
+                        url = it.link,
+                        title = it.name,
+                        modifier = Modifier
+                            .background(colors.background)
+                            .fillMaxWidth()
+                            .padding(top = 8.dp, bottom = 16.dp, start = 4.dp, end = 4.dp),
+                        fontSize = 12.sp
+                    )
+                }
             }
         }
     }
@@ -81,12 +101,15 @@ fun PlanElement(
 
 @Preview
 @Composable
-fun PlanElementPreview() {
-    PlanElement(
+fun PlanDetailItemPreview() {
+    PlanDetailItemScreen(
         modifier = Modifier,
-        name = "Graz",
-        dateString = "23.06.2023 - 27.06.2023",
-        imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
+        planDetailItem = PlanDetailItem(
+            title = "Marina Bay Sands",
+            details = "Marina Bay Singapore",
+            attributionWithText = AttributionWithText(link = "https://www.singapore.com", name = "Singapore"),
+            imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
+        ),
         onClick = { },
     )
 }

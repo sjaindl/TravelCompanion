@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
+import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -144,7 +145,9 @@ fun PlanDetailScreen(
                             fontSize = 16.sp,
                         )
 
-                        PlanDetailItems()
+                        PlanDetailItems(
+                            plan = plan
+                        )
                     }
                 }
 

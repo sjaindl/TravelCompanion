@@ -2,6 +2,15 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="GooglePlaceDecodingTest.testGooglePlaceEncoding">
+        <State />
+      </entry>
+      <entry key="PlanDetailItemPreview">
+        <State />
+      </entry>
+      <entry key="PlanDetailItemsPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
