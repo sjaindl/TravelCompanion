@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,6 +10,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.explore.ExploreScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
+import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 
@@ -28,6 +30,7 @@ private val pinArgs = listOf(navArgument(pinArg) {
 private const val exploreRoute = "explore"
 private const val searchPlaceRoute = "searchPlaces"
 private const val exploreDetailsContainerRoute = "exploreDetailsContainer"
+private const val photoFullScreenRoute = "photoFullScreen"
 
 private val exploreHome by lazy {
     ExploreHome()
@@ -37,11 +40,29 @@ private val searchPlace by lazy {
     SearchPlace()
 }
 
+private val photoFullScreen by lazy {
+    PhotoFullScreen()
+}
+
 val exploreDetailContainer by lazy {
     ExploreDetailContainer()
 }
 
 const val exploreNavigation = "exploreNavigation"
+
+private var url: String? = null
+private var title: String? = null
+private var bitmap: ImageBitmap? = null
+
+data class PhotoFullScreen(
+    override var route: String = photoFullScreenRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
 
 data class ExploreHome(
     override var route: String = exploreRoute,
@@ -115,7 +136,24 @@ fun NavGraphBuilder.exploreGraph(navController: NavController) {
             arguments = exploreDetailContainer.arguments,
         ) { navBackStackEntry ->
             val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw IllegalStateException("No pinId given")
-            ExploreDetailContainer(pinId = pinId)
+            ExploreDetailContainer(
+                pinId = pinId,
+                onGoToFullScreenPhoto = { _bitmap, _url, _title ->
+                    bitmap = _bitmap
+                    url = _url
+                    title = _title
+                    navController.navigate(photoFullScreen.routeWithSetArguments(pinId))
+                },
+            )
+        }
+
+        composable(
+            route = photoFullScreen.route,
+            arguments = emptyList(),
+        ) {
+            PhotoFullScreen(bitmap = bitmap, url = url, title = title!!) {
+                
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.explore.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,6 +28,7 @@ fun ExploreDetailNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     pinId: Long,
+    onGoToFullScreenPhoto: (bitmap: ImageBitmap?, url: String?, title: String) -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -55,7 +57,12 @@ fun ExploreDetailNavHost(
         ) { navBackStackEntry ->
             val argPinId =
                 navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
-            ExploreDetailPhotosMainScreen(pinId = argPinId)
+            ExploreDetailPhotosMainScreen(
+                pinId = argPinId,
+                onGoToFullScreenPhoto = { _bitmap, _url, _title ->
+                    onGoToFullScreenPhoto(_bitmap, _url, _title)
+                },
+            )
         }
 
         composable(

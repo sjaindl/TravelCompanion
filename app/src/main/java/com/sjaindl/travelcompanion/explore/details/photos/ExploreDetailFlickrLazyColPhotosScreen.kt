@@ -3,14 +3,21 @@ package com.sjaindl.travelcompanion.explore.details.photos
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,74 +56,102 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
             photoType = photoType,
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
-    )
+    ),
+    onGoToFullScreenPhoto: (url: String?, title: String) -> Unit,
 ) {
     val pagingData = viewModel.fetchPhotosFlow().collectAsLazyPagingItems()
 
+    val state = rememberLazyListState()
+
+    var fullScreenImage: String? by remember {
+        mutableStateOf(null)
+    }
+
     TravelCompanionTheme {
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-        ) {
-
-            stickyHeader {
-                if (pagingData.loadState.append.endOfPaginationReached && pagingData.itemCount == 0) {
-                    Text(
-                        text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp
-                    )
-                } else {
-                    val place = viewModel.place ?: stringResource(id = R.string.place)
-                    val placeText = stringResource(id = R.string.around, place)
-                    val countryText = viewModel.country ?: stringResource(id = R.string.country)
-                    val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
-
-                    Text(
-                        text = text,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier
-                            .background(MaterialTheme.colors.background)
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp
-                    )
+        if (fullScreenImage != null) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                PhotoFullScreen(bitmap = null, url = fullScreenImage, title = "") {
+                    fullScreenImage = null
                 }
             }
+        } else {
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background),
+                state = state,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+            ) {
 
-            itemsIndexed(
-                items = pagingData,
-                key = { index, item ->
-                    "$index-${item.id}"
-                },
-            ) { _, item ->
-                item?.let { photo ->
-                    val model = ImageRequest.Builder(LocalContext.current)
-                        .data(photo.url)
-                        //.size(width = photo.width!!, height = photo.height!!)
-                        .size(Size.ORIGINAL)
-                        .placeholder(android.R.drawable.gallery_thumb)
-                        .crossfade(enable = true)
-                        .build()
+                stickyHeader {
+                    if (pagingData.loadState.append.endOfPaginationReached && pagingData.itemCount == 0) {
+                        Text(
+                            text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp
+                        )
+                    } else {
+                        val place = viewModel.place ?: stringResource(id = R.string.place)
+                        val placeText = stringResource(id = R.string.around, place)
+                        val countryText = viewModel.country ?: stringResource(id = R.string.country)
+                        val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
-                    val painter = rememberAsyncImagePainter(model)
+                        Text(
+                            text = text,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.background)
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
 
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 12.dp),
-                        painter = painter,
-                        contentDescription = photo.title,
-                        alignment = Alignment.Center,
-                        contentScale = ContentScale.FillWidth,
-                    )
+                itemsIndexed(
+                    items = pagingData,
+                    key = { index, item ->
+                        "$index-${item.id}"
+                    },
+                ) { _, item ->
+                    item?.let { photo ->
+                        val model = ImageRequest.Builder(LocalContext.current)
+                            .data(photo.url)
+                            //.size(width = photo.width!!, height = photo.height!!)
+                            .size(Size.ORIGINAL)
+                            .placeholder(android.R.drawable.gallery_thumb)
+                            .crossfade(enable = true)
+                            .build()
+
+                        val painter = rememberAsyncImagePainter(model)
+
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp)
+                                .clickable {
+                                    fullScreenImage = photo.url
+                                    // There's an issue that paging is data always reloaded when navigating to another
+                                    // composable with paging3 inside a nav host - disabling for now:
+                                    // https://issuetracker.google.com/issues/177245496?pli=1
+                                    /*
+                                    onGoToFullScreenPhoto(
+                                        photo.url,
+                                        photo.title,
+                                    )
+                                     */
+                                },
+                            painter = painter,
+                            contentDescription = photo.title,
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.FillWidth,
+                        )
+                    }
                 }
             }
         }
@@ -167,6 +202,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                     fontSize = 20.sp
                 )
             }
+
             is LoadState.Loading -> {
                 LoadingAnimation()
             }
@@ -178,6 +214,11 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
 @Composable
 fun ExploreDetailFlickrLazyColPhotosScreenPreview() {
     TravelCompanionTheme {
-        ExploreDetailFlickrLazyColPhotosScreen(modifier = Modifier, pinId = 1, photoType = PhotoType.COUNTRY)
+        ExploreDetailFlickrLazyColPhotosScreen(
+            modifier = Modifier,
+            pinId = 1,
+            photoType = PhotoType.COUNTRY,
+            onGoToFullScreenPhoto = { _, _ -> },
+        )
     }
 }

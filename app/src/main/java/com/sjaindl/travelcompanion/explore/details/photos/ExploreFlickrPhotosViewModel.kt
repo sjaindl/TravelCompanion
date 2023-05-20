@@ -99,6 +99,7 @@ class ExploreFlickrPhotosViewModel(
                         _state.value = State.Error(it)
                     }
             }
+
             PhotoType.LOCATION -> {
                 val latitude = pin?.latitude ?: return
                 val longitude = pin?.longitude ?: return
@@ -132,6 +133,7 @@ class ExploreFlickrPhotosViewModel(
 
                 return flickrRepository.fetchPhotos(text = country).cachedIn(viewModelScope)
             }
+
             PhotoType.LOCATION -> {
                 val latitude = pin?.latitude ?: return emptyFlow()
                 val longitude = pin?.longitude ?: return emptyFlow()

@@ -27,7 +27,8 @@ fun ExploreDetailFlickrPhotosScreen(
             photoType = photoType,
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
-    )
+    ),
+    onGoToFullScreenPhoto: (url: String?, title: String) -> Unit,
 ) {
     TravelCompanionTheme {
         Box(
@@ -42,6 +43,9 @@ fun ExploreDetailFlickrPhotosScreen(
                     photoType = photoType,
                     pinId = pinId,
                     viewModel = viewModel,
+                    onGoToFullScreenPhoto = { url, title ->
+                        onGoToFullScreenPhoto(url, title)
+                    }
                 )
             } else {
                 ExploreDetailFlickrLazyColPhotosScreen(
@@ -49,6 +53,9 @@ fun ExploreDetailFlickrPhotosScreen(
                     photoType = photoType,
                     pinId = pinId,
                     viewModel = viewModel,
+                    onGoToFullScreenPhoto = { url, title ->
+                        onGoToFullScreenPhoto(url, title)
+                    }
                 )
             }
         }
@@ -59,6 +66,12 @@ fun ExploreDetailFlickrPhotosScreen(
 @Composable
 fun ExploreDetailFlickrPhotosScreenPreview() {
     TravelCompanionTheme {
-        ExploreDetailFlickrPhotosScreen(modifier = Modifier, pinId = 1, showGrids = false, photoType = PhotoType.COUNTRY)
+        ExploreDetailFlickrPhotosScreen(
+            modifier = Modifier,
+            pinId = 1,
+            showGrids = false,
+            photoType = PhotoType.COUNTRY,
+            onGoToFullScreenPhoto = { _, _ -> }
+        )
     }
 }
