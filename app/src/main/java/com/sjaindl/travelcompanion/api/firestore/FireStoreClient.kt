@@ -12,8 +12,22 @@ import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 
+interface FireStoreClientObserver {
+    fun didAddData(documentName: String)
+}
+
 class FireStoreClient {
     companion object {
+        private var observers = mutableListOf<FireStoreClientObserver>()
+
+        fun addObserver(observer: FireStoreClientObserver) {
+            observers += observer
+        }
+
+        fun removeObserver(observer: FireStoreClientObserver) {
+            observers -= observer
+        }
+
         private fun newDatabaseInstance(): FirebaseFirestore {
             val fireStoreDb = FirebaseFirestore.getInstance()
             val settings = fireStoreDb.firestoreSettings
@@ -35,6 +49,7 @@ class FireStoreClient {
             collectionReference.document(documentName).set(data).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     completion(null)
+                    observers.forEach { it.didAddData(documentName) }
                 } else {
                     completion(task.exception)
                 }

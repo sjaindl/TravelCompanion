@@ -7,13 +7,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.PlanHomeScreen
+import com.sjaindl.travelcompanion.plan.add.AddPlanScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailHomeScreen
 
 private const val planRoute = "plan"
 private const val planDetailsContainerRoute = "planDetailsContainerRoute"
+private const val addPlanRoute = "addPlan"
 
 private val planHome by lazy {
     PlanHome()
+}
+
+private val addPlan by lazy {
+    AddPlan()
 }
 
 private val planDetailsContainer by lazy {
@@ -24,6 +30,16 @@ const val planNavigation = "planNavigation"
 
 data class PlanHome(
     override var route: String = planRoute,
+    override var arguments: List<NamedNavArgument> = emptyList(),
+    override var routeWithArgs: String = route,
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        return route
+    }
+}
+
+data class AddPlan(
+    override var route: String = addPlanRoute,
     override var arguments: List<NamedNavArgument> = emptyList(),
     override var routeWithArgs: String = route,
 ) : DestinationItem {
@@ -55,6 +71,19 @@ fun NavGraphBuilder.planGraph(navController: NavController, onShowDetails: (Long
                 onShowPlan = { plan ->
                     navController.navigate(planDetailsContainer.routeWithSetArguments(plan))
                 },
+                onAddPlan = {
+                    navController.navigate(addPlan.route)
+                },
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
+            )
+        }
+
+        composable(
+            route = addPlan.route,
+            arguments = emptyList()
+        ) {
+            AddPlanScreen(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )

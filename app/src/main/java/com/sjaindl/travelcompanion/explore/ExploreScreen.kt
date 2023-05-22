@@ -103,7 +103,9 @@ fun ExploreScreen(
         val placeId = placesPredictions.placeId
 
         if (placeId != null) {
-            viewModel.fetchPlaceDetails(placeId = placeId)
+            LaunchedEffect(placeId) {
+                viewModel.fetchPlaceDetails(placeId = placeId)
+            }
         }
 
         val message = stringResource(id = R.string.picked, placesPredictions.description)
@@ -189,8 +191,8 @@ fun ExploreScreen(
                 onMapLoaded = {
                     coroutineScope.launch {
                         initialLocation = prefs.lastLocationFlow.first()
+                        viewModel.addPersistedPinsToMap()
                     }
-                    viewModel.addPersistedPinsToMap()
                 }
             ) {
                 val placeDetail by viewModel.placeDetails.collectAsState()

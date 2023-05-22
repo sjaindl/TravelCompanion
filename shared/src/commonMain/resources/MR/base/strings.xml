@@ -191,6 +191,7 @@
     <string name="back">Back</string>
     <string name="picked">Picked %s</string>
     <string name="cancelled">Cancelled</string>
+    <string name="pick_date">Select a date</string>
 
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 </resources>

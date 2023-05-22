@@ -1,11 +1,13 @@
 package com.sjaindl.travelcompanion.plan
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
+import com.sjaindl.travelcompanion.api.firestore.FireStoreClientObserver
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
@@ -18,7 +20,7 @@ import kotlinx.datetime.Clock
 import timber.log.Timber
 import java.util.Date
 
-class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), FireStoreClientObserver {
     sealed class State {
         object Loading : State()
 
@@ -54,6 +56,15 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
         TCInjector.geoNamesClient
     }
 
+    init {
+        FireStoreClient.addObserver(this)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        FireStoreClient.removeObserver(this)
+    }
+
     fun fetchPlans() {
         if (!_upcomingTrips.isEmpty() || !_pastTrips.isEmpty()) return // already loaded
 
@@ -69,22 +80,18 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
                     val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
                     val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
+                    val downloadFromUrlTask = storageImageRef?.downloadUrl
 
-                    storageImageRef?.downloadUrl?.addOnSuccessListener { imagePath ->
-                        Timber.tag(tag).d("fetched imagePath: $imagePath")
-                        if (name != null && pinName != null && startDate != null && endDate != null) {
-                            val plan = Plan(name, pinName, startDate, endDate, imagePath)
-
-                            if (endDate > Date()) {
-                                _upcomingTrips.add(plan)
-                            } else {
-                                _pastTrips.add(plan)
-                            }
-
-                            addPinIfNeeded(plan)
+                    if (downloadFromUrlTask == null) {
+                        Timber.tag(tag).d("Add plan without image: $name")
+                        addPlan(name, pinName, startDate, endDate)
+                    } else {
+                        downloadFromUrlTask.addOnSuccessListener { imagePath ->
+                            Timber.tag(tag).d("fetched imagePath: $imagePath for $name")
+                            addPlan(name, pinName, startDate, endDate, imagePath)
+                        }.addOnFailureListener {
+                            _state.value = State.Error(it)
                         }
-                    }?.addOnFailureListener {
-                        _state.value = State.Error(it)
                     }
                 }
 
@@ -94,6 +101,36 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
                 Timber.e(task.exception)
             }
         }
+    }
+
+    private fun addPlan(
+        name: String?,
+        pinName: String?,
+        startDate: Date?,
+        endDate: Date?,
+        imagePath: Uri? = null,
+    ) {
+        if (name == null || pinName == null || startDate == null || endDate == null) return
+
+        val plan = Plan(
+            name = name,
+            pinName = pinName,
+            startDate = startDate,
+            endDate = endDate,
+            imagePath = imagePath
+        )
+
+        addPlan(plan, endDate)
+    }
+
+    private fun addPlan(plan: Plan, endDate: Date) {
+        if (endDate > Date()) {
+            _upcomingTrips.add(plan)
+        } else {
+            _pastTrips.add(plan)
+        }
+
+        addPinIfNeeded(plan)
     }
 
     fun getPinId(name: String): Long? {
@@ -180,6 +217,59 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
                 return PlanViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
+        }
+    }
+
+    override fun didAddData(documentName: String) {
+        Timber.tag(tag).d("Add new plan: $documentName")
+        fireStoreDbReference.document(documentName).get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val name = snapshot.getString(FireStoreConstants.Ids.Plan.name) ?: return@addOnSuccessListener
+                val pinName = snapshot.getString(FireStoreConstants.Ids.Plan.pinName) ?: return@addOnSuccessListener
+                val startDate = snapshot.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate() ?: return@addOnSuccessListener
+                val endDate = snapshot.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate() ?: return@addOnSuccessListener
+
+                val upcomingTripsIndex = _upcomingTrips.indexOfFirst { it.pinName == pinName }
+                val pastTripsIndex = _pastTrips.indexOfFirst { it.pinName == pinName }
+
+                if (upcomingTripsIndex != -1) {
+                    val oriPlan = _upcomingTrips[upcomingTripsIndex]
+                    val newPlan = Plan(
+                        name = name,
+                        pinName = pinName,
+                        startDate = startDate,
+                        endDate = endDate,
+                        imagePath = oriPlan.imagePath,
+                    )
+
+                    if (endDate > Date()) {
+                        _upcomingTrips[upcomingTripsIndex] = newPlan
+                    } else {
+                        _upcomingTrips.removeAt(upcomingTripsIndex)
+                        _pastTrips.add(newPlan)
+                    }
+
+                } else if (pastTripsIndex != -1) {
+                    val oriPlan = _pastTrips[pastTripsIndex]
+                    val newPlan = Plan(
+                        name = name,
+                        pinName = pinName,
+                        startDate = startDate,
+                        endDate = endDate,
+                        imagePath = oriPlan.imagePath,
+                    )
+
+                    if (endDate > Date()) {
+                        _pastTrips.removeAt(pastTripsIndex)
+                        _upcomingTrips.add(newPlan)
+                    } else {
+                        _pastTrips[pastTripsIndex] = newPlan
+                    }
+
+                } else {
+                    addPlan(name, pinName, startDate, endDate)
+                }
+            }
         }
     }
 }

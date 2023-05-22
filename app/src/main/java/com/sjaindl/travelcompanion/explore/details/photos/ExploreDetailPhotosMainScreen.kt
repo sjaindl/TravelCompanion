@@ -87,7 +87,7 @@ fun ExploreDetailPhotosMainScreen(
                             showGrids = showGrids,
                             pinId = pinId,
                             onGoToFullScreenPhoto = { url, title ->
-                                onGoToFullScreenPhoto(null, url, title)
+                                onGoToFullScreenPhoto(url, null, title)
                             },
                         )
                     }

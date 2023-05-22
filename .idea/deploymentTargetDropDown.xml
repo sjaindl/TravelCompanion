@@ -2,10 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="GooglePlaceDecodingTest.testGooglePlaceEncoding">
+      <entry key="AddPlanScreenPreview">
         <State />
       </entry>
-      <entry key="PlanDetailItemPreview">
+      <entry key="AddPlanScreenPreview (1)">
+        <State />
+      </entry>
+      <entry key="GooglePlaceDecodingTest.testGooglePlaceEncoding">
         <State />
       </entry>
       <entry key="PlanDetailItemsPreview">
@@ -22,12 +25,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_6_API_30_11_.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6_API_33_Notifications.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-14T10:56:12.846468Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-05-22T14:49:31.854533Z" />
         </State>
       </entry>
     </value>

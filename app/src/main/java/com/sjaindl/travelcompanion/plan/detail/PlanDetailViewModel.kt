@@ -50,16 +50,23 @@ class PlanDetailViewModel(private val planName: String) : ViewModel() {
 
                 val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
                 val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
+                val downloadFromUrlTask = storageImageRef?.downloadUrl
 
-                storageImageRef?.downloadUrl?.addOnSuccessListener { imagePath ->
-                    Timber.tag(tag).d("fetched imagePath: $imagePath")
-                    val plan = Plan(name, pinName, startDate, endDate, imagePath)
+                if (downloadFromUrlTask == null) {
+                    Timber.tag(tag).d("Add plan without image: $name")
+                    val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = null)
                     _state.value = State.Loaded(plan = plan, bitmap = null)
-                    loadImageIfAvailable(plan = plan)
-                }?.addOnCanceledListener {
-                    _state.value = State.Info(R.string.cancelled)
-                }?.addOnFailureListener { exception ->
-                    _state.value = State.Error(exception)
+                } else {
+                    downloadFromUrlTask.addOnSuccessListener { imagePath ->
+                        Timber.tag(tag).d("fetched imagePath: $imagePath")
+                        val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = imagePath)
+                        _state.value = State.Loaded(plan = plan, bitmap = null)
+                        loadImageIfAvailable(plan = plan)
+                    }.addOnCanceledListener {
+                        _state.value = State.Info(R.string.cancelled)
+                    }.addOnFailureListener { exception ->
+                        _state.value = State.Error(exception)
+                    }
                 }
             }
         }.addOnCanceledListener {

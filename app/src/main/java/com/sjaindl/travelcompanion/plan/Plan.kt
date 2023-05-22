@@ -17,7 +17,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
-class Plan(
+data class Plan(
     val name: String,
     val pinName: String,
     val startDate: Date,

@@ -14,17 +14,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
 fun PlanImageElement(bitmap: Bitmap?, imagePath: Uri?, modifier: Modifier) {
     TravelCompanionTheme {
-        val data = bitmap ?: imagePath
-        if (data != null) {
+        val data = bitmap ?: imagePath ?: R.drawable.ic_map_marker
+        //if (data != null) {
             val model = ImageRequest.Builder(LocalContext.current)
                 .data(data)
                 .size(Size.ORIGINAL)
-                .placeholder(android.R.drawable.gallery_thumb)
+                .placeholder(R.drawable.ic_map_marker)
                 .crossfade(enable = true)
                 .build()
 
@@ -37,12 +38,16 @@ fun PlanImageElement(bitmap: Bitmap?, imagePath: Uri?, modifier: Modifier) {
                 alignment = Alignment.Center,
                 contentScale = ContentScale.FillWidth,
             )
+        /*
         } else {
             Image(
+                modifier = modifier,
                 imageVector = Icons.Default.Image,
                 contentDescription = null,
             )
         }
+
+         */
     }
 }
 
