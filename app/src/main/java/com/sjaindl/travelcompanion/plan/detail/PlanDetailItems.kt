@@ -18,6 +18,7 @@ import com.sjaindl.travelcompanion.plan.detail.expandable.CardsViewModel
 import com.sjaindl.travelcompanion.plan.detail.expandable.ExpandableCard
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import timber.log.Timber
 import java.util.Date
 
 // https://developer.android.com/jetpack/compose/touch-input/pointer-input/scroll
@@ -29,6 +30,8 @@ fun PlanDetailItems(
         factory = CardsViewModel.CardsViewModelFactory(plan = plan)
     )
 ) {
+    val tag = "PlanDetailItems"
+
     val cards = viewModel.cards.collectAsState()
     val expandedCardIds = viewModel.expandedCardIdsList.collectAsState()
 
@@ -61,6 +64,10 @@ fun PlanDetailItems(
                         card = card,
                         planDetailItems = items,
                         onCardArrowClick = { viewModel.onCardArrowClicked(card.id) },
+                        onAdd = {
+                            val type = card.type
+                            Timber.d(tag, "Add $type to plan")
+                        },
                         expanded = expandedCardIds.value.contains(card.id),
                     )
                 }

@@ -101,6 +101,7 @@ dependencies {
 
     //https://developer.android.com/jetpack/androidx/releases/constraintlayout
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.constraintlayoutCompose)
 
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
     implementation(libs.androidx.lifecycle.extensions)

@@ -11,12 +11,11 @@ import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-fun CardTitle(title: String) {
+fun CardTitle(modifier: Modifier, title: String) {
     TravelCompanionTheme {
         Text(
             text = title,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = modifier
                 .padding(16.dp),
             textAlign = TextAlign.Center,
         )
@@ -27,6 +26,7 @@ fun CardTitle(title: String) {
 @Composable
 fun CardTitlePreview() {
     CardTitle(
+        modifier = Modifier,
         title = "Card"
     )
 }

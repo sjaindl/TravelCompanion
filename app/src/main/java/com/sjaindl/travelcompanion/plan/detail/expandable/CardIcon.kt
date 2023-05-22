@@ -3,17 +3,17 @@ package com.sjaindl.travelcompanion.plan.detail.expandable
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-fun CardArrow(
+fun CardIcon(
     modifier: Modifier,
-    degrees: Float,
+    image: ImageVector,
     onClick: () -> Unit
 ) {
     TravelCompanionTheme {
@@ -22,9 +22,8 @@ fun CardArrow(
             onClick = onClick,
             content = {
                 Icon(
-                    imageVector = Icons.Rounded.KeyboardArrowDown,
+                    imageVector = image,
                     contentDescription = null,
-                    modifier = Modifier.rotate(degrees),
                 )
             }
         )
@@ -33,10 +32,10 @@ fun CardArrow(
 
 @Preview
 @Composable
-fun CardArrowPreview() {
-    CardArrow(
+fun CardIconPreview() {
+    CardIcon(
         modifier = Modifier,
-        degrees = 0f,
+        image = Icons.Default.Add,
         onClick = { },
     )
 }

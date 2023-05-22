@@ -8,25 +8,31 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
+import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
@@ -34,32 +40,40 @@ fun ExpandableCard(
     card: ExpandableCardModel,
     planDetailItems: List<PlanDetailItem>,
     onCardArrowClick: () -> Unit,
+    onAdd: () -> Unit,
     expanded: Boolean,
 ) {
-    val cardExpandedBackgroundColor = MaterialTheme.colors.onPrimary
-    val cardCollapsedBackgroundColor = MaterialTheme.colors.secondaryVariant
-
     val transitionState = remember {
         MutableTransitionState(expanded).apply {
             targetState = !expanded
         }
     }
     val transition = updateTransition(transitionState, label = "transition")
+
     val cardBgColor by transition.animateColor({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "bgColorTransition") {
-        if (expanded) cardExpandedBackgroundColor else cardCollapsedBackgroundColor
+        if (expanded) colors.onPrimary else colors.secondaryVariant
     }
+
+    val cardContentColor by transition.animateColor({
+        tween(durationMillis = EXPAND_ANIMATION_DURATION)
+    }, label = "bgColorTransition") {
+        if (expanded) colors.secondaryVariant else colors.onPrimary
+    }
+
     val cardPaddingHorizontal by transition.animateDp({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "paddingTransition") {
         if (expanded) 24.dp else 48.dp
     }
+
     val cardElevation by transition.animateDp({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "elevationTransition") {
         if (expanded) 24.dp else 4.dp
     }
+
     val cardRoundedCorners by transition.animateDp({
         tween(
             durationMillis = EXPAND_ANIMATION_DURATION,
@@ -68,20 +82,18 @@ fun ExpandableCard(
     }, label = "cornersTransition") {
         if (expanded) 8.dp else 16.dp
     }
+
     val arrowRotationDegree by transition.animateFloat({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "rotationDegreeTransition") {
         if (expanded) 0f else -90f
     }
 
+    val interactionSource = remember { MutableInteractionSource() }
+    
     Card(
         backgroundColor = cardBgColor,
-        contentColor = Color(
-            ContextCompat.getColor(
-                LocalContext.current,
-                R.color.colorPrimary
-            )
-        ),
+        contentColor = cardContentColor,
         elevation = cardElevation,
         shape = RoundedCornerShape(cardRoundedCorners),
         modifier = Modifier
@@ -92,22 +104,95 @@ fun ExpandableCard(
             )
     ) {
         Column {
-            Box {
-                CardArrow(
-                    degrees = arrowRotationDegree,
-                    onClick = onCardArrowClick
-                )
-                val title = when (card.type) {
-                    PlanDetailItemType.HOTEL -> stringResource(id = R.string.hotels)
-                    PlanDetailItemType.RESTAURANT -> stringResource(id = R.string.restaurants)
-                    PlanDetailItemType.ATTRACTION -> stringResource(id = R.string.attractions)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) {
+                        onCardArrowClick()
+                    },
+            ) {
+                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                    val (arrowRef, titleRef, addRef) = createRefs()
+
+                    /*
+                    val chainRef = createHorizontalChain(arrowRef, titleRef, addRef, chainStyle = ChainStyle.SpreadInside)
+                    constrain(chainRef) {
+                        start.linkTo(arrowRef.start)
+                        end.linkTo(addRef.end)
+                    }
+                     */
+
+                    CardArrow(
+                        modifier = Modifier.constrainAs(arrowRef) {
+                            start.linkTo(parent.start)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                        },
+                        degrees = arrowRotationDegree,
+                        onClick = onCardArrowClick,
+                    )
+
+                    val title = when (card.type) {
+                        PlanDetailItemType.HOTEL -> stringResource(id = R.string.hotels)
+                        PlanDetailItemType.RESTAURANT -> stringResource(id = R.string.restaurants)
+                        PlanDetailItemType.ATTRACTION -> stringResource(id = R.string.attractions)
+                    }
+                    CardTitle(
+                        modifier = Modifier.constrainAs(titleRef) {
+                            start.linkTo(arrowRef.end)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            //end.linkTo(addRef.start)
+                        },
+                        title = title,
+                    )
+
+                    CardIcon(
+                        modifier = Modifier.constrainAs(addRef) {
+                            //start.linkTo(titleRef.end)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            end.linkTo(parent.end)
+                        },
+                        image = Icons.Default.Add,
+                        onClick = onAdd,
+                    )
                 }
-                CardTitle(title = title)
+
             }
             ExpandableContent(
                 planDetailItems = planDetailItems,
                 visible = expanded,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun ExpandableCardPreview() {
+    val model = ExpandableCardModel(
+        id = 1,
+        type = PlanDetailItemType.HOTEL,
+    )
+
+    val expanded by remember {
+        mutableStateOf(true)
+    }
+
+    TravelCompanionTheme {
+        ExpandableCard(
+            card = model,
+            planDetailItems = listOf(
+                PlanDetailItem(title = "title1", details = "detail1", attributionWithText = null, imagePath = null),
+                PlanDetailItem(title = "title2", details = "detail2", attributionWithText = null, imagePath = null),
+            ),
+            onCardArrowClick = { },
+            onAdd = { },
+            expanded = expanded,
+        )
     }
 }
