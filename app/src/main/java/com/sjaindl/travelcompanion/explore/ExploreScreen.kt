@@ -56,7 +56,7 @@ import kotlinx.serialization.json.Json
 fun ExploreScreen(
     encodedPlaces: String? = null,
     viewModel: ExploreViewModel = viewModel(
-        factory = ExploreViewModelFactory(
+        factory = ExploreViewModel.ExploreViewModelFactory(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),

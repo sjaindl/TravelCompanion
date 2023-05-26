@@ -1,12 +1,12 @@
 package com.sjaindl.travelcompanion.explore.search
 
-import android.R
 import android.widget.ArrayAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +21,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Composable
-fun SearchPlaceScreen(
+fun SearchPlaceAutocompleteScreen(
     modifier: Modifier = Modifier,
     onPickedPlace: (String) -> Unit,
 ) {
@@ -49,11 +49,11 @@ fun SearchPlaceScreen(
             // setup autocompletion
             val adapter = ArrayAdapter<String>(
                 context,
-                R.layout.simple_spinner_dropdown_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 emptyArray()
             )
             this.autocompleteCountry.setAdapter(adapter)
-            this.autocompleteCountry.doOnTextChanged { text, start, before, count ->
+            this.autocompleteCountry.doOnTextChanged { text, _, _, _ ->
                 scope.launch {
                     val autocompleteResult = googleClient.autocomplete(
                         text.toString(), sessionToken
@@ -65,7 +65,7 @@ fun SearchPlaceScreen(
                         println(suggestions)
 
                         val viewHolders = suggestions.map {
-                            SearchPlaceViewHolderType.Item(it)
+                            SearchPlaceViewHolderType.PlacesPredictionItem(it)
                         }
                         searchPlaceAdapter.submitList(viewHolders)
                     }
@@ -77,10 +77,19 @@ fun SearchPlaceScreen(
             placeSuggestions.addItemDecoration(
                 CustomDividerItemDecoration(
                     context,
-                    R.drawable.divider_horizontal_bright,
+                    android.R.drawable.divider_horizontal_bright,
                 )
             )
             placeSuggestions.adapter = searchPlaceAdapter
         }
     }
+}
+
+@Preview
+@Composable
+fun SearchPlaceScreenPreview() {
+    SearchPlaceAutocompleteScreen(
+        modifier = Modifier,
+        onPickedPlace = { },
+    )
 }

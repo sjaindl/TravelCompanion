@@ -26,13 +26,13 @@ data class Plan(
 ) {
     var imageData: ByteArray? = null
 
-    var hotels: List<Plannable> = emptyList()
-    var restaurants: List<Plannable> = emptyList()
-    var attractions: List<Plannable> = emptyList()
+    var hotels: MutableList<Plannable> = mutableListOf()
+    var restaurants: MutableList<Plannable> = mutableListOf()
+    var attractions: MutableList<Plannable> = mutableListOf()
 
-    private var fireStoreHotelDbReference: CollectionReference? = null
-    private var fireStoreRestaurantDbReference: CollectionReference? = null
-    private var fireStoreAttractionDbReference: CollectionReference? = null
+    var fireStoreHotelDbReference: CollectionReference? = null
+    var fireStoreRestaurantDbReference: CollectionReference? = null
+    var fireStoreAttractionDbReference: CollectionReference? = null
 
     private var fireStoreRememberPhotosDbReference: CollectionReference? = null
 
@@ -198,8 +198,8 @@ data class Plan(
     }
 
     private fun reset() {
-        hotels = emptyList()
-        restaurants = emptyList()
-        attractions = emptyList()
+        hotels = mutableListOf()
+        restaurants = mutableListOf()
+        attractions = mutableListOf()
     }
 }

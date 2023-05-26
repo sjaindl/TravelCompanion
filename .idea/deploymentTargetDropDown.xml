@@ -2,19 +2,45 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="AddPlaceMapScreenPreview">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6_API_33_Notifications.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-05-23T18:11:50.504005Z" />
+        </State>
+      </entry>
+      <entry key="AddPlacePreviewScreenPreview">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Nexus_9_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-05-25T18:23:44.163823Z" />
+        </State>
+      </entry>
       <entry key="AddPlanScreenPreview">
         <State />
       </entry>
       <entry key="AddPlanScreenPreview (1)">
         <State />
       </entry>
-      <entry key="GooglePlaceDecodingTest.testGooglePlaceEncoding">
-        <State />
-      </entry>
-      <entry key="PlanDetailItemsPreview">
-        <State />
-      </entry>
-      <entry key="TravelCompanion:shared [iosSimulatorArm64Test]">
+      <entry key="PlaceTypePickerPreview">
         <State />
       </entry>
       <entry key="app">

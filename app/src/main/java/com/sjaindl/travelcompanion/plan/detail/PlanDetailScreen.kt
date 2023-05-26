@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
+import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
@@ -40,8 +43,10 @@ fun PlanDetailScreen(
     viewModel: PlanDetailViewModel = viewModel(
         factory = PlanDetailViewModel.PlanDetailViewModelFactory(
             plan = planName,
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
+    onAddPlace: (PlanDetailItemType, String, MapLocationData) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -55,7 +60,6 @@ fun PlanDetailScreen(
                 )
             },
         ) { paddingValues ->
-
             val state by viewModel.state.collectAsState()
 
             LaunchedEffect(key1 = Unit) {
@@ -146,7 +150,10 @@ fun PlanDetailScreen(
                         )
 
                         PlanDetailItems(
-                            plan = plan
+                            plan = plan,
+                            onAddPlace = {
+                                onAddPlace(it, plan.name, viewModel.locationData())
+                            }
                         )
                     }
                 }
@@ -171,6 +178,7 @@ fun PlanDetailScreen(
 fun PlanDetailScreenPreview() {
     PlanDetailScreen(
         planName = "",
+        onAddPlace = { _, _, _ -> },
         canNavigateBack = true,
     )
 }

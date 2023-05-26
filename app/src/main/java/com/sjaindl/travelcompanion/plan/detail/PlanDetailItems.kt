@@ -26,8 +26,11 @@ import java.util.Date
 @Composable
 fun PlanDetailItems(
     plan: Plan,
+    onAddPlace: (PlanDetailItemType) -> Unit,
     viewModel: CardsViewModel = viewModel(
-        factory = CardsViewModel.CardsViewModelFactory(plan = plan)
+        factory = CardsViewModel.CardsViewModelFactory(
+            plan = plan,
+        ),
     )
 ) {
     val tag = "PlanDetailItems"
@@ -65,8 +68,8 @@ fun PlanDetailItems(
                         planDetailItems = items,
                         onCardArrowClick = { viewModel.onCardArrowClicked(card.id) },
                         onAdd = {
-                            val type = card.type
-                            Timber.d(tag, "Add $type to plan")
+                            Timber.d(tag, "Add ${card.type} to plan")
+                            onAddPlace(card.type)
                         },
                         expanded = expandedCardIds.value.contains(card.id),
                     )
@@ -87,6 +90,7 @@ fun PlanDetailItemsPreview() {
             startDate = Date(),
             endDate = Date(),
             imagePath = null,
-        )
+        ),
+        onAddPlace = { },
     )
 }

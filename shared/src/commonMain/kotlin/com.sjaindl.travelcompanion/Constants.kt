@@ -21,4 +21,10 @@ object Constants {
             const val photoResizingWidth = 800
         }
     }
+
+    object Settings {
+        const val zoomLevelStandard = 10.0f
+        const val zoomLevelDetail = 14.0f
+        const val zoomLevelStandardGooglePlaceAdd = 12.0f
+    }
 }

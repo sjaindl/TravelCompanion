@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 // https://developers.google.com/maps/documentation/places/web-service/search-nearby
 @Serializable
 data class GooglePlace(
+    @SerialName("id")
+    var id: String? = null,
+
     @SerialName("place_id")
     var placeId: String,
 

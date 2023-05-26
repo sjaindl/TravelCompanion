@@ -15,10 +15,32 @@ class FireStoreConstants {
 
     object Ids {
         object Place {
-            const val placeId = "placeId"
+            const val placeId = "place_id"
+            const val id = "id"
+            const val name = "name"
+            const val icon = "icon"
+            const val rating = "rating"
+            const val reference = "reference"
+            const val scope = "scope"
+            const val userRatingsTotal = "user_ratings_total"
+            const val vicinity = "vicinity"
+
+            const val types = "types"
+
+            const val geometry = "geometry"
+            const val location = "location"
             const val latitude = "latitude"
             const val longitude = "longitude"
-            const val name = "name"
+
+            const val photos = "photos"
+            const val height = "height"
+            const val width = "width"
+            const val photoReference = "photo_reference"
+            const val htmlAttributions = "html_attributions"
+
+            const val plusCode = "plus_code"
+            const val compound_code = "compound_code"
+            const val global_code = "global_code"
         }
 
         object Plan {

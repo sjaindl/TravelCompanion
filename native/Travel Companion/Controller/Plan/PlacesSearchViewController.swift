@@ -87,8 +87,8 @@ extension GooglePlacesAutocompleteContainer {
         
         let place = places[indexPath.row]
         
-        cell.textLabel?.text = "TODO description!" //place.description()
-        let detailText = NSMutableAttributedString(string: "TODO details!") // place.details()
+        cell.textLabel?.text = place.description()
+        let detailText = place.details()
         if let attributions = place.htmlAttributions, attributions.count > 0, let attribution = FormatUtils.getLinkAttributedText(attributions[0]) {
             detailText.append(NSAttributedString(string: "\n"))
             detailText.append(attribution)

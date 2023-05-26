@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.search
+package com.sjaindl.travelcompanion.plan.detail.addplace
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.google.PlacesPredictions
+import com.sjaindl.travelcompanion.api.google.GooglePlace
 import com.sjaindl.travelcompanion.databinding.ViewholderSearchplaceItemBinding
 import kotlin.reflect.KClass
 
-class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType.PlacesPredictionItem) -> Unit) :
-    ListAdapter<SearchPlaceViewHolderType, ViewHolder>(SearchPlaceDiffUtilCallback()) {
+class SearchPlacesAdapter(private val onClick: (SearchPlacesViewHolderType.GooglePlaceItem) -> Unit) :
+    ListAdapter<SearchPlacesViewHolderType, ViewHolder>(SearchPlaceDiffUtilCallback()) {
 
     private val viewTypes = listOf<KClass<*>>(
-        SearchPlaceViewHolderType.PlacesPredictionItem::class,
+        SearchPlacesViewHolderType.GooglePlaceItem::class,
     )
 
     override fun getItemViewType(position: Int): Int {
@@ -25,7 +25,7 @@ class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType.PlacesP
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         when (viewTypes.getOrNull(viewType)) {
-            SearchPlaceViewHolderType.PlacesPredictionItem::class -> {
+            SearchPlacesViewHolderType.GooglePlaceItem::class -> {
                 val binding = DataBindingUtil.inflate<ViewholderSearchplaceItemBinding>(
                     LayoutInflater.from(parent.context),
                     R.layout.viewholder_searchplace_item,
@@ -45,7 +45,7 @@ class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType.PlacesP
 
         when (holder) {
             is SearchPlaceItemViewHolder -> {
-                (current as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
+                (current as? SearchPlacesViewHolderType.GooglePlaceItem)?.let {
                     holder.configure(it)
                 }
             }
@@ -53,26 +53,26 @@ class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType.PlacesP
     }
 }
 
-sealed class SearchPlaceViewHolderType {
-    class PlacesPredictionItem(val placesPredictions: PlacesPredictions) : SearchPlaceViewHolderType()
+sealed class SearchPlacesViewHolderType {
+    class GooglePlaceItem(val places: GooglePlace) : SearchPlacesViewHolderType()
 }
 
-class SearchPlaceDiffUtilCallback : DiffUtil.ItemCallback<SearchPlaceViewHolderType>() {
-    override fun areItemsTheSame(oldItem: SearchPlaceViewHolderType, newItem: SearchPlaceViewHolderType): Boolean {
+class SearchPlaceDiffUtilCallback : DiffUtil.ItemCallback<SearchPlacesViewHolderType>() {
+    override fun areItemsTheSame(oldItem: SearchPlacesViewHolderType, newItem: SearchPlacesViewHolderType): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: SearchPlaceViewHolderType, newItem: SearchPlaceViewHolderType): Boolean {
+    override fun areContentsTheSame(oldItem: SearchPlacesViewHolderType, newItem: SearchPlacesViewHolderType): Boolean {
         return when (oldItem) {
-            is SearchPlaceViewHolderType.PlacesPredictionItem -> newItem is SearchPlaceViewHolderType.PlacesPredictionItem && oldItem.placesPredictions == newItem.placesPredictions
+            is SearchPlacesViewHolderType.GooglePlaceItem -> newItem is SearchPlacesViewHolderType.GooglePlaceItem && oldItem.places == newItem.places
         }
     }
 }
 
 class SearchPlaceItemViewHolder(
     val binding: ViewholderSearchplaceItemBinding,
-    onClick: (SearchPlaceViewHolderType.PlacesPredictionItem) -> Unit,
-    private var item: SearchPlaceViewHolderType.PlacesPredictionItem? = null
+    onClick: (SearchPlacesViewHolderType.GooglePlaceItem) -> Unit,
+    private var item: SearchPlacesViewHolderType.GooglePlaceItem? = null
 
 ) : ViewHolder(binding.root) {
     init {
@@ -83,8 +83,8 @@ class SearchPlaceItemViewHolder(
         }
     }
 
-    fun configure(item: SearchPlaceViewHolderType.PlacesPredictionItem?) {
-        binding.viewholderSearchplaceText.text = item?.placesPredictions?.description
+    fun configure(item: SearchPlacesViewHolderType.GooglePlaceItem?) {
+        binding.viewholderSearchplaceText.text = item?.places?.name
         this.item = item
         binding.executePendingBindings()
     }

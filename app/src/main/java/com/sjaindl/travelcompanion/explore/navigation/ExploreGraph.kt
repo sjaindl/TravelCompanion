@@ -11,7 +11,7 @@ import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.explore.ExploreScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
 import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
-import com.sjaindl.travelcompanion.explore.search.SearchPlaceScreen
+import com.sjaindl.travelcompanion.explore.search.SearchPlaceAutocompleteScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 
 private const val pinArg = "pin"
@@ -121,7 +121,7 @@ fun NavGraphBuilder.exploreGraph(navController: NavController) {
         composable(
             route = searchPlace.route,
         ) {
-            SearchPlaceScreen(
+            SearchPlaceAutocompleteScreen(
                 onPickedPlace = { place ->
                     navController.popBackStack()
                     navController.navigate(route = exploreHome.routeWithSetArguments(place)) {

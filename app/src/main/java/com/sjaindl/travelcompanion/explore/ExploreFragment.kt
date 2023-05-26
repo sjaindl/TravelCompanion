@@ -58,7 +58,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         TCInjector.googleClient
     }
 
-    private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModelFactory(dataRepository) })
+    private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModel.ExploreViewModelFactory(dataRepository) })
 
     private val prefs by lazy {
         MapLocationDataPrefs(requireContext())

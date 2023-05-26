@@ -128,14 +128,14 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
 
         _placeDetails.value = list
     }
-}
 
-class ExploreViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ExploreViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return ExploreViewModel(dataRepository) as T
+    class ExploreViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ExploreViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return ExploreViewModel(dataRepository) as T
+            }
+            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }
-        throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
     }
 }

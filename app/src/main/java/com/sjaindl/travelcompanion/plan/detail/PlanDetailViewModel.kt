@@ -6,15 +6,18 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.storage.FirebaseStorage
+import com.sjaindl.travelcompanion.Constants
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
+import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
-class PlanDetailViewModel(private val planName: String) : ViewModel() {
+class PlanDetailViewModel(private val planName: String, private val dataRepository: DataRepository) : ViewModel() {
     sealed class State {
         object Loading : State()
 
@@ -36,6 +39,10 @@ class PlanDetailViewModel(private val planName: String) : ViewModel() {
 
     private val fireStoreDbReference by lazy {
         FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
+    }
+
+    val pin by lazy {
+        dataRepository.singlePin(planName)
     }
 
     fun loadPlan() {
@@ -74,6 +81,13 @@ class PlanDetailViewModel(private val planName: String) : ViewModel() {
         }.addOnFailureListener { exception ->
             _state.value = State.Error(exception)
         }
+    }
+
+    fun locationData(): MapLocationData {
+        val zoom = Constants.Settings.zoomLevelDetail
+        val latitude = pin?.latitude?.toFloat() ?: MapLocationData.default.latitude
+        val longitude = pin?.longitude?.toFloat() ?: MapLocationData.default.longitude
+        return MapLocationData(latitude = latitude, longitude = longitude, radius = zoom)
     }
 
     private fun loadImageIfAvailable(plan: Plan) {
@@ -150,11 +164,11 @@ class PlanDetailViewModel(private val planName: String) : ViewModel() {
         return BitmapFactory.decodeByteArray(data, 0, data.size)
     }
 
-    class PlanDetailViewModelFactory(private val plan: String) : ViewModelProvider.Factory {
+    class PlanDetailViewModelFactory(private val plan: String, private val dataRepository: DataRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(PlanDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return PlanDetailViewModel(plan) as T
+                return PlanDetailViewModel(planName = plan, dataRepository = dataRepository) as T
             }
             throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }

@@ -1,12 +1,18 @@
 package com.sjaindl.travelcompanion.api
 
 import com.sjaindl.travelcompanion.exception.ApiException
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.RedirectResponseException
+import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.request.headers
+import io.ktor.client.request.parameter
+import io.ktor.client.request.request
+import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 
 class HttpResponseHandler(private val client: HttpClient) {
     companion object {

@@ -63,43 +63,44 @@ enum class GooglePlaceType(private val rawValue: String) {
             }
         }
 
-    // TODO: MP String resources
     /*
+
     val description: String?
         get() {
             when (this) {
-                lodging -> return "lodging".localized()
-                restaurant -> return "restaurant".localized()
-                pointOfInterest -> return "pointOfInterest".localized()
-                amusementPark -> return "amusementPark".localized()
-                aquarium -> return "aquarium".localized()
-                artGallery -> return "artGallery".localized()
-                atm -> return "atm".localized()
-                bank -> return "bank".localized()
-                bar -> return "bar".localized()
-                beautySalon -> return "beautySalon".localized()
-                bowlingAlley -> return "bowlingAlley".localized()
-                cafe -> return "cafe".localized()
-                casino -> return "casino".localized()
-                church -> return "church".localized()
-                cityHall -> return "cityHall".localized()
-                embassy -> return "embassy".localized()
-                gym -> return "gym".localized()
-                hinduTemple -> return "hinduTemple".localized()
-                library -> return "library".localized()
-                mosque -> return "mosque".localized()
-                movieTheater -> return "movieTheater".localized()
-                museum -> return "museum".localized()
-                nightClub -> return "nightClub".localized()
-                postOffice -> return "postOffice".localized()
-                rvPark -> return "rvPark".localized()
-                shoppingMall -> return "shoppingMall".localized()
-                spa -> return "spa".localized()
-                stadium -> return "stadium".localized()
-                synagogue -> return "synagogue".localized()
-                travelAgency -> return "travelAgency".localized()
-                zoo -> return "zoo".localized()
+                Lodging -> return R.string.lodging
+                Restaurant -> return "restaurant".localized()
+                PointOfInterest -> return "pointOfInterest".localized()
+                AmusementPark -> return "amusementPark".localized()
+                Aquarium -> return "aquarium".localized()
+                ArtGallery -> return "artGallery".localized()
+                Atm -> return "atm".localized()
+                Bank -> return "bank".localized()
+                Bar -> return "bar".localized()
+                BeautySalon -> return "beautySalon".localized()
+                BowlingAlley -> return "bowlingAlley".localized()
+                Cafe -> return "cafe".localized()
+                Casino -> return "casino".localized()
+                Church -> return "church".localized()
+                CityHall -> return "cityHall".localized()
+                Embassy -> return "embassy".localized()
+                Gym -> return "gym".localized()
+                HinduTemple -> return "hinduTemple".localized()
+                Library -> return "library".localized()
+                Mosque -> return "mosque".localized()
+                MovieTheater -> return "movieTheater".localized()
+                Museum -> return "museum".localized()
+                NightClub -> return "nightClub".localized()
+                PostOffice -> return "postOffice".localized()
+                RvPark -> return "rvPark".localized()
+                ShoppingMall -> return "shoppingMall".localized()
+                Spa -> return "spa".localized()
+                Stadium -> return "stadium".localized()
+                Synagogue -> return "synagogue".localized()
+                TravelAgency -> return "travelAgency".localized()
+                Zoo -> return "zoo".localized()
             }
         }
+
      */
 }

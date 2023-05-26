@@ -15,11 +15,11 @@ import UIKit
 class AddPlacePreviewViewController: UIViewController {
 
     @IBOutlet weak var placeName: UILabel!
+    @IBOutlet weak var address: UILabel!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var map: GMSMapView!
     @IBOutlet weak var distance: UILabel!
     @IBOutlet weak var rating: UILabel!
-    @IBOutlet weak var address: UILabel!
     
     var searchedLocation: CLLocation!
     var googlePlace: GooglePlace!
@@ -89,7 +89,6 @@ class AddPlacePreviewViewController: UIViewController {
                 self.addPlaceToPlan(place)
                 
                 DispatchQueue.main.async {
-                    
                     UiUtils.showToast(message: "addedPlace".localized(), view: self.view)
                     
                     //show toast for 1 second

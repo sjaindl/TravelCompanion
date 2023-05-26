@@ -46,9 +46,10 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
         expandedCardIdsList.value = list
     }
 
-    class CardsViewModelFactory(private val plan: Plan) : ViewModelProvider.NewInstanceFactory() {
+    class CardsViewModelFactory(private val plan: Plan) :
+        ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return CardsViewModel(plan) as T
+            return CardsViewModel(plan = plan) as T
         }
     }
 }

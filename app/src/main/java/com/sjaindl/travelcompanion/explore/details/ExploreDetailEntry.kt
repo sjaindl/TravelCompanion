@@ -3,7 +3,7 @@ package com.sjaindl.travelcompanion.explore.details
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +22,7 @@ fun ExploreDetailEntry(modifier: Modifier = Modifier, title: String? = null, val
                 Text(
                     text = it,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colors.primary,
+                    color = colors.primary,
                     textAlign = TextAlign.Start,
                     fontSize = 20.sp
                 )
@@ -33,7 +33,7 @@ fun ExploreDetailEntry(modifier: Modifier = Modifier, title: String? = null, val
             value?.let {
                 Text(
                     text = it,
-                    color = MaterialTheme.colors.primary,
+                    color = colors.primary,
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp
                 )

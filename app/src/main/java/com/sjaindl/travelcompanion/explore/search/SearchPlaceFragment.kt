@@ -83,7 +83,7 @@ class SearchPlaceFragment : Fragment() {
                     println(suggestions)
 
                     val viewHolders = suggestions.map {
-                        SearchPlaceViewHolderType.Item(it)
+                        SearchPlaceViewHolderType.PlacesPredictionItem(it)
                     }
                     searchPlaceAdapter.submitList(viewHolders)
                 }
@@ -91,7 +91,7 @@ class SearchPlaceFragment : Fragment() {
         }
     }
 
-    private fun onClickItem(item: SearchPlaceViewHolderType.Item) {
+    private fun onClickItem(item: SearchPlaceViewHolderType.PlacesPredictionItem) {
         val encodedResult = Json.encodeToString(item.placesPredictions)
         setFragmentResult(PLACE_RESULT, bundleOf(PLACE_RESULT to encodedResult))
         // Alternative using nav graph backstack:
