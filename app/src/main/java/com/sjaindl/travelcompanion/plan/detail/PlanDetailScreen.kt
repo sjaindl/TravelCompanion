@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.EditCalendar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,9 +49,16 @@ fun PlanDetailScreen(
         )
     ),
     onAddPlace: (PlanDetailItemType, String, MapLocationData) -> Unit,
+    onChangeDate: (String) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loadPlan()
+    }
+
     TravelCompanionTheme {
         Scaffold(
             topBar = {
@@ -57,15 +66,14 @@ fun PlanDetailScreen(
                     title = planName,
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
+                    customActionIcon = if (state is PlanDetailViewModel.State.Loaded) Icons.Rounded.EditCalendar else null,
+                    onCustomAction = {
+                        val plan = (state as PlanDetailViewModel.State.Loaded).plan
+                        onChangeDate(plan.name)
+                    }
                 )
             },
         ) { paddingValues ->
-            val state by viewModel.state.collectAsState()
-
-            LaunchedEffect(key1 = Unit) {
-                viewModel.loadPlan()
-            }
-
             when (state) {
                 is PlanDetailViewModel.State.Error -> {
                     val exception = (state as PlanDetailViewModel.State.Error).exception
@@ -180,5 +188,6 @@ fun PlanDetailScreenPreview() {
         planName = "",
         onAddPlace = { _, _, _ -> },
         canNavigateBack = true,
+        onChangeDate = { },
     )
 }

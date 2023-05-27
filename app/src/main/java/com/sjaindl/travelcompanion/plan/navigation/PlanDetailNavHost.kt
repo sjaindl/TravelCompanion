@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.navigation.DestinationItem
+import com.sjaindl.travelcompanion.plan.ChangeDateScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailScreen
 import com.sjaindl.travelcompanion.plan.detail.addplace.AddPlaceMapScreen
@@ -43,8 +44,13 @@ internal val addPlace by lazy {
     AddPlace()
 }
 
+internal val changeDate by lazy {
+    ChangeDate()
+}
+
 internal const val planDetailRoute = "planDetail"
 internal const val addPlaceRoute = "addPlace"
+internal const val changeDateRoute = "changeDate"
 
 data class PlanDetail(
     override var route: String = planDetailRoute,
@@ -74,6 +80,17 @@ data class AddPlace(
     }
 }
 
+data class ChangeDate(
+    override var route: String = changeDateRoute,
+    override var arguments: List<NamedNavArgument> = planArgs,
+    override var routeWithArgs: String = "$route/{$planArg}",
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        val plan = arguments.firstOrNull() as? String ?: return route
+        return "$route/$plan"
+    }
+}
+
 @Composable
 fun PlanDetailNavHost(
     navController: NavHostController,
@@ -98,6 +115,9 @@ fun PlanDetailNavHost(
                 navigateUp = { navigateUp() },
                 onAddPlace = { planDetailItemType, planName, mapLocationData ->
                     navController.navigate(addPlace.routeWithSetArguments(planDetailItemType, planName, mapLocationData))
+                },
+                onChangeDate = { planName ->
+                    navController.navigate(changeDate.routeWithSetArguments(planName))
                 }
             )
         }
@@ -114,6 +134,9 @@ fun PlanDetailNavHost(
                 onAddPlace = { planDetailItemType, planName, mapLocationData ->
                     val encodedLocationData = Json.encodeToString(mapLocationData)
                     navController.navigate(addPlace.routeWithSetArguments(planDetailItemType, planName, encodedLocationData))
+                },
+                onChangeDate = { planName ->
+                    navController.navigate(changeDate.routeWithSetArguments(planName))
                 }
             )
         }
@@ -137,6 +160,20 @@ fun PlanDetailNavHost(
                 planName = planArgument,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
+            )
+        }
+
+        composable(
+            route = changeDate.routeWithArgs,
+            arguments = planArgs,
+        ) { navBackStackEntry ->
+            val planArg = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
+            ChangeDateScreen(
+                planName = planArg,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = {
+                    navController.navigateUp()
+                },
             )
         }
     }

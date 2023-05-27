@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.baseui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme.colors
@@ -13,6 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +32,8 @@ fun TCAppBar(
     navigateUp: () -> Unit = {},
     showProfile: Boolean = false,
     onClickProfile: () -> Unit = { },
+    customActionIcon: ImageVector? = null,
+    onCustomAction: () -> Unit = { },
 ) {
     val context = LocalContext.current
 
@@ -60,6 +64,16 @@ fun TCAppBar(
                         factory = {
                             UserIconView(context)
                         }
+                    )
+                } else if (customActionIcon != null) {
+                    Image(
+                        imageVector = customActionIcon,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                onCustomAction()
+                            }
                     )
                 }
             },

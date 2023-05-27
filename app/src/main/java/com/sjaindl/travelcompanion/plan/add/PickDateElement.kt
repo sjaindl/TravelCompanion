@@ -30,6 +30,7 @@ import java.util.Date
 @Composable
 fun PickDateElement(
     modifier: Modifier = Modifier,
+    prefilled: Date? = null,
     minDate: Date? = null,
     onDateSelected: (Date) -> Unit,
 ) {
@@ -51,16 +52,35 @@ fun PickDateElement(
                 val pickedCalender = Calendar.getInstance()
                 pickedCalender.set(selectedYear, selectedMonth, selectedDayOfMonth)
                 val date = pickedCalender.time
-                
+
                 val formattedDate = formatter.format(date.toInstant())
                 selectedDateText = formattedDate
 
                 onDateSelected(date)
-            }, year, month, dayOfMonth
+            },
+            year,
+            month,
+            dayOfMonth,
         )
 
         minDate?.let {
             datePicker.datePicker.minDate = it.time
+        }
+
+        if (prefilled != null) {
+            val prefilledCalendar = Calendar.getInstance()
+            prefilledCalendar.time = prefilled
+
+            datePicker.updateDate(
+                prefilledCalendar[Calendar.YEAR],
+                prefilledCalendar[Calendar.MONTH],
+                prefilledCalendar[Calendar.DAY_OF_MONTH],
+            )
+
+            val formattedDate = formatter.format(prefilled.toInstant())
+            selectedDateText = formattedDate
+        } else {
+            selectedDateText = ""
         }
 
         val buttonColors = ButtonDefaults.buttonColors(
