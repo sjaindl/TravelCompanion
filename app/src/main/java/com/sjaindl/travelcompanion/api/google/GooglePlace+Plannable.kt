@@ -67,10 +67,10 @@ fun GooglePlace.asPlannable() = object : Plannable {
 
 
     override fun getNotes(): String {
-        TODO("Not yet implemented")
+        return notes.orEmpty()
     }
 
     override fun setNotes(notes: String) {
-        TODO("Not yet implemented")
+        this@asPlannable.notes = notes
     }
 }

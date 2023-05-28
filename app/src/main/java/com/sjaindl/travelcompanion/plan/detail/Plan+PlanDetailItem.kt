@@ -37,6 +37,7 @@ fun createPlanDetailItemType(plannable: Plannable): PlanDetailItem {
     val attributionWithText = if (link != null && linkText != null) AttributionWithText(link = link, name = linkText) else null
     
     return PlanDetailItem(
+        id = plannable.getId(),
         title = plannable.description(),
         details = plannable.details().toString(),
         attributionWithText = attributionWithText,

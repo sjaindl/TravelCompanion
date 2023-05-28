@@ -15,11 +15,13 @@ import com.sjaindl.travelcompanion.plan.ChangeDateScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailScreen
 import com.sjaindl.travelcompanion.plan.detail.addplace.AddPlaceMapScreen
+import com.sjaindl.travelcompanion.plan.detail.notes.NotesScreen
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 internal const val planArg = "plan"
+internal const val plannableIdArg = "plannableId"
 internal const val planDetailTypeArg = "planDetailType"
 internal const val locationArg = "location"
 
@@ -36,6 +38,14 @@ internal val planArgs = listOf(navArgument(planArg) {
     // nullable = true
 })
 
+internal val addNoteArgs = listOf(navArgument(plannableIdArg) {
+    type = NavType.StringType
+}, navArgument(planArg) {
+    type = NavType.StringType
+}, navArgument(planDetailTypeArg) {
+    type = NavType.StringType
+})
+
 internal val planDetail by lazy {
     PlanDetail()
 }
@@ -48,9 +58,14 @@ internal val changeDate by lazy {
     ChangeDate()
 }
 
+internal val addNote by lazy {
+    AddNote()
+}
+
 internal const val planDetailRoute = "planDetail"
 internal const val addPlaceRoute = "addPlace"
 internal const val changeDateRoute = "changeDate"
+internal const val addNoteRoute = "addNote"
 
 data class PlanDetail(
     override var route: String = planDetailRoute,
@@ -91,6 +106,22 @@ data class ChangeDate(
     }
 }
 
+data class AddNote(
+    override var route: String = addNoteRoute,
+    override var arguments: List<NamedNavArgument> = addNoteArgs,
+    override var routeWithArgs: String = "$route/{$plannableIdArg}/{$planArg}/{$planDetailTypeArg}",
+) : DestinationItem {
+    override fun routeWithSetArguments(vararg arguments: Any): String {
+        if (arguments.size < 3) return route
+        val plannableId = arguments.first() as? String ?: return route
+        val planName = arguments[1] as? String ?: return route
+        val planDetailItemType = arguments[2] as? PlanDetailItemType ?: return route
+
+        val encodedPlanDetailItemType = Json.encodeToString(planDetailItemType)
+        return "$route/$plannableId/$planName/$encodedPlanDetailItemType"
+    }
+}
+
 @Composable
 fun PlanDetailNavHost(
     navController: NavHostController,
@@ -118,7 +149,10 @@ fun PlanDetailNavHost(
                 },
                 onChangeDate = { planName ->
                     navController.navigate(changeDate.routeWithSetArguments(planName))
-                }
+                },
+                onAddNote = { plannableId, planName, planDetailItemType ->
+                    navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
+                },
             )
         }
 
@@ -137,7 +171,10 @@ fun PlanDetailNavHost(
                 },
                 onChangeDate = { planName ->
                     navController.navigate(changeDate.routeWithSetArguments(planName))
-                }
+                },
+                onAddNote = { plannableId, planName, planDetailItemType ->
+                    navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
+                },
             )
         }
 
@@ -159,7 +196,31 @@ fun PlanDetailNavHost(
                 initialLocation = locationData,
                 planName = planArgument,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() },
+                navigateUp = {
+                    navController.navigateUp()
+                },
+            )
+        }
+
+        composable(
+            route = addNote.routeWithArgs,
+            arguments = addNoteArgs,
+        ) { navBackStackEntry ->
+            val args = navBackStackEntry.arguments
+            val plannableIdArg = args?.getString(plannableIdArg) ?: throw IllegalStateException("No plannable given")
+            val planArgument = args?.getString(planArg) ?: throw IllegalStateException("No plan given")
+            val encodedPlanDetailItemType = args?.getString(planDetailTypeArg) ?: throw IllegalStateException("No placeType given")
+
+            val planDetailItemType: PlanDetailItemType = Json.decodeFromString(encodedPlanDetailItemType)
+
+            NotesScreen(
+                planName = planArgument,
+                plannableId = plannableIdArg,
+                planDetailItemType = planDetailItemType,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = {
+                    navController.navigateUp()
+                },
             )
         }
 

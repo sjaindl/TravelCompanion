@@ -41,6 +41,7 @@ fun ExpandableCard(
     planDetailItems: List<PlanDetailItem>,
     onCardArrowClick: () -> Unit,
     onAdd: () -> Unit,
+    onClick: (plannableId: String) -> Unit,
     expanded: Boolean,
 ) {
     val transitionState = remember {
@@ -90,7 +91,7 @@ fun ExpandableCard(
     }
 
     val interactionSource = remember { MutableInteractionSource() }
-    
+
     Card(
         backgroundColor = cardBgColor,
         contentColor = cardContentColor,
@@ -166,6 +167,7 @@ fun ExpandableCard(
             ExpandableContent(
                 planDetailItems = planDetailItems,
                 visible = expanded,
+                onClick = onClick
             )
         }
     }
@@ -187,12 +189,13 @@ fun ExpandableCardPreview() {
         ExpandableCard(
             card = model,
             planDetailItems = listOf(
-                PlanDetailItem(title = "title1", details = "detail1", attributionWithText = null, imagePath = null),
-                PlanDetailItem(title = "title2", details = "detail2", attributionWithText = null, imagePath = null),
+                PlanDetailItem(title = "title1", details = "detail1", attributionWithText = null, imagePath = null, id = "1"),
+                PlanDetailItem(title = "title2", details = "detail2", attributionWithText = null, imagePath = null, id = "2"),
             ),
             onCardArrowClick = { },
             onAdd = { },
             expanded = expanded,
+            onClick = { },
         )
     }
 }

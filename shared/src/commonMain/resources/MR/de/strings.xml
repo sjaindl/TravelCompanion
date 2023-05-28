@@ -193,4 +193,7 @@
     <string name="cancelled">Abgebrochen</string>
     <string name="pick_date">Datum wählen</string>
     <string name="place_details">Ortdetails</string>
+
+    <string name="notes_added">Notizen hinzugefügt</string>
+    <string name="add_notes">Notizen hinzufügen ...</string>
 </resources>

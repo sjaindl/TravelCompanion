@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.plan.Plan
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
+import com.sjaindl.travelcompanion.plan.detail.notes.NoteData
 import com.sjaindl.travelcompanion.plan.detail.planDetailItems
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
@@ -23,6 +25,15 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
     val hotels: MutableStateFlow<List<PlanDetailItem>> = MutableStateFlow(emptyList())
     val restaurants: MutableStateFlow<List<PlanDetailItem>> = MutableStateFlow(emptyList())
     val attractions: MutableStateFlow<List<PlanDetailItem>> = MutableStateFlow(emptyList())
+
+    private val _showDialog = MutableStateFlow(false)
+    val showDialog = _showDialog.asStateFlow()
+
+    private val _bottomSheetData: MutableStateFlow<NoteData?> = MutableStateFlow(null)
+    var bottomSheetData = _bottomSheetData.asStateFlow()
+
+    private val _exception: MutableStateFlow<Exception?> = MutableStateFlow(null)
+    var exception = _exception.asStateFlow()
 
     fun loadPlannables() {
         // load subdocuments of plan
@@ -44,6 +55,20 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
         val list = expandedCardIdsList.value.toMutableList()
         if (list.contains(id)) list.remove(id) else list.add(id)
         expandedCardIdsList.value = list
+    }
+
+    fun onDelete() {
+        _showDialog.value = false
+        // TODO
+    }
+
+    fun onDismiss() {
+        _showDialog.value = false
+    }
+
+    fun clickedOnItem(plannableId: String, name: String, type: PlanDetailItemType) {
+        _showDialog.value = true
+        _bottomSheetData.value = NoteData(plannableId = plannableId, planName = name, planDetailItemType = type)
     }
 
     class CardsViewModelFactory(private val plan: Plan) :

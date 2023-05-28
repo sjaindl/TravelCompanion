@@ -23,6 +23,7 @@ import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 data class PlanDetailItem(
+    val id: String,
     val title: String,
     val details: String,
     val attributionWithText: AttributionWithText?,
@@ -33,7 +34,7 @@ data class PlanDetailItem(
 fun PlanDetailItemScreen(
     modifier: Modifier,
     planDetailItem: PlanDetailItem,
-    onClick: () -> Unit,
+    onClick: (plannableId: String) -> Unit,
 ) {
     TravelCompanionTheme {
         Row(
@@ -41,7 +42,7 @@ fun PlanDetailItemScreen(
                 .background(colors.background)
                 .padding(vertical = 4.dp)
                 .clickable {
-                    onClick()
+                    onClick(planDetailItem.id)
                 },
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -105,6 +106,7 @@ fun PlanDetailItemPreview() {
     PlanDetailItemScreen(
         modifier = Modifier,
         planDetailItem = PlanDetailItem(
+            id = "1234567890",
             title = "Marina Bay Sands",
             details = "Marina Bay Singapore",
             attributionWithText = AttributionWithText(link = "https://www.singapore.com", name = "Singapore"),

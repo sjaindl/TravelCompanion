@@ -50,6 +50,7 @@ fun PlanDetailScreen(
     ),
     onAddPlace: (PlanDetailItemType, String, MapLocationData) -> Unit,
     onChangeDate: (String) -> Unit,
+    onAddNote: (plannableId: String, planName: String, planDetailItemType: PlanDetailItemType) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -161,7 +162,8 @@ fun PlanDetailScreen(
                             plan = plan,
                             onAddPlace = {
                                 onAddPlace(it, plan.name, viewModel.locationData())
-                            }
+                            },
+                            onAddNote = onAddNote
                         )
                     }
                 }
@@ -189,5 +191,6 @@ fun PlanDetailScreenPreview() {
         onAddPlace = { _, _, _ -> },
         canNavigateBack = true,
         onChangeDate = { },
+        onAddNote = { _, _, _ -> }
     )
 }

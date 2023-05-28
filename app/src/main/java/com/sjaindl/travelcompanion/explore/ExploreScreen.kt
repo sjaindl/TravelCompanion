@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,7 +48,6 @@ import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -67,8 +67,8 @@ fun ExploreScreen(
 ) {
     val context = LocalContext.current
 
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val scaffoldState: ScaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
     val cameraPositionState = rememberCameraPositionState()
 
     var initialLocation: MapLocationData? by remember {
@@ -83,6 +83,7 @@ fun ExploreScreen(
     val title by viewModel.dialogTitle.collectAsState()
     val onShowDetailsPinId by viewModel.onShowDetails.collectAsState()
     val exception by viewModel.exception.collectAsState()
+    val snackBarHostState = remember { SnackbarHostState() }
 
     val prefs by lazy {
         MapLocationDataPrefs(context)
@@ -139,86 +140,6 @@ fun ExploreScreen(
     }
 
     TravelCompanionTheme {
-        Scaffold(
-            modifier = Modifier
-                .background(Color.Gray),
-            scaffoldState = scaffoldState,
-            topBar = {
-                TCAppBar(
-                    title = stringResource(R.string.explore),
-                    canNavigateBack = canNavigateBack,
-                    navigateUp = navigateUp,
-                )
-            },
-            floatingActionButton = {
-                TravelCompanionTheme {
-                    FloatingActionButton(
-                        onClick = {
-                            searchPlace = true
-                        },
-                        containerColor = colors.primary,
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .background(colors.primary)
-                                .padding(8.dp),
-                        ) {
-                            Text(text = stringResource(id = R.string.searchPlaces))
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Image(
-                                imageVector = Icons.Rounded.Search,
-                                contentDescription = stringResource(id = R.string.search),
-                            )
-                        }
-                    }
-                }
-            },
-            floatingActionButtonPosition = FabPosition.Center,
-        ) { paddingValues ->
-            GoogleMap(
-                modifier = Modifier.padding(paddingValues),
-                cameraPositionState = cameraPositionState,
-                googleMapOptionsFactory = {
-                    GoogleMapOptions()
-                },
-                properties = MapProperties(
-                    isBuildingEnabled = true,
-                    isIndoorEnabled = true,
-                    isMyLocationEnabled = false,
-                    isTrafficEnabled = false,
-                ),
-                uiSettings = MapUiSettings(),
-                onMapLoaded = {
-                    coroutineScope.launch {
-                        initialLocation = prefs.lastLocationFlow.first()
-                        viewModel.addPersistedPinsToMap()
-                    }
-                }
-            ) {
-                val placeDetail by viewModel.placeDetails.collectAsState()
-
-                placeDetail.forEach {
-                    Marker(
-                        state = MarkerState(position = LatLng(it.latitude, it.longitude)),
-                        tag = it.name,
-                        title = it.name,
-                        onClick = { marker ->
-                            viewModel.clickedOnPlace(marker.title)
-                            true
-                        },
-                    )
-                }
-
-                viewModel.newlyAddedLocation?.let {
-                    cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                        LatLng(it.latitude, it.longitude),
-                        cameraPositionState.position.zoom
-                    )
-                    viewModel.newlyAddedLocation = null
-                }
-            }
-        }
-
         PlaceActionBottomSheet(
             show = showDialogState,
             title = title,
@@ -226,7 +147,88 @@ fun ExploreScreen(
             onPlanTrip = viewModel::onPlanTrip,
             onDelete = viewModel::onDelete,
             onCancel = viewModel::onDismiss,
-        )
+        ) {
+            Scaffold(
+                modifier = Modifier
+                    .background(Color.Gray),
+                snackbarHost = { SnackbarHost(snackBarHostState) },
+                topBar = {
+                    TCAppBar(
+                        title = stringResource(R.string.explore),
+                        canNavigateBack = canNavigateBack,
+                        navigateUp = navigateUp,
+                    )
+                },
+                floatingActionButton = {
+                    TravelCompanionTheme {
+                        FloatingActionButton(
+                            onClick = {
+                                searchPlace = true
+                            },
+                            containerColor = colors.primary,
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .background(colors.primary)
+                                    .padding(8.dp),
+                            ) {
+                                Text(text = stringResource(id = R.string.searchPlaces))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Image(
+                                    imageVector = Icons.Rounded.Search,
+                                    contentDescription = stringResource(id = R.string.search),
+                                )
+                            }
+                        }
+                    }
+                },
+                floatingActionButtonPosition = FabPosition.Center,
+            ) { paddingValues ->
+                GoogleMap(
+                    modifier = Modifier.padding(paddingValues),
+                    cameraPositionState = cameraPositionState,
+                    googleMapOptionsFactory = {
+                        GoogleMapOptions()
+                    },
+                    properties = MapProperties(
+                        isBuildingEnabled = true,
+                        isIndoorEnabled = true,
+                        isMyLocationEnabled = false,
+                        isTrafficEnabled = false,
+                    ),
+                    uiSettings = MapUiSettings(),
+                    onMapLoaded = {
+                        coroutineScope.launch {
+                            initialLocation = prefs.lastLocationFlow.first()
+                            viewModel.addPersistedPinsToMap()
+                        }
+                    }
+                ) {
+                    val placeDetail by viewModel.placeDetails.collectAsState()
+
+                    placeDetail.forEach {
+                        Marker(
+                            state = MarkerState(position = LatLng(it.latitude, it.longitude)),
+                            tag = it.name,
+                            title = it.name,
+                            onClick = { marker ->
+                                viewModel.clickedOnPlace(marker.title)
+                                true
+                            },
+                        )
+                    }
+
+                    viewModel.newlyAddedLocation?.let {
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                            LatLng(it.latitude, it.longitude),
+                            cameraPositionState.position.zoom
+                        )
+                        viewModel.newlyAddedLocation = null
+                    }
+                }
+            }
+        }
+
 
         /*
         PlaceActionDialog(

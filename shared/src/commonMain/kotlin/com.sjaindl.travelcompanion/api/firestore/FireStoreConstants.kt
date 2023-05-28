@@ -53,6 +53,10 @@ class FireStoreConstants {
             const val path = "path"
         }
 
+        object Plannable {
+            const val notes = "notes"
+        }
+
         object User {
             const val userId = "uid"
             const val email = "email"

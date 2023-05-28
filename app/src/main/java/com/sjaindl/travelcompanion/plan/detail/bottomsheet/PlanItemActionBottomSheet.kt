@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.explore.search
+package com.sjaindl.travelcompanion.plan.detail.bottomsheet
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,12 +11,11 @@ import com.sjaindl.travelcompanion.baseui.TCBottomSheet
 
 // https://proandroiddev.com/bottom-sheet-in-jetpack-compose-d7e106422606
 @Composable
-fun PlaceActionBottomSheet(
+fun PlanItemActionBottomSheet(
     modifier: Modifier = Modifier,
     show: Boolean,
     title: String,
-    onShowDetails: () -> Unit,
-    onPlanTrip: () -> Unit,
+    onAddNote: () -> Unit,
     onDelete: () -> Unit,
     onCancel: () -> Unit,
     content: @Composable () -> Unit = { },
@@ -25,14 +24,13 @@ fun PlaceActionBottomSheet(
         show = show,
         onCancel = onCancel,
         sheetContent = {
-            PlaceActionContent(
+            PlanItemActionContent(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
                 shape = RectangleShape,
                 title = title,
-                onShowDetails = onShowDetails,
-                onPlanTrip = onPlanTrip,
+                onAddNote = onAddNote,
                 onDelete = onDelete,
                 onCancel = onCancel,
             )
@@ -43,12 +41,11 @@ fun PlaceActionBottomSheet(
 
 @Preview
 @Composable
-fun PlaceActionBottomSheetPreview() {
-    PlaceActionBottomSheet(
+fun PlanItemActionBottomSheetPreview() {
+    PlanItemActionBottomSheet(
         show = true,
-        title = "Test Location",
-        onShowDetails = { },
-        onPlanTrip = { },
+        title = "Plan item actions",
+        onAddNote = { },
         onDelete = { },
         onCancel = { },
     )

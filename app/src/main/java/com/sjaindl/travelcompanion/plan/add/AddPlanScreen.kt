@@ -206,7 +206,7 @@ fun AddPlanScreen(
                                     .fillMaxWidth()
                                     .padding(all = 8.dp),
                                 enabled = places.isNotEmpty(),
-                                value = displayName ?: "",
+                                value = displayName.orEmpty(),
                                 onValueChange = {
                                     displayName = it
                                 },

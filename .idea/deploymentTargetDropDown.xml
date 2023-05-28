@@ -2,7 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AddPlaceMapScreenPreview">
+      <entry key="ChangeDateScreenPreview">
+        <State />
+      </entry>
+      <entry key="NotesScreenPreview">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -15,32 +18,16 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-23T18:11:50.504005Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-05-28T16:02:28.185047Z" />
         </State>
       </entry>
-      <entry key="AddPlacePreviewScreenPreview">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Nexus_9_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-25T18:23:44.163823Z" />
-        </State>
-      </entry>
-      <entry key="AddPlanScreenPreview (1)">
+      <entry key="PlaceActionBottomSheetPreview">
         <State />
       </entry>
-      <entry key="ChangeDateScreenPreview">
+      <entry key="PlanItemActionBottomSheetPreview">
         <State />
       </entry>
-      <entry key="PlaceTypePickerPreview">
+      <entry key="TCBottomSheetPreview">
         <State />
       </entry>
       <entry key="app">

@@ -9,6 +9,8 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import timber.log.Timber
 import java.util.Date
 
+// TODO: Caching of plans in a hashmap
+// https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
 object PlanUtils {
     private const val tag = "PlanLoader"
 

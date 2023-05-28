@@ -29,6 +29,7 @@ fun ExpandableContent(
     planDetailItems: List<PlanDetailItem>,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
+    onClick: (plannableId: String) -> Unit,
 ) {
     val enterFadeIn = remember {
         fadeIn(
@@ -69,9 +70,7 @@ fun ExpandableContent(
                     PlanDetailItemScreen(
                         modifier = Modifier,
                         planDetailItem = it,
-                        onClick = {
-                            // TODO
-                        }
+                        onClick = onClick
                     )
                 }
             }

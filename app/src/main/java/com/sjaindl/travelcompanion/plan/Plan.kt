@@ -17,6 +17,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
+// TODO: Move firbase stuff in a diff. class
 data class Plan(
     val name: String,
     val pinName: String,
