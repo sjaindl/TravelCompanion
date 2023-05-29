@@ -51,14 +51,14 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
         val data = place.asMap()
 
         val placeTypeCollection = getPlaceTypeReference(placeType = placeType)
-        val task = placeTypeCollection?.add(data)
+        val task = placeTypeCollection?.document(place.placeId)?.set(data)
         task?.addOnSuccessListener {
             addPlaceToPlan(place = place, placeType = placeType)
         }?.addOnFailureListener {
             _state.value = State.Error(it)
         }
     }
-
+    
     fun fetchPlan() {
         if (state.value is State.PlanReady || state.value is State.Finished) return // already loaded
 

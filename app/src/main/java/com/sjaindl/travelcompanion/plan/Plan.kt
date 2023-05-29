@@ -52,6 +52,7 @@ data class Plan(
     }
 
     fun loadPlannables(completion: (exception: Exception?) -> Unit) {
+        // TODO: Can this be improved?
         reset()
         hotels.ifEmpty { loadPlannables(HOTEL, fireStoreHotelDbReference, Constants.Plannables.hotel, completion) }
         restaurants.ifEmpty { loadPlannables(RESTAURANT, fireStoreRestaurantDbReference, Constants.Plannables.restaurant, completion) }

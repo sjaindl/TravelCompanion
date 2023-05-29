@@ -62,7 +62,11 @@ fun PlanDetailItems(
                 val data = bottomSheetData ?: return@PlanItemActionBottomSheet
                 onAddNote(data.plannableId, data.planName, data.planDetailItemType)
             },
-            onDelete = viewModel::onDelete,
+            onDelete = {
+                viewModel.onDismiss()
+                val data = bottomSheetData ?: return@PlanItemActionBottomSheet
+                viewModel.onDelete(plannableId = data.plannableId, planDetailItemType = data.planDetailItemType)
+            },
             onCancel = viewModel::onDismiss,
         ) {
             Scaffold(

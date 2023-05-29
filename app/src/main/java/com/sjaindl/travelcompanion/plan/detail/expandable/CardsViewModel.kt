@@ -57,9 +57,40 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
         expandedCardIdsList.value = list
     }
 
-    fun onDelete() {
-        _showDialog.value = false
-        // TODO
+    fun onDelete(plannableId: String, planDetailItemType: PlanDetailItemType) {
+        val docRef = when (planDetailItemType) {
+            PlanDetailItemType.HOTEL -> {
+                val newList = hotels.value.toMutableList()
+                newList.removeIf { it.id == plannableId }
+                hotels.value = newList
+
+                plan.fireStoreHotelDbReference?.document(plannableId)
+            }
+
+            PlanDetailItemType.RESTAURANT -> {
+                val newList = restaurants.value.toMutableList()
+                newList.removeIf { it.id == plannableId }
+                hotels.value = newList
+
+                plan.fireStoreRestaurantDbReference?.document(plannableId)
+            }
+
+            PlanDetailItemType.ATTRACTION -> {
+                val newList = attractions.value.toMutableList()
+                newList.removeIf { it.id == plannableId }
+                hotels.value = newList
+
+                plan.fireStoreAttractionDbReference?.document(plannableId)
+            }
+        }
+
+        docRef?.delete()
+            ?.addOnSuccessListener {
+                Timber.d("Successfully removed plannable")
+            }
+            ?.addOnFailureListener {
+                _exception.value = it
+            }
     }
 
     fun onDismiss() {
