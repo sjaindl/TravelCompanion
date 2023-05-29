@@ -58,10 +58,6 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
         addPersistedPinsToMap()
     }
 
-    fun onPlanTrip() {
-        _showDialog.value = false
-    }
-
     fun onDismiss() {
         _showDialog.value = false
     }

@@ -13,7 +13,11 @@ fun MainContainer(
     openProfile: Boolean,
     profileOpened: () -> Unit = { },
     onAuthenticateAndOpenPlan: () -> Unit,
+    onAuthenticateAndOpenAddPlan: (String) -> Unit = { },
     openPlan: Boolean,
+    openAddPlan: String? = null,
+    openedPlan: () -> Unit = { },
+    openedAddPlan: () -> Unit = { },
 ) {
     val navController = rememberNavController()
     
@@ -26,10 +30,14 @@ fun MainContainer(
             openProfile = openProfile,
             profileOpened = profileOpened,
             onAuthenticateAndOpenPlan = onAuthenticateAndOpenPlan,
+            onAuthenticateAndOpenAddPlan = onAuthenticateAndOpenAddPlan,
             openPlan = openPlan,
+            openAddPlan = openAddPlan,
             onClose = {
                 navController.popBackStack()
-            }
+            },
+            openedPlan = openedPlan,
+            openedAddPlan = openedAddPlan,
         )
     }
 }

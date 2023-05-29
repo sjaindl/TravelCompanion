@@ -62,6 +62,7 @@ fun ExploreScreen(
     ),
     onSearch: () -> Unit,
     onNavigateToExploreDetails: (Long) -> Unit,
+    onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -144,7 +145,10 @@ fun ExploreScreen(
             show = showDialogState,
             title = title,
             onShowDetails = viewModel::onShowDetails,
-            onPlanTrip = viewModel::onPlanTrip,
+            onPlanTrip = {
+                viewModel.onDismiss()
+                onPlanTrip(title)
+            },
             onDelete = viewModel::onDelete,
             onCancel = viewModel::onDismiss,
         ) {
@@ -250,6 +254,7 @@ fun ExploreScreenPreview() {
     ExploreScreen(
         onSearch = { },
         onNavigateToExploreDetails = { },
+        onPlanTrip = { },
         canNavigateBack = true,
     )
 }

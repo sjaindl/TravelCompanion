@@ -11,6 +11,7 @@ import com.sjaindl.travelcompanion.explore.navigation.exploreDetailContainer
 import com.sjaindl.travelcompanion.explore.navigation.exploreGraph
 import com.sjaindl.travelcompanion.explore.navigation.exploreNavigation
 import com.sjaindl.travelcompanion.navigation.DestinationItem
+import com.sjaindl.travelcompanion.plan.navigation.AddPlan
 import com.sjaindl.travelcompanion.plan.navigation.planGraph
 import com.sjaindl.travelcompanion.plan.navigation.planNavigation
 import com.sjaindl.travelcompanion.profile.navigation.profileGraph
@@ -38,7 +39,11 @@ fun TCNavHost(
     openProfile: Boolean = false,
     profileOpened: () -> Unit = { },
     onAuthenticateAndOpenPlan: () -> Unit = { },
+    onAuthenticateAndOpenAddPlan: (String) -> Unit = { },
     openPlan: Boolean = false,
+    openAddPlan: String? = null,
+    openedPlan: () -> Unit = { },
+    openedAddPlan: () -> Unit = { },
 ) {
     if (openProfile) {
         navController.navigateSingleTopTo(profileNavigation)
@@ -47,6 +52,12 @@ fun TCNavHost(
 
     if (openPlan) {
         navController.navigateSingleTopTo(planNavigation)
+        openedPlan()
+    }
+
+    openAddPlan?.let { destination ->
+        navController.navigate(AddPlan().routeWithSetArguments(destination))
+        openedAddPlan()
     }
 
     NavHost(
@@ -83,9 +94,21 @@ fun TCNavHost(
 
         profileGraph(navController = navController, onClose = onClose)
 
-        exploreGraph(navController = navController)
+        exploreGraph(
+            navController = navController,
+            onPlanTrip = { destination ->
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    navController.navigate(AddPlan().routeWithSetArguments(destination))
+                } else {
+                    onAuthenticateAndOpenAddPlan(destination)
+                }
+            }
+        )
 
-        planGraph(navController = navController, onShowDetails = onShowDetails)
+        planGraph(
+            navController = navController,
+            onShowDetails = onShowDetails,
+        )
     }
 }
 
@@ -93,7 +116,6 @@ fun TCNavHost(
 // https://proandroiddev.com/safe-compose-arguments-an-improved-way-to-navigate-in-jetpack-compose-95c84722eec2
 
 private const val tcHomeRoute = "tcHome"
-
 
 data class TCHome(
     override var route: String = tcHomeRoute,

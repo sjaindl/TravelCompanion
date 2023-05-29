@@ -93,7 +93,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                 show = showDialogState.value,
                 title = title.value,
                 onShowDetails = viewModel::onShowDetails,
-                onPlanTrip = viewModel::onPlanTrip,
+                onPlanTrip = viewModel::onDismiss,
                 onDelete = viewModel::onDelete,
                 onCancel = viewModel::onDismiss,
             )

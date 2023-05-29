@@ -3,7 +3,9 @@ package com.sjaindl.travelcompanion.plan.navigation
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.PlanHomeScreen
@@ -14,11 +16,18 @@ private const val planRoute = "plan"
 private const val planDetailsContainerRoute = "planDetailsContainerRoute"
 private const val addPlanRoute = "addPlan"
 
+const val destinationArg = "destination"
+
+internal val addPlanArgs = listOf(navArgument(destinationArg) {
+    type = NavType.StringType
+    nullable = true
+})
+
 private val planHome by lazy {
     PlanHome()
 }
 
-private val addPlan by lazy {
+val addPlan by lazy {
     AddPlan()
 }
 
@@ -38,13 +47,15 @@ data class PlanHome(
     }
 }
 
+// https://developer.android.com/jetpack/compose/navigation#optional-args
 data class AddPlan(
     override var route: String = addPlanRoute,
-    override var arguments: List<NamedNavArgument> = emptyList(),
-    override var routeWithArgs: String = route,
+    override var arguments: List<NamedNavArgument> = addPlanArgs,
+    override var routeWithArgs: String = "$route?destination={$destinationArg}",
 ) : DestinationItem {
     override fun routeWithSetArguments(vararg arguments: Any): String {
-        return route
+        val destination = arguments.firstOrNull() as? String ?: return route
+        return "$route?destination=$destination"
     }
 }
 
@@ -60,7 +71,10 @@ data class PlanDetailContainer(
     }
 }
 
-fun NavGraphBuilder.planGraph(navController: NavController, onShowDetails: (Long) -> Unit = { }) {
+fun NavGraphBuilder.planGraph(
+    navController: NavController,
+    onShowDetails: (Long) -> Unit = { },
+) {
     navigation(startDestination = planHome.route, route = planNavigation) {
         composable(
             route = planHome.route,
@@ -82,8 +96,25 @@ fun NavGraphBuilder.planGraph(navController: NavController, onShowDetails: (Long
         composable(
             route = addPlan.route,
             arguments = emptyList()
-        ) {
+        ) { navBackStackEntry ->
+            val destination = navBackStackEntry.arguments?.getString(destinationArg)
             AddPlanScreen(
+                preselectedDestination = destination,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = {
+                    navController.navigateUp()
+
+                },
+            )
+        }
+
+        composable(
+            route = addPlan.routeWithArgs,
+            arguments = addPlan.arguments,
+        ) { navBackStackEntry ->
+            val destination = navBackStackEntry.arguments?.getString(destinationArg)
+            AddPlanScreen(
+                preselectedDestination = destination,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )

@@ -18,6 +18,8 @@ import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
 import timber.log.Timber
 import kotlin.random.Random
 
+data class OpenAddPlan(val open: Boolean, val destination: String)
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -42,6 +44,10 @@ class MainActivity : AppCompatActivity() {
                 mutableStateOf(false)
             }
 
+            var openAddPlan by remember {
+                mutableStateOf(OpenAddPlan(open = false, destination = ""))
+            }
+
             MainContainer(
                 onClickedProfile = {
                     openProfile = startSignIn {
@@ -58,7 +64,22 @@ class MainActivity : AppCompatActivity() {
                         openPlan = true
                     }
                 },
+                onAuthenticateAndOpenAddPlan = { destination ->
+                    val isOpen = startSignIn {
+                        Timber.d(tag, "Successfully signed in")
+                        openAddPlan = OpenAddPlan(open = true, destination = destination)
+                    }
+
+                    openAddPlan = OpenAddPlan(open = isOpen, destination = destination)
+                },
                 openPlan = openPlan,
+                openAddPlan = if (openAddPlan.open) openAddPlan.destination else null,
+                openedPlan = {
+                    openPlan = false
+                },
+                openedAddPlan = {
+                    openAddPlan = OpenAddPlan(open = false, destination = "")
+                },
             )
         }
     }

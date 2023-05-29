@@ -52,6 +52,7 @@ import java.util.Date
 @Composable
 fun AddPlanScreen(
     modifier: Modifier = Modifier,
+    preselectedDestination: String? = null,
     viewModel: AddPlanViewModel = viewModel(
         factory = AddPlanViewModel.AddPlanViewModelFactory(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
@@ -63,8 +64,8 @@ fun AddPlanScreen(
     val focusManager = LocalFocusManager.current
 
     var placeSelectionIsExpanded by remember { mutableStateOf(false) }
-    var selectedDestination: String? by remember { mutableStateOf(null) }
-    var displayName: String? by remember { mutableStateOf(null) }
+    var selectedDestination: String? by remember { mutableStateOf(preselectedDestination) }
+    var displayName: String? by remember { mutableStateOf(preselectedDestination) }
     var startDate: Date? by remember { mutableStateOf(null) }
     var endDate: Date? by remember { mutableStateOf(null) }
 

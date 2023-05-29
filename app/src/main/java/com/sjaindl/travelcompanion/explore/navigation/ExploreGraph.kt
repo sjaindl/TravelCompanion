@@ -98,7 +98,10 @@ data class SearchPlace(
     }
 }
 
-fun NavGraphBuilder.exploreGraph(navController: NavController) {
+fun NavGraphBuilder.exploreGraph(
+    navController: NavController,
+    onPlanTrip: (String) -> Unit,
+) {
     navigation(startDestination = exploreHome.routeWithArgs, route = exploreNavigation) {
         composable(
             route = exploreHome.routeWithArgs,
@@ -113,6 +116,7 @@ fun NavGraphBuilder.exploreGraph(navController: NavController) {
                 onNavigateToExploreDetails = { pinId ->
                     navController.navigate(exploreDetailContainer.routeWithSetArguments(pinId))
                 },
+                onPlanTrip = onPlanTrip,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
@@ -152,7 +156,7 @@ fun NavGraphBuilder.exploreGraph(navController: NavController) {
             arguments = emptyList(),
         ) {
             PhotoFullScreen(bitmap = bitmap, url = url, title = title!!) {
-                
+
             }
         }
     }
