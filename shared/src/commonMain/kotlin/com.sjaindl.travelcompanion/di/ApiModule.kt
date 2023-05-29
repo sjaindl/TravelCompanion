@@ -2,8 +2,10 @@ package com.sjaindl.travelcompanion.di
 
 import com.sjaindl.travelcompanion.api.HttpClientBuilder
 import com.sjaindl.travelcompanion.api.HttpResponseHandler
-import com.sjaindl.travelcompanion.api.country.RestCountriesClient
-import com.sjaindl.travelcompanion.api.country.RestCountriesClientImpl
+import com.sjaindl.travelcompanion.api.country.countryapi.CountryApiClient
+import com.sjaindl.travelcompanion.api.country.countryapi.CountryApiClientImpl
+import com.sjaindl.travelcompanion.api.country.restcountries.RestCountriesClient
+import com.sjaindl.travelcompanion.api.country.restcountries.RestCountriesClientImpl
 import com.sjaindl.travelcompanion.api.flickr.FlickrClient
 import com.sjaindl.travelcompanion.api.flickr.FlickrClientImpl
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
@@ -33,5 +35,6 @@ object ApiModule {
         bindSingleton<WikiClient> { WikiClientImpl(instance()) }
         bindSingleton<GeoNamesClient> { GeoNamesClientImpl(instance()) }
         bindSingleton<GoogleClient> { GoogleClientImpl(instance()) }
+        bindSingleton<CountryApiClient> { CountryApiClientImpl(instance()) }
     }
 }

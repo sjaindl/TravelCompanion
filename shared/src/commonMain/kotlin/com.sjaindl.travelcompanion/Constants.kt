@@ -14,6 +14,7 @@ object Constants {
             const val photoResizingHeight = "firestorePhotoResizingHeight"
             const val photoResizingWidth = "firestorePhotoResizingWidth"
             const val transportSearchAutocomplete = "transportSearchAutocomplete"
+            const val countryApiType = "countryApiType"
         }
 
         object LocalDefaultValues {

@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.api.country
+package com.sjaindl.travelcompanion.api.country.restcountries
 
 object RestCountriesConstants {
     object UrlComponents {

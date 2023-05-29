@@ -3,7 +3,8 @@ package com.sjaindl.travelcompanion.repository
 import com.sjaindl.travelcompanion.Country
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.TravelCompanionDatabaseQueries
-import com.sjaindl.travelcompanion.api.country.CountryResponse
+import com.sjaindl.travelcompanion.api.country.countryapi.CountryApiResponse
+import com.sjaindl.travelcompanion.api.country.restcountries.CountryResponse
 import com.sjaindl.travelcompanion.model.Currency
 import com.sjaindl.travelcompanion.model.Flag
 import com.sjaindl.travelcompanion.model.Language
@@ -176,6 +177,42 @@ open class DataRepositoryImpl(private val dbQueries: TravelCompanionDatabaseQuer
             regionalBlock = country.regionalBlocs,
             cioc = country.cioc,
             independent = country.independent,
+        )
+    }
+
+    override fun insertCountry(countryCode: String, country: CountryApiResponse) {
+        insertCountry(
+            countryCode = countryCode,
+            name = country.name,
+            topLevelDomain = country.topLevelDomain,
+            alpha2Code = country.alpha2Code,
+            alpha3Code = country.alpha3Code,
+            callingCodes = country.callingCode?.let { listOf(it) },
+            capital = country.capital,
+            altSpellings = country.altSpellings,
+            subregion = country.subregion,
+            region = country.region,
+            population = country.population,
+            latlng = country.latLng?.get("country"),
+            demonym = country.demonyms?.get("eng")?.get("m"),
+            area = country.area,
+            gini = null,
+            timezones = country.timezones,
+            borders = country.borders,
+            nativeName = country.nativeNames?.values?.firstOrNull()?.get("official"),
+            numericCode = country.numericCode,
+            flags = country.flag?.get("large")?.let { Flag(png = it) },
+            currency = country.currencies?.map { currency ->
+                Currency(code = currency.key, name = currency.value.name, symbol = currency.value.symbol)
+            },
+            language = country.languages?.map {
+                Language(iso639_1 = it.key, name = it.value)
+            },
+            translations = country.translations,
+            flag = country.flag?.get("large"),
+            regionalBlock = country.regionalBlocs,
+            cioc = country.cioc,
+            independent = null,
         )
     }
 

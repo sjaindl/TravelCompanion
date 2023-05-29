@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.api.country
+package com.sjaindl.travelcompanion.api.country.restcountries
 
 import com.sjaindl.travelcompanion.model.Currency
 import com.sjaindl.travelcompanion.model.Flag

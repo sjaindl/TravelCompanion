@@ -2,7 +2,8 @@ package com.sjaindl.travelcompanion.repository
 
 import com.sjaindl.travelcompanion.Country
 import com.sjaindl.travelcompanion.Pin
-import com.sjaindl.travelcompanion.api.country.CountryResponse
+import com.sjaindl.travelcompanion.api.country.countryapi.CountryApiResponse
+import com.sjaindl.travelcompanion.api.country.restcountries.CountryResponse
 import com.sjaindl.travelcompanion.model.Currency
 import com.sjaindl.travelcompanion.model.Flag
 import com.sjaindl.travelcompanion.model.Language
@@ -69,6 +70,8 @@ interface DataRepository {
     )
 
     fun insertCountry(countryCode: String, country: CountryResponse)
+
+    fun insertCountry(countryCode: String, country: CountryApiResponse)
 
     fun updateCountry(
         countryCode: String,

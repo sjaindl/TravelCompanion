@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Country
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApi
+import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApiLocal
+import com.sjaindl.travelcompanion.api.firestore.CountryApiType.RestCountries
+import com.sjaindl.travelcompanion.api.firestore.FireStoreRemoteConfig
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.mapper.PinAndCountryToCountryUiMapper
 import com.sjaindl.travelcompanion.model.CountryUi
@@ -22,8 +26,12 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
         data class Error(val message: String? = null, @StringRes val stringRes: Int? = null) : State()
     }
 
-    private val client by lazy {
+    private val restCountriesClient by lazy {
         TCInjector.restCountriesClient
+    }
+
+    private val countryApiClient by lazy {
+        TCInjector.countryApiClient
     }
 
     private val mapper = PinAndCountryToCountryUiMapper()
@@ -52,15 +60,42 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
     }
 
     private suspend fun fetchAndStoreCountry(countryCode: String): Country? {
-        client.fetchCountryDetails(countryCode = countryCode)
-            .onSuccess {
-                dataRepository.insertCountry(countryCode = countryCode, country = it)
-            }
-            .onFailure {
-                _state.value = State.Error(message = it.localizedMessage ?: it.message ?: it.stackTrace.toString())
+        when (FireStoreRemoteConfig.countryApiType) {
+            RestCountries -> {
+                restCountriesClient.fetchCountryDetails(countryCode = countryCode)
+                    .onSuccess {
+                        dataRepository.insertCountry(countryCode = countryCode, country = it)
+                    }
+                    .onFailure {
+                        _state.value = State.Error(message = it.localizedMessage ?: it.message ?: it.stackTrace.toString())
+                    }
+
+                return dataRepository.singleCountry(countryCode)
             }
 
-        return dataRepository.singleCountry(countryCode)
+            CountryApi -> {
+                countryApiClient.fetchCountryDetails(countryCode = countryCode)
+                    .onSuccess {
+                        dataRepository.insertCountry(countryCode = countryCode, country = it)
+                    }
+                    .onFailure {
+                        _state.value = State.Error(message = it.localizedMessage ?: it.message ?: it.stackTrace.toString())
+                    }
+
+                return dataRepository.singleCountry(countryCode)
+            }
+
+            CountryApiLocal -> {
+                val response = countryApiClient.fetchCountryDetailsLocal(countryCode = countryCode)
+                if (response != null) {
+                    dataRepository.insertCountry(countryCode = countryCode, country = response)
+                } else {
+                    _state.value = State.Error(message = "Could not determine country data")
+                }
+
+                return dataRepository.singleCountry(countryCode)
+            }
+        }
     }
 
     class ExploreDetailViewModelFactory(private val pinId: Long, private val dataRepository: DataRepository) :
