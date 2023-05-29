@@ -157,6 +157,22 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
             }
         }
 
+        // delete subdocuments from Firestore
+        // no auto deletion of subdocs: https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=en
+        plan.loadPlannables { exception ->
+            if (exception != null) {
+                _state.value = State.Error(exception)
+            } else {
+                plan.deleteSubDocuments { subDocException ->
+                    if (subDocException != null) {
+                        _state.value = State.Error(subDocException)
+                    } else {
+                        _state.value = State.Finished
+                    }
+                }
+            }
+        }
+
         val documentRef = fireStoreDbReference.document(plan.pinName)
         documentRef.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {

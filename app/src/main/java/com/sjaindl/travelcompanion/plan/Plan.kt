@@ -2,7 +2,6 @@ package com.sjaindl.travelcompanion.plan
 
 import android.net.Uri
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.Constants
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
@@ -30,6 +29,10 @@ data class Plan(
     var hotels: MutableList<Plannable> = mutableListOf()
     var restaurants: MutableList<Plannable> = mutableListOf()
     var attractions: MutableList<Plannable> = mutableListOf()
+
+    private val planCollectionReference by lazy {
+        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
+    }
 
     var fireStoreHotelDbReference: CollectionReference? = null
     var fireStoreRestaurantDbReference: CollectionReference? = null
@@ -111,24 +114,26 @@ data class Plan(
     }
 
     fun deleteSubDocuments(completion: (exception: Exception?) -> Unit) {
-        val fireStorePlanBaseDbReference = FirebaseFirestore.getInstance()
-            .collection(FireStoreConstants.Collections.plans)
-            .document(pinName)
+        val fireStorePlanBaseDbReference = planCollectionReference.document(pinName)
+
+        val hotelsRef = fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.hotels)
+        val restaurantsRef = fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.restaurants)
+        val attractionsRef = fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.attractions)
 
         deleteSubDocument(
-            fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.hotels),
+            hotelsRef,
             hotels,
             completion,
         )
 
         deleteSubDocument(
-            fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.restaurants),
+            restaurantsRef,
             restaurants,
             completion,
         )
 
         deleteSubDocument(
-            fireStorePlanBaseDbReference.collection(FireStoreConstants.Collections.attractions),
+            attractionsRef,
             attractions,
             completion,
         )
