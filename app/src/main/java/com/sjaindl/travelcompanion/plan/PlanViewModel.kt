@@ -144,32 +144,25 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     fun onDelete(plan: Plan) {
         _state.value = State.Loading
 
-        val documentRef = fireStoreDbReference.document(plan.pinName)
-        val document = documentRef.get().result
-        val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
-        val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
+        _upcomingTrips.remove(plan)
+        _pastTrips.remove(plan)
 
+        plan.imagePath?.let {
+            // delete plan photo in Firebase storage
+            val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it.toString())
+            storageImageRef.delete().addOnCompleteListener { imageTask ->
+                if (!imageTask.isSuccessful) {
+                    _state.value = State.Error(imageTask.exception)
+                }
+            }
+        }
+
+        val documentRef = fireStoreDbReference.document(plan.pinName)
         documentRef.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Timber.d(tag, "Document successfully removed!")
 
-                // delete plan photo in Firebase storage
-                storageImageRef?.delete()?.addOnCompleteListener { imageTask ->
-                    if (!imageTask.isSuccessful) {
-                        _state.value = State.Error(imageTask.exception)
-                    } else {
-                        _state.value = State.Finished
-                    }
-                }
-
-                // delete subdocuments from Firestore
-                plan.deleteSubDocuments { exception ->
-                    if (exception != null) {
-                        _state.value = State.Error(exception)
-                    } else {
-                        _state.value = State.Finished
-                    }
-                }
+                _state.value = State.Finished
             } else {
                 _state.value = State.Error(task.exception)
             }
@@ -207,16 +200,6 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
                 rating = null,
                 url = details.result.url,
             )
-        }
-    }
-
-    class PlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return PlanViewModel(dataRepository) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }
     }
 
@@ -270,6 +253,16 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
                     addPlan(name, pinName, startDate, endDate)
                 }
             }
+        }
+    }
+
+    class PlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return PlanViewModel(dataRepository) as T
+            }
+            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }
     }
 }
