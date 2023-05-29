@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
+import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.util.Date
@@ -50,7 +52,11 @@ import java.util.Date
 @Composable
 fun AddPlanScreen(
     modifier: Modifier = Modifier,
-    viewModel: AddPlanViewModel = viewModel(),
+    viewModel: AddPlanViewModel = viewModel(
+        factory = AddPlanViewModel.AddPlanViewModelFactory(
+            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
+        )
+    ),
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {

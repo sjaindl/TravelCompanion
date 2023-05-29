@@ -1,15 +1,17 @@
 package com.sjaindl.travelcompanion.plan.add
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.Date
 
-class AddPlanViewModel : ViewModel() {
+class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
     sealed class State {
         object Loading : State()
 
@@ -41,7 +43,15 @@ class AddPlanViewModel : ViewModel() {
                     }
                 }
 
-                _state.value = State.LoadedPlaces(places)
+                dataRepository.allPins()
+                    .mapNotNull { it.name }
+                    .forEach {
+                        if (!places.contains(it)) {
+                            places.add(it)
+                        }
+                    }
+
+                _state.value = State.LoadedPlaces(places.sorted())
             } else {
                 _state.value = State.Error(task.exception)
                 Timber.e(task.exception)
@@ -76,6 +86,16 @@ class AddPlanViewModel : ViewModel() {
             } else {
                 completion()
             }
+        }
+    }
+
+    class AddPlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(AddPlanViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return AddPlanViewModel(dataRepository) as T
+            }
+            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
         }
     }
 }
