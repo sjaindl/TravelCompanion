@@ -67,7 +67,7 @@ fun PickDateElement(
             datePicker.datePicker.minDate = it.time
         }
 
-        if (prefilled != null) {
+        if (prefilled != null && selectedDateText.isEmpty()) {
             val prefilledCalendar = Calendar.getInstance()
             prefilledCalendar.time = prefilled
 
@@ -79,8 +79,6 @@ fun PickDateElement(
 
             val formattedDate = formatter.format(prefilled.toInstant())
             selectedDateText = formattedDate
-        } else {
-            selectedDateText = ""
         }
 
         val buttonColors = ButtonDefaults.buttonColors(
