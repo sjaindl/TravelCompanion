@@ -3,8 +3,7 @@ package com.sjaindl.travelcompanion.plan
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,26 +17,33 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
-fun PlanImageElement(bitmap: Bitmap?, imagePath: Uri?, modifier: Modifier) {
+fun PlanImageElement(
+    bitmap: Bitmap?,
+    imagePath: Uri?,
+    modifier: Modifier,
+    onClick: () -> Unit = { },
+) {
     TravelCompanionTheme {
         val data = bitmap ?: imagePath ?: R.drawable.ic_map_marker
         //if (data != null) {
-            val model = ImageRequest.Builder(LocalContext.current)
-                .data(data)
-                .size(Size.ORIGINAL)
-                .placeholder(R.drawable.ic_map_marker)
-                .crossfade(enable = true)
-                .build()
+        val model = ImageRequest.Builder(LocalContext.current)
+            .data(data)
+            .size(Size.ORIGINAL)
+            .placeholder(R.drawable.ic_map_marker)
+            .crossfade(enable = true)
+            .build()
 
-            val painter = rememberAsyncImagePainter(model)
+        val painter = rememberAsyncImagePainter(model)
 
-            Image(
-                modifier = modifier,
-                painter = painter,
-                contentDescription = null,
-                alignment = Alignment.Center,
-                contentScale = ContentScale.FillWidth,
-            )
+        Image(
+            modifier = modifier.clickable {
+                onClick()
+            },
+            painter = painter,
+            contentDescription = null,
+            alignment = Alignment.Center,
+            contentScale = ContentScale.FillWidth,
+        )
         /*
         } else {
             Image(
@@ -58,5 +64,6 @@ fun PlanImageElementPreview() {
         bitmap = null,
         imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
         modifier = Modifier,
+        onClick = { },
     )
 }

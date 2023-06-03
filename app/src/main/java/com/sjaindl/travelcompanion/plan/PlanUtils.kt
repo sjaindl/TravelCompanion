@@ -103,38 +103,30 @@ object PlanUtils {
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
-        plan.imageData?.let { data ->
-            // Has an image been chosen?
-            byteArrayToBitmap(data)?.let {
-                onLoaded(plan, it)
-            }
-            persistPhoto(plan = plan, photoData = data, onInfo = onInfo, onError = onError)
-        } ?: run {
-            // Is an image available in storage?
-            plan.imagePath?.toString()?.let {
-                val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it)
-                storageImageRef.getBytes(2 * 1024 * 1024)
-                    .addOnSuccessListener { data ->
-                        val bitmap = byteArrayToBitmap(data)
-                        if (bitmap != null) {
-                            onLoaded(plan, bitmap)
-                        } else {
-                            onInfo(R.string.noImageData)
-                        }
+        plan.imagePath?.toString()?.let {
+            val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it)
+            storageImageRef.getBytes(2 * 1024 * 1024)
+                .addOnSuccessListener { data ->
+                    val bitmap = byteArrayToBitmap(data)
+                    if (bitmap != null) {
+                        onLoaded(plan, bitmap)
+                    } else {
+                        onInfo(R.string.noImageData)
                     }
-                    .addOnCanceledListener {
-                        onInfo(R.string.cancelled)
-                    }
-                    .addOnFailureListener { exception ->
-                        onError(exception)
-                    }
-            }
+                }
+                .addOnCanceledListener {
+                    onInfo(R.string.cancelled)
+                }
+                .addOnFailureListener { exception ->
+                    onError(exception)
+                }
         }
     }
 
-    private fun persistPhoto(
+    fun persistPhoto(
         plan: Plan,
-        photoData: ByteArray,
+        image: Bitmap,
+        onSuccess: () -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
@@ -142,7 +134,7 @@ object PlanUtils {
             path = FireStoreConstants.Collections.plans,
             fileName = plan.pinName
         )
-        FireStoreClient.storePhoto(storageRef = storageRef, path = path, photoData = photoData) { metadata, exception ->
+        FireStoreClient.storePhoto(storageRef = storageRef, path = path, image = image) { metadata, exception ->
             if (exception != null) {
                 onError(exception)
             } else {
@@ -150,32 +142,42 @@ object PlanUtils {
                 if (storagePath == null) {
                     onInfo(R.string.imageNotSaved)
                 } else {
-                    plan.imagePath = storageRef.child(storagePath).downloadUrl.result
-                    updatePlan(plan = plan, onError = onError)
+                    storageRef.child(storagePath).downloadUrl.addOnSuccessListener {
+                        plan.imagePath = it
+                        updatePlan(
+                            planName = plan.name,
+                            imagePath = it.toString(),
+                            onSuccess = onSuccess,
+                            onError = onError,
+                        )
+                    }.addOnFailureListener {
+                        onError(it)
+                    }.addOnCanceledListener {
+                        R.string.cancelled
+                    }
                 }
             }
         }
     }
 
     private fun updatePlan(
-        plan: Plan,
+        planName: String,
+        imagePath: String,
+        onSuccess: () -> Unit,
         onError: (Exception) -> Unit,
     ) {
         val data = hashMapOf(
-            FireStoreConstants.Ids.Plan.name to plan.name,
-            FireStoreConstants.Ids.Plan.pinName to plan.pinName,
-            FireStoreConstants.Ids.Plan.startDate to plan.startDate,
-            FireStoreConstants.Ids.Plan.endDate to plan.endDate,
-            FireStoreConstants.Ids.Plan.imageReference to plan.imagePath,
+            FireStoreConstants.Ids.Plan.imageReference to imagePath,
         )
 
-        FireStoreClient.addData(
-            collectionReference = fireStoreDbReferencePlans,
-            documentName = plan.name,
+        FireStoreClient.updateDocumentFields(
+            documentReference = fireStoreDbReferencePlans.document(planName),
             data = data,
         ) { exception: Exception? ->
             if (exception != null) {
                 onError(exception)
+            } else {
+                onSuccess()
             }
         }
     }

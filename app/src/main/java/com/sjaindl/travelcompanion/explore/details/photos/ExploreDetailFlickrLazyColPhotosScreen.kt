@@ -49,6 +49,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
     modifier: Modifier = Modifier,
     photoType: PhotoType,
     pinId: Long,
+    isPickerMode: Boolean,
     viewModel: ExploreFlickrPhotosViewModel = viewModel(
         key = photoType.toString(),
         factory = ExploreFlickrPhotosViewModelFactory(
@@ -57,7 +58,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
-    onGoToFullScreenPhoto: (url: String?, title: String) -> Unit,
+    onChoosePhoto: (url: String?) -> Unit,
 ) {
     val pagingData = viewModel.fetchPhotosFlow().collectAsLazyPagingItems()
 
@@ -135,10 +136,16 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                                 .fillMaxWidth()
                                 .padding(bottom = 12.dp)
                                 .clickable {
-                                    fullScreenImage = photo.url
+                                    if (isPickerMode) {
+                                        onChoosePhoto(photo.url)
+                                    } else {
+                                        fullScreenImage = photo.url
+                                    }
+
                                     // There's an issue that paging is data always reloaded when navigating to another
                                     // composable with paging3 inside a nav host - disabling for now:
                                     // https://issuetracker.google.com/issues/177245496?pli=1
+
                                     /*
                                     onGoToFullScreenPhoto(
                                         photo.url,
@@ -218,7 +225,8 @@ fun ExploreDetailFlickrLazyColPhotosScreenPreview() {
             modifier = Modifier,
             pinId = 1,
             photoType = PhotoType.COUNTRY,
-            onGoToFullScreenPhoto = { _, _ -> },
+            isPickerMode = false,
+            onChoosePhoto = { _ -> },
         )
     }
 }

@@ -10,7 +10,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.explore.ExploreScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
-import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceAutocompleteScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 
@@ -140,24 +141,25 @@ fun NavGraphBuilder.exploreGraph(
             arguments = exploreDetailContainer.arguments,
         ) { navBackStackEntry ->
             val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw IllegalStateException("No pinId given")
-            ExploreDetailContainer(
-                pinId = pinId,
-                onGoToFullScreenPhoto = { _bitmap, _url, _title ->
-                    bitmap = _bitmap
-                    url = _url
-                    title = _title
-                    navController.navigate(photoFullScreen.routeWithSetArguments(pinId))
-                },
-            )
+            ExploreDetailContainer(pinId = pinId)
         }
 
         composable(
-            route = photoFullScreen.route,
-            arguments = emptyList(),
-        ) {
-            PhotoFullScreen(bitmap = bitmap, url = url, title = title!!) {
+            route = exploreDetailPhotos.routeWithArgs,
+            arguments = exploreDetailPhotos.arguments,
+        ) { navBackStackEntry ->
+            val argPinId =
+                navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+            val isPickerMode =
+                navBackStackEntry.arguments?.getBoolean(BottomNavItem.pickerMode) ?: throw IllegalStateException("No pickerMode given")
 
-            }
+            ExploreDetailPhotosMainScreen(
+                pinId = argPinId,
+                isPickerMode = isPickerMode,
+                onPhotoChosen = {
+                    navController.navigateUp()
+                },
+            )
         }
     }
 }

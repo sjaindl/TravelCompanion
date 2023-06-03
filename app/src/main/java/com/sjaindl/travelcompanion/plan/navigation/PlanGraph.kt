@@ -31,7 +31,7 @@ val addPlan by lazy {
     AddPlan()
 }
 
-private val planDetailsContainer by lazy {
+val planDetailsContainer by lazy {
     PlanDetailContainer()
 }
 
@@ -74,6 +74,7 @@ data class PlanDetailContainer(
 fun NavGraphBuilder.planGraph(
     navController: NavController,
     onShowDetails: (Long) -> Unit = { },
+    onChoosePlanImage: (pinId: Long) -> Unit,
 ) {
     navigation(startDestination = planHome.route, route = planNavigation) {
         composable(
@@ -127,6 +128,7 @@ fun NavGraphBuilder.planGraph(
             val plan = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
             PlanDetailHomeScreen(
                 planName = plan,
+                onChoosePlanImage = onChoosePlanImage,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )

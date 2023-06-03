@@ -11,6 +11,7 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 @Composable
 fun PlanDetailHomeScreen(
     planName: String,
+    onChoosePlanImage: (pinId: Long) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -22,6 +23,7 @@ fun PlanDetailHomeScreen(
             modifier = Modifier
                 .fillMaxSize(),
             plan = planName,
+            onChoosePlanImage = onChoosePlanImage,
             canNavigateBack = canNavigateBack,
             navigateUp = navigateUp,
         )
@@ -33,6 +35,7 @@ fun PlanDetailHomeScreen(
 fun PlanDetailContainerPreview() {
     PlanDetailHomeScreen(
         planName = "Graz",
+        onChoosePlanImage = { },
         canNavigateBack = false,
     )
 }

@@ -16,11 +16,23 @@ import com.sjaindl.travelcompanion.navigation.NamedDestinationItem
 sealed class BottomNavItem : NamedDestinationItem {
     companion object {
         const val pinArg = "pin"
+        const val pickerMode = "pickerMode"
 
         private val pinArgs = listOf(navArgument(pinArg) {
             type = NavType.LongType
             // defaultValue = 0
         })
+
+        private val photoDetailArgs = listOf(
+            navArgument(pinArg) {
+                type = NavType.LongType
+                // defaultValue = 0
+            },
+            navArgument(pickerMode) {
+                type = NavType.BoolType
+                defaultValue = false
+            },
+        )
 
         private const val exploreDetailsHomeRoute = "exploreDetailsHome"
         private const val exploreDetailsPhotosRoute = "exploreDetailsPhoto"
@@ -45,13 +57,15 @@ sealed class BottomNavItem : NamedDestinationItem {
         override var titleRes: Int = R.string.photos,
         override var icon: ImageVector = Icons.Rounded.Photo,
         override var route: String = exploreDetailsPhotosRoute,
-        override var arguments: List<NamedNavArgument> = pinArgs,
-        override var routeWithArgs: String = "$route/{$pinArg}",
+        override var arguments: List<NamedNavArgument> = photoDetailArgs,
+        override var routeWithArgs: String = "$route/{$pinArg}/{$pickerMode}",
     ) : BottomNavItem() {
         override fun routeWithSetArguments(vararg arguments: Any): String {
+            if (arguments.size < 2) return route
             val pinId = arguments.firstOrNull() as? Long ?: return route
+            val pickerMode = arguments[1] as? Boolean ?: return route
 
-            return "$route/$pinId"
+            return "$route/$pinId/$pickerMode"
         }
     }
 

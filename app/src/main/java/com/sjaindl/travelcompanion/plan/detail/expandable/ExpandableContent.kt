@@ -35,24 +35,28 @@ fun ExpandableContent(
         fadeIn(
             animationSpec = TweenSpec(
                 durationMillis = FADE_IN_ANIMATION_DURATION,
-                easing = FastOutLinearInEasing
+                easing = FastOutLinearInEasing,
             )
         )
     }
+
     val enterExpand = remember {
         expandVertically(animationSpec = tween(EXPAND_ANIMATION_DURATION))
     }
+
     val exitFadeOut = remember {
         fadeOut(
             animationSpec = TweenSpec(
                 durationMillis = FADE_OUT_ANIMATION_DURATION,
-                easing = LinearOutSlowInEasing
+                easing = LinearOutSlowInEasing,
             )
         )
     }
+
     val exitCollapse = remember {
         shrinkVertically(animationSpec = tween(COLLAPSE_ANIMATION_DURATION))
     }
+
     AnimatedVisibility(
         visible = visible,
         enter = enterExpand + enterFadeIn,

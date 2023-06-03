@@ -2,7 +2,6 @@ package com.sjaindl.travelcompanion.explore.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,12 +14,12 @@ private val exploreDetailHome by lazy {
     BottomNavItem.ExploreDetailHome()
 }
 
-private val exploreDetailPhotos by lazy {
-    BottomNavItem.ExploreDetailPhotos()
-}
-
 private val exploreDetailInfo by lazy {
     BottomNavItem.ExploreDetailInfo()
+}
+
+val exploreDetailPhotos by lazy {
+    BottomNavItem.ExploreDetailPhotos()
 }
 
 @Composable
@@ -28,7 +27,6 @@ fun ExploreDetailNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     pinId: Long,
-    onGoToFullScreenPhoto: (bitmap: ImageBitmap?, url: String?, title: String) -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -55,12 +53,14 @@ fun ExploreDetailNavHost(
             route = exploreDetailPhotos.routeWithArgs,
             arguments = exploreDetailPhotos.arguments,
         ) { navBackStackEntry ->
-            val argPinId =
-                navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+            val argPinId = navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+            val isPickerMode =
+                navBackStackEntry.arguments?.getBoolean(BottomNavItem.pickerMode) ?: throw IllegalStateException("No pickerMode given")
             ExploreDetailPhotosMainScreen(
                 pinId = argPinId,
-                onGoToFullScreenPhoto = { _bitmap, _url, _title ->
-                    onGoToFullScreenPhoto(_bitmap, _url, _title)
+                isPickerMode = isPickerMode,
+                onPhotoChosen = {
+                    navController.navigateUp()
                 },
             )
         }

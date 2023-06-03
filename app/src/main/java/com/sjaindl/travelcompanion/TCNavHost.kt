@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
 import com.sjaindl.travelcompanion.explore.navigation.exploreDetailContainer
 import com.sjaindl.travelcompanion.explore.navigation.exploreGraph
 import com.sjaindl.travelcompanion.explore.navigation.exploreNavigation
@@ -108,6 +109,10 @@ fun TCNavHost(
         planGraph(
             navController = navController,
             onShowDetails = onShowDetails,
+            onChoosePlanImage = { pinId ->
+                val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
+                navController.navigate(route)
+            }
         )
     }
 }

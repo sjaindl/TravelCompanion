@@ -50,6 +50,7 @@ fun ExploreDetailPlacesPhotosScreen(
     modifier: Modifier = Modifier,
     showGrids: Boolean,
     pinId: Long,
+    isPickerMode: Boolean,
     viewModel: ExplorePlacesPhotosViewModel = viewModel(
         factory = ExplorePlacesPhotosViewModelFactory(
             pinId = pinId,
@@ -57,7 +58,7 @@ fun ExploreDetailPlacesPhotosScreen(
             client = GooglePlacesClientImpl(LocalContext.current),
         )
     ),
-    onGoToFullScreenPhoto: (bitmap: ImageBitmap, title: String) -> Unit,
+    onChoosePhoto: (bitmap: ImageBitmap) -> Unit,
 ) {
     TravelCompanionTheme {
         val state by viewModel.state.collectAsState()
@@ -130,14 +131,11 @@ fun ExploreDetailPlacesPhotosScreen(
                                                         .fillMaxWidth()
                                                         .padding(vertical = 12.dp)
                                                         .clickable {
-                                                            fullScreenImage = it.first.asImageBitmap()
-                                                            /*
-                                                             onGoToFullScreenPhoto(
-                                                                 it.first.asImageBitmap(),
-                                                                 it.second,
-                                                             )
-
-                                                              */
+                                                            if (isPickerMode) {
+                                                                onChoosePhoto(it.first.asImageBitmap())
+                                                            } else {
+                                                                fullScreenImage = it.first.asImageBitmap()
+                                                            }
                                                         },
                                                     bitmap = it.first.asImageBitmap(),
                                                     contentDescription = it.second,
@@ -180,7 +178,11 @@ fun ExploreDetailPlacesPhotosScreen(
                                                 .fillMaxWidth()
                                                 .padding(vertical = 12.dp)
                                                 .clickable {
-                                                    fullScreenImage = it.first.asImageBitmap()
+                                                    if (isPickerMode) {
+                                                        onChoosePhoto(it.first.asImageBitmap())
+                                                    } else {
+                                                        fullScreenImage = it.first.asImageBitmap()
+                                                    }
                                                 },
                                             bitmap = it.first.asImageBitmap(),
                                             contentDescription = it.second,

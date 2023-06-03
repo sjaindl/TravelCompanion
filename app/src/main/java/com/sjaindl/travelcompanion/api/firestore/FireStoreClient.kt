@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.api.firestore
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import androidx.compose.ui.geometry.Size
 import com.google.firebase.auth.FirebaseAuth
@@ -89,20 +88,12 @@ object FireStoreClient {
     fun storePhoto(
         storageRef: StorageReference,
         path: String,
-        photoData: ByteArray,
+        image: Bitmap,
         completionHandler: (metadata: StorageMetadata?, exception: Exception?) -> Unit
     ) {
         val metadata = StorageMetadata.Builder()
             .setContentType("image/jpeg")
             .build()
-
-        val image = BitmapFactory.decodeByteArray(photoData, 0, photoData.size)
-
-        if (image == null) {
-            val exception = Exception("Could not store photo")
-            completionHandler(null, exception)
-            return
-        }
 
         val resizedImage = resizeImage(
             image,

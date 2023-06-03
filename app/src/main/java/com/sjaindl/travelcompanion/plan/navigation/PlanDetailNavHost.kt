@@ -9,6 +9,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
+import com.sjaindl.travelcompanion.explore.navigation.exploreDetailPhotos
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.ChangeDateScreen
@@ -127,6 +130,7 @@ fun PlanDetailNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     plan: String,
+    onChoosePlanImage: (pinId: Long) -> Unit,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -153,6 +157,10 @@ fun PlanDetailNavHost(
                 onAddNote = { plannableId, planName, planDetailItemType ->
                     navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
                 },
+                onChoosePlanImage = { pinId ->
+                    val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
+                    navController.navigate(route)
+                }
             )
         }
 
@@ -175,6 +183,7 @@ fun PlanDetailNavHost(
                 onAddNote = { plannableId, planName, planDetailItemType ->
                     navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
                 },
+                onChoosePlanImage = onChoosePlanImage,
             )
         }
 
@@ -233,6 +242,24 @@ fun PlanDetailNavHost(
                 planName = planArg,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = {
+                    navController.navigateUp()
+                },
+            )
+        }
+
+        composable(
+            route = exploreDetailPhotos.routeWithArgs,
+            arguments = exploreDetailPhotos.arguments,
+        ) { navBackStackEntry ->
+            val argPinId =
+                navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+            val isPickerMode =
+                navBackStackEntry.arguments?.getBoolean(BottomNavItem.pickerMode) ?: throw IllegalStateException("No pickerMode given")
+
+            ExploreDetailPhotosMainScreen(
+                pinId = argPinId,
+                isPickerMode = isPickerMode,
+                onPhotoChosen = {
                     navController.navigateUp()
                 },
             )

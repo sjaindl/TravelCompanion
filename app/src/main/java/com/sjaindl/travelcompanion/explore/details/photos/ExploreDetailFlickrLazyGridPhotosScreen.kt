@@ -57,6 +57,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
     modifier: Modifier = Modifier,
     photoType: PhotoType,
     pinId: Long,
+    isPickerMode: Boolean,
     viewModel: ExploreFlickrPhotosViewModel = viewModel(
         key = photoType.toString(),
         factory = ExploreFlickrPhotosViewModelFactory(
@@ -65,7 +66,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
-    onGoToFullScreenPhoto: (url: String?, title: String) -> Unit,
+    onChoosePhoto: (url: String?) -> Unit,
 ) {
     val tag = "ExploreDetailFlickrLazyGridPhotosScreen"
 
@@ -93,7 +94,6 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                 }
             }
         } else {
-
             Column {
                 val place = viewModel.place ?: stringResource(id = R.string.place)
                 val placeText = stringResource(id = R.string.around, place)
@@ -169,13 +169,11 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                                             .fillMaxWidth()
                                             .padding(bottom = 12.dp)
                                             .clickable {
-                                                /*
-                                                onGoToFullScreenPhoto(
-                                                    it.url,
-                                                    it.info,
-                                                )
-                                                 */
-                                                fullScreenImage = it.url
+                                                if (isPickerMode) {
+                                                    onChoosePhoto(it.url)
+                                                } else {
+                                                    fullScreenImage = it.url
+                                                }
                                             },
                                         painter = painter,
                                         contentDescription = it.info,
@@ -231,7 +229,8 @@ fun ExploreDetailFlickrLazyGridPhotosScreenPreview() {
             modifier = Modifier,
             pinId = 1,
             photoType = PhotoType.COUNTRY,
-            onGoToFullScreenPhoto = { _, _ -> }
+            isPickerMode = false,
+            onChoosePhoto = { _ -> }
         )
     }
 }

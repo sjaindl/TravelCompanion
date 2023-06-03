@@ -20,6 +20,7 @@ fun ExploreDetailFlickrPhotosScreen(
     showGrids: Boolean,
     pinId: Long,
     photoType: PhotoType,
+    isPickerMode: Boolean,
     viewModel: ExploreFlickrPhotosViewModel = viewModel(
         key = photoType.toString(),
         factory = ExploreFlickrPhotosViewModelFactory(
@@ -28,7 +29,7 @@ fun ExploreDetailFlickrPhotosScreen(
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
-    onGoToFullScreenPhoto: (url: String?, title: String) -> Unit,
+    onChoosePhoto: (url: String?) -> Unit,
 ) {
     TravelCompanionTheme {
         Box(
@@ -43,8 +44,9 @@ fun ExploreDetailFlickrPhotosScreen(
                     photoType = photoType,
                     pinId = pinId,
                     viewModel = viewModel,
-                    onGoToFullScreenPhoto = { url, title ->
-                        onGoToFullScreenPhoto(url, title)
+                    isPickerMode = isPickerMode,
+                    onChoosePhoto = { url ->
+                        onChoosePhoto(url)
                     }
                 )
             } else {
@@ -53,8 +55,9 @@ fun ExploreDetailFlickrPhotosScreen(
                     photoType = photoType,
                     pinId = pinId,
                     viewModel = viewModel,
-                    onGoToFullScreenPhoto = { url, title ->
-                        onGoToFullScreenPhoto(url, title)
+                    isPickerMode = isPickerMode,
+                    onChoosePhoto = { url ->
+                        onChoosePhoto(url)
                     }
                 )
             }
@@ -71,7 +74,8 @@ fun ExploreDetailFlickrPhotosScreenPreview() {
             pinId = 1,
             showGrids = false,
             photoType = PhotoType.COUNTRY,
-            onGoToFullScreenPhoto = { _, _ -> }
+            isPickerMode = false,
+            onChoosePhoto = { _ -> },
         )
     }
 }

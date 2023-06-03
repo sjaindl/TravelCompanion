@@ -1,6 +1,7 @@
 package com.sjaindl.travelcompanion.plan.detail
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,8 +52,9 @@ fun PlanDetailScreen(
     onAddPlace: (PlanDetailItemType, String, MapLocationData) -> Unit,
     onChangeDate: (String) -> Unit,
     onAddNote: (plannableId: String, planName: String, planDetailItemType: PlanDetailItemType) -> Unit,
+    onChoosePlanImage: (pinId: Long) -> Unit,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit = {},
+    navigateUp: () -> Unit = { },
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -138,13 +140,21 @@ fun PlanDetailScreen(
                                     width = 4.dp,
                                     color = colors.onBackground,
                                     shape = CircleShape
-                                ),
+                                )
+                                .clickable {
+                                    val pinId = viewModel.pin?.id ?: return@clickable
+                                    onChoosePlanImage(pinId)
+                                },
                             contentAlignment = Alignment.Center,
                         ) {
                             PlanImageElement(
                                 bitmap = bitmap,
                                 imagePath = plan.imagePath,
                                 modifier = Modifier,
+                                onClick = {
+                                    val pinId = viewModel.pin?.id ?: return@PlanImageElement
+                                    onChoosePlanImage(pinId)
+                                }
                             )
                         }
 
@@ -187,10 +197,11 @@ fun PlanDetailScreen(
 @Preview
 fun PlanDetailScreenPreview() {
     PlanDetailScreen(
-        planName = "",
+        planName = "Bled",
         onAddPlace = { _, _, _ -> },
         canNavigateBack = true,
         onChangeDate = { },
-        onAddNote = { _, _, _ -> }
+        onAddNote = { _, _, _ -> },
+        onChoosePlanImage = { },
     )
 }

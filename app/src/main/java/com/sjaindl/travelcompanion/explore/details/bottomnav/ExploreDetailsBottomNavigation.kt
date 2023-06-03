@@ -44,7 +44,7 @@ fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long
                 alwaysShowLabel = true,
                 selected = currentRoute == item.routeWithArgs,
                 onClick = {
-                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(pinId))
+                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(pinId, false))
                 }
             )
         }
