@@ -42,7 +42,8 @@ fun PlanElement(
                 bitmap = null,
                 imagePath = imagePath,
                 modifier = Modifier
-                    .weight(2f)
+                    .weight(2f),
+                onClick = onClick,
             )
 
             Column(

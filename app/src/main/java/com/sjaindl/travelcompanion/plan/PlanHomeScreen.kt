@@ -61,6 +61,7 @@ fun PlanHomeScreen(
 
     TravelCompanionTheme {
         Scaffold(
+            containerColor = colors.background,
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.plan),
