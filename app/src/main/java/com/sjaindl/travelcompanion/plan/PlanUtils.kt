@@ -22,6 +22,67 @@ object PlanUtils {
         FirebaseStorage.getInstance().reference
     }
 
+    fun loadPlans(
+        onLoaded: (plan: Plan) -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onError: (Exception) -> Unit,
+        withImageRef: Boolean = true,
+    ) {
+        fireStoreDbReferencePlans.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                task.result.forEach { document ->
+                    Timber.d(tag, "${document.id} => {$document.data}")
+
+                    val name = document.getString(FireStoreConstants.Ids.Plan.name)
+                    val pinName = document.getString(FireStoreConstants.Ids.Plan.pinName)
+                    val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
+                    val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
+
+                    val imageRef = if (withImageRef) document.getString(FireStoreConstants.Ids.Plan.imageReference) else null
+                    val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
+                    val downloadFromUrlTask = storageImageRef?.downloadUrl
+
+                    if (name != null && pinName != null && startDate != null && endDate != null) {
+                        if (downloadFromUrlTask == null) {
+                            Timber.tag(tag).d("Add plan without image: $name")
+                            val plan = Plan(
+                                name = name,
+                                pinName = pinName,
+                                startDate = startDate,
+                                endDate = endDate,
+                                imagePath = null,
+                            )
+                            onLoaded(plan)
+                        } else {
+                            downloadFromUrlTask.addOnSuccessListener { imagePath ->
+                                Timber.tag(tag).d("fetched imagePath: $imagePath for $name")
+                                val plan = Plan(
+                                    name = name,
+                                    pinName = pinName,
+                                    startDate = startDate,
+                                    endDate = endDate,
+                                    imagePath = imagePath,
+                                )
+                                onLoaded(plan)
+                            }.addOnCanceledListener {
+                                onInfo(R.string.cancelled)
+                            }.addOnFailureListener {
+                                onError(it)
+                            }
+                        }
+                    }
+                }
+            } else {
+                val exception = task.exception
+                if (exception != null) {
+                    onError(exception)
+                } else {
+                    onInfo(R.string.cancelled)
+                }
+            }
+        }
+    }
+
     fun loadPlan(
         planName: String,
         onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,
@@ -33,35 +94,45 @@ object PlanUtils {
             if (task.isSuccessful) {
                 val document = task.result
 
-                val name = document.getString(FireStoreConstants.Ids.Plan.name) ?: return@addOnCompleteListener
-                val pinName = document.getString(FireStoreConstants.Ids.Plan.pinName) ?: return@addOnCompleteListener
-                val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate() ?: return@addOnCompleteListener
-                val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate() ?: return@addOnCompleteListener
+                val name = document.getString(FireStoreConstants.Ids.Plan.name)
+                val pinName = document.getString(FireStoreConstants.Ids.Plan.pinName)
+                val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
+                val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
 
                 val imageRef = if (withImageRef) document.getString(FireStoreConstants.Ids.Plan.imageReference) else null
                 val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
                 val downloadFromUrlTask = storageImageRef?.downloadUrl
 
-                if (downloadFromUrlTask == null) {
-                    Timber.tag(tag).d("Add plan without image: $name")
-                    val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = null)
-                    onLoaded(plan, null)
-                } else {
-                    downloadFromUrlTask.addOnSuccessListener { imagePath ->
-                        Timber.tag(tag).d("fetched imagePath: $imagePath")
-                        val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = imagePath)
+                if (name != null && pinName != null && startDate != null && endDate != null) {
+                    if (downloadFromUrlTask == null) {
+                        Timber.tag(tag).d("Add plan without image: $name")
+                        val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = null)
                         onLoaded(plan, null)
-                        loadImageIfAvailable(
-                            plan = plan,
-                            onLoaded = onLoaded,
-                            onInfo = onInfo,
-                            onError = onError,
-                        )
-                    }.addOnCanceledListener {
-                        onInfo(R.string.cancelled)
-                    }.addOnFailureListener { exception ->
-                        onError(exception)
+                    } else {
+                        downloadFromUrlTask.addOnSuccessListener { imagePath ->
+                            Timber.tag(tag).d("fetched imagePath: $imagePath")
+                            val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = imagePath)
+                            onLoaded(plan, null)
+                            loadImageIfAvailable(
+                                plan = plan,
+                                onLoaded = onLoaded,
+                                onInfo = onInfo,
+                                onError = onError,
+                            )
+                        }.addOnCanceledListener {
+                            onInfo(R.string.cancelled)
+                        }.addOnFailureListener { exception ->
+                            onError(exception)
+                        }
                     }
+                }
+
+            } else {
+                val exception = task.exception
+                if (exception != null) {
+                    onError(exception)
+                } else {
+                    onInfo(R.string.cancelled)
                 }
             }
         }.addOnCanceledListener {

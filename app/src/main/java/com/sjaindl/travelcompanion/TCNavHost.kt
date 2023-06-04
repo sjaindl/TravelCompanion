@@ -17,6 +17,8 @@ import com.sjaindl.travelcompanion.plan.navigation.planGraph
 import com.sjaindl.travelcompanion.plan.navigation.planNavigation
 import com.sjaindl.travelcompanion.profile.navigation.profileGraph
 import com.sjaindl.travelcompanion.profile.navigation.profileNavigation
+import com.sjaindl.travelcompanion.remember.navigation.rememberGraph
+import com.sjaindl.travelcompanion.remember.navigation.rememberNavigation
 import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
 private val tcHome by lazy {
@@ -81,7 +83,7 @@ fun TCNavHost(
                     }
                 },
                 onNavigateToRemember = {
-                    // TODO
+                    navController.navigateSingleTopTo(rememberNavigation)
                 },
                 onNavigateToProfile = {
                     onClickedProfile()
@@ -113,6 +115,10 @@ fun TCNavHost(
                 val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
                 navController.navigate(route)
             }
+        )
+
+        rememberGraph(
+            navController = navController,
         )
     }
 }

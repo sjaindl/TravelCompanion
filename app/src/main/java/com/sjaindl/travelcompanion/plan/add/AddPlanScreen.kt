@@ -125,6 +125,27 @@ fun AddPlanScreen(
                     }
                 }
 
+                is AddPlanViewModel.State.Info -> {
+                    val info = state as AddPlanViewModel.State.Info
+
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .fillMaxSize()
+                            .background(colors.background)
+                            .padding(all = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            text = stringResource(id = info.stringRes),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 20.sp,
+                        )
+                    }
+                }
+
                 is AddPlanViewModel.State.LoadedPlaces -> {
                     val places = (state as AddPlanViewModel.State.LoadedPlaces).places
 

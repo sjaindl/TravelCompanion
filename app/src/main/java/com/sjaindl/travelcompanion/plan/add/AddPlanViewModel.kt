@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.plan.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.plan.Plan
@@ -16,6 +17,8 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
         object Loading : State()
 
         data class Error(val exception: Exception?) : State()
+
+        data class Info(val stringRes: Int) : State()
 
         data class LoadedPlaces(val places: List<String>) : State()
     }
@@ -53,8 +56,12 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
 
                 _state.value = State.LoadedPlaces(places.sorted())
             } else {
-                _state.value = State.Error(task.exception)
-                Timber.e(task.exception)
+                val exception = task.exception
+                if (exception != null) {
+                    _state.value = State.Error(exception)
+                } else {
+                    _state.value = State.Info(R.string.cancelled)
+                }
             }
         }
     }

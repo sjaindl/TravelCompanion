@@ -55,7 +55,7 @@ fun PlanHomeScreen(
     onShowPlan: (String) -> Unit,
     onAddPlan: () -> Unit,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit = {},
+    navigateUp: () -> Unit = { },
 ) {
     var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
 
@@ -138,6 +138,27 @@ fun PlanHomeScreen(
                     }
                 }
 
+                is PlanViewModel.State.Info -> {
+                    val info = state as PlanViewModel.State.Info
+
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .fillMaxSize()
+                            .background(colors.background)
+                            .padding(all = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            text = stringResource(id = info.stringRes),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 20.sp,
+                        )
+                    }
+                }
+
                 PlanViewModel.State.Finished -> {
                     LazyColumn(modifier = modifier.padding(paddingValues)) {
                         stickyHeader {
@@ -208,7 +229,6 @@ fun PlanHomeScreen(
         show = showDialogForPlan != null,
         title = stringResource(id = R.string.chooseAction),
         onShow = {
-            viewModel.onShow()
             showDialogForPlan?.let {
                 onShowPlan(it.name)
             }
