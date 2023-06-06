@@ -10,6 +10,7 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreClientObserver
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -69,7 +70,7 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     fun fetchPlans() {
         if (!_upcomingTrips.isEmpty() || !_pastTrips.isEmpty()) return // already loaded
 
-        PlanUtils.loadPlans(
+        FireStoreUtils.loadPlans(
             onLoaded = { plan ->
                 addPlan(plan = plan)
                 _state.value = State.Finished
@@ -179,7 +180,7 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     override fun didAddData(documentName: String) {
         Timber.tag(tag).d("Add new plan: $documentName")
 
-        PlanUtils.loadPlan(
+        FireStoreUtils.loadPlan(
             planName = documentName,
             onLoaded = { newPlan, bitmap ->
                 val upcomingTripsIndex = _upcomingTrips.indexOfFirst { it.pinName == newPlan.pinName }

@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.navigation.DestinationItem
-import com.sjaindl.travelcompanion.remember.RememberDetailScreen
 import com.sjaindl.travelcompanion.remember.RememberScreen
+import com.sjaindl.travelcompanion.remember.detail.RememberDetailScreen
 
 private const val planArg = "plan"
 
@@ -62,6 +62,9 @@ fun NavGraphBuilder.rememberGraph(navController: NavController) {
             RememberScreen(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
+                onNavigateToRememberDetails = { planName ->
+                    navController.navigate(rememberDetail.routeWithSetArguments(planName))
+                }
             )
         }
 

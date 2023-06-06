@@ -6,11 +6,11 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.api.google.Plannable
 import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtils
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.RESTAURANT
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -35,7 +35,7 @@ class NotesViewModel(
     var state = _state.asStateFlow()
 
     fun load() {
-        PlanUtils.loadPlan(
+        FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
                 plan.loadPlannables { exception ->

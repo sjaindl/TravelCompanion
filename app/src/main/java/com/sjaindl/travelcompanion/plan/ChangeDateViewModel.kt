@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.plan
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Date
@@ -26,7 +27,7 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
     val tag = "AddPlanViewModel"
 
     fun loadPlan() {
-        PlanUtils.loadPlan(
+        FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
                 _state.value = State.Loaded(plan = plan)
@@ -46,7 +47,7 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
         startDate: Date,
         endDate: Date,
     ) {
-        PlanUtils.updatePlanDates(
+        FireStoreUtils.updatePlanDates(
             planName = planName,
             startDate = startDate,
             endDate = endDate,

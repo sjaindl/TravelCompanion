@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtils
 import com.sjaindl.travelcompanion.repository.DataRepository
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -63,7 +63,7 @@ class ExploreDetailPhotosViewModel(
 
         if (image == null) return@launch
 
-        PlanUtils.persistPhoto(
+        FireStoreUtils.persistPlanPhoto(
             plan = loaded.plan,
             image = image,
             onSuccess = {
@@ -81,7 +81,7 @@ class ExploreDetailPhotosViewModel(
     private fun loadPlan() {
         val planName = pin?.name ?: return
 
-        PlanUtils.loadPlan(
+        FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, bitmap ->
                 _state.value = State.Loaded(plan = plan, bitmap = bitmap)

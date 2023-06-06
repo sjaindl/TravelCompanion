@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.Constants
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtils
 import com.sjaindl.travelcompanion.repository.DataRepository
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -34,7 +34,7 @@ class PlanDetailViewModel(private val planName: String, private val dataReposito
         // TODO: improve reloading (when changing dates)
         //if (state.value is State.Loaded) return // already loaded
 
-        PlanUtils.loadPlan(
+        FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, bitmap ->
                 _state.value = State.Loaded(plan = plan, bitmap = bitmap)

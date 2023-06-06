@@ -3,7 +3,7 @@ package com.sjaindl.travelcompanion.remember
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtils
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,7 +32,7 @@ class RememberViewModel : ViewModel() {
     fun fetchPlans() {
         if (!_rememberTrips.isEmpty()) return // already loaded
 
-        PlanUtils.loadPlans(
+        FireStoreUtils.loadPlans(
             onLoaded = {
                 addPlan(it)
                 _state.value = State.Finished
@@ -48,7 +48,7 @@ class RememberViewModel : ViewModel() {
     }
 
     private fun addPlan(plan: Plan) {
-        //remember photos should be storable from the beginning of the trip
+        //remember photos should be storeable from the beginning of the trip
         if (plan.startDate >= Date()) {
             _rememberTrips.add(plan)
         }
