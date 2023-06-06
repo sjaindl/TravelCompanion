@@ -292,6 +292,32 @@ object FireStoreUtils {
         )
     }
 
+    fun deletePhoto(
+        planName: String,
+        url: String,
+        documentId: String,
+        onSuccess: () -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onError: (Exception) -> Unit,
+    ) {
+        val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(url)
+        val fireStoreDbReferencePhotos = fireStoreDbReferencePlans.document(planName).collection(FireStoreConstants.Collections.photos)
+
+        storageImageRef.delete().addOnSuccessListener {
+            fireStoreDbReferencePhotos.document(documentId).delete().addOnSuccessListener {
+                onSuccess()
+            }.addOnFailureListener {
+                onError(it)
+            }.addOnCanceledListener {
+                onInfo(R.string.errorDeleteImage)
+            }
+        }.addOnFailureListener {
+            onError(it)
+        }.addOnCanceledListener {
+            onInfo(R.string.errorDeleteImage)
+        }
+    }
+
     private fun loadImageIfAvailable(
         plan: Plan,
         onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,

@@ -199,4 +199,5 @@
 
     <string name="choose_camera">Foto von Kamera auswählen</string>
     <string name="choose_gallery">Foto von Galerie auswählen</string>
+    <string name="errorDeleteImage">Foto konnte nicht gelöscht werden</string>
 </resources>

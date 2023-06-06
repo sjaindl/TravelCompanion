@@ -1,19 +1,17 @@
 package com.sjaindl.travelcompanion.remember.detail
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,13 +26,17 @@ fun RememberDetailPhotosScreen(
     modifier: Modifier = Modifier,
     showGrids: Boolean,
     photos: List<RememberPhoto>,
-    addedPhotos: List<Bitmap>,
-    viewModel: RememberDetailPhotosViewModel = viewModel(
-        factory = RememberDetailPhotosViewModelFactory(photos = photos)
-    ),
+    planName: String,
+    onShowActions: (Boolean) -> Unit,
+    onDeleted: (String?) -> Unit,
+    viewModel: RememberDetailPhotosViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    val bitmaps by viewModel.bitmapsFlow.collectAsState()
+    val loadedPhotos by viewModel.loadedPhotosFlow.collectAsState()
+
+    LaunchedEffect(key1 = photos) {
+        viewModel.loadBitmaps(photos = photos)
+    }
 
     TravelCompanionTheme {
         Box(
@@ -75,12 +77,18 @@ fun RememberDetailPhotosScreen(
                     if (showGrids) {
                         RememberDetailLazyColScreen(
                             modifier = Modifier,
-                            bitmaps = bitmaps.plus(addedPhotos),
+                            loadedPhotos = loadedPhotos,
+                            planName = planName,
+                            onShowActions = onShowActions,
+                            onDeleted = onDeleted,
                         )
                     } else {
                         RememberDetailLazyGridScreen(
                             modifier = Modifier,
-                            bitmaps = bitmaps.plus(addedPhotos),
+                            loadedPhotos = loadedPhotos,
+                            planName = planName,
+                            onShowActions = onShowActions,
+                            onDeleted = onDeleted,
                         )
                     }
                 }
@@ -106,9 +114,9 @@ fun RememberDetailPhotosScreenPreview() {
                     documentId = "QJmJsdJhsJvX7VoD4SxC",
                 )
             ),
-            addedPhotos = listOf(
-                BitmapFactory.decodeResource(LocalContext.current.resources, R.drawable.plan),
-            )
+            planName = "Bled",
+            onShowActions = { },
+            onDeleted = { },
         )
     }
 }

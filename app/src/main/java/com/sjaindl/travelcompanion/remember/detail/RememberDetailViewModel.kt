@@ -42,6 +42,16 @@ class RememberDetailViewModel(
         )
     }
 
+    fun removePhoto(documentId: String) {
+        val loaded = state.value as? State.LoadedPhotos ?: return
+        val photos = loaded.photos.toMutableList()
+        photos.removeIf {
+            it.documentId == documentId
+        }
+
+        _state.value = State.LoadedPhotos(photos = photos)
+    }
+
     fun setError(exception: Exception) {
         _state.value = State.Error(exception)
     }
@@ -50,9 +60,19 @@ class RememberDetailViewModel(
         _state.value = State.Info(stringRes)
     }
 
+    fun setLoading() {
+        _state.value = State.Loading
+    }
+
     fun addPhoto(photo: RememberPhoto) {
         val curPhotos = ((state.value as? State.LoadedPhotos)?.photos ?: emptyList()).toMutableList()
         curPhotos.add(photo)
+        _state.value = State.LoadedPhotos(curPhotos)
+    }
+
+    fun addPhotos(photos: List<RememberPhoto>) {
+        val curPhotos = ((state.value as? State.LoadedPhotos)?.photos ?: emptyList()).toMutableList()
+        curPhotos.addAll(photos)
         _state.value = State.LoadedPhotos(curPhotos)
     }
 }

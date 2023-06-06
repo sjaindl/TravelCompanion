@@ -1,18 +1,14 @@
 package com.sjaindl.travelcompanion.remember.detail
 
-import android.graphics.Bitmap
 import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class RememberDetailPhotosViewModel(
-    private val photos: List<RememberPhoto>,
-) : ViewModel() {
+class RememberDetailPhotosViewModel : ViewModel() {
 
     sealed class State {
         object Loading : State()
@@ -27,24 +23,31 @@ class RememberDetailPhotosViewModel(
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     var state = _state.asStateFlow()
 
-    private val _bitmaps = mutableStateListOf<Bitmap>()
-    private val _bitmapsFlow = MutableStateFlow(_bitmaps)
-    val bitmapsFlow: StateFlow<List<Bitmap>> = _bitmapsFlow.asStateFlow()
+    private val _loadedPhotos = mutableStateListOf<LoadedPhoto>()
+    private val _loadedPhotosFlow = MutableStateFlow(_loadedPhotos)
+    val loadedPhotosFlow: StateFlow<List<LoadedPhoto>> = _loadedPhotosFlow.asStateFlow()
 
-    init {
-        loadBitmaps()
-    }
-
-    private fun loadBitmaps() {
+    fun loadBitmaps(photos: List<RememberPhoto>) {
         if (photos.isEmpty()) {
             _state.value = State.Loaded
+            return
         }
+
+        _state.value = State.Loading
+
+        _loadedPhotos.clear()
 
         photos.forEach { photo ->
             FireStoreUtils.loadImageIfAvailable(
                 imagePath = photo.url,
                 onLoaded = { bitmap ->
-                    _bitmaps.add(bitmap)
+                    _loadedPhotos.add(
+                        LoadedPhoto(
+                            url = photo.url,
+                            documentId = photo.documentId,
+                            bitmap = bitmap,
+                        )
+                    )
                     _state.value = State.Loaded // loaded at least first bitmap
                 },
                 onInfo = {
@@ -56,11 +59,4 @@ class RememberDetailPhotosViewModel(
             )
         }
     }
-}
-
-class RememberDetailPhotosViewModelFactory(
-    private val photos: List<RememberPhoto>,
-) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = RememberDetailPhotosViewModel(photos = photos) as T
 }

@@ -1,6 +1,5 @@
 package com.sjaindl.travelcompanion.remember.detail
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -29,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +46,17 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import com.sjaindl.travelcompanion.util.TCFileProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+
+sealed class AddMultiplePhotosState {
+    data class Error(val exception: Exception) : AddMultiplePhotosState()
+
+    data class Info(val stringRes: Int) : AddMultiplePhotosState()
+
+    data class AddedPhotos(val photos: List<RememberPhoto>) : AddMultiplePhotosState()
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,34 +71,59 @@ fun RememberDetailScreen(
 ) {
     val context = LocalContext.current
 
+    var showActions by remember { mutableStateOf(true) }
     var showGrids by remember { mutableStateOf(false) }
 
     val state by viewModel.state.collectAsState()
 
-    var addedPhotos: List<Bitmap> by remember { mutableStateOf(listOf()) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val scope = rememberCoroutineScope()
 
     val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickMultipleVisualMedia(),
         onResult = { uris ->
-            uris.map { uri ->
-                BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-            }.forEach { bitmap ->
-                addedPhotos += bitmap
+            val curPhotos = (state as? RememberDetailViewModel.State.LoadedPhotos)?.photos ?: emptyList()
+            viewModel.setLoading()
 
-                FireStoreUtils.persistRememberPhoto(
-                    planName = planName,
-                    image = bitmap,
-                    onSuccess = {
-                        viewModel.addPhoto(photo = it)
-                    },
-                    onInfo = {
-                        viewModel.setInfo(stringRes = it)
-                    },
-                    onError = {
-                        viewModel.setError(exception = it)
-                    },
-                )
+            scope.launch {
+                val result = suspendCancellableCoroutine { continuation ->
+                    val photos = mutableListOf<RememberPhoto>()
+                    uris.map { uri ->
+                        BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
+                    }.forEach { bitmap ->
+                        FireStoreUtils.persistRememberPhoto(
+                            planName = planName,
+                            image = bitmap,
+                            onSuccess = {
+                                photos.add(it)
+                                if (photos.size == uris.size) {
+                                    continuation.resume(AddMultiplePhotosState.AddedPhotos(photos = photos))
+                                }
+                            },
+                            onInfo = {
+                                continuation.resume(AddMultiplePhotosState.Info(stringRes = it))
+                            },
+                            onError = {
+                                continuation.resume(AddMultiplePhotosState.Error(exception = it))
+                            },
+                        )
+                    }
+                }
+
+                when (result) {
+                    is AddMultiplePhotosState.Error -> {
+                        viewModel.setError(exception = result.exception)
+                    }
+
+                    is AddMultiplePhotosState.Info -> {
+                        viewModel.setInfo(stringRes = result.stringRes)
+                    }
+
+                    is AddMultiplePhotosState.AddedPhotos -> {
+                        viewModel.addPhotos(photos = curPhotos.plus(result.photos))
+                    }
+                }
             }
         }
     )
@@ -100,7 +136,6 @@ fun RememberDetailScreen(
                 viewModel.setInfo(R.string.imageNotSaved)
             } else {
                 val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-                addedPhotos += bitmap
 
                 FireStoreUtils.persistRememberPhoto(
                     planName = planName,
@@ -134,37 +169,39 @@ fun RememberDetailScreen(
                 )
             },
             floatingActionButton = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    FloatingActionButton(onClick = {
-                        // https://proandroiddev.com/jetpack-compose-new-photo-picker-b280950ba934
-                        multiplePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Photo,
-                            contentDescription = stringResource(id = R.string.choose_gallery),
-                        )
-                    }
-                    FloatingActionButton(onClick = {
-                        val uri = TCFileProvider.getImageUri(context)
-                        imageUri = uri
-                        cameraPicker.launch(uri)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.CameraAlt,
-                            contentDescription = stringResource(id = R.string.choose_camera),
-                        )
-                    }
-                    FloatingActionButton(onClick = {
-                        showGrids = !showGrids
-                    }) {
-                        Icon(
-                            imageVector = if (showGrids) Icons.Rounded.GridOn else Icons.Rounded.GridOff,
-                            contentDescription = null,
-                        )
+                if (showActions) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        FloatingActionButton(onClick = {
+                            // https://proandroiddev.com/jetpack-compose-new-photo-picker-b280950ba934
+                            multiplePhotoPickerLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Photo,
+                                contentDescription = stringResource(id = R.string.choose_gallery),
+                            )
+                        }
+                        FloatingActionButton(onClick = {
+                            val uri = TCFileProvider.getImageUri(context)
+                            imageUri = uri
+                            cameraPicker.launch(uri)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.CameraAlt,
+                                contentDescription = stringResource(id = R.string.choose_camera),
+                            )
+                        }
+                        FloatingActionButton(onClick = {
+                            showGrids = !showGrids
+                        }) {
+                            Icon(
+                                imageVector = if (showGrids) Icons.Rounded.GridOn else Icons.Rounded.GridOff,
+                                contentDescription = null,
+                            )
+                        }
                     }
                 }
             },
@@ -237,7 +274,15 @@ fun RememberDetailScreen(
                         modifier = Modifier.padding(paddingValues = paddingValues),
                         showGrids = showGrids,
                         photos = loaded.photos,
-                        addedPhotos = addedPhotos,
+                        planName = planName,
+                        onShowActions = {
+                            showActions = it
+                        },
+                        onDeleted = { documentId ->
+                            documentId?.let {
+                                viewModel.removePhoto(it)
+                            }
+                        },
                     )
                 }
             }
