@@ -1,18 +1,22 @@
-package com.sjaindl.travelcompanion.plan
+package com.sjaindl.travelcompanion.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
+import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.remember.detail.RememberPhoto
 import timber.log.Timber
 import java.util.Date
+import kotlin.random.Random
 
 // TODO: Caching of plans in a hashmap
 // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
-object PlanUtils {
-    private const val tag = "PlanLoader"
+object FireStoreUtils {
+    private const val tag = "FireStoreUtils"
 
     private val fireStoreDbReferencePlans by lazy {
         FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
@@ -142,6 +146,44 @@ object PlanUtils {
         }
     }
 
+    fun loadPhotoPaths(
+        planName: String,
+        onLoaded: (photos: List<RememberPhoto>) -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onError: (Exception) -> Unit,
+    ) {
+        val fireStoreDbReferencePhotos = fireStoreDbReferencePlans.document(planName).collection(FireStoreConstants.Collections.photos)
+
+        fireStoreDbReferencePhotos.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val photos = mutableListOf<RememberPhoto>()
+
+                task.result.forEach { document ->
+                    Timber.d(tag, "${document.id} => {$document.data}")
+                    val path = document.getString(FireStoreConstants.Ids.Plan.path)
+
+                    if (path != null) {
+                        Timber.tag(tag).d("Add path: $path")
+                        photos.add(RememberPhoto(url = path, documentId = document.id))
+                    }
+                }
+
+                onLoaded(photos)
+            } else {
+                val exception = task.exception
+                if (exception != null) {
+                    onError(exception)
+                } else {
+                    onInfo(R.string.cancelled)
+                }
+            }
+        }.addOnCanceledListener {
+            onInfo(R.string.cancelled)
+        }.addOnFailureListener {
+            onError(it)
+        }
+    }
+
     fun updatePlanDates(
         planName: String,
         startDate: Date,
@@ -168,33 +210,31 @@ object PlanUtils {
         }
     }
 
-    private fun loadImageIfAvailable(
-        plan: Plan,
-        onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,
+    fun loadImageIfAvailable(
+        imagePath: String,
+        onLoaded: (bitmap: Bitmap) -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
-        plan.imagePath?.toString()?.let {
-            val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it)
-            storageImageRef.getBytes(2 * 1024 * 1024)
-                .addOnSuccessListener { data ->
-                    val bitmap = byteArrayToBitmap(data)
-                    if (bitmap != null) {
-                        onLoaded(plan, bitmap)
-                    } else {
-                        onInfo(R.string.noImageData)
-                    }
+        val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imagePath)
+        storageImageRef.getBytes(2 * 1024 * 1024)
+            .addOnSuccessListener { data ->
+                val bitmap = byteArrayToBitmap(data)
+                if (bitmap != null) {
+                    onLoaded(bitmap)
+                } else {
+                    onInfo(R.string.noImageData)
                 }
-                .addOnCanceledListener {
-                    onInfo(R.string.cancelled)
-                }
-                .addOnFailureListener { exception ->
-                    onError(exception)
-                }
-        }
+            }
+            .addOnCanceledListener {
+                onInfo(R.string.cancelled)
+            }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
     }
 
-    fun persistPhoto(
+    fun persistPlanPhoto(
         plan: Plan,
         image: Bitmap,
         onSuccess: () -> Unit,
@@ -205,6 +245,78 @@ object PlanUtils {
             path = FireStoreConstants.Collections.plans,
             fileName = plan.pinName
         )
+
+        storePhoto(
+            path = path,
+            image = image,
+            onError = onError,
+            onInfo = onInfo,
+            onSuccess = {
+                plan.imagePath = it
+                updatePlan(
+                    planName = plan.name,
+                    imagePath = it.toString(),
+                    onSuccess = onSuccess,
+                    onError = onError,
+                )
+            },
+        )
+    }
+
+    fun persistRememberPhoto(
+        plan: Plan,
+        image: Bitmap,
+        onSuccess: (RememberPhoto) -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onError: (Exception) -> Unit,
+    ) {
+        val fileName = "${plan.pinName}${Random.nextInt()}"
+        val path = FireStoreClient.storageByPath(
+            path = "${FireStoreConstants.Collections.plans}/${plan.pinName}/${FireStoreConstants.Collections.photos}",
+            fileName = fileName
+        )
+
+        storePhoto(
+            path = path,
+            image = image,
+            onError = onError,
+            onInfo = onInfo,
+            onSuccess = {
+                updatePhotos(
+                    planName = plan.name,
+                    path = it.toString(),
+                    onSuccess = onSuccess,
+                    onError = onError,
+                )
+            },
+        )
+    }
+
+    private fun loadImageIfAvailable(
+        plan: Plan,
+        onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onError: (Exception) -> Unit,
+    ) {
+        plan.imagePath?.toString()?.let {
+            loadImageIfAvailable(
+                imagePath = it,
+                onLoaded = { bitmap ->
+                    onLoaded(plan, bitmap)
+                },
+                onInfo = onInfo,
+                onError = onError,
+            )
+        }
+    }
+
+    private fun storePhoto(
+        path: String,
+        image: Bitmap,
+        onError: (Exception) -> Unit,
+        onInfo: (info: Int) -> Unit,
+        onSuccess: (Uri) -> Unit,
+    ) {
         FireStoreClient.storePhoto(storageRef = storageRef, path = path, image = image) { metadata, exception ->
             if (exception != null) {
                 onError(exception)
@@ -214,19 +326,37 @@ object PlanUtils {
                     onInfo(R.string.imageNotSaved)
                 } else {
                     storageRef.child(storagePath).downloadUrl.addOnSuccessListener {
-                        plan.imagePath = it
-                        updatePlan(
-                            planName = plan.name,
-                            imagePath = it.toString(),
-                            onSuccess = onSuccess,
-                            onError = onError,
-                        )
+                        onSuccess(it)
                     }.addOnFailureListener {
                         onError(it)
                     }.addOnCanceledListener {
                         R.string.cancelled
                     }
                 }
+            }
+        }
+    }
+
+    private fun updatePhotos(
+        planName: String,
+        path: String,
+        onSuccess: (RememberPhoto) -> Unit,
+        onError: (Exception) -> Unit,
+    ) {
+        val data: Map<String, Any> = hashMapOf(
+            FireStoreConstants.Ids.Plan.path to path,
+        )
+
+        val fireStoreDbReferencePhotos = fireStoreDbReferencePlans.document(planName).collection(FireStoreConstants.Collections.photos)
+
+        FireStoreClient.addData(
+            collectionReference = fireStoreDbReferencePhotos,
+            data = data,
+        ) { exception, documentId ->
+            if (exception != null) {
+                onError(exception)
+            } else {
+                onSuccess(RememberPhoto(url = path, documentId = documentId))
             }
         }
     }
