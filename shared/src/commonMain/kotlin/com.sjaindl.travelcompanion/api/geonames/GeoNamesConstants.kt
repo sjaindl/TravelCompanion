@@ -5,6 +5,9 @@ object GeoNamesConstants {
         val urlProtocol: String = "https"
         val domain: String = "secure.geonames.org"
         val path: String = "/countryCode"
+
+        val urlProtocolHttp: String = "http"
+        val domainHttp: String = "api.geonames.org"
     }
 
     object ParameterKeys {
