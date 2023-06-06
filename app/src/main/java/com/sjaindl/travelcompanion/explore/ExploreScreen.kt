@@ -227,6 +227,15 @@ fun ExploreScreen(
                             LatLng(it.latitude, it.longitude),
                             cameraPositionState.position.zoom
                         )
+
+                        coroutineScope.launch {
+                            prefs.updateLastLocation(
+                                latitude = it.latitude.toFloat(),
+                                longitude = it.longitude.toFloat(),
+                                radius = cameraPositionState.position.zoom,
+                            )
+                        }
+
                         viewModel.newlyAddedLocation = null
                     }
                 }
