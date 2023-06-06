@@ -264,16 +264,16 @@ object FireStoreUtils {
     }
 
     fun persistRememberPhoto(
-        plan: Plan,
+        planName: String,
         image: Bitmap,
         onSuccess: (RememberPhoto) -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
-        val fileName = "${plan.pinName}${Random.nextInt()}"
+        val fileName = "$planName${Random.nextInt()}"
         val path = FireStoreClient.storageByPath(
-            path = "${FireStoreConstants.Collections.plans}/${plan.pinName}/${FireStoreConstants.Collections.photos}",
-            fileName = fileName
+            path = "${FireStoreConstants.Collections.plans}/$planName/${FireStoreConstants.Collections.photos}",
+            fileName = fileName,
         )
 
         storePhoto(
@@ -283,7 +283,7 @@ object FireStoreUtils {
             onInfo = onInfo,
             onSuccess = {
                 updatePhotos(
-                    planName = plan.name,
+                    planName = planName,
                     path = it.toString(),
                     onSuccess = onSuccess,
                     onError = onError,

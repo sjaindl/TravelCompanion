@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,11 +23,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -54,37 +60,47 @@ fun RememberDetailLazyColScreen(
                 }
             }
         } else {
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
-                state = state,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
-            ) {
+            if (bitmaps.isEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.noImageData),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp
+                )
+            } else {
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background),
+                    state = state,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top,
+                ) {
 
-                items(bitmaps) { photo ->
-                    val model = ImageRequest.Builder(LocalContext.current)
-                        .data(photo)
-                        .size(Size.ORIGINAL)
-                        .placeholder(android.R.drawable.gallery_thumb)
-                        .crossfade(enable = true)
-                        .build()
+                    items(bitmaps) { photo ->
+                        val model = ImageRequest.Builder(LocalContext.current)
+                            .data(photo)
+                            .size(Size.ORIGINAL)
+                            .placeholder(android.R.drawable.gallery_thumb)
+                            .crossfade(enable = true)
+                            .build()
 
-                    val painter = rememberAsyncImagePainter(model)
+                        val painter = rememberAsyncImagePainter(model)
 
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 12.dp)
-                            .clickable {
-                                fullScreenImage = photo
-                            },
-                        painter = painter,
-                        contentDescription = null,
-                        alignment = Alignment.Center,
-                        contentScale = ContentScale.FillWidth,
-                    )
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp)
+                                .clickable {
+                                    fullScreenImage = photo
+                                },
+                            painter = painter,
+                            contentDescription = null,
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.FillWidth,
+                        )
+                    }
                 }
             }
         }

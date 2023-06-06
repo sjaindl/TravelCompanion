@@ -197,5 +197,8 @@
     <string name="notes_added">Added notes</string>
     <string name="add_notes">Add notes ...</string>
 
+    <string name="choose_camera">Choose photo from camera</string>
+    <string name="choose_gallery">Choose photo from gallery</string>
+
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 </resources>

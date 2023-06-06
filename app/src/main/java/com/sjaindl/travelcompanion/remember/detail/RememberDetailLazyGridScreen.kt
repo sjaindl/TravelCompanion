@@ -71,7 +71,7 @@ fun RememberDetailLazyGridScreen(
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         textAlign = TextAlign.Center,
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
                     )
                 } else {
                     LazyVerticalStaggeredGrid(

@@ -17,7 +17,7 @@ class RememberDetailViewModel(
     sealed class State {
         object Loading : State()
 
-        data class Error(val throwable: Throwable) : State()
+        data class Error(val exception: Exception) : State()
 
         data class Info(val stringRes: Int) : State()
 
@@ -40,6 +40,20 @@ class RememberDetailViewModel(
                 _state.value = State.Error(exception)
             },
         )
+    }
+
+    fun setError(exception: Exception) {
+        _state.value = State.Error(exception)
+    }
+
+    fun setInfo(stringRes: Int) {
+        _state.value = State.Info(stringRes)
+    }
+
+    fun addPhoto(photo: RememberPhoto) {
+        val curPhotos = ((state.value as? State.LoadedPhotos)?.photos ?: emptyList()).toMutableList()
+        curPhotos.add(photo)
+        _state.value = State.LoadedPhotos(curPhotos)
     }
 }
 

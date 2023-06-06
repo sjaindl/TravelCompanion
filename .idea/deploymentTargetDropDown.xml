@@ -34,13 +34,13 @@
           <timeTargetWasSelectedWithDropDown value="2023-05-28T16:02:28.185047Z" />
         </State>
       </entry>
-      <entry key="PlaceActionBottomSheetPreview">
-        <State />
-      </entry>
       <entry key="PlanItemActionBottomSheetPreview">
         <State />
       </entry>
       <entry key="RememberDetailLazyColScreenPreview">
+        <State />
+      </entry>
+      <entry key="RememberDetailPhotosScreenPreview">
         <State />
       </entry>
       <entry key="app">

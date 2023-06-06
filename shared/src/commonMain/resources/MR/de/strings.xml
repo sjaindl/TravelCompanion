@@ -196,4 +196,7 @@
 
     <string name="notes_added">Notizen hinzugefügt</string>
     <string name="add_notes">Notizen hinzufügen ...</string>
+
+    <string name="choose_camera">Foto von Kamera auswählen</string>
+    <string name="choose_gallery">Foto von Galerie auswählen</string>
 </resources>
