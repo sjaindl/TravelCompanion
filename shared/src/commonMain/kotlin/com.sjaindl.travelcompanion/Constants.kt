@@ -3,6 +3,11 @@ package com.sjaindl.travelcompanion
 object Constants {
     const val photoLimit = 40
 
+    object Files {
+        const val tempFilePath = "camera_image_"
+        const val jpg = ".jpg"
+    }
+
     object Plannables {
         const val hotel = "hotel"
         const val restaurant = "restaurant"

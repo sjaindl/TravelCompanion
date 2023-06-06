@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.remember.detail
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -44,6 +45,7 @@ import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.util.TCFileProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,10 +61,11 @@ fun RememberDetailScreen(
     val context = LocalContext.current
 
     var showGrids by remember { mutableStateOf(false) }
-    var choosePhotoFromCamera by remember { mutableStateOf(false) }
+
     val state by viewModel.state.collectAsState()
 
     var addedPhotos: List<Bitmap> by remember { mutableStateOf(listOf()) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickMultipleVisualMedia(),
@@ -70,6 +73,33 @@ fun RememberDetailScreen(
             uris.map { uri ->
                 BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
             }.forEach { bitmap ->
+                addedPhotos += bitmap
+
+                FireStoreUtils.persistRememberPhoto(
+                    planName = planName,
+                    image = bitmap,
+                    onSuccess = {
+                        viewModel.addPhoto(photo = it)
+                    },
+                    onInfo = {
+                        viewModel.setInfo(stringRes = it)
+                    },
+                    onError = {
+                        viewModel.setError(exception = it)
+                    },
+                )
+            }
+        }
+    )
+
+    val cameraPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { success ->
+            val uri = imageUri
+            if (!success || uri == null) {
+                viewModel.setInfo(R.string.imageNotSaved)
+            } else {
+                val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
                 addedPhotos += bitmap
 
                 FireStoreUtils.persistRememberPhoto(
@@ -108,6 +138,7 @@ fun RememberDetailScreen(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     FloatingActionButton(onClick = {
+                        // https://proandroiddev.com/jetpack-compose-new-photo-picker-b280950ba934
                         multiplePhotoPickerLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
@@ -118,7 +149,9 @@ fun RememberDetailScreen(
                         )
                     }
                     FloatingActionButton(onClick = {
-                        choosePhotoFromCamera = !choosePhotoFromCamera
+                        val uri = TCFileProvider.getImageUri(context)
+                        imageUri = uri
+                        cameraPicker.launch(uri)
                     }) {
                         Icon(
                             imageVector = Icons.Rounded.CameraAlt,
