@@ -159,6 +159,7 @@ fun NavGraphBuilder.exploreGraph(
                 onPhotoChosen = {
                     navController.navigateUp()
                 },
+                isChoosePlanImageMode = false,
             )
         }
     }

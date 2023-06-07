@@ -48,9 +48,11 @@ fun ExploreDetailPhotosMainScreen(
     isPickerMode: Boolean,
     onPhotoChosen: () -> Unit,
     modifier: Modifier = Modifier,
+    isChoosePlanImageMode: Boolean,
     viewModel: ExploreDetailPhotosViewModel = viewModel(
         factory = ExploreDetailPhotosViewModelFactory(
             pinId = pinId,
+            isChoosePlanImageMode = isChoosePlanImageMode,
             dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
         )
     ),
@@ -156,69 +158,73 @@ fun ExploreDetailPhotosMainScreen(
     )
 
     TravelCompanionTheme {
-        when (state) {
-            is ExploreDetailPhotosViewModel.State.Error -> {
-                val exception = (state as ExploreDetailPhotosViewModel.State.Error).exception
+        if (!isChoosePlanImageMode) {
+            DetailsTabBarLayout(tabRowItems = tabRowItems, userScrollEnabled = true)
+        } else {
+            when (state) {
+                is ExploreDetailPhotosViewModel.State.Error -> {
+                    val exception = (state as ExploreDetailPhotosViewModel.State.Error).exception
 
-                val errorMessage =
-                    exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+                    val errorMessage =
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background)
-                        .padding(all = 16.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = errorMessage,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        fontSize = 20.sp,
-                    )
+                    Column(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.background)
+                            .padding(all = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            text = errorMessage,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 20.sp,
+                        )
+                    }
                 }
-            }
 
-            is ExploreDetailPhotosViewModel.State.Info -> {
-                val info = (state as ExploreDetailPhotosViewModel.State.Info)
+                is ExploreDetailPhotosViewModel.State.Info -> {
+                    val info = (state as ExploreDetailPhotosViewModel.State.Info)
 
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background)
-                        .padding(all = 16.dp),
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = stringResource(id = info.stringRes),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        fontSize = 20.sp,
-                    )
+                    Column(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.background)
+                            .padding(all = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            text = stringResource(id = info.stringRes),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 20.sp,
+                        )
+                    }
                 }
-            }
 
-            is ExploreDetailPhotosViewModel.State.Loaded -> {
-                DetailsTabBarLayout(tabRowItems = tabRowItems, userScrollEnabled = true)
-            }
-
-            ExploreDetailPhotosViewModel.State.Loading -> {
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background)
-                        .padding(all = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    LoadingAnimation()
+                is ExploreDetailPhotosViewModel.State.Loaded -> {
+                    DetailsTabBarLayout(tabRowItems = tabRowItems, userScrollEnabled = true)
                 }
-            }
 
-            is ExploreDetailPhotosViewModel.State.PhotoChosen -> {
-                onPhotoChosen()
+                ExploreDetailPhotosViewModel.State.Loading -> {
+                    Column(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.background)
+                            .padding(all = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        LoadingAnimation()
+                    }
+                }
+
+                is ExploreDetailPhotosViewModel.State.PhotoChosen -> {
+                    onPhotoChosen()
+                }
             }
         }
     }
@@ -231,5 +237,6 @@ fun ExploreDetailPhotosMainScreenPreview() {
         pinId = 1,
         isPickerMode = false,
         onPhotoChosen = { },
+        isChoosePlanImageMode = false,
     )
 }

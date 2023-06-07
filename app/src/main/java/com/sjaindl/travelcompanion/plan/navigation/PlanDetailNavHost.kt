@@ -262,6 +262,7 @@ fun PlanDetailNavHost(
                 onPhotoChosen = {
                     navController.navigateUp()
                 },
+                isChoosePlanImageMode = true,
             )
         }
     }

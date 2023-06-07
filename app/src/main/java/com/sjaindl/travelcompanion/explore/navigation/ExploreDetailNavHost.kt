@@ -62,6 +62,7 @@ fun ExploreDetailNavHost(
                 onPhotoChosen = {
                     navController.navigateUp()
                 },
+                isChoosePlanImageMode = false,
             )
         }
 

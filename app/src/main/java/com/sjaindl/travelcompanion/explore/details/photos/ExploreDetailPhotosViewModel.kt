@@ -19,8 +19,9 @@ import kotlinx.coroutines.launch
 import java.net.URL
 
 class ExploreDetailPhotosViewModel(
-    dataRepository: DataRepository,
     pinId: Long,
+    isChoosePlanImageMode: Boolean,
+    dataRepository: DataRepository,
 ) :
     ViewModel() {
 
@@ -45,7 +46,9 @@ class ExploreDetailPhotosViewModel(
         get() = pin?.name
 
     init {
-        loadPlan()
+        if (isChoosePlanImageMode) {
+            loadPlan()
+        }
     }
 
     fun persistPlan(bitmap: ImageBitmap?, url: String?) = viewModelScope.launch(Dispatchers.IO) {
@@ -97,9 +100,14 @@ class ExploreDetailPhotosViewModel(
 }
 
 class ExploreDetailPhotosViewModelFactory(
-    private val dataRepository: DataRepository,
     private val pinId: Long,
+    private val isChoosePlanImageMode: Boolean,
+    private val dataRepository: DataRepository,
 ) :
     ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = ExploreDetailPhotosViewModel(dataRepository, pinId) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = ExploreDetailPhotosViewModel(
+        pinId = pinId,
+        isChoosePlanImageMode = isChoosePlanImageMode,
+        dataRepository = dataRepository,
+    ) as T
 }
