@@ -88,7 +88,7 @@ fun TCAppBar(
 @Composable
 fun TCAppBarPreview() {
     TCAppBar(
-        title = stringResource(R.string.app_name),
+        title = stringResource(R.string.appName),
         canNavigateBack = true,
         navigateUp = {},
         showProfile = true,

@@ -25,13 +25,13 @@ fun MainScreen(
     navigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
-
+    val title = stringResource(R.string.appName)
 
     TravelCompanionTheme {
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(R.string.app_name),
+                    title = title,
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                     showProfile = true,

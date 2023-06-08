@@ -10,8 +10,7 @@ import io.ktor.http.HttpMethod
 class RestCountriesClientImpl(private val responseHandler: HttpResponseHandler) : RestCountriesClient {
     override suspend fun fetchCountryDetails(countryCode: String): Result<CountryResponse> {
         val urlComponents = RestCountriesConstants.UrlComponents
-        val baseUrl =
-            "${RestCountriesConstants.UrlComponents.urlProtocol}://${RestCountriesConstants.UrlComponents.domain}/${RestCountriesConstants.UrlComponents.path}"
+        val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}/${urlComponents.path}"
 
         val response = responseHandler.request(
             baseUrl = baseUrl,

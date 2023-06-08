@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name" translatable="false">Travel Companion</string>
+    <string name="appName" translatable="false">Travel Companion</string>
 
     <string name="anonymous">Anonymous</string>
     <string name="mainMenuTitle">Travel Companion</string>
