@@ -71,6 +71,8 @@ kotlin {
                 // https://github.com/kosi-libs/Kodein
                 implementation(libs.kodein)
 
+                implementation(libs.kermit)
+
                 // https://arkivanov.github.io/Decompose/getting-started/installation/
                 //implementation("com.arkivanov.decompose:decompose:0.5.1")
             }

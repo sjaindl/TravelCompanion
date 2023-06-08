@@ -1,5 +1,7 @@
 package com.sjaindl.travelcompanion.api
 
+import co.touchlab.kermit.Logger
+
 actual fun logError(exception: Exception) {
-    //TODO: Implement
+    Logger.e(exception.message ?: exception.stackTraceToString(), exception)
 }

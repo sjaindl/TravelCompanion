@@ -161,10 +161,6 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
 
-    // https://github.com/tony19/logback-android
-    implementation(libs.slf4j.api)
-    implementation(libs.logback.android)
-
     // https://github.com/Kotlin/kotlinx-datetime
     implementation(libs.kotlinx.datetime)
 
