@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.plan.detail
 
 import com.sjaindl.travelcompanion.api.google.Plannable
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.plan.PlanUtils
 
 enum class PlanDetailItemType {
     HOTEL,
@@ -9,7 +10,7 @@ enum class PlanDetailItemType {
     ATTRACTION
 }
 
-fun Plan.planDetailItems(type: PlanDetailItemType): List<PlanDetailItem> {
+fun PlanUtils.planDetailItems(type: PlanDetailItemType): List<PlanDetailItem> {
     return when (type) {
         PlanDetailItemType.HOTEL -> {
             hotels.map {

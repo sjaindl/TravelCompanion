@@ -169,7 +169,7 @@ fun PlanDetailScreen(
                         )
 
                         PlanDetailItems(
-                            plan = plan,
+                            planName = plan.name,
                             onAddPlace = {
                                 onAddPlace(it, plan.name, viewModel.locationData())
                             },

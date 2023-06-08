@@ -11,6 +11,7 @@ import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.api.google.asMap
 import com.sjaindl.travelcompanion.api.google.asPlannable
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.plan.PlanUtilsFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
@@ -36,6 +37,10 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
         FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(planName)
     }
 
+    private val planUtils by lazy {
+        PlanUtilsFactory.getOrCreate(planName = planName)
+    }
+
     private val stepSize = 0.1
 
     val minDistanceKm = 1.0
@@ -58,7 +63,7 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
             _state.value = State.Error(it)
         }
     }
-    
+
     fun fetchPlan() {
         if (state.value is State.PlanReady || state.value is State.Finished) return // already loaded
 
@@ -113,9 +118,9 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
         val plan = (state.value as? State.PlanReady)?.plan ?: return
 
         when (placeType) {
-            GooglePlaceType.Lodging -> plan.hotels.add(place.asPlannable())
-            GooglePlaceType.Restaurant -> plan.restaurants.add(place.asPlannable())
-            else -> plan.attractions.add(place.asPlannable())
+            GooglePlaceType.Lodging -> planUtils.hotels.add(place.asPlannable())
+            GooglePlaceType.Restaurant -> planUtils.restaurants.add(place.asPlannable())
+            else -> planUtils.attractions.add(place.asPlannable())
         }
 
         _state.value = State.Finished
@@ -125,9 +130,9 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
         val plan = (state.value as? State.PlanReady)?.plan ?: return null
 
         return when (placeType) {
-            GooglePlaceType.Lodging -> plan.fireStoreHotelDbReference
-            GooglePlaceType.Restaurant -> plan.fireStoreRestaurantDbReference
-            else -> plan.fireStoreAttractionDbReference
+            GooglePlaceType.Lodging -> planUtils.fireStoreHotelDbReference
+            GooglePlaceType.Restaurant -> planUtils.fireStoreRestaurantDbReference
+            else -> planUtils.fireStoreAttractionDbReference
         }
     }
 

@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.plan.detail.expandable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.plan.PlanUtilsFactory
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.notes.NoteData
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
-class CardsViewModel(private val plan: Plan) : ViewModel() {
+class CardsViewModel(private val planName: String) : ViewModel() {
     private val items = listOf(
         ExpandableCardModel(1, PlanDetailItemType.HOTEL),
         ExpandableCardModel(2, PlanDetailItemType.RESTAURANT),
@@ -35,18 +36,22 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
     private val _exception: MutableStateFlow<Exception?> = MutableStateFlow(null)
     var exception = _exception.asStateFlow()
 
+    private val planUtils by lazy {
+        PlanUtilsFactory.getOrCreate(planName = planName)
+    }
+
     fun loadPlannables() {
         // load subdocuments of plan
-        plan.loadPlannables { exception ->
+        planUtils.loadPlannables { exception ->
             Timber.e(exception)
             hotels.update {
-                plan.planDetailItems(PlanDetailItemType.HOTEL)
+                planUtils.planDetailItems(PlanDetailItemType.HOTEL)
             }
             restaurants.update {
-                plan.planDetailItems(PlanDetailItemType.RESTAURANT)
+                planUtils.planDetailItems(PlanDetailItemType.RESTAURANT)
             }
             attractions.update {
-                plan.planDetailItems(PlanDetailItemType.ATTRACTION)
+                planUtils.planDetailItems(PlanDetailItemType.ATTRACTION)
             }
         }
     }
@@ -64,7 +69,7 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                plan.fireStoreHotelDbReference?.document(plannableId)
+                planUtils.fireStoreHotelDbReference?.document(plannableId)
             }
 
             PlanDetailItemType.RESTAURANT -> {
@@ -72,7 +77,7 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                plan.fireStoreRestaurantDbReference?.document(plannableId)
+                planUtils.fireStoreRestaurantDbReference?.document(plannableId)
             }
 
             PlanDetailItemType.ATTRACTION -> {
@@ -80,7 +85,7 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                plan.fireStoreAttractionDbReference?.document(plannableId)
+                planUtils.fireStoreAttractionDbReference?.document(plannableId)
             }
         }
 
@@ -102,10 +107,10 @@ class CardsViewModel(private val plan: Plan) : ViewModel() {
         _bottomSheetData.value = NoteData(plannableId = plannableId, planName = name, planDetailItemType = type)
     }
 
-    class CardsViewModelFactory(private val plan: Plan) :
+    class CardsViewModelFactory(private val planName: String) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return CardsViewModel(plan = plan) as T
+            return CardsViewModel(planName = planName) as T
         }
     }
 }

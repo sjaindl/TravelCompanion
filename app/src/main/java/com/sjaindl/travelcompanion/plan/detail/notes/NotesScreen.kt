@@ -157,7 +157,6 @@ fun NotesScreen(
                                         focusManager.clearFocus(force = true)
 
                                         viewModel.persistNotes(
-                                            plan = loaded.plan,
                                             plannable = loaded.plannable,
                                             notes = notes.orEmpty(),
                                         )

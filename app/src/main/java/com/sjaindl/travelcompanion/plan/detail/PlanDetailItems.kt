@@ -28,12 +28,12 @@ import java.util.Date
 @ExperimentalCoroutinesApi
 @Composable
 fun PlanDetailItems(
-    plan: Plan,
+    planName: String,
     onAddPlace: (PlanDetailItemType) -> Unit,
     onAddNote: (plannableId: String, planName: String, planDetailItemType: PlanDetailItemType) -> Unit,
     viewModel: CardsViewModel = viewModel(
         factory = CardsViewModel.CardsViewModelFactory(
-            plan = plan,
+            planName = planName,
         ),
     )
 ) {
@@ -95,7 +95,7 @@ fun PlanDetailItems(
                             },
                             expanded = expandedCardIds.value.contains(card.id),
                             onClick = { plannableId ->
-                                viewModel.clickedOnItem(plannableId, plan.name, card.type)
+                                viewModel.clickedOnItem(plannableId, planName, card.type)
                             }
                         )
                     }
@@ -110,13 +110,7 @@ fun PlanDetailItems(
 @Preview
 fun PlanDetailItemsPreview() {
     PlanDetailItems(
-        plan = Plan(
-            "Singapore",
-            "Singapore",
-            startDate = Date(),
-            endDate = Date(),
-            imagePath = null,
-        ),
+        planName = "Singapore",
         onAddPlace = { },
         onAddNote = { _, _, _ -> }
     )

@@ -6,6 +6,7 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.api.google.Plannable
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.plan.PlanUtilsFactory
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
@@ -34,30 +35,34 @@ class NotesViewModel(
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Initial)
     var state = _state.asStateFlow()
 
+    private val planUtils by lazy {
+        PlanUtilsFactory.getOrCreate(planName = planName)
+    }
+
     fun load() {
         FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
-                plan.loadPlannables { exception ->
+                planUtils.loadPlannables { exception ->
                     if (exception != null) {
                         _state.value = State.Error(exception)
                     } else {
                         try {
                             val plannable = when (planDetailItemType) {
                                 HOTEL -> {
-                                    plan.hotels.first {
+                                    planUtils.hotels.first {
                                         it.getId() == plannableId
                                     }
                                 }
 
                                 RESTAURANT -> {
-                                    plan.restaurants.first {
+                                    planUtils.restaurants.first {
                                         it.getId() == plannableId
                                     }
                                 }
 
                                 ATTRACTION -> {
-                                    plan.attractions.first {
+                                    planUtils.attractions.first {
                                         it.getId() == plannableId
                                     }
                                 }
@@ -81,7 +86,6 @@ class NotesViewModel(
     }
 
     fun persistNotes(
-        plan: Plan,
         plannable: Plannable,
         notes: String,
     ) {
@@ -91,9 +95,9 @@ class NotesViewModel(
         }
 
         val plannableCollectionReference = when (planDetailItemType) {
-            HOTEL -> plan.fireStoreHotelDbReference
-            RESTAURANT -> plan.fireStoreRestaurantDbReference
-            ATTRACTION -> plan.fireStoreAttractionDbReference
+            HOTEL -> planUtils.fireStoreHotelDbReference
+            RESTAURANT -> planUtils.fireStoreRestaurantDbReference
+            ATTRACTION -> planUtils.fireStoreAttractionDbReference
         } ?: return
 
         plannable.setNotes(notes = notes)
