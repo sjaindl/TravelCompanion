@@ -12,7 +12,7 @@ import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.RESTAURANT
 import timber.log.Timber
 
-class PlanUtils(private val planName: String) {
+class PlannableUtils(private val planName: String) {
     var hotels: MutableList<Plannable> = mutableListOf()
     var restaurants: MutableList<Plannable> = mutableListOf()
     var attractions: MutableList<Plannable> = mutableListOf()
@@ -34,8 +34,7 @@ class PlanUtils(private val planName: String) {
     }
 
     fun loadPlannables(completion: (exception: Exception?) -> Unit) {
-        // TODO: Can this be improved?
-        reset()
+        // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#kotlin+ktx_2
         hotels.ifEmpty { loadPlannables(HOTEL, fireStoreHotelDbReference, Constants.Plannables.hotel, completion) }
         restaurants.ifEmpty { loadPlannables(RESTAURANT, fireStoreRestaurantDbReference, Constants.Plannables.restaurant, completion) }
         attractions.ifEmpty { loadPlannables(ATTRACTION, fireStoreAttractionDbReference, Constants.Plannables.attraction, completion) }
@@ -173,11 +172,5 @@ class PlanUtils(private val planName: String) {
         fireStoreAttractionDbReference = planReference.collection(FireStoreConstants.Collections.attractions)
 
         fireStoreRememberPhotosDbReference = planReference.collection(FireStoreConstants.Collections.photos)
-    }
-
-    private fun reset() {
-        hotels = mutableListOf()
-        restaurants = mutableListOf()
-        attractions = mutableListOf()
     }
 }

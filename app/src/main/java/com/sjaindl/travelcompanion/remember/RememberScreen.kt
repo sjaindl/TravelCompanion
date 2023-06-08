@@ -28,6 +28,7 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.PlanElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -128,6 +129,7 @@ fun RememberScreen(
                                 modifier = Modifier,
                                 name = plan.name,
                                 dateString = plan.formattedDate,
+                                bitmap = FireStoreUtils.bitmapForPlan(planName = plan.name),
                                 imagePath = plan.imagePath,
                                 onClick = {
                                     onNavigateToRememberDetails(plan.name)

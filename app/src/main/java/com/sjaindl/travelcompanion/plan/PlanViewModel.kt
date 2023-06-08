@@ -4,10 +4,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClientObserver
-import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.FireStoreUtils
@@ -29,10 +27,6 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
         data class Info(val stringRes: Int) : State()
 
         object Finished : State()
-    }
-
-    private val fireStoreDbReference by lazy {
-        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
     }
 
     val tag = "PlanViewModel"
@@ -81,7 +75,6 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
             onInfo = {
                 _state.value = State.Info(it)
             },
-            withImageRef = true,
         )
     }
 
@@ -105,43 +98,15 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
         _upcomingTrips.remove(plan)
         _pastTrips.remove(plan)
 
-        plan.imagePath?.let {
-            // delete plan photo in Firebase storage
-            val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it.toString())
-            storageImageRef.delete().addOnCompleteListener { imageTask ->
-                if (!imageTask.isSuccessful) {
-                    _state.value = State.Error(imageTask.exception)
-                }
-            }
-        }
-
-        val planUtils = PlanUtilsFactory.getOrCreate(planName = plan.name)
-        // delete subdocuments from Firestore
-        // no auto deletion of subdocs: https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=en
-        planUtils.loadPlannables { exception ->
-            if (exception != null) {
+        FireStoreUtils.deletePlan(
+            plan = plan,
+            onError = { exception ->
                 _state.value = State.Error(exception)
-            } else {
-                planUtils.deleteSubDocuments(pinName = plan.pinName) { subDocException ->
-                    if (subDocException != null) {
-                        _state.value = State.Error(subDocException)
-                    } else {
-                        _state.value = State.Finished
-                    }
-                }
-            }
-        }
-
-        val documentRef = fireStoreDbReference.document(plan.pinName)
-        documentRef.delete().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Timber.d(tag, "Document successfully removed!")
-
+            },
+            onSuccess = {
                 _state.value = State.Finished
-            } else {
-                _state.value = State.Error(task.exception)
-            }
-        }
+            },
+        )
     }
 
     private fun addPinIfNeeded(plan: Plan) = viewModelScope.launch {
@@ -219,7 +184,6 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
             onInfo = {
                 _state.value = State.Info(it)
             },
-            withImageRef = true,
         )
     }
 

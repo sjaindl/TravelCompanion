@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.plan
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +26,7 @@ fun PlanElement(
     modifier: Modifier,
     name: String,
     dateString: String,
+    bitmap: Bitmap?,
     imagePath: Uri?,
     onClick: () -> Unit,
 ) {
@@ -39,7 +41,7 @@ fun PlanElement(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             PlanImageElement(
-                bitmap = null,
+                bitmap = bitmap,
                 imagePath = imagePath,
                 modifier = Modifier
                     .weight(2f),
@@ -87,6 +89,7 @@ fun PlanElementPreview() {
         modifier = Modifier,
         name = "Graz",
         dateString = "23.06.2023 - 27.06.2023",
+        bitmap = null,
         imagePath = Uri.parse("https://ball-orientiert.de/wp-content/uploads/2023/02/Artikelbild-Sturm-Graz_Ilzer.png"),
         onClick = { },
     )

@@ -2,8 +2,7 @@ package com.sjaindl.travelcompanion.plan.detail.expandable
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtilsFactory
+import com.sjaindl.travelcompanion.plan.PlannableUtilsFactory
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.notes.NoteData
@@ -36,22 +35,22 @@ class CardsViewModel(private val planName: String) : ViewModel() {
     private val _exception: MutableStateFlow<Exception?> = MutableStateFlow(null)
     var exception = _exception.asStateFlow()
 
-    private val planUtils by lazy {
-        PlanUtilsFactory.getOrCreate(planName = planName)
+    private val plannableUtils by lazy {
+        PlannableUtilsFactory.getOrCreate(planName = planName)
     }
 
     fun loadPlannables() {
         // load subdocuments of plan
-        planUtils.loadPlannables { exception ->
+        plannableUtils.loadPlannables { exception ->
             Timber.e(exception)
             hotels.update {
-                planUtils.planDetailItems(PlanDetailItemType.HOTEL)
+                plannableUtils.planDetailItems(PlanDetailItemType.HOTEL)
             }
             restaurants.update {
-                planUtils.planDetailItems(PlanDetailItemType.RESTAURANT)
+                plannableUtils.planDetailItems(PlanDetailItemType.RESTAURANT)
             }
             attractions.update {
-                planUtils.planDetailItems(PlanDetailItemType.ATTRACTION)
+                plannableUtils.planDetailItems(PlanDetailItemType.ATTRACTION)
             }
         }
     }
@@ -69,7 +68,7 @@ class CardsViewModel(private val planName: String) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                planUtils.fireStoreHotelDbReference?.document(plannableId)
+                plannableUtils.fireStoreHotelDbReference?.document(plannableId)
             }
 
             PlanDetailItemType.RESTAURANT -> {
@@ -77,7 +76,7 @@ class CardsViewModel(private val planName: String) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                planUtils.fireStoreRestaurantDbReference?.document(plannableId)
+                plannableUtils.fireStoreRestaurantDbReference?.document(plannableId)
             }
 
             PlanDetailItemType.ATTRACTION -> {
@@ -85,7 +84,7 @@ class CardsViewModel(private val planName: String) : ViewModel() {
                 newList.removeIf { it.id == plannableId }
                 hotels.value = newList
 
-                planUtils.fireStoreAttractionDbReference?.document(plannableId)
+                plannableUtils.fireStoreAttractionDbReference?.document(plannableId)
             }
         }
 

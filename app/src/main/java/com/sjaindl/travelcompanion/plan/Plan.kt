@@ -8,8 +8,8 @@ import java.util.Date
 data class Plan(
     val name: String,
     val pinName: String,
-    val startDate: Date,
-    val endDate: Date,
+    var startDate: Date,
+    var endDate: Date,
     var imagePath: Uri?,
 ) {
     val formattedDate: String

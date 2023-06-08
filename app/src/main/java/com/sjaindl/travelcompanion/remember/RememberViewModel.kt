@@ -43,7 +43,6 @@ class RememberViewModel : ViewModel() {
             onInfo = {
                 _state.value = State.Info(it)
             },
-            withImageRef = true,
         )
     }
 

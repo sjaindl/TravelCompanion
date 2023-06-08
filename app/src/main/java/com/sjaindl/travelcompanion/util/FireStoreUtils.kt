@@ -8,15 +8,18 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.plan.Plan
+import com.sjaindl.travelcompanion.plan.PlannableUtilsFactory
 import com.sjaindl.travelcompanion.remember.detail.RememberPhoto
 import timber.log.Timber
 import java.util.Date
 import kotlin.random.Random
 
-// TODO: Caching of plans in a hashmap
 // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
 object FireStoreUtils {
     private const val tag = "FireStoreUtils"
+
+    private val plans = mutableListOf<Plan>()
+    private val planBitmaps = mutableMapOf<String, Bitmap>()
 
     private val fireStoreDbReferencePlans by lazy {
         FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
@@ -30,8 +33,15 @@ object FireStoreUtils {
         onLoaded: (plan: Plan) -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
-        withImageRef: Boolean = true,
     ) {
+        if (plans.isNotEmpty()) {
+            plans.forEach { cachedPlan ->
+                onLoaded(cachedPlan)
+            }
+
+            return
+        }
+
         fireStoreDbReferencePlans.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 task.result.forEach { document ->
@@ -42,7 +52,7 @@ object FireStoreUtils {
                     val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
                     val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
 
-                    val imageRef = if (withImageRef) document.getString(FireStoreConstants.Ids.Plan.imageReference) else null
+                    val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
                     val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
                     val downloadFromUrlTask = storageImageRef?.downloadUrl
 
@@ -56,6 +66,7 @@ object FireStoreUtils {
                                 endDate = endDate,
                                 imagePath = null,
                             )
+                            plans.add(plan)
                             onLoaded(plan)
                         } else {
                             downloadFromUrlTask.addOnSuccessListener { imagePath ->
@@ -67,6 +78,7 @@ object FireStoreUtils {
                                     endDate = endDate,
                                     imagePath = imagePath,
                                 )
+                                plans.add(plan)
                                 onLoaded(plan)
                             }.addOnCanceledListener {
                                 onInfo(R.string.cancelled)
@@ -92,8 +104,16 @@ object FireStoreUtils {
         onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
-        withImageRef: Boolean = true,
     ) {
+        val cachedPlan = plans.find {
+            it.name == planName
+        }
+        if (cachedPlan != null) {
+            val bitmap = planBitmaps[planName]
+            onLoaded(cachedPlan, bitmap)
+            return
+        }
+
         fireStoreDbReferencePlans.document(planName).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
@@ -103,7 +123,7 @@ object FireStoreUtils {
                 val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
                 val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
 
-                val imageRef = if (withImageRef) document.getString(FireStoreConstants.Ids.Plan.imageReference) else null
+                val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
                 val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
                 val downloadFromUrlTask = storageImageRef?.downloadUrl
 
@@ -111,6 +131,7 @@ object FireStoreUtils {
                     if (downloadFromUrlTask == null) {
                         Timber.tag(tag).d("Add plan without image: $name")
                         val plan = Plan(name = name, pinName = pinName, startDate = startDate, endDate = endDate, imagePath = null)
+                        plans.add(plan)
                         onLoaded(plan, null)
                     } else {
                         downloadFromUrlTask.addOnSuccessListener { imagePath ->
@@ -184,6 +205,10 @@ object FireStoreUtils {
         }
     }
 
+    fun bitmapForPlan(planName: String): Bitmap? {
+        return planBitmaps[planName]
+    }
+
     fun updatePlanDates(
         planName: String,
         startDate: Date,
@@ -205,6 +230,13 @@ object FireStoreUtils {
             if (exception != null) {
                 onError(exception)
             } else {
+                plans.firstOrNull {
+                    it.name == planName
+                }.apply {
+                    this?.startDate = startDate
+                    this?.endDate = endDate
+                }
+
                 onSuccess()
             }
         }
@@ -253,9 +285,11 @@ object FireStoreUtils {
             onInfo = onInfo,
             onSuccess = {
                 plan.imagePath = it
+                planBitmaps[plan.name] = image
+
                 updatePlan(
                     planName = plan.name,
-                    imagePath = it.toString(),
+                    imagePath = it,
                     onSuccess = onSuccess,
                     onError = onError,
                 )
@@ -318,6 +352,99 @@ object FireStoreUtils {
         }
     }
 
+    fun planExists(planName: String): Boolean {
+        return plans.firstOrNull {
+            it.name == planName
+        } != null
+    }
+
+    fun addPlan(
+        name: String,
+        pinName: String,
+        startDate: Date,
+        endDate: Date,
+        onError: (Exception) -> Unit,
+        completion: () -> Unit,
+    ) {
+        val plan = Plan(
+            name = name,
+            pinName = pinName,
+            startDate = startDate,
+            endDate = endDate,
+            imagePath = null,
+        )
+
+        persistPlan(plan = plan, onError = onError, completion = completion)
+    }
+
+    fun deletePlan(
+        plan: Plan,
+        onError: (Exception?) -> Unit,
+        onSuccess: () -> Unit,
+    ) {
+        plan.imagePath?.let {
+            // delete plan photo in Firebase storage
+            val storageImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(it.toString())
+            storageImageRef.delete().addOnCompleteListener { imageTask ->
+                if (!imageTask.isSuccessful) {
+                    onError(imageTask.exception)
+                }
+            }
+        }
+
+        val plannableUtils = PlannableUtilsFactory.getOrCreate(planName = plan.name)
+        // delete subdocuments from Firestore
+        // no auto deletion of subdocs: https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=en
+        plannableUtils.loadPlannables { exception ->
+            if (exception != null) {
+                onError(exception)
+            } else {
+                plannableUtils.deleteSubDocuments(pinName = plan.pinName) { subDocException ->
+                    if (subDocException != null) {
+                        onError(subDocException)
+                    } else {
+                        onSuccess()
+                    }
+                }
+            }
+        }
+
+        val documentRef = fireStoreDbReferencePlans.document(plan.pinName)
+        documentRef.delete().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Timber.d(tag, "Document successfully removed!")
+                plans.removeIf {
+                    it.name == plan.name
+                }
+                onSuccess()
+            } else {
+                onError(task.exception)
+            }
+        }
+    }
+
+    private fun persistPlan(
+        plan: Plan,
+        onError: (Exception) -> Unit,
+        completion: () -> Unit,
+    ) {
+        val data = mapOf(
+            FireStoreConstants.Ids.Plan.name to plan.name,
+            FireStoreConstants.Ids.Plan.pinName to plan.pinName,
+            FireStoreConstants.Ids.Plan.startDate to plan.startDate,
+            FireStoreConstants.Ids.Plan.endDate to plan.endDate
+        )
+
+        FireStoreClient.addData(collectionReference = fireStoreDbReferencePlans, documentName = plan.pinName, data = data) { exception ->
+            if (exception != null) {
+                onError(exception)
+            } else {
+                plans.add(plan)
+                completion()
+            }
+        }
+    }
+
     private fun loadImageIfAvailable(
         plan: Plan,
         onLoaded: (plan: Plan, bitmap: Bitmap?) -> Unit,
@@ -328,6 +455,11 @@ object FireStoreUtils {
             loadImageIfAvailable(
                 imagePath = it,
                 onLoaded = { bitmap ->
+                    if (!plans.contains(plan)) {
+                        plans.add(plan)
+                    }
+                    planBitmaps[plan.name] = bitmap
+
                     onLoaded(plan, bitmap)
                 },
                 onInfo = onInfo,
@@ -389,12 +521,12 @@ object FireStoreUtils {
 
     private fun updatePlan(
         planName: String,
-        imagePath: String,
+        imagePath: Uri,
         onSuccess: () -> Unit,
         onError: (Exception) -> Unit,
     ) {
         val data = hashMapOf(
-            FireStoreConstants.Ids.Plan.imageReference to imagePath,
+            FireStoreConstants.Ids.Plan.imageReference to imagePath.toString(),
         )
 
         FireStoreClient.updateDocumentFields(
@@ -404,6 +536,11 @@ object FireStoreUtils {
             if (exception != null) {
                 onError(exception)
             } else {
+                plans.firstOrNull {
+                    it.name == planName
+                }.apply {
+                    this?.imagePath = imagePath
+                }
                 onSuccess()
             }
         }

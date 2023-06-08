@@ -38,7 +38,6 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
             onError = { exception ->
                 _state.value = State.Error(exception)
             },
-            withImageRef = false,
         )
     }
 

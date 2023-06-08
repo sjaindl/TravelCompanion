@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
-import com.sjaindl.travelcompanion.plan.Plan
 import com.sjaindl.travelcompanion.repository.DataRepository
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
@@ -67,33 +67,21 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
     }
 
     fun addPlan(name: String, pinName: String, startDate: Date, endDate: Date, completion: () -> Unit) {
-        val plan = Plan(
+        if (FireStoreUtils.planExists(planName = name)) {
+            _state.value = State.Info(R.string.planAlreadyExists)
+            return
+        }
+
+        FireStoreUtils.addPlan(
             name = name,
             pinName = pinName,
             startDate = startDate,
             endDate = endDate,
-            imagePath = null,
-        )
-
-        //TODO: check whether plan already exists and ask if user wants to override
-        persistPlan(plan = plan, completion = completion)
-    }
-
-    private fun persistPlan(plan: Plan, completion: () -> Unit) {
-        val data = mapOf(
-            FireStoreConstants.Ids.Plan.name to plan.name,
-            FireStoreConstants.Ids.Plan.pinName to plan.pinName,
-            FireStoreConstants.Ids.Plan.startDate to plan.startDate,
-            FireStoreConstants.Ids.Plan.endDate to plan.endDate
-        )
-
-        FireStoreClient.addData(collectionReference = fireStoreDbReference, documentName = plan.pinName, data = data) { exception ->
-            if (exception != null) {
+            onError = { exception ->
                 _state.value = State.Error(exception)
-            } else {
-                completion()
-            }
-        }
+            },
+            completion = completion,
+        )
     }
 
     class AddPlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {

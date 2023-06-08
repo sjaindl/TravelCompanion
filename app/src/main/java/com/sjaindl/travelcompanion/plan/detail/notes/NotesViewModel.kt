@@ -6,7 +6,7 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.api.google.Plannable
 import com.sjaindl.travelcompanion.plan.Plan
-import com.sjaindl.travelcompanion.plan.PlanUtilsFactory
+import com.sjaindl.travelcompanion.plan.PlannableUtilsFactory
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
@@ -35,34 +35,34 @@ class NotesViewModel(
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Initial)
     var state = _state.asStateFlow()
 
-    private val planUtils by lazy {
-        PlanUtilsFactory.getOrCreate(planName = planName)
+    private val plannableUtils by lazy {
+        PlannableUtilsFactory.getOrCreate(planName = planName)
     }
 
     fun load() {
         FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
-                planUtils.loadPlannables { exception ->
+                plannableUtils.loadPlannables { exception ->
                     if (exception != null) {
                         _state.value = State.Error(exception)
                     } else {
                         try {
                             val plannable = when (planDetailItemType) {
                                 HOTEL -> {
-                                    planUtils.hotels.first {
+                                    plannableUtils.hotels.first {
                                         it.getId() == plannableId
                                     }
                                 }
 
                                 RESTAURANT -> {
-                                    planUtils.restaurants.first {
+                                    plannableUtils.restaurants.first {
                                         it.getId() == plannableId
                                     }
                                 }
 
                                 ATTRACTION -> {
-                                    planUtils.attractions.first {
+                                    plannableUtils.attractions.first {
                                         it.getId() == plannableId
                                     }
                                 }
@@ -81,7 +81,6 @@ class NotesViewModel(
             onError = { exception ->
                 _state.value = State.Error(exception)
             },
-            withImageRef = false,
         )
     }
 
@@ -95,9 +94,9 @@ class NotesViewModel(
         }
 
         val plannableCollectionReference = when (planDetailItemType) {
-            HOTEL -> planUtils.fireStoreHotelDbReference
-            RESTAURANT -> planUtils.fireStoreRestaurantDbReference
-            ATTRACTION -> planUtils.fireStoreAttractionDbReference
+            HOTEL -> plannableUtils.fireStoreHotelDbReference
+            RESTAURANT -> plannableUtils.fireStoreRestaurantDbReference
+            ATTRACTION -> plannableUtils.fireStoreAttractionDbReference
         } ?: return
 
         plannable.setNotes(notes = notes)

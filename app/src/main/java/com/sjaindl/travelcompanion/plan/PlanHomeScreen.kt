@@ -40,6 +40,7 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -183,6 +184,7 @@ fun PlanHomeScreen(
                                 modifier = Modifier,
                                 name = it.name,
                                 dateString = it.formattedDate,
+                                bitmap = FireStoreUtils.bitmapForPlan(planName = it.name),
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it
@@ -212,6 +214,7 @@ fun PlanHomeScreen(
                                 modifier = Modifier,
                                 name = it.name,
                                 dateString = it.formattedDate,
+                                bitmap = FireStoreUtils.bitmapForPlan(planName = it.name),
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it

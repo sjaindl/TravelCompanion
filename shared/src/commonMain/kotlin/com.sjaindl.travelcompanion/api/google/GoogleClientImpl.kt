@@ -4,11 +4,19 @@ import com.sjaindl.travelcompanion.AutocompleteConfig
 import com.sjaindl.travelcompanion.SecretConstants
 import com.sjaindl.travelcompanion.api.HttpResponseHandler
 import com.sjaindl.travelcompanion.util.Mockable
-import io.ktor.client.call.*
-import io.ktor.http.*
+import io.ktor.client.call.body
+import io.ktor.http.HttpMethod
+import kotlin.collections.List
+import kotlin.collections.listOf
+import kotlin.collections.mutableListOf
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
 
 @Mockable
 class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : GoogleClient {
+    private val autocompleteCache = mutableMapOf<String, PlacesAutoCompleteResponse?>()
+    private val placeDetailCache = mutableMapOf<String, PlacesDetailsResponse?>()
+
     override suspend fun searchPlaces(
         text: String?,
         latitude: Double?,
@@ -41,6 +49,10 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
             return null
         }
 
+        autocompleteCache[input]?.let {
+            return it
+        }
+
         val requestParams = buildAutoCompleteRequestParams(input = input, token = token)
 
         val urlComponents = GoogleConstants.UrlComponents
@@ -52,10 +64,16 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = requestParams
-        ).body()
+        ).body<PlacesAutoCompleteResponse?>().also {
+            autocompleteCache[input] = it
+        }
     }
 
     override suspend fun placeDetail(placeId: String, token: String): PlacesDetailsResponse {
+        placeDetailCache[placeId]?.let {
+            return it
+        }
+
         val requestParams = buildPlaceDetailRequestParams(placeId = placeId, token = token)
 
         val urlComponents = GoogleConstants.UrlComponents
@@ -67,7 +85,9 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = requestParams
-        ).body()
+        ).body<PlacesDetailsResponse>().also {
+            placeDetailCache[placeId] = it
+        }
     }
 
     override fun buildAutoCompleteRequestParams(

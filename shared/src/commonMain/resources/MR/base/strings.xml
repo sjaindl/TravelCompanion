@@ -200,6 +200,7 @@
     <string name="choose_camera">Choose photo from camera</string>
     <string name="choose_gallery">Choose photo from gallery</string>
     <string name="errorDeleteImage">Could not delete image</string>
+    <string name="planAlreadyExists">Plan already exists</string>
 
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 </resources>
