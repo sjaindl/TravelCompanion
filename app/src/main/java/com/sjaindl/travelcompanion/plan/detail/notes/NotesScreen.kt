@@ -130,7 +130,7 @@ fun NotesScreen(
                                 contentColor = colorResource(id = R.color.textLight),
                             )
 
-                            // TODO: Replace with MotionLayout & FAB?
+                            // TODO: Replace with CoordinatorLayout/MotionLayout & FAB?
                             Row(
                                 modifier = Modifier.weight(1f),
                             ) {
