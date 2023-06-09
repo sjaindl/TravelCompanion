@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 @Composable
 fun SearchPlaceAutocompleteScreen(
@@ -55,19 +56,22 @@ fun SearchPlaceAutocompleteScreen(
             this.autocompleteCountry.setAdapter(adapter)
             this.autocompleteCountry.doOnTextChanged { text, _, _, _ ->
                 scope.launch {
-                    val autocompleteResult = googleClient.autocomplete(
+                    googleClient.autocomplete(
                         text.toString(), sessionToken
-                    )
+                    ).onSuccess { autocompleteResult ->
+                        val suggestions = autocompleteResult?.predictions ?: emptyList()
 
-                    val suggestions = autocompleteResult?.predictions ?: emptyList()
+                        scope.launch(Dispatchers.Main) {
+                            println(suggestions)
 
-                    scope.launch(Dispatchers.Main) {
-                        println(suggestions)
-
-                        val viewHolders = suggestions.map {
-                            SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                            val viewHolders = suggestions.map {
+                                SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                            }
+                            searchPlaceAdapter.submitList(viewHolders)
                         }
-                        searchPlaceAdapter.submitList(viewHolders)
+                    }.onFailure {
+                        Timber.e(it)
+                        searchPlaceAdapter.submitList(emptyList())
                     }
                 }
             }

@@ -22,7 +22,7 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     sealed class State {
         object Loading : State()
 
-        data class Error(val exception: Exception?) : State()
+        data class Error(val exception: Throwable?) : State()
 
         data class Info(val stringRes: Int) : State()
 
@@ -111,35 +111,41 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
 
     private fun addPinIfNeeded(plan: Plan) = viewModelScope.launch {
         if (dataRepository.singlePin(plan.pinName) == null) {
-            val autocompleteResult = googleClient.autocomplete(
+            googleClient.autocomplete(
                 plan.pinName, sessionToken
-            )
+            ).onSuccess { autocompleteResult ->
+                val prediction = autocompleteResult?.predictions?.firstOrNull() ?: return@launch
+                val placeId = prediction.placeId ?: return@launch
 
-            val prediction = autocompleteResult?.predictions?.firstOrNull() ?: return@launch
-            val placeId = prediction.placeId ?: return@launch
+                googleClient.placeDetail(placeId, sessionToken)
+                    .onSuccess { details ->
+                        val location = details.result.geometry.location
+                        val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
 
-            val details = googleClient.placeDetail(placeId, sessionToken)
-            val location = details.result.geometry.location
-            val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                        val component = details.result.addressComponents?.firstOrNull {
+                            it.types.contains("country")
+                        }
 
-            val component = details.result.addressComponents?.firstOrNull {
-                it.types.contains("country")
+                        dataRepository.insertPin(
+                            id = 0,
+                            address = details.result.formattedAddress,
+                            country = component?.longName,
+                            countryCode = countryCode,
+                            creationDate = Clock.System.now(),
+                            latitude = details.result.geometry.location.lat,
+                            longitude = details.result.geometry.location.lng,
+                            name = plan.pinName,
+                            phoneNumber = null,
+                            placeId = placeId,
+                            rating = null,
+                            url = details.result.url,
+                        )
+                    }.onFailure {
+                        _state.value = State.Error(it)
+                    }
+            }.onFailure {
+                _state.value = State.Error(it)
             }
-
-            dataRepository.insertPin(
-                id = 0,
-                address = details.result.formattedAddress,
-                country = component?.longName,
-                countryCode = countryCode,
-                creationDate = Clock.System.now(),
-                latitude = details.result.geometry.location.lat,
-                longitude = details.result.geometry.location.lng,
-                name = plan.pinName,
-                phoneNumber = null,
-                placeId = placeId,
-                rating = null,
-                url = details.result.url,
-            )
         }
     }
 

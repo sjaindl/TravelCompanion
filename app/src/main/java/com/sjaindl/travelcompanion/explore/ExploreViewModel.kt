@@ -23,7 +23,7 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     private val _onShowDetails = MutableStateFlow(0L)
     var onShowDetails = _onShowDetails.asStateFlow()
 
-    private val _exception: MutableStateFlow<Exception?> = MutableStateFlow(null)
+    private val _exception: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     var exception = _exception.asStateFlow()
 
     private val _placeDetails = MutableStateFlow<List<PlaceDetail>>(emptyList())
@@ -74,41 +74,45 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     }
 
     fun fetchPlaceDetails(placeId: String) = viewModelScope.launch {
-        val details = googleClient.placeDetail(placeId, sessionToken)
-        val location = details.result.geometry.location
-        val name = details.result.name ?: return@launch
-        val placeDetail = PlaceDetail(latitude = location.lat, longitude = location.lng, name = name)
-        newlyAddedLocation = placeDetail
+        googleClient.placeDetail(placeId, sessionToken)
+            .onSuccess { details ->
+                val location = details.result.geometry.location
+                val name = details.result.name ?: return@launch
+                val placeDetail = PlaceDetail(latitude = location.lat, longitude = location.lng, name = name)
+                newlyAddedLocation = placeDetail
 
-        val list = placeDetails.value.toMutableList().apply {
-            add(placeDetail)
-        }
-        _placeDetails.value = list
+                val list = placeDetails.value.toMutableList().apply {
+                    add(placeDetail)
+                }
+                _placeDetails.value = list
 
-        try {
-            val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                try {
+                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
 
-            val component = details.result.addressComponents?.firstOrNull {
-                it.types.contains("country")
+                    val component = details.result.addressComponents?.firstOrNull {
+                        it.types.contains("country")
+                    }
+
+                    dataRepository.insertPin(
+                        id = 0,
+                        address = details.result.formattedAddress,
+                        country = component?.longName,
+                        countryCode = countryCode,
+                        creationDate = Clock.System.now(),
+                        latitude = details.result.geometry.location.lat,
+                        longitude = details.result.geometry.location.lng,
+                        name = name,
+                        phoneNumber = null,
+                        placeId = placeId,
+                        rating = null,
+                        url = details.result.url,
+                    )
+                } catch (exception: Exception) {
+                    _exception.value = exception
+                }
+            }.onFailure {
+                _exception.value = it
             }
-
-            dataRepository.insertPin(
-                id = 0,
-                address = details.result.formattedAddress,
-                country = component?.longName,
-                countryCode = countryCode,
-                creationDate = Clock.System.now(),
-                latitude = details.result.geometry.location.lat,
-                longitude = details.result.geometry.location.lng,
-                name = name,
-                phoneNumber = null,
-                placeId = placeId,
-                rating = null,
-                url = details.result.url,
-            )
-        } catch (exception: Exception) {
-            _exception.value = exception
-        }
     }
 
     fun addPersistedPinsToMap() {

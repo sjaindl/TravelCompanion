@@ -21,6 +21,7 @@ import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 class SearchPlaceFragment : Fragment() {
     private var binding: FragmentSearchPlaceBinding? = null
@@ -75,17 +76,20 @@ class SearchPlaceFragment : Fragment() {
             lifecycleScope.launch {
                 val autocompleteResult = googleClient.autocomplete(
                     text.toString(), sessionToken
-                )
+                ).onSuccess { autocompleteResult ->
+                    val suggestions = autocompleteResult?.predictions ?: emptyList()
 
-                val suggestions = autocompleteResult?.predictions ?: emptyList()
+                    requireActivity().runOnUiThread {
+                        println(suggestions)
 
-                requireActivity().runOnUiThread {
-                    println(suggestions)
-
-                    val viewHolders = suggestions.map {
-                        SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                        val viewHolders = suggestions.map {
+                            SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                        }
+                        searchPlaceAdapter.submitList(viewHolders)
                     }
-                    searchPlaceAdapter.submitList(viewHolders)
+                }.onFailure {
+                    Timber.e(it)
+                    searchPlaceAdapter.submitList(emptyList())
                 }
             }
         }

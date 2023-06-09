@@ -7,11 +7,11 @@ interface GoogleClient {
         longitude: Double?,
         type: String,
         radius: String,
-    ): PlacesNearbySearchResponse
+    ): Result<PlacesNearbySearchResponse>
 
-    suspend fun autocomplete(input: String, token: String): PlacesAutoCompleteResponse?
+    suspend fun autocomplete(input: String, token: String): Result<PlacesAutoCompleteResponse?>
 
-    suspend fun placeDetail(placeId: String, token: String): PlacesDetailsResponse
+    suspend fun placeDetail(placeId: String, token: String): Result<PlacesDetailsResponse>
 
     fun buildAutoCompleteRequestParams(
         input: String,

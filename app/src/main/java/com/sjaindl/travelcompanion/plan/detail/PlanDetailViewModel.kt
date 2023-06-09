@@ -31,9 +31,6 @@ class PlanDetailViewModel(private val planName: String, private val dataReposito
     }
 
     fun loadPlan() {
-        // TODO: improve reloading (when changing dates)
-        //if (state.value is State.Loaded) return // already loaded
-
         FireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, bitmap ->

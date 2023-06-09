@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class SearchPlacesViewModel : ViewModel() {
     private val googleClient by lazy {
@@ -25,25 +26,27 @@ class SearchPlacesViewModel : ViewModel() {
         placeType: GooglePlaceType,
         radius: Double,
     ) = viewModelScope.launch(Dispatchers.IO) {
-        // TODO: error handling
-        val nearbyPlaces = googleClient.searchPlaces(
+        googleClient.searchPlaces(
             text = text,
             latitude = latitude,
             longitude = longitude,
             type = placeType.key,
             radius = radius.toString(),
-        )
+        ).onSuccess { nearbyPlaces ->
+            val places = nearbyPlaces.results
 
-        val places = nearbyPlaces.results
+            withContext(Dispatchers.Main) {
+                println(places)
 
-        withContext(Dispatchers.Main) {
-            println(places)
+                val viewHolders = places.map {
+                    SearchPlacesViewHolderType.GooglePlaceItem(it)
+                }
 
-            val viewHolders = places.map {
-                SearchPlacesViewHolderType.GooglePlaceItem(it)
+                _viewHolders.value = viewHolders
             }
-
-            _viewHolders.value = viewHolders
+        }.onFailure {
+            Timber.e(it)
+            _viewHolders.value = emptyList()
         }
     }
 }

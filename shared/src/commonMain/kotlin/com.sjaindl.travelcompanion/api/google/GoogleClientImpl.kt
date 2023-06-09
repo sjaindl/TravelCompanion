@@ -4,12 +4,9 @@ import com.sjaindl.travelcompanion.AutocompleteConfig
 import com.sjaindl.travelcompanion.SecretConstants
 import com.sjaindl.travelcompanion.api.HttpResponseHandler
 import com.sjaindl.travelcompanion.util.Mockable
+import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.http.HttpMethod
-import kotlin.collections.List
-import kotlin.collections.listOf
-import kotlin.collections.mutableListOf
-import kotlin.collections.mutableMapOf
 import kotlin.collections.set
 
 @Mockable
@@ -23,7 +20,7 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         longitude: Double?,
         type: String,
         radius: String,
-    ): PlacesNearbySearchResponse {
+    ): Result<PlacesNearbySearchResponse> {
         val requestParams = buildPlaceSearchRequestParams(
             text = text,
             latitude = latitude,
@@ -35,22 +32,28 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         val urlComponents = GoogleConstants.UrlComponents
         val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}/"
 
-        return httpResponseHandler.request(
+        val response = httpResponseHandler.request(
             baseUrl = baseUrl,
             urlString = urlComponents.pathNearbySearch,
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = requestParams
-        ).body()
+        )
+
+        return try {
+            Result.success(response.body())
+        } catch (exception: NoTransformationFoundException) {
+            Result.failure(exception)
+        }
     }
 
-    override suspend fun autocomplete(input: String, token: String): PlacesAutoCompleteResponse? {
+    override suspend fun autocomplete(input: String, token: String): Result<PlacesAutoCompleteResponse?> {
         if (input.count() < AutocompleteConfig.autocompletionMinChars) {
-            return null
+            return Result.success(null)
         }
 
         autocompleteCache[input]?.let {
-            return it
+            return Result.success(it)
         }
 
         val requestParams = buildAutoCompleteRequestParams(input = input, token = token)
@@ -58,20 +61,28 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         val urlComponents = GoogleConstants.UrlComponents
         val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}/"
 
-        return httpResponseHandler.request(
+        val response = httpResponseHandler.request(
             baseUrl = baseUrl,
             urlString = urlComponents.pathAutocomplete,
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = requestParams
-        ).body<PlacesAutoCompleteResponse?>().also {
-            autocompleteCache[input] = it
+        )
+
+        return try {
+            Result.success(
+                response.body<PlacesAutoCompleteResponse?>().also {
+                    autocompleteCache[input] = it
+                }
+            )
+        } catch (exception: NoTransformationFoundException) {
+            Result.failure(exception)
         }
     }
 
-    override suspend fun placeDetail(placeId: String, token: String): PlacesDetailsResponse {
+    override suspend fun placeDetail(placeId: String, token: String): Result<PlacesDetailsResponse> {
         placeDetailCache[placeId]?.let {
-            return it
+            return Result.success(it)
         }
 
         val requestParams = buildPlaceDetailRequestParams(placeId = placeId, token = token)
@@ -79,14 +90,22 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         val urlComponents = GoogleConstants.UrlComponents
         val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}/"
 
-        return httpResponseHandler.request(
+        val response = httpResponseHandler.request(
             baseUrl = baseUrl,
             urlString = urlComponents.pathPlaceDetail,
             httpMethod = HttpMethod.Get,
             requestHeaders = HttpResponseHandler.defaultHeaders,
             requestParams = requestParams
-        ).body<PlacesDetailsResponse>().also {
-            placeDetailCache[placeId] = it
+        )
+
+        return try {
+            Result.success(
+                response.body<PlacesDetailsResponse>().also {
+                    placeDetailCache[placeId] = it
+                }
+            )
+        } catch (exception: NoTransformationFoundException) {
+            Result.failure(exception)
         }
     }
 

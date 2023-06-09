@@ -164,51 +164,60 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun fetchPlaceDetails(placeId: String) = lifecycleScope.launch {
-        val details = googleClient.placeDetail(placeId, sessionToken)
-        val location = details.result.geometry.location
-        val marker = googleMap?.addMarker(
-            MarkerOptions()
-                .position(LatLng(location.lat, location.lng))
-                .title(details.result.name)
-        )
+        googleClient.placeDetail(placeId, sessionToken)
+            .onSuccess { details ->
+                val location = details.result.geometry.location
+                val marker = googleMap?.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(location.lat, location.lng))
+                        .title(details.result.name)
+                )
 
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
 
-        try {
-            val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                try {
+                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
 
-            val component = details.result.addressComponents?.firstOrNull {
-                it.types.contains("country")
-            }
-            val name = details.result.name
+                    val component = details.result.addressComponents?.firstOrNull {
+                        it.types.contains("country")
+                    }
+                    val name = details.result.name
 
-            dataRepository.insertPin(
-                id = 0,
-                address = details.result.formattedAddress,
-                country = component?.longName,
-                countryCode = countryCode,
-                creationDate = Clock.System.now(),
-                latitude = details.result.geometry.location.lat,
-                longitude = details.result.geometry.location.lng,
-                name = name,
-                phoneNumber = null,
-                placeId = placeId,
-                rating = null,
-                url = details.result.url,
-            )
+                    dataRepository.insertPin(
+                        id = 0,
+                        address = details.result.formattedAddress,
+                        country = component?.longName,
+                        countryCode = countryCode,
+                        creationDate = Clock.System.now(),
+                        latitude = details.result.geometry.location.lat,
+                        longitude = details.result.geometry.location.lng,
+                        name = name,
+                        phoneNumber = null,
+                        placeId = placeId,
+                        rating = null,
+                        url = details.result.url,
+                    )
 
-            if (name != null && marker != null) {
-                dataRepository.singlePin(name = name)?.let { pin ->
-                    // viewModel.markers[pin.id] = marker
+                    if (name != null && marker != null) {
+                        dataRepository.singlePin(name = name)?.let { pin ->
+                            // viewModel.markers[pin.id] = marker
+                        }
+                    }
+                } catch (exception: Exception) {
+                    Snackbar.make(
+                        requireView(),
+                        exception.localizedMessage ?: "Could not fetch country code",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
+            }.onFailure {
+                Snackbar.make(
+                    requireView(),
+                    it.localizedMessage ?: "Could not fetch country code",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
-        } catch (exception: Exception) {
-            Snackbar.make(
-                requireView(),
-                exception.localizedMessage ?: "Could not fetch country code",
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
+
     }
 
     override fun onDestroyView() {
