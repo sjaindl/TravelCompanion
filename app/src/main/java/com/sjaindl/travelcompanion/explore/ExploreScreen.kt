@@ -41,6 +41,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.api.google.GeocodingResult
 import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
@@ -61,6 +62,7 @@ fun ExploreScreen(
         )
     ),
     onSearch: () -> Unit,
+    onPickedLocation: (latitude: Float, longitude: Float) -> Unit,
     onNavigateToExploreDetails: (Long) -> Unit,
     onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
@@ -101,8 +103,17 @@ fun ExploreScreen(
     }
 
     if (encodedPlaces != null) {
-        val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
-        val placeId = placesPredictions.placeId
+        var description: String?
+        var placeId: String?
+        try {
+            val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
+            placeId = placesPredictions.placeId
+            description = placesPredictions.description
+        } catch (exc: Exception) {
+            val geocodingResult = Json.decodeFromString(GeocodingResult.serializer(), encodedPlaces)
+            description = geocodingResult.formattedAddress
+            placeId = geocodingResult.placeId
+        }
 
         if (placeId != null) {
             LaunchedEffect(placeId) {
@@ -110,11 +121,13 @@ fun ExploreScreen(
             }
         }
 
-        val message = stringResource(id = R.string.picked, placesPredictions.description)
-        LaunchedEffect(key1 = placeId) {
-            scaffoldState.snackbarHostState.showSnackbar(
-                message = message,
-            )
+        if (description != null) {
+            val message = stringResource(id = R.string.picked, description)
+            LaunchedEffect(key1 = placeId) {
+                scaffoldState.snackbarHostState.showSnackbar(
+                    message = message,
+                )
+            }
         }
     }
 
@@ -201,12 +214,15 @@ fun ExploreScreen(
                         isTrafficEnabled = false,
                     ),
                     uiSettings = MapUiSettings(),
+                    onMapClick = { latLng ->
+                        onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
+                    },
                     onMapLoaded = {
                         coroutineScope.launch {
                             initialLocation = prefs.lastLocationFlow.first()
                             viewModel.addPersistedPinsToMap()
                         }
-                    }
+                    },
                 ) {
                     val placeDetail by viewModel.placeDetails.collectAsState()
 
@@ -262,6 +278,7 @@ fun ExploreScreen(
 fun ExploreScreenPreview() {
     ExploreScreen(
         onSearch = { },
+        onPickedLocation = { _, _ -> },
         onNavigateToExploreDetails = { },
         onPlanTrip = { },
         canNavigateBack = true,

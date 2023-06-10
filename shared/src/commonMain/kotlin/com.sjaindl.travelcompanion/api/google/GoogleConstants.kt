@@ -11,6 +11,7 @@ object GoogleConstants {
         const val pathPlaceDetail = pathPlace + "details/json"
         const val domainSearch = "google.com"
         const val pathSearch = "/search"
+        const val pathReverseGeocode = "maps/api/geocode/json"
     }
 
     object ParameterKeys {
@@ -29,6 +30,9 @@ object GoogleConstants {
         const val placeId = "placeid"
         const val fields = "fields"
         const val searchQuery = "q"
+
+        const val latLng = "latlng"
+        const val resultType = "result_type"
     }
 
     object ParameterValues {
@@ -38,5 +42,6 @@ object GoogleConstants {
         const val autocompletePlaceType = "(regions)"
         const val placeDetailFields =
             "address_component,adr_address,formatted_address,geometry,icon,name,permanently_closed,photo,type,url,utc_offset,vicinity"
+        const val resultType = "country|administrative_area_level_1|administrative_area_level_2|administrative_area_level_3|locality"
     }
 }

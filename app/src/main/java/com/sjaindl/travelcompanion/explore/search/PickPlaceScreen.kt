@@ -8,13 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidViewBinding
-import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
-import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -22,8 +20,10 @@ import kotlinx.serialization.json.Json
 import timber.log.Timber
 
 @Composable
-fun SearchPlaceAutocompleteScreen(
+fun PickPlaceScreen(
     modifier: Modifier = Modifier,
+    latitude: Float,
+    longitude: Float,
     onPickedPlace: (String) -> Unit,
 ) {
     val context = LocalContext.current
@@ -33,12 +33,12 @@ fun SearchPlaceAutocompleteScreen(
     val googleClient by lazy {
         TCInjector.googleClient
     }
-    val sessionToken = randomStringByKotlinRandom(32)
     val searchPlaceAdapter by lazy {
         SearchPlaceAdapter { item ->
             focusManager.clearFocus(force = true)
-            (item as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
-                val encodedResult = Json.encodeToString(item.placesPredictions)
+
+            (item as? SearchPlaceViewHolderType.PlaceItem)?.let {
+                val encodedResult = Json.encodeToString(item.geocoded)
                 onPickedPlace(encodedResult)
             }
         }
@@ -49,32 +49,30 @@ fun SearchPlaceAutocompleteScreen(
             modifier = modifier,
             factory = FragmentSearchPlaceBinding::inflate,
         ) {
-            // setup autocompletion
             val adapter = ArrayAdapter<String>(
                 context,
                 android.R.layout.simple_spinner_dropdown_item,
                 emptyArray()
             )
             this.autocompleteCountry.setAdapter(adapter)
-            this.autocompleteCountry.doOnTextChanged { text, _, _, _ ->
-                scope.launch {
-                    googleClient.autocomplete(
-                        text.toString(), sessionToken
-                    ).onSuccess { autocompleteResult ->
-                        val suggestions = autocompleteResult?.predictions ?: emptyList()
 
-                        scope.launch(Dispatchers.Main) {
-                            println(suggestions)
+            scope.launch {
+                googleClient.reverseGeocode(
+                    latitude = latitude,
+                    longitude = longitude,
+                ).onSuccess { geocodingResponse ->
+                    scope.launch(Dispatchers.Main) {
+                        println(geocodingResponse)
 
-                            val viewHolders = suggestions.map {
-                                SearchPlaceViewHolderType.PlacesPredictionItem(it)
-                            }
-                            searchPlaceAdapter.submitList(viewHolders)
+                        val viewHolders = geocodingResponse.results.map {
+                            SearchPlaceViewHolderType.PlaceItem(it)
                         }
-                    }.onFailure {
-                        Timber.e(it)
-                        searchPlaceAdapter.submitList(emptyList())
+                        searchPlaceAdapter.submitList(viewHolders)
                     }
+
+                }.onFailure {
+                    Timber.e(it)
+                    searchPlaceAdapter.submitList(emptyList())
                 }
             }
 
@@ -93,9 +91,11 @@ fun SearchPlaceAutocompleteScreen(
 
 @Preview
 @Composable
-fun SearchPlaceScreenPreview() {
-    SearchPlaceAutocompleteScreen(
+fun PickPlaceScreenPreview() {
+    PickPlaceScreen(
         modifier = Modifier,
+        latitude = 0.0f,
+        longitude = 0.0f,
         onPickedPlace = { },
     )
 }

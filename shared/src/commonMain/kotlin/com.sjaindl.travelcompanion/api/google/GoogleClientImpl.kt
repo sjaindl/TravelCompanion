@@ -109,6 +109,35 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         }
     }
 
+    override suspend fun reverseGeocode(
+        latitude: Float,
+        longitude: Float,
+    ): Result<GeocodingResponse> {
+        val requestParams = buildReverseGeocodeRequestParams(
+            latitude = latitude,
+            longitude = longitude,
+        )
+
+        val urlComponents = GoogleConstants.UrlComponents
+        val baseUrl = "${urlComponents.urlProtocol}://${urlComponents.domain}"
+
+        val response = httpResponseHandler.request(
+            baseUrl = baseUrl,
+            urlString = urlComponents.pathReverseGeocode,
+            httpMethod = HttpMethod.Get,
+            requestHeaders = HttpResponseHandler.defaultHeaders,
+            requestParams = requestParams,
+        )
+
+        return try {
+            Result.success(
+                response.body()
+            )
+        } catch (exception: NoTransformationFoundException) {
+            Result.failure(exception)
+        }
+    }
+
     override fun buildAutoCompleteRequestParams(
         input: String,
         token: String
@@ -160,5 +189,16 @@ class GoogleClientImpl(private val httpResponseHandler: HttpResponseHandler) : G
         }
 
         return parameters
+    }
+
+    override fun buildReverseGeocodeRequestParams(
+        latitude: Float,
+        longitude: Float,
+    ): List<Pair<String, String>> {
+        return listOf(
+            GoogleConstants.ParameterKeys.latLng to "$latitude,$longitude",
+            GoogleConstants.ParameterKeys.key to SecretConstants.apiKeyGooglePlaces,
+            GoogleConstants.ParameterKeys.resultType to GoogleConstants.ParameterValues.resultType,
+        )
     }
 }

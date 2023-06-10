@@ -38,7 +38,25 @@ data class PlaceDetailGeometry(var location: PlaceDetailLocation)
 @Serializable
 data class PlaceDetailLocation(
     var lat: Double,
-    var lng: Double
+    var lng: Double,
+
+    @SerialName("location_type")
+    val locationType: String? = null,
+    val viewPort: ViewPort? = null,
+)
+
+@Serializable
+data class ViewPort(
+    @SerialName("northeast")
+    val northEast: LocationPair? = null,
+    @SerialName("southwest")
+    val southWest: LocationPair? = null,
+)
+
+@Serializable
+data class LocationPair(
+    var lat: Double,
+    var lng: Double,
 )
 
 @Serializable

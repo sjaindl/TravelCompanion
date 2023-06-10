@@ -29,8 +29,10 @@ class SearchPlaceFragment : Fragment() {
     private val sessionToken = randomStringByKotlinRandom(32)
 
     private val searchPlaceAdapter by lazy {
-        SearchPlaceAdapter {
-            onClickItem(it)
+        SearchPlaceAdapter { viewHolderType ->
+            (viewHolderType as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
+                onClickItem(it)
+            }
         }
     }
 
