@@ -13,10 +13,16 @@ import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 class CardsViewModel(private val planName: String) : ViewModel() {
+    companion object {
+        const val hotelCardId = 1
+        const val restaurantCardId = 2
+        const val attractionCardId = 3
+    }
+
     private val items = listOf(
-        ExpandableCardModel(1, PlanDetailItemType.HOTEL),
-        ExpandableCardModel(2, PlanDetailItemType.RESTAURANT),
-        ExpandableCardModel(3, PlanDetailItemType.ATTRACTION),
+        ExpandableCardModel(id = hotelCardId, type = PlanDetailItemType.HOTEL),
+        ExpandableCardModel(id = restaurantCardId, type = PlanDetailItemType.RESTAURANT),
+        ExpandableCardModel(id = attractionCardId, type = PlanDetailItemType.ATTRACTION),
     )
 
     val cards = MutableStateFlow(items)
@@ -52,13 +58,21 @@ class CardsViewModel(private val planName: String) : ViewModel() {
             attractions.update {
                 plannableUtils.planDetailItems(PlanDetailItemType.ATTRACTION)
             }
+
+            if (hotels.value.isNotEmpty()) {
+                toggleCardExpandedState(id = hotelCardId)
+            }
+            if (restaurants.value.isNotEmpty()) {
+                toggleCardExpandedState(id = restaurantCardId)
+            }
+            if (attractions.value.isNotEmpty()) {
+                toggleCardExpandedState(id = attractionCardId)
+            }
         }
     }
 
     fun onCardArrowClicked(id: Int) {
-        val list = expandedCardIdsList.value.toMutableList()
-        if (list.contains(id)) list.remove(id) else list.add(id)
-        expandedCardIdsList.value = list
+        toggleCardExpandedState(id = id)
     }
 
     fun onDelete(plannableId: String, planDetailItemType: PlanDetailItemType) {
@@ -104,6 +118,12 @@ class CardsViewModel(private val planName: String) : ViewModel() {
     fun clickedOnItem(plannableId: String, name: String, type: PlanDetailItemType) {
         _showDialog.value = true
         _bottomSheetData.value = NoteData(plannableId = plannableId, planName = name, planDetailItemType = type)
+    }
+
+    private fun toggleCardExpandedState(id: Int) {
+        val list = expandedCardIdsList.value.toMutableList()
+        if (list.contains(id)) list.remove(id) else list.add(id)
+        expandedCardIdsList.value = list
     }
 
     class CardsViewModelFactory(private val planName: String) :
