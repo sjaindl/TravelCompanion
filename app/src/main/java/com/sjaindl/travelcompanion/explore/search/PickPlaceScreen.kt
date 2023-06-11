@@ -1,6 +1,6 @@
 package com.sjaindl.travelcompanion.explore.search
 
-import android.widget.ArrayAdapter
+import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -49,12 +49,7 @@ fun PickPlaceScreen(
             modifier = modifier,
             factory = FragmentSearchPlaceBinding::inflate,
         ) {
-            val adapter = ArrayAdapter<String>(
-                context,
-                android.R.layout.simple_spinner_dropdown_item,
-                emptyArray()
-            )
-            this.autocompleteCountry.setAdapter(adapter)
+            this.autocompleteCountry.visibility = View.GONE
 
             scope.launch {
                 googleClient.reverseGeocode(
