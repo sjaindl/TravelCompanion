@@ -11,6 +11,7 @@ plugins {
     id("com.google.firebase.crashlytics")
 
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -67,10 +68,6 @@ android {
     namespace = "com.sjaindl.travelcompanion"
 }
 
-//https://proandroiddev.com/dependencies-versions-in-gradle-kotlin-dsl-a8db15cedee2
-apply(from = "../versions.gradle.kts")
-val roomVersion: String by extra
-
 dependencies {
     // implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(project(":shared"))
@@ -87,7 +84,7 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/room
     implementation(libs.room.ktx)
     implementation(libs.androidx.room.runtime)
-    kapt("androidx.room:room-compiler:$roomVersion")
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.androidx.room.testing)
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
