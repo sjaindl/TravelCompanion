@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
@@ -114,12 +113,16 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                     }
                 }
 
-                itemsIndexed(
-                    items = pagingData,
-                    key = { index, item ->
-                        "$index-${item.id}"
+                items(
+                    count = pagingData.itemCount,
+                    /*
+                    Check: java.lang.IllegalArgumentException: Key "FlickrPhoto(id=28502378924, owner=132366789@N03, secret=c4cb6f1f9f, server=8211, farm=9, title=Seychellen, isPublic=BooleanInt(value=true), isFriend=BooleanInt(value=false), isFamily=BooleanInt(value=false), url=https://live.staticflickr.com/8211/28502378924_c4cb6f1f9f.jpg, height=335, width=500)" was already used. If you are using LazyColumn/Row please make sure you provide a unique key for each item.
+                    key = pagingData.itemKey { item ->
+                        item.toString()
                     },
-                ) { _, item ->
+                     */
+                ) { index ->
+                    val item = pagingData[index]
                     item?.let { photo ->
                         val model = ImageRequest.Builder(LocalContext.current)
                             .data(photo.url)

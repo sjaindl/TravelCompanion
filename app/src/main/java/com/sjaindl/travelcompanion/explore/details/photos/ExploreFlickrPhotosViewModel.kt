@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sjaindl.travelcompanion.Pin
-import com.sjaindl.travelcompanion.api.flickr.FlickrConstants
 import com.sjaindl.travelcompanion.api.flickr.FlickrPhoto
 import com.sjaindl.travelcompanion.api.flickr.FlickrPhotoResponse
 import com.sjaindl.travelcompanion.api.flickr.FlickrRepository
@@ -18,8 +17,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
-import timber.log.Timber
-import java.util.concurrent.atomic.AtomicInteger
 
 class ExploreFlickrPhotosViewModel(
     dataRepository: DataRepository,
@@ -58,74 +55,6 @@ class ExploreFlickrPhotosViewModel(
     val country: String?
         get() = pin?.country
 
-    var pageOffset = AtomicInteger(0)
-        private set
-
-    private var _photosCount: MutableStateFlow<Int> = MutableStateFlow(0)
-    var photosCount = _photosCount.asStateFlow()
-
-    suspend fun fetchNextPhotos() {
-        if (shouldFetchMore()) {
-            fetchPhotos(offset = pageOffset.addAndGet(1))
-        }
-    }
-
-    private suspend fun fetchPhotos(offset: Int = 0, limit: Int = FlickrConstants.ParameterValues.limit) {
-        if (state.value == State.Initial) {
-            _state.value = State.Loading
-        }
-
-        Timber.tag(tag).d("Fetch photos at offset: $offset")
-        when (photoType) {
-            PhotoType.COUNTRY -> {
-                val country = pin?.country ?: return
-
-                flickrClient.fetchPhotos(text = country, offset = offset, limit = limit)
-                    .onSuccess { response ->
-                        val allPhotos: MutableList<FlickrPhoto> =
-                            (state.value as? State.Done)?.response?.metaData?.photos?.toMutableList() ?: mutableListOf()
-
-                        _state.value = State.Done(
-                            response = response.apply {
-                                allPhotos.addAll(this.metaData.photos)
-                                Timber.tag(tag).d("all photos: ${allPhotos.size}")
-                                metaData.photos = allPhotos
-                            }
-                        )
-
-                        _photosCount.value = allPhotos.size
-                    }
-                    .onFailure {
-                        _state.value = State.Error(it)
-                    }
-            }
-
-            PhotoType.LOCATION -> {
-                val latitude = pin?.latitude ?: return
-                val longitude = pin?.longitude ?: return
-
-                flickrClient.fetchPhotos(latitude = latitude, longitude = longitude, offset = offset, limit = limit)
-                    .onSuccess { response ->
-                        val allPhotos: MutableList<FlickrPhoto> =
-                            (state.value as? State.Done)?.response?.metaData?.photos?.toMutableList() ?: mutableListOf()
-
-                        _state.value = State.Done(
-                            response = response.apply {
-                                allPhotos.addAll(this.metaData.photos)
-                                Timber.tag(tag).d("all photos: ${allPhotos.size}")
-                                this.metaData.photos = allPhotos
-                            }
-                        )
-
-                        _photosCount.value = allPhotos.size
-                    }
-                    .onFailure {
-                        _state.value = State.Error(it)
-                    }
-            }
-        }
-    }
-
     fun fetchPhotosFlow(): Flow<PagingData<FlickrPhoto>> {
         when (photoType) {
             PhotoType.COUNTRY -> {
@@ -142,15 +71,6 @@ class ExploreFlickrPhotosViewModel(
             }
         }
     }
-
-    private fun shouldFetchMore(): Boolean {
-        if (state.value == State.Loading) return false
-        val metadata = (state.value as? State.Done)?.response?.metaData ?: return true
-
-        return metadata.page < metadata.pages
-    }
-
-
 }
 
 class ExploreFlickrPhotosViewModelFactory(

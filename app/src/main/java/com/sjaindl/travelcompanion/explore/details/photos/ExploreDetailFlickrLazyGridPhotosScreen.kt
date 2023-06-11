@@ -12,18 +12,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,18 +32,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import coil.size.Size
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.flickr.FlickrConstants
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
-import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoInfo
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 // https://stackoverflow.com/questions/73276953/android-jetpack-compose-pagination-pagination-not-working-with-staggered-layou
 @OptIn(ExperimentalFoundationApi::class)
@@ -68,16 +62,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
     ),
     onChoosePhoto: (url: String?) -> Unit,
 ) {
-    val tag = "ExploreDetailFlickrLazyGridPhotosScreen"
-
-    val state by viewModel.state.collectAsState()
-    val photosCount by viewModel.photosCount.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchNextPhotos() // initial fetch
-    }
-
-    val scope = rememberCoroutineScope()
+    val pagingData = viewModel.fetchPhotosFlow().collectAsLazyPagingItems()
 
     val gridState = rememberLazyStaggeredGridState()
 
@@ -86,7 +71,6 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
     }
 
     TravelCompanionTheme {
-
         if (fullScreenImage != null) {
             Box(modifier = Modifier.fillMaxSize()) {
                 PhotoFullScreen(bitmap = null, url = fullScreenImage, title = "") {
@@ -95,108 +79,116 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
             }
         } else {
             Column {
-                val place = viewModel.place ?: stringResource(id = R.string.place)
-                val placeText = stringResource(id = R.string.around, place)
-                val countryText = viewModel.country ?: stringResource(id = R.string.country)
-                val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
+                if (pagingData.loadState.append.endOfPaginationReached && pagingData.itemCount == 0) {
+                    Text(
+                        text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp
+                    )
+                } else {
+                    val place = viewModel.place ?: stringResource(id = R.string.place)
+                    val placeText = stringResource(id = R.string.around, place)
+                    val countryText = viewModel.country ?: stringResource(id = R.string.country)
+                    val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
-                Text(
-                    text = text,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier
-                        .background(colors.background)
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp
-                )
+                    Text(
+                        text = text,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier
+                            .background(colors.background)
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp
+                    )
+                }
 
-                when (val photoState = state) {
-                    is ExploreFlickrPhotosViewModel.State.Done -> {
-                        val doneState = state as ExploreFlickrPhotosViewModel.State.Done
-                        val metaData = doneState.response.metaData
-                        val photos = metaData.photos
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(colors.background),
+                    state = gridState,
+                    verticalItemSpacing = 4.dp,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    items(
+                        count = pagingData.itemCount,
+                        /*
+                        Check: java.lang.IllegalArgumentException: Key "FlickrPhoto(id=28502378924, owner=132366789@N03, secret=c4cb6f1f9f, server=8211, farm=9, title=Seychellen, isPublic=BooleanInt(value=true), isFriend=BooleanInt(value=false), isFamily=BooleanInt(value=false), url=https://live.staticflickr.com/8211/28502378924_c4cb6f1f9f.jpg, height=335, width=500)" was already used. If you are using LazyColumn/Row please make sure you provide a unique key for each item.
+                        key = pagingData.itemKey { item ->
+                            item.toString()
+                        },
+                         */
+                    ) { index ->
+                        val item = pagingData[index]
+                        item?.let {
 
-                        if (photos.isEmpty()) {
-                            Text(
-                                text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White,
-                                textAlign = TextAlign.Center,
-                                fontSize = 20.sp
+                            val model = ImageRequest.Builder(LocalContext.current)
+                                .data(it.url)
+                                //.size(width = it.width, height = it.height)
+                                .size(Size.ORIGINAL)
+                                .placeholder(android.R.drawable.gallery_thumb)
+                                .crossfade(enable = true)
+                                .build()
+                            val painter = rememberAsyncImagePainter(model)
+
+                            Image(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 12.dp)
+                                    .clickable {
+                                        if (isPickerMode) {
+                                            onChoosePhoto(it.url)
+                                        } else {
+                                            fullScreenImage = it.url
+                                        }
+                                    },
+                                painter = painter,
+                                contentDescription = it.title,
+                                alignment = Alignment.Center,
+                                contentScale = ContentScale.FillWidth,
                             )
-                        } else {
-                            val photoInfo = photos.mapNotNull {
-                                val url = it.url ?: return@mapNotNull null
-                                val height = it.height ?: return@mapNotNull null
-                                val width = it.width ?: return@mapNotNull null
-                                val info = "${it.title} - ${it.owner}"
-                                return@mapNotNull PhotoInfo(url = url, height = height, width = width, info = info)
-                            }
-
-                            val endReached = remember {
-                                derivedStateOf {
-                                    Timber.tag(tag)
-                                        .d("endReached: firstVisibleItemIndex >= photosCount - 2 * limit -> ${gridState.firstVisibleItemIndex} >= $photosCount - ${2 * FlickrConstants.ParameterValues.limit}")
-                                    gridState.firstVisibleItemIndex >= photosCount - 2 * FlickrConstants.ParameterValues.limit
-                                }
-                            }
-
-                            // https://medium.com/mobile-app-development-publication/staggeredverticalgrid-of-android-jetpack-compose-fa565e5363e1
-                            LazyVerticalStaggeredGrid(
-                                columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
-                                modifier = modifier
-                                    .fillMaxSize()
-                                    .background(colors.background),
-                                state = gridState,
-                                verticalItemSpacing = 4.dp,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            ) {
-
-                                items(photoInfo) {
-                                    val model = ImageRequest.Builder(LocalContext.current)
-                                        .data(it.url)
-                                        .size(width = it.width, height = it.height)
-                                        //.size(Size.ORIGINAL)
-                                        .placeholder(android.R.drawable.gallery_thumb)
-                                        .crossfade(true)
-                                        .build()
-                                    val painter = rememberAsyncImagePainter(model)
-
-                                    Image(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(bottom = 12.dp)
-                                            .clickable {
-                                                if (isPickerMode) {
-                                                    onChoosePhoto(it.url)
-                                                } else {
-                                                    fullScreenImage = it.url
-                                                }
-                                            },
-                                        painter = painter,
-                                        contentDescription = it.info,
-                                        alignment = Alignment.Center,
-                                        contentScale = ContentScale.FillWidth,
-                                    )
-
-                                }
-                            }
-
-                            if (endReached.value) {
-                                Timber.tag(tag).d("endReached, fetch photos at offset ${viewModel.pageOffset}")
-                                LaunchedEffect(key1 = viewModel.pageOffset) {
-                                    scope.launch {
-                                        viewModel.fetchNextPhotos()
-                                    }
-                                }
-                            }
                         }
                     }
+                }
 
-                    is ExploreFlickrPhotosViewModel.State.Error -> {
-                        val throwable = photoState.throwable
+                when (val refreshState = pagingData.loadState.refresh) {
+                    is LoadState.NotLoading -> {
+                        // no op
+                    }
+
+                    is LoadState.Loading -> {
+                        LoadingAnimation()
+                    }
+
+                    is LoadState.Error -> {
+                        val throwable = refreshState.error
+
+                        val errorMessage =
+                            if (throwable is OfflineException) stringResource(id = R.string.offline)
+                            else (throwable.localizedMessage ?: throwable.toString())
+
+                        Text(
+                            text = errorMessage,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+
+                when (val appendState = pagingData.loadState.append) {
+                    is LoadState.NotLoading -> {
+                        /* no op */
+                    }
+
+                    is LoadState.Error -> {
+                        val throwable = appendState.error
 
                         val errorMessage =
                             if (throwable is OfflineException) stringResource(id = R.string.offline)
@@ -211,12 +203,11 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                         )
                     }
 
-                    else -> {
+                    is LoadState.Loading -> {
                         LoadingAnimation()
                     }
                 }
             }
-
         }
     }
 }
