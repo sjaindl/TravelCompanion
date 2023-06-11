@@ -29,7 +29,6 @@ fun SearchPlaceAutocompleteScreen(
     onPickedPlace: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
 
     val scope = rememberCoroutineScope()
     val googleClient by lazy {
