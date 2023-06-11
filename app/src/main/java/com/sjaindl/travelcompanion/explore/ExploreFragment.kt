@@ -84,7 +84,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
         mapFragment?.getMapAsync(this)
 
         binding?.composeView?.setContent {
-            val showDialogState = viewModel.showDialog.collectAsState()
+            val showDialogState = viewModel.showBottomSheet.collectAsState()
             val title = viewModel.dialogTitle.collectAsState()
 
             binding?.fab?.visibility = if (showDialogState.value) View.GONE else View.VISIBLE

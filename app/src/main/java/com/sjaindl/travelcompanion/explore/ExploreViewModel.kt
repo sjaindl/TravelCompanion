@@ -14,8 +14,8 @@ import kotlinx.datetime.Clock
 data class PlaceDetail(val latitude: Double, val longitude: Double, val name: String)
 
 class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel() {
-    private val _showDialog = MutableStateFlow(false)
-    val showDialog = _showDialog.asStateFlow()
+    private val _showBottomSheet = MutableStateFlow(false)
+    val showBottomSheet = _showBottomSheet.asStateFlow()
 
     private val _dialogTitle = MutableStateFlow("")
     var dialogTitle = _dialogTitle.asStateFlow()
@@ -42,7 +42,7 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     var newlyAddedLocation: PlaceDetail? = null
 
     fun onShowDetails() {
-        _showDialog.value = false
+        _showBottomSheet.value = false
 
         val pin = dataRepository.singlePin(name = dialogTitle.value) ?: return
 
@@ -50,7 +50,7 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     }
 
     fun onDelete() {
-        _showDialog.value = false
+        _showBottomSheet.value = false
 
         val pin = dataRepository.singlePin(name = dialogTitle.value) ?: return
         dataRepository.deletePin(pin.id)
@@ -59,14 +59,14 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     }
 
     fun onDismiss() {
-        _showDialog.value = false
+        _showBottomSheet.value = false
     }
 
     fun clickedOnPlace(name: String?) {
         if (name == null) return
 
         _dialogTitle.value = name
-        _showDialog.value = true
+        _showBottomSheet.value = true
     }
 
     fun clickedOnDetails() {

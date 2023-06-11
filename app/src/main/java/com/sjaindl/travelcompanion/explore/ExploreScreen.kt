@@ -82,7 +82,7 @@ fun ExploreScreen(
         mutableStateOf(false)
     }
 
-    val showDialogState by viewModel.showDialog.collectAsState()
+    val showBottomSheetState by viewModel.showBottomSheet.collectAsState()
     val title by viewModel.dialogTitle.collectAsState()
     val onShowDetailsPinId by viewModel.onShowDetails.collectAsState()
     val exception by viewModel.exception.collectAsState()
@@ -116,7 +116,7 @@ fun ExploreScreen(
         }
 
         if (placeId != null) {
-            LaunchedEffect(placeId) {
+            LaunchedEffect(key1 = placeId) {
                 viewModel.fetchPlaceDetails(placeId = placeId)
             }
         }
@@ -155,7 +155,7 @@ fun ExploreScreen(
 
     TravelCompanionTheme {
         PlaceActionBottomSheet(
-            show = showDialogState,
+            show = showBottomSheetState,
             title = title,
             onShowDetails = viewModel::onShowDetails,
             onPlanTrip = {
@@ -251,6 +251,8 @@ fun ExploreScreen(
                                 radius = cameraPositionState.position.zoom,
                             )
                         }
+
+                        viewModel.clickedOnPlace(viewModel.newlyAddedLocation?.name)
 
                         viewModel.newlyAddedLocation = null
                     }
