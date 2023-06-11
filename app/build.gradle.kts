@@ -116,6 +116,8 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation(libs.androidx.recyclerview)
 
+    implementation(libs.splashScreen)
+
     // https://github.com/square/retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

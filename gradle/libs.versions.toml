@@ -52,6 +52,7 @@ roomVersion = "2.5.1"
 runnerVersion = "1.0.2"
 secretsGradlePluginVersion = "2.0.1"
 serializationVersion = "1.5.0"
+splashScreenVersion = "1.0.1"
 sqlDelightVersion = "1.5.3"
 supportAnnotationsVersion = "28.0.0"
 testRunnerVersion = "1.5.2"
@@ -136,6 +137,7 @@ resources-goncalossilva = { module = "com.goncalossilva:resources", version.ref 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 runner = { module = "com.android.support.test:runner", version.ref = "runnerVersion" }
+splashScreen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreenVersion" }
 sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelightVersion" }
 sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqlDelightVersion" }
 sqldelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelightVersion" }

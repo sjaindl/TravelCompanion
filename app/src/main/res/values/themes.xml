@@ -5,6 +5,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorMain</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">5000</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/colorPrimaryDark</item>
+        -->
+        <!-- Optional "branding" image to be shown at the bottom of the screen:
+        <item name="android:windowSplashScreenBrandingImage">@drawable/</item>
+        -->
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="AppTheme">
