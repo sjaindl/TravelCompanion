@@ -34,12 +34,6 @@
           <timeTargetWasSelectedWithDropDown value="2023-05-28T16:02:28.185047Z" />
         </State>
       </entry>
-      <entry key="PlanItemActionBottomSheetPreview">
-        <State />
-      </entry>
-      <entry key="RememberDetailLazyColScreenPreview">
-        <State />
-      </entry>
       <entry key="RememberDetailPhotosScreenPreview">
         <State />
       </entry>
@@ -58,6 +52,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2023-06-07T00:32:08.024144Z" />
         </State>
+      </entry>
+      <entry key="startup()">
+        <State />
       </entry>
     </value>
   </component>

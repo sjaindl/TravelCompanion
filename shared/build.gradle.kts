@@ -25,6 +25,8 @@ sqldelight {
 kotlin {
     android()
 
+    jvmToolchain(17)
+
     listOf(
         iosX64(),
         iosArm64(),

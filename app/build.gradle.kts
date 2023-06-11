@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.gms.google-services")
@@ -50,19 +51,19 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0-alpha02"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
 
-    // REMOVES ERROR Cannot inline bytecode built with JVM target 1.8 into bytecode that is being built with JVM target 1.6
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
     }
 
-    // Needed for journeyapps.barcodescanner.camera JVM desugaring
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+    kotlin {
+        jvmToolchain(17)
     }
+
     namespace = "com.sjaindl.travelcompanion"
 }
 
