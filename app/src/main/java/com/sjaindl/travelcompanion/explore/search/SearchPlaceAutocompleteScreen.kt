@@ -1,5 +1,7 @@
 package com.sjaindl.travelcompanion.explore.search
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,29 +36,33 @@ fun SearchPlaceAutocompleteScreen(
         TCInjector.googleClient
     }
     val sessionToken = randomStringByKotlinRandom(32)
-    val searchPlaceAdapter by lazy {
-        SearchPlaceAdapter { item ->
-            focusManager.clearFocus(force = true)
-            (item as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
-                val encodedResult = Json.encodeToString(item.placesPredictions)
-                onPickedPlace(encodedResult)
-            }
-        }
-    }
 
     TravelCompanionTheme {
         AndroidViewBinding(
             modifier = modifier,
             factory = FragmentSearchPlaceBinding::inflate,
         ) {
+            val searchPlaceAdapter by lazy {
+                SearchPlaceAdapter { item ->
+                    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                    inputMethodManager?.hideSoftInputFromWindow(autocompleteCountry.applicationWindowToken, 0)
+
+                    (item as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
+                        val encodedResult = Json.encodeToString(item.placesPredictions)
+                        onPickedPlace(encodedResult)
+                    }
+                }
+            }
+
             // setup autocompletion
             val adapter = ArrayAdapter<String>(
                 context,
                 android.R.layout.simple_spinner_dropdown_item,
                 emptyArray()
             )
-            this.autocompleteCountry.setAdapter(adapter)
-            this.autocompleteCountry.doOnTextChanged { text, _, _, _ ->
+
+            autocompleteCountry.setAdapter(adapter)
+            autocompleteCountry.doOnTextChanged { text, _, _, _ ->
                 scope.launch {
                     googleClient.autocomplete(
                         text.toString(), sessionToken
@@ -79,7 +85,7 @@ fun SearchPlaceAutocompleteScreen(
             }
 
             // setupRecyclerView
-            this.placeSuggestions.layoutManager = LinearLayoutManager(context)
+            placeSuggestions.layoutManager = LinearLayoutManager(context)
             placeSuggestions.addItemDecoration(
                 CustomDividerItemDecoration(
                     context,
