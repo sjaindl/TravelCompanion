@@ -29,10 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.shared.R as SharedR
+
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
@@ -137,9 +138,9 @@ fun ExpandableCard(
                     )
 
                     val title = when (card.type) {
-                        PlanDetailItemType.HOTEL -> stringResource(id = R.string.hotels)
-                        PlanDetailItemType.RESTAURANT -> stringResource(id = R.string.restaurants)
-                        PlanDetailItemType.ATTRACTION -> stringResource(id = R.string.attractions)
+                        PlanDetailItemType.HOTEL -> stringResource(id = SharedR.string.hotels)
+                        PlanDetailItemType.RESTAURANT -> stringResource(id = SharedR.string.restaurants)
+                        PlanDetailItemType.ATTRACTION -> stringResource(id = SharedR.string.attractions)
                     }
                     CardTitle(
                         modifier = Modifier.constrainAs(titleRef) {

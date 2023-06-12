@@ -14,15 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.plan.Plan
 import com.sjaindl.travelcompanion.plan.detail.bottomsheet.PlanItemActionBottomSheet
 import com.sjaindl.travelcompanion.plan.detail.expandable.CardsViewModel
 import com.sjaindl.travelcompanion.plan.detail.expandable.ExpandableCard
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
-import java.util.Date
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 // https://developer.android.com/jetpack/compose/touch-input/pointer-input/scroll
 @ExperimentalCoroutinesApi
@@ -56,7 +54,7 @@ fun PlanDetailItems(
     TravelCompanionTheme {
         PlanItemActionBottomSheet(
             show = showDialogState,
-            title = stringResource(id = R.string.chooseAction),
+            title = stringResource(id = SharedR.string.chooseAction),
             onAddNote = {
                 viewModel.onDismiss()
                 val data = bottomSheetData ?: return@PlanItemActionBottomSheet

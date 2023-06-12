@@ -8,8 +8,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.navigation.NamedDestinationItem
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
 
@@ -40,7 +40,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data class ExploreDetailHome(
-        override var titleRes: Int = R.string.detail,
+        override var titleRes: Int = SharedR.string.detail,
         override var icon: ImageVector = Icons.Rounded.Place,
         override var route: String = exploreDetailsHomeRoute,
         override var arguments: List<NamedNavArgument> = pinArgs,
@@ -54,7 +54,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data class ExploreDetailPhotos(
-        override var titleRes: Int = R.string.photos,
+        override var titleRes: Int = SharedR.string.photos,
         override var icon: ImageVector = Icons.Rounded.Photo,
         override var route: String = exploreDetailsPhotosRoute,
         override var arguments: List<NamedNavArgument> = photoDetailArgs,
@@ -70,7 +70,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data class ExploreDetailInfo(
-        override var titleRes: Int = R.string.info,
+        override var titleRes: Int = SharedR.string.info,
         override var icon: ImageVector = Icons.Rounded.Info,
         override var route: String = exploreDetailsInfoRoute,
         override var arguments: List<NamedNavArgument> = pinArgs,

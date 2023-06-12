@@ -17,10 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.DisplayItem
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,7 @@ fun PersonalInfoScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(R.string.personalInformation),
+                    title = stringResource(SharedR.string.personalInformation),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )

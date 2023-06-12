@@ -37,12 +37,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 // https://stackoverflow.com/questions/73276953/android-jetpack-compose-pagination-pagination-not-working-with-staggered-layou
 @OptIn(ExperimentalFoundationApi::class)
@@ -81,16 +81,16 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
             Column {
                 if (pagingData.loadState.append.endOfPaginationReached && pagingData.itemCount == 0) {
                     Text(
-                        text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
+                        text = stringResource(id = SharedR.string.noPhotosFor, photoType.toString().lowercase()),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp
                     )
                 } else {
-                    val place = viewModel.place ?: stringResource(id = R.string.place)
-                    val placeText = stringResource(id = R.string.around, place)
-                    val countryText = viewModel.country ?: stringResource(id = R.string.country)
+                    val place = viewModel.place ?: stringResource(id = SharedR.string.place)
+                    val placeText = stringResource(id = SharedR.string.around, place)
+                    val countryText = viewModel.country ?: stringResource(id = SharedR.string.country)
                     val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
                     Text(
@@ -169,7 +169,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                         val throwable = refreshState.error
 
                         val errorMessage =
-                            if (throwable is OfflineException) stringResource(id = R.string.offline)
+                            if (throwable is OfflineException) stringResource(id = SharedR.string.offline)
                             else (throwable.localizedMessage ?: throwable.toString())
 
                         Text(
@@ -191,7 +191,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                         val throwable = appendState.error
 
                         val errorMessage =
-                            if (throwable is OfflineException) stringResource(id = R.string.offline)
+                            if (throwable is OfflineException) stringResource(id = SharedR.string.offline)
                             else (throwable.localizedMessage ?: throwable.toString())
 
                         Text(

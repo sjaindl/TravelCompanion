@@ -33,6 +33,7 @@ import com.sjaindl.travelcompanion.baseui.DisplayItem
 import com.sjaindl.travelcompanion.baseui.JumpItem
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +50,7 @@ fun ProfileScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(R.string.profile),
+                    title = stringResource(SharedR.string.profile),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -93,22 +94,22 @@ fun ProfileScreen(
 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     JumpItem(
-                        title = stringResource(id = R.string.personalInformation),
-                        subTitle = stringResource(id = R.string.nameAddressBirthday),
+                        title = stringResource(id = SharedR.string.personalInformation),
+                        subTitle = stringResource(id = SharedR.string.nameAddressBirthday),
                         icon = R.drawable.ic_user,
                     ) {
                         goToPersonalInfo()
                     }
 
                     DisplayItem(
-                        title = stringResource(id = R.string.requestAccountDeletion),
+                        title = stringResource(id = SharedR.string.requestAccountDeletion),
                         icon = android.R.drawable.ic_delete
                     ) {
                         showDeleteDialog = true
                     }
 
                     DisplayItem(
-                        title = stringResource(id = R.string.signOut),
+                        title = stringResource(id = SharedR.string.signOut),
                         icon = android.R.drawable.ic_lock_idle_lock
                     ) {
                         viewModel.logout()
@@ -128,7 +129,7 @@ fun ProfileScreen(
                             viewModel.deleteAccount()
                         }) {
                             Text(
-                                text = stringResource(id = R.string.yesDelete),
+                                text = stringResource(id = SharedR.string.yesDelete),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,
@@ -142,7 +143,7 @@ fun ProfileScreen(
                             showDeleteDialog = false
                         }) {
                             Text(
-                                text = stringResource(id = R.string.cancel),
+                                text = stringResource(id = SharedR.string.cancel),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,
@@ -153,7 +154,7 @@ fun ProfileScreen(
                     },
                     title = {
                         Text(
-                            text = stringResource(id = R.string.deleteAccount),
+                            text = stringResource(id = SharedR.string.deleteAccount),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier,
@@ -162,7 +163,7 @@ fun ProfileScreen(
                     },
                     text = {
                         Text(
-                            text = stringResource(id = R.string.doYouReallyWantToDeleteYourAccount),
+                            text = stringResource(id = SharedR.string.doYouReallyWantToDeleteYourAccount),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier,

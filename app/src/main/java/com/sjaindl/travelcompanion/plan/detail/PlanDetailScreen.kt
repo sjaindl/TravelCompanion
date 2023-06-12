@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.model.MapLocationData
@@ -37,6 +36,7 @@ import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
@@ -81,7 +81,8 @@ fun PlanDetailScreen(
                 is PlanDetailViewModel.State.Error -> {
                     val exception = (state as PlanDetailViewModel.State.Error).exception
 
-                    val errorMessage = exception?.localizedMessage ?: exception?.message ?: stringResource(R.string.couldNotRetrieveData)
+                    val errorMessage =
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(SharedR.string.couldNotRetrieveData)
 
                     Box(
                         modifier = modifier

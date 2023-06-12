@@ -37,12 +37,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlacesClientImpl
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)
 @Composable
@@ -94,7 +94,10 @@ fun ExploreDetailPlacesPhotosScreen(
 
                         if (photos.isEmpty()) {
                             Text(
-                                text = stringResource(id = R.string.noPhotosFor, stringResource(id = R.string.place).lowercase()),
+                                text = stringResource(
+                                    id = SharedR.string.noPhotosFor,
+                                    stringResource(id = SharedR.string.place).lowercase()
+                                ),
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
                                 textAlign = TextAlign.Center,
@@ -104,7 +107,7 @@ fun ExploreDetailPlacesPhotosScreen(
                             if (showGrids) {
                                 Column {
                                     Text(
-                                        text = viewModel.place ?: stringResource(id = R.string.place),
+                                        text = viewModel.place ?: stringResource(id = SharedR.string.place),
                                         fontWeight = FontWeight.Bold,
                                         color = Color.White,
                                         modifier = Modifier
@@ -159,7 +162,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                 ) {
                                     stickyHeader {
                                         Text(
-                                            text = viewModel.place ?: stringResource(id = R.string.place),
+                                            text = viewModel.place ?: stringResource(id = SharedR.string.place),
                                             fontWeight = FontWeight.Bold,
                                             color = Color.White,
                                             modifier = Modifier
@@ -198,7 +201,7 @@ fun ExploreDetailPlacesPhotosScreen(
                         val error = state as ExplorePlacesPhotosViewModel.State.Error
 
                         val errorMessage =
-                            if (error.throwable is OfflineException) stringResource(id = R.string.offline)
+                            if (error.throwable is OfflineException) stringResource(id = SharedR.string.offline)
                             else (error.throwable.localizedMessage ?: error.throwable.toString())
 
                         Text(

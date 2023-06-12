@@ -17,7 +17,6 @@ import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlace
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.baseui.TCAppBar
@@ -25,6 +24,7 @@ import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun SearchPlacesScreen(
@@ -56,7 +56,7 @@ fun SearchPlacesScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(id = R.string.searchPlaces),
+                    title = stringResource(id = SharedR.string.searchPlaces),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )

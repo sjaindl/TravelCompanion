@@ -41,6 +41,7 @@ import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +78,7 @@ fun NotesScreen(
                 snackbarHost = { SnackbarHost(snackBarHostState) },
                 topBar = {
                     TCAppBar(
-                        title = stringResource(R.string.addNote),
+                        title = stringResource(SharedR.string.addNote),
                         canNavigateBack = canNavigateBack,
                         navigateUp = navigateUp,
                     )
@@ -119,7 +120,7 @@ fun NotesScreen(
                                     notes = it
                                 },
                                 placeholder = {
-                                    Text(text = stringResource(id = R.string.add_notes))
+                                    Text(text = stringResource(id = SharedR.string.add_notes))
                                 }
                             )
 
@@ -145,7 +146,7 @@ fun NotesScreen(
                                     colors = buttonColors,
                                 ) {
                                     Text(
-                                        text = stringResource(id = R.string.cancel)
+                                        text = stringResource(id = SharedR.string.cancel)
                                     )
                                 }
 
@@ -164,7 +165,7 @@ fun NotesScreen(
                                     colors = buttonColors,
                                 ) {
                                     Text(
-                                        text = stringResource(id = R.string.addNote)
+                                        text = stringResource(id = SharedR.string.addNote)
                                     )
                                 }
                             }
@@ -175,7 +176,7 @@ fun NotesScreen(
                         val exception = (state as NotesViewModel.State.Error).exception
 
                         val errorMessage =
-                            exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+                            exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
 
                         Column(
                             modifier = modifier
@@ -196,7 +197,7 @@ fun NotesScreen(
                     }
 
                     NotesViewModel.State.Finished -> {
-                        val message = stringResource(id = R.string.notes_added)
+                        val message = stringResource(id = SharedR.string.notes_added)
                         LaunchedEffect(Unit) {
                             snackBarHostState.showSnackbar(
                                 message = message

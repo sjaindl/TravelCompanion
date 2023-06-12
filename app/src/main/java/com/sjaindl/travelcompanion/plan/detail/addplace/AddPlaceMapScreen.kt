@@ -33,7 +33,6 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlace
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.api.google.description
@@ -43,6 +42,7 @@ import com.sjaindl.travelcompanion.plan.add.PlaceTypePicker
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun AddPlaceMapScreen(
@@ -98,7 +98,7 @@ fun AddPlaceMapScreen(
         PlaceTypePicker(
             modifier = Modifier,
             show = showPlaceTypePicker,
-            title = stringResource(id = R.string.choosePlaceType),
+            title = stringResource(id = SharedR.string.choosePlaceType),
             onPickedPlace = { type ->
                 placeType = type
                 showPlaceTypePicker = false
@@ -157,7 +157,7 @@ fun AddPlaceMapScreen(
                 Scaffold(
                     topBar = {
                         TCAppBar(
-                            title = stringResource(id = R.string.addPlace, stringResource(id = it.description.resourceId)),
+                            title = stringResource(id = SharedR.string.addPlace, stringResource(id = it.description.resourceId)),
                             canNavigateBack = canNavigateBack,
                             navigateUp = navigateUp,
                         )
@@ -234,9 +234,9 @@ fun AddPlaceMapScreen(
                                     modifier = Modifier
                                         .padding(bottom = 16.dp, start = 24.dp, end = 16.dp)
                                         .weight(1f),
-                                    text = "${stringResource(id = R.string.searchRadius)} ${
+                                    text = "${stringResource(id = SharedR.string.searchRadius)} ${
                                         stringResource(
-                                            R.string.km,
+                                            SharedR.string.km,
                                             searchDistance.value
                                         )
                                     }",

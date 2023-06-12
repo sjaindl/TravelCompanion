@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Country
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApi
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApiLocal
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.RestCountries
@@ -17,6 +16,7 @@ import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataRepository) : ViewModel() {
 
@@ -55,7 +55,7 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
             val countryUi = mapper.map(pin = fetchedPin, country = country)
             _state.value = State.Done(countryUi)
         } else {
-            _state.value = State.Error(stringRes = R.string.couldNotRetrieveData)
+            _state.value = State.Error(stringRes = SharedR.string.couldNotRetrieveData)
         }
     }
 

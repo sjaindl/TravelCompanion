@@ -30,7 +30,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCLink
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailEntry
@@ -38,6 +37,7 @@ import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModel
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.text.NumberFormat
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun ExploreDetailHomeScreen(
@@ -111,72 +111,72 @@ fun ExploreDetailHomeScreen(
                     }
 
                     countryUiData.capital?.let {
-                        ExploreDetailEntry(title = stringResource(id = R.string.capital), value = it)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.capital), value = it)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.languages.isNotEmpty()) {
                         val languages = countryUiData.languages.mapNotNull { it.name }.joinToString(", ")
-                        ExploreDetailEntry(title = stringResource(id = R.string.language), value = languages)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.language), value = languages)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.currencies.isNotEmpty()) {
                         val currencies = countryUiData.currencies.joinToString(", ") { "${it.name} (${it.code}/${it.symbol})" }
-                        ExploreDetailEntry(title = stringResource(id = R.string.currency), value = currencies)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.currency), value = currencies)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     countryUiData.areaSquareKilometers?.let {
                         val area = NumberFormat.getNumberInstance().format(it)
-                        val km = stringResource(id = R.string.km2)
+                        val km = stringResource(id = SharedR.string.km2)
                         val areaString = "$area $km"
-                        ExploreDetailEntry(title = stringResource(id = R.string.area), value = areaString)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.area), value = areaString)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     countryUiData.population?.let {
                         val population = NumberFormat.getNumberInstance().format(it)
-                        ExploreDetailEntry(title = stringResource(id = R.string.population), value = population)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.population), value = population)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.timezones.isNotEmpty()) {
                         val timezones = countryUiData.timezones.joinToString(", ")
-                        ExploreDetailEntry(title = stringResource(id = R.string.timezones), value = timezones)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.timezones), value = timezones)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     countryUiData.region?.let {
-                        ExploreDetailEntry(title = stringResource(id = R.string.region), value = it)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.region), value = it)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     countryUiData.isoCode?.let {
-                        ExploreDetailEntry(title = stringResource(id = R.string.isoCode), value = it)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.isoCode), value = it)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.callingCodes.isNotEmpty()) {
                         val callingCodes = countryUiData.callingCodes.joinToString(", ")
-                        ExploreDetailEntry(title = stringResource(id = R.string.callingCodes), value = callingCodes)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.callingCodes), value = callingCodes)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.domains.isNotEmpty()) {
                         val domains = countryUiData.domains.joinToString(", ")
-                        ExploreDetailEntry(title = stringResource(id = R.string.domains), value = domains)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.domains), value = domains)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     countryUiData.nativeName?.let {
-                        ExploreDetailEntry(title = stringResource(id = R.string.native_name), value = it)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.native_name), value = it)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
 
                     if (countryUiData.regionalBlocks.isNotEmpty()) {
                         val regionalBlocks = countryUiData.regionalBlocks.joinToString(", ") { "${it.name} (${it.acronym})" }
-                        ExploreDetailEntry(title = stringResource(id = R.string.blocks), value = regionalBlocks)
+                        ExploreDetailEntry(title = stringResource(id = SharedR.string.blocks), value = regionalBlocks)
                         Spacer(modifier = Modifier.height(spacerHeight))
                     }
                 }
@@ -184,7 +184,7 @@ fun ExploreDetailHomeScreen(
                 is ExploreDetailViewModel.State.Error -> {
                     val error = (state as ExploreDetailViewModel.State.Error)
 
-                    val errorMessage = error.message ?: stringResource(id = (error.stringRes ?: R.string.couldNotRetrieveData))
+                    val errorMessage = error.message ?: stringResource(id = (error.stringRes ?: SharedR.string.couldNotRetrieveData))
 
                     Text(
                         text = errorMessage,

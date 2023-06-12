@@ -1,7 +1,9 @@
 package com.sjaindl.travelcompanion.explore.details.info
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,11 +21,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun ExploreDetailInfoScreen(
@@ -86,7 +88,7 @@ fun ExploreDetailInfoScreen(
 
                     } else {
                         Text(
-                            text = stringResource(id = R.string.couldNotRetrieveData),
+                            text = stringResource(id = SharedR.string.couldNotRetrieveData),
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -100,7 +102,7 @@ fun ExploreDetailInfoScreen(
                     val error = state as ExploreInfoViewModel.State.Error
 
                     val errorMessage =
-                        if (error.throwable is OfflineException) stringResource(id = R.string.offline)
+                        if (error.throwable is OfflineException) stringResource(id = SharedR.string.offline)
                         else (error.throwable.localizedMessage ?: error.throwable.toString())
 
                     Text(
@@ -114,7 +116,7 @@ fun ExploreDetailInfoScreen(
 
                 is ExploreInfoViewModel.State.NoData -> {
                     Text(
-                        text = stringResource(id = R.string.couldNotRetrieveData),
+                        text = stringResource(id = SharedR.string.couldNotRetrieveData),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         textAlign = TextAlign.Center,

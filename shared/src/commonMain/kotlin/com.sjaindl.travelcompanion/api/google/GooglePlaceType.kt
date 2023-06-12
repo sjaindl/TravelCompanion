@@ -68,7 +68,7 @@ enum class GooglePlaceType(private val rawValue: String) {
     val description: String?
         get() {
             when (this) {
-                Lodging -> return R.string.lodging
+                Lodging -> return SharedR.string.lodging
                 Restaurant -> return "restaurant".localized()
                 PointOfInterest -> return "pointOfInterest".localized()
                 AmusementPark -> return "amusementPark".localized()

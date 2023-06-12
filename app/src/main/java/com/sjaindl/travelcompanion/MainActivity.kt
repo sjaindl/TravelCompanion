@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
 import timber.log.Timber
 import kotlin.random.Random
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 data class OpenAddPlan(val open: Boolean, val destination: String)
 
@@ -100,16 +101,16 @@ class MainActivity : AppCompatActivity() {
                 // Sign in failed
                 if (response == null) {
                     // User pressed back button
-                    showMessage(getString(R.string.sign_in_cancelled))
+                    showMessage(getString(SharedR.string.sign_in_cancelled))
                     return@register
                 }
 
                 if (response.error?.errorCode == ErrorCodes.NO_NETWORK) {
-                    showMessage(getString(R.string.offline))
+                    showMessage(getString(SharedR.string.offline))
                     return@register
                 }
 
-                showMessage(getString(R.string.unknown_error))
+                showMessage(getString(SharedR.string.unknown_error))
                 Timber.tag(tag).e(response.error, "Sign-in error: ${response.error}")
             }
         }

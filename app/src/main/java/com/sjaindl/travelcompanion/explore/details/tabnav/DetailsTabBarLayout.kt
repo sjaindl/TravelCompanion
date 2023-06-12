@@ -3,9 +3,12 @@ package com.sjaindl.travelcompanion.explore.details.tabnav
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Photo
@@ -16,15 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.launch
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -90,17 +92,17 @@ fun DetailsTabBarLayoutPreview() {
         tabRowItems = listOf(
             TabItem(
                 title = "Tab 1",
-                screen = { TabScreen(text = stringResource(id = R.string.detail)) },
+                screen = { TabScreen(text = stringResource(id = SharedR.string.detail)) },
                 icon = Icons.Rounded.Place,
             ),
             TabItem(
                 title = "Tab 2",
-                screen = { TabScreen(text = stringResource(id = R.string.photos)) },
+                screen = { TabScreen(text = stringResource(id = SharedR.string.photos)) },
                 icon = Icons.Rounded.Photo,
             ),
             TabItem(
                 title = "Tab 3",
-                screen = { TabScreen(text = stringResource(id = R.string.info)) },
+                screen = { TabScreen(text = stringResource(id = SharedR.string.info)) },
                 icon = Icons.Rounded.Info,
             )
         ),

@@ -20,7 +20,7 @@ fun MainContainer(
     openedAddPlan: () -> Unit = { },
 ) {
     val navController = rememberNavController()
-    
+
     TravelCompanionTheme {
         TCNavHost(
             navController = navController,

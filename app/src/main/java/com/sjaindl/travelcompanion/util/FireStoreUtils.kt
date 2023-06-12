@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.plan.Plan
@@ -13,6 +12,7 @@ import com.sjaindl.travelcompanion.remember.detail.RememberPhoto
 import timber.log.Timber
 import java.util.Date
 import kotlin.random.Random
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
 object FireStoreUtils {
@@ -81,7 +81,7 @@ object FireStoreUtils {
                                 plans.add(plan)
                                 onLoaded(plan)
                             }.addOnCanceledListener {
-                                onInfo(R.string.cancelled)
+                                onInfo(SharedR.string.cancelled)
                             }.addOnFailureListener {
                                 onError(it)
                             }
@@ -93,7 +93,7 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(R.string.cancelled)
+                    onInfo(SharedR.string.cancelled)
                 }
             }
         }
@@ -145,7 +145,7 @@ object FireStoreUtils {
                                 onError = onError,
                             )
                         }.addOnCanceledListener {
-                            onInfo(R.string.cancelled)
+                            onInfo(SharedR.string.cancelled)
                         }.addOnFailureListener { exception ->
                             onError(exception)
                         }
@@ -157,11 +157,11 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(R.string.cancelled)
+                    onInfo(SharedR.string.cancelled)
                 }
             }
         }.addOnCanceledListener {
-            onInfo(R.string.cancelled)
+            onInfo(SharedR.string.cancelled)
         }.addOnFailureListener { exception ->
             onError(exception)
         }
@@ -195,11 +195,11 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(R.string.cancelled)
+                    onInfo(SharedR.string.cancelled)
                 }
             }
         }.addOnCanceledListener {
-            onInfo(R.string.cancelled)
+            onInfo(SharedR.string.cancelled)
         }.addOnFailureListener {
             onError(it)
         }
@@ -255,11 +255,11 @@ object FireStoreUtils {
                 if (bitmap != null) {
                     onLoaded(bitmap)
                 } else {
-                    onInfo(R.string.noImageData)
+                    onInfo(SharedR.string.noImageData)
                 }
             }
             .addOnCanceledListener {
-                onInfo(R.string.cancelled)
+                onInfo(SharedR.string.cancelled)
             }
             .addOnFailureListener { exception ->
                 onError(exception)
@@ -343,12 +343,12 @@ object FireStoreUtils {
             }.addOnFailureListener {
                 onError(it)
             }.addOnCanceledListener {
-                onInfo(R.string.errorDeleteImage)
+                onInfo(SharedR.string.errorDeleteImage)
             }
         }.addOnFailureListener {
             onError(it)
         }.addOnCanceledListener {
-            onInfo(R.string.errorDeleteImage)
+            onInfo(SharedR.string.errorDeleteImage)
         }
     }
 
@@ -481,14 +481,14 @@ object FireStoreUtils {
             } else {
                 val storagePath = metadata?.path
                 if (storagePath == null) {
-                    onInfo(R.string.imageNotSaved)
+                    onInfo(SharedR.string.imageNotSaved)
                 } else {
                     storageRef.child(storagePath).downloadUrl.addOnSuccessListener {
                         onSuccess(it)
                     }.addOnFailureListener {
                         onError(it)
                     }.addOnCanceledListener {
-                        R.string.cancelled
+                        SharedR.string.cancelled
                     }
                 }
             }

@@ -38,6 +38,7 @@ class FlickrPhotoPagingSource(
             is FlickrPhotosSourceType.Text -> {
                 client.fetchPhotos(text = type.text, offset = page, limit = limit)
             }
+
             is FlickrPhotosSourceType.Geo -> {
                 client.fetchPhotos(
                     latitude = type.latitude,

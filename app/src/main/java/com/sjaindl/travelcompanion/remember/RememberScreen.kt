@@ -24,12 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.PlanElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +45,7 @@ fun RememberScreen(
             containerColor = MaterialTheme.colors.background,
             topBar = {
                 TCAppBar(
-                    title = stringResource(R.string.remember),
+                    title = stringResource(SharedR.string.remember),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -77,7 +77,7 @@ fun RememberScreen(
                     val exception = (state as RememberViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.couldNotRetrieveData)
+                        exception.localizedMessage ?: exception.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
 
                     Column(
                         modifier = Modifier

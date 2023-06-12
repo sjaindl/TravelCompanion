@@ -56,6 +56,7 @@ class ExploreInfoViewModel(
                             }
                     }
                 }
+
                 InfoType.WIKIVOYAGE -> {
                     val place = place
                     if (place == null) {
@@ -71,6 +72,7 @@ class ExploreInfoViewModel(
                             }
                     }
                 }
+
                 InfoType.GOOGLE -> {
                     if (place == null) {
                         _state.value = State.NoData
@@ -82,6 +84,7 @@ class ExploreInfoViewModel(
                         _state.value = State.Done(url)
                     }
                 }
+
                 InfoType.LONELYPLANET -> {
                     if (place == null) {
                         _state.value = State.NoData

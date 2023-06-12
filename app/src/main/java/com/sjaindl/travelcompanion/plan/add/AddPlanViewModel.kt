@@ -2,7 +2,6 @@ package com.sjaindl.travelcompanion.plan.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.repository.DataRepository
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.Date
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
     sealed class State {
@@ -60,7 +60,7 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
                 if (exception != null) {
                     _state.value = State.Error(exception)
                 } else {
-                    _state.value = State.Info(R.string.cancelled)
+                    _state.value = State.Info(SharedR.string.cancelled)
                 }
             }
         }
@@ -68,7 +68,7 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
 
     fun addPlan(name: String, pinName: String, startDate: Date, endDate: Date, completion: () -> Unit) {
         if (FireStoreUtils.planExists(planName = name)) {
-            _state.value = State.Info(R.string.planAlreadyExists)
+            _state.value = State.Info(SharedR.string.planAlreadyExists)
             return
         }
 

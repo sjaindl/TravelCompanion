@@ -47,6 +47,7 @@ import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersist
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.util.Date
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +74,7 @@ fun AddPlanScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(R.string.addPlan),
+                    title = stringResource(SharedR.string.addPlan),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -105,7 +106,7 @@ fun AddPlanScreen(
                     val exception = (state as AddPlanViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
 
                     Column(
                         modifier = Modifier
@@ -164,7 +165,7 @@ fun AddPlanScreen(
                     )
                     {
                         Text(
-                            text = stringResource(id = R.string.destination),
+                            text = stringResource(id = SharedR.string.destination),
                             fontWeight = FontWeight.Bold,
                             color = colors.background,
                             modifier = Modifier
@@ -218,7 +219,7 @@ fun AddPlanScreen(
 
                         if (selectedDestination != null) {
                             Text(
-                                text = stringResource(id = R.string.displayName),
+                                text = stringResource(id = SharedR.string.displayName),
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -243,7 +244,7 @@ fun AddPlanScreen(
 
                         if (!displayName.isNullOrEmpty()) {
                             Text(
-                                text = stringResource(id = R.string.startDate),
+                                text = stringResource(id = SharedR.string.startDate),
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -264,7 +265,7 @@ fun AddPlanScreen(
 
                         if (startDate != null) {
                             Text(
-                                text = stringResource(id = R.string.endDate),
+                                text = stringResource(id = SharedR.string.endDate),
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -303,7 +304,7 @@ fun AddPlanScreen(
                                 colors = buttonColors,
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.cancel)
+                                    text = stringResource(id = SharedR.string.cancel)
                                 )
                             }
 
@@ -333,7 +334,7 @@ fun AddPlanScreen(
                                 colors = buttonColors,
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.addPlan)
+                                    text = stringResource(id = SharedR.string.addPlan)
                                 )
                             }
                         }

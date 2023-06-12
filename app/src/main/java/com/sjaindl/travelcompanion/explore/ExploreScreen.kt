@@ -40,7 +40,6 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GeocodingResult
 import com.sjaindl.travelcompanion.api.google.PlacesPredictions
 import com.sjaindl.travelcompanion.baseui.TCAppBar
@@ -52,6 +51,7 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun ExploreScreen(
@@ -122,7 +122,7 @@ fun ExploreScreen(
         }
 
         if (description != null) {
-            val message = stringResource(id = R.string.picked, description)
+            val message = stringResource(id = SharedR.string.picked, description)
             LaunchedEffect(key1 = placeId) {
                 scaffoldState.snackbarHostState.showSnackbar(
                     message = message,
@@ -132,7 +132,7 @@ fun ExploreScreen(
     }
 
     if (exception != null) {
-        val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.unknown_error)
+        val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.unknown_error)
         LaunchedEffect(exception) {
             scaffoldState.snackbarHostState.showSnackbar(
                 message = message
@@ -171,7 +171,7 @@ fun ExploreScreen(
                 snackbarHost = { SnackbarHost(snackBarHostState) },
                 topBar = {
                     TCAppBar(
-                        title = stringResource(R.string.explore),
+                        title = stringResource(SharedR.string.explore),
                         canNavigateBack = canNavigateBack,
                         navigateUp = navigateUp,
                     )
@@ -189,11 +189,11 @@ fun ExploreScreen(
                                     .background(colors.primary)
                                     .padding(8.dp),
                             ) {
-                                Text(text = stringResource(id = R.string.searchPlaces))
+                                Text(text = stringResource(id = SharedR.string.searchPlaces))
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Image(
                                     imageVector = Icons.Rounded.Search,
-                                    contentDescription = stringResource(id = R.string.search),
+                                    contentDescription = stringResource(id = SharedR.string.search),
                                 )
                             }
                         }

@@ -144,7 +144,7 @@ android {
         minSdk = 26
         targetSdk = 33
     }
-    namespace = "com.sjaindl.travelcompanion"
+    namespace = "com.sjaindl.travelcompanion.shared"
 }
 
 dependencies {

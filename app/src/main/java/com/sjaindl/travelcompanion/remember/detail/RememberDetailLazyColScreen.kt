@@ -43,6 +43,7 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
 import com.sjaindl.travelcompanion.remember.detail.bottomsheet.RememberItemActionBottomSheet
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun RememberDetailLazyColScreen(
@@ -68,7 +69,7 @@ fun RememberDetailLazyColScreen(
     TravelCompanionTheme {
         RememberItemActionBottomSheet(
             show = showDialogState != null,
-            title = stringResource(id = R.string.chooseAction),
+            title = stringResource(id = SharedR.string.chooseAction),
             onFullScreen = {
                 onShowActions(true)
                 fullScreenImage = viewModel.showDialog.value?.bitmap
@@ -89,7 +90,7 @@ fun RememberDetailLazyColScreen(
                     val exception = (state as RememberDetailLazyScreenViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
 
                     Box(
                         modifier = modifier
@@ -142,7 +143,7 @@ fun RememberDetailLazyColScreen(
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.noImageData),
+                                    text = stringResource(id = SharedR.string.noImageData),
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White,
                                     textAlign = TextAlign.Center,

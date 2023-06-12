@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun RememberItemActionContent(
@@ -57,7 +58,7 @@ fun RememberItemActionContent(
                 onClick = {
                     onFullScreen()
                 }) {
-                Text(stringResource(id = R.string.showPhoto))
+                Text(stringResource(id = SharedR.string.showPhoto))
             }
             Button(
                 modifier = modifier.fillMaxWidth(),
@@ -65,7 +66,7 @@ fun RememberItemActionContent(
                 onClick = {
                     onDelete()
                 }) {
-                Text(stringResource(id = R.string.delete))
+                Text(stringResource(id = SharedR.string.delete))
             }
             Button(
                 modifier = modifier.fillMaxWidth(),
@@ -73,7 +74,7 @@ fun RememberItemActionContent(
                 onClick = {
                     onCancel()
                 }) {
-                Text(stringResource(id = R.string.cancel))
+                Text(stringResource(id = SharedR.string.cancel))
             }
         }
     }
