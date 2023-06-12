@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleStartupBenchmark">
-        <State />
-      </entry>
       <entry key="ExploreDetailFlickrLazyGridPhotosScreenPreview">
         <State>
           <targetSelectedWithDropDown>
@@ -40,6 +37,9 @@
       <entry key="RememberDetailPhotosScreenPreview">
         <State />
       </entry>
+      <entry key="StartupBenchmark">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -57,6 +57,9 @@
         </State>
       </entry>
       <entry key="startup()">
+        <State />
+      </entry>
+      <entry key="startup() (1)">
         <State />
       </entry>
     </value>

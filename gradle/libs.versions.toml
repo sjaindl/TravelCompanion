@@ -4,6 +4,7 @@
 accompanistVersion = "0.28.0"
 activityComposeVersion = "1.7.2"
 appcompatVersion = "1.6.1"
+benchmark-macro-junit4 = "1.2.0-alpha15"
 coilVersion = "2.3.0"
 composeUIVersion = "1.4.3"
 constraintLayoutVersion = "2.1.4"
@@ -23,6 +24,7 @@ googleServicesVersion = "4.3.15"
 gradle = "8.2.0-alpha07"
 gradleVersion = "7.4.0"
 gsonVersion = "2.10.1"
+junit = "1.1.5"
 jUnitVersion = "4.13.2"
 kermitVersion = "1.2.2"
 kodeinVersion = "7.20.1"
@@ -50,6 +52,7 @@ resourcesVersion = "0.2.5"
 resourcesGeneratorVersion = "0.23.0"
 retrofitVersion = "2.9.0"
 roomVersion = "2.5.1"
+rulesVersion = "1.5.0"
 runnerVersion = "1.0.2"
 secretsGradlePluginVersion = "2.0.1"
 serializationVersion = "1.5.0"
@@ -58,6 +61,7 @@ sqlDelightVersion = "1.5.5"
 supportAnnotationsVersion = "28.0.0"
 testRunnerVersion = "1.5.2"
 timberVersion = "5.0.1"
+uiautomator = "2.2.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistVersion" }
@@ -155,6 +159,10 @@ kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref =
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
 resources-generator = { module = "dev.icerock.moko:resources-generator", version.ref = "resourcesGeneratorVersion" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
+androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rulesVersion" }
 
 [plugins]
 firebase-crashlytics = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradleVersion" }
