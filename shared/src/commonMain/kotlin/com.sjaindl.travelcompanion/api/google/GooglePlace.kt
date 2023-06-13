@@ -23,7 +23,7 @@ data class GooglePlace(
 
     @SerialName("user_ratings_total")
     var userRatingsTotal: Long? = null,
-    var vicinity: String,
+    var vicinity: String? = null,
     var geometry: Geometry? = null,
     var photos: List<Photo>? = null,
 

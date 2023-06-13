@@ -149,7 +149,7 @@ fun ExpandableCard(
                             bottom.linkTo(parent.bottom)
                             //end.linkTo(addRef.start)
                         },
-                        title = title,
+                        title = "$title (${planDetailItems.size})",
                     )
 
                     CardIcon(

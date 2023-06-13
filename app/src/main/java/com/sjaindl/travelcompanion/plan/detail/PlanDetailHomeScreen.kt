@@ -13,7 +13,7 @@ fun PlanDetailHomeScreen(
     planName: String,
     onChoosePlanImage: (pinId: Long) -> Unit,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit = {},
+    navigateUp: () -> Unit = { },
 ) {
     val navController = rememberNavController()
 

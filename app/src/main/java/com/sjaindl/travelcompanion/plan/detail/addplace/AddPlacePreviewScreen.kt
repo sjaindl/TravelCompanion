@@ -111,7 +111,7 @@ fun AddPlacePreviewScreen(
                     )
 
                     Text(
-                        text = googlePlace.vicinity,
+                        text = googlePlace.vicinity.orEmpty(),
                         color = colors.primary,
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp

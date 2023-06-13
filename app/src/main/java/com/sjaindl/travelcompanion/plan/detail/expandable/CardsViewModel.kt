@@ -58,16 +58,6 @@ class CardsViewModel(private val planName: String) : ViewModel() {
             attractions.update {
                 plannableUtils.planDetailItems(PlanDetailItemType.ATTRACTION)
             }
-
-            if (hotels.value.isNotEmpty()) {
-                toggleCardExpandedState(id = hotelCardId)
-            }
-            if (restaurants.value.isNotEmpty()) {
-                toggleCardExpandedState(id = restaurantCardId)
-            }
-            if (attractions.value.isNotEmpty()) {
-                toggleCardExpandedState(id = attractionCardId)
-            }
         }
     }
 

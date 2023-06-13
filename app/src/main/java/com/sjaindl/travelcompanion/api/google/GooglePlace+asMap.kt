@@ -8,7 +8,7 @@ fun GooglePlace.asMap(): Map<String, Any> {
         FireStoreConstants.Ids.Place.name to name,
         FireStoreConstants.Ids.Place.reference to reference,
         FireStoreConstants.Ids.Place.scope to scope,
-        FireStoreConstants.Ids.Place.vicinity to vicinity,
+        FireStoreConstants.Ids.Place.vicinity to vicinity.orEmpty(),
     )
 
     id?.let {
