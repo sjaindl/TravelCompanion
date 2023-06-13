@@ -4,12 +4,12 @@ import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,7 +61,7 @@ fun SearchPlacesScreen(
                     navigateUp = navigateUp,
                 )
             },
-            backgroundColor = colors.onPrimary,
+            backgroundColor = Color.White,
         ) { paddingValues ->
             AndroidViewBinding(
                 modifier = modifier.padding(paddingValues),
