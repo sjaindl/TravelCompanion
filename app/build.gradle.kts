@@ -10,6 +10,8 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 
+    id("androidx.baselineprofile")
+
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
@@ -91,6 +93,8 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/room
     implementation(libs.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.profileinstaller)
+    "baselineProfile"(project(mapOf("path" to ":baselineprofile")))
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.androidx.room.testing)
 

@@ -23,3 +23,4 @@ rootProject.name = "TravelCompanion"
 include(":app")
 include(":shared")
 include(":benchmark")
+include(":baselineprofile")

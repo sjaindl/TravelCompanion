@@ -1,8 +1,12 @@
 package com.sjaindl.travelcompanion.benchmark
 
 import android.Manifest
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
+import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
@@ -27,6 +31,10 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class StartupBenchmark {
+    companion object {
+        const val packageName = "com.sjaindl.travelcompanion"
+    }
+
     @get:Rule
     val grantPermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(
@@ -34,15 +42,22 @@ class StartupBenchmark {
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
 
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
+    @RequiresApi(Build.VERSION_CODES.P)
+    @get:Rule
+    val baselineProfileRule = BaselineProfileRule()
+
     @Test
-    fun startup() = benchmarkRule.measureRepeated(
-        packageName = "com.sjaindl.travelcompanion",
+    fun startupMeasure() = benchmarkRule.measureRepeated(
+        packageName = packageName,
         metrics = listOf(StartupTimingMetric()),
+        compilationMode = CompilationMode.None(),
         iterations = 5,
         startupMode = StartupMode.COLD
     ) {

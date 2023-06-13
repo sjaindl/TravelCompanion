@@ -22,6 +22,7 @@ buildscript {
 
         // https://github.com/icerockdev/moko-resources
         classpath(libs.resources.generator)
+        classpath(libs.baseline.profile)
     }
 }
 

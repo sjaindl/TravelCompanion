@@ -1,11 +1,12 @@
 # https://proandroiddev.com/gradle-version-catalogs-for-an-awesome-dependency-management-f2ba700ff894
 # https://developer.android.com/build/migrate-to-catalogs
 [versions]
-accompanistVersion = "0.28.0"
+accompanistVersion = "0.30.1"
 activityComposeVersion = "1.7.2"
 appcompatVersion = "1.6.1"
-benchmark-macro-junit4 = "1.2.0-alpha15"
-coilVersion = "2.3.0"
+baselineProfileVersion = "1.2.0-alpha15"
+benchmark-macro-junit4Version = "1.2.0-alpha15"
+coilVersion = "2.4.0"
 composeUIVersion = "1.4.3"
 constraintLayoutVersion = "2.1.4"
 constraintLayoutComposeVersion = "1.0.1"
@@ -36,6 +37,7 @@ lifecycleExtensionsVersion = "2.2.0"
 lifecycleVersion = "2.6.1"
 mapsComposeVersion = "2.7.2"
 mapsVersion = "18.1.0"
+profileinstallerVersion = "1.3.1"
 materialVersion = "1.9.0"
 mockitoAndroidVersion = "2.24.5"
 mockitoKotlinVersion = "2.2.0"
@@ -136,6 +138,7 @@ okio-fakefilesystem = { module = "com.squareup.okio:okio-fakefilesystem", versio
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picassoVersion" }
 places = { module = "com.google.android.libraries.places:places", version.ref = "placesVersion" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "mapsVersion" }
+profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstallerVersion" }
 resources = { module = "dev.icerock.moko:resources", version.ref = "resourcesGeneratorVersion" }
 resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "resourcesGeneratorVersion" }
 resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "resourcesGeneratorVersion" }
@@ -151,6 +154,7 @@ support-annotations = { module = "com.android.support:support-annotations", vers
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 
 # Plugins or classpath:
+baseline-profile = { module = "androidx.benchmark:benchmark-baseline-profile-gradle-plugin", version.ref = "baselineProfileVersion" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradleVersion" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
@@ -161,7 +165,7 @@ resources-generator = { module = "dev.icerock.moko:resources-generator", version
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4Version" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rulesVersion" }
 
 [plugins]

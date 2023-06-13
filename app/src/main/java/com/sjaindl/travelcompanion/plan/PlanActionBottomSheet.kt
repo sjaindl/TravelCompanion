@@ -48,7 +48,7 @@ fun PlanActionBottomSheet(
                 if (!show) {
                     modalSheetState.hide()
                 } else {
-                    modalSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                    modalSheetState.show()
                 }
             }
         }

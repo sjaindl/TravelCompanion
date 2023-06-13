@@ -17,6 +17,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1994021274">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Pixel_6_API_33_Notifications" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1238038254">
           <value>
             <AndroidTestResultsTableState>
@@ -24,6 +38,7 @@
                 <map>
                   <entry key="13.5_Freeform_API_33" value="120" />
                   <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -50,6 +65,20 @@
                 <map>
                   <entry key="13.5_Freeform_API_33" value="120" />
                   <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="308657734">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Pixel_6_API_33_Notifications" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
