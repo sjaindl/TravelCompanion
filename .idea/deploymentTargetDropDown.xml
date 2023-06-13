@@ -2,22 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="NotesScreenPreview">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_6_API_33_Notifications.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-05-28T16:02:28.185047Z" />
-        </State>
-      </entry>
       <entry key="StartupBenchmark">
         <State />
       </entry>
@@ -74,6 +58,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2023-06-13T12:04:55.347007Z" />
         </State>
+      </entry>
+      <entry key="startupCompilationBaselineProfiles()">
+        <State />
       </entry>
     </value>
   </component>
