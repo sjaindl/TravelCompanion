@@ -60,7 +60,8 @@ fun AddPlanScreen(
         )
     ),
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit = {},
+    navigateUp: () -> Unit = { },
+    planAdded: () -> Unit = { },
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -328,7 +329,7 @@ fun AddPlanScreen(
                                         endDate = end,
                                     ) {
                                         focusManager.clearFocus(force = true)
-                                        navigateUp()
+                                        planAdded()
                                     }
                                 },
                                 colors = buttonColors,

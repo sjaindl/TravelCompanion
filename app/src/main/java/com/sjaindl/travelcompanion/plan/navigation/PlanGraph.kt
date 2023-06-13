@@ -1,8 +1,8 @@
 package com.sjaindl.travelcompanion.plan.navigation
 
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -11,6 +11,7 @@ import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.PlanHomeScreen
 import com.sjaindl.travelcompanion.plan.add.AddPlanScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailHomeScreen
+import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
 private const val planRoute = "plan"
 private const val planDetailsContainerRoute = "planDetailsContainerRoute"
@@ -72,7 +73,7 @@ data class PlanDetailContainer(
 }
 
 fun NavGraphBuilder.planGraph(
-    navController: NavController,
+    navController: NavHostController,
     onShowDetails: (Long) -> Unit = { },
     onChoosePlanImage: (pinId: Long) -> Unit,
 ) {
@@ -104,8 +105,11 @@ fun NavGraphBuilder.planGraph(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = {
                     navController.navigateUp()
-
                 },
+                planAdded = {
+                    navController.navigateUp()
+                    navController.navigateSingleTopTo(planHome.route)
+                }
             )
         }
 
@@ -118,6 +122,10 @@ fun NavGraphBuilder.planGraph(
                 preselectedDestination = destination,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
+                planAdded = {
+                    navController.navigateUp()
+                    navController.navigateSingleTopTo(planHome.route)
+                }
             )
         }
 
