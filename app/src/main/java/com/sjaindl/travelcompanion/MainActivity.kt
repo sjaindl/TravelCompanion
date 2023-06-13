@@ -16,6 +16,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
+import com.sjaindl.travelcompanion.util.FireStoreUtils
 import timber.log.Timber
 import kotlin.random.Random
 import com.sjaindl.travelcompanion.shared.R as SharedR
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            preloadPlans()
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -96,6 +101,7 @@ class MainActivity : AppCompatActivity() {
 
             if (result?.resultCode == RESULT_OK) {
                 // Successfully signed in
+                preloadPlans()
                 successAction()
             } else {
                 // Sign in failed
@@ -114,6 +120,20 @@ class MainActivity : AppCompatActivity() {
                 Timber.tag(tag).e(response.error, "Sign-in error: ${response.error}")
             }
         }
+    }
+
+    private fun preloadPlans() {
+        FireStoreUtils.loadPlans(
+            onLoaded = {
+                Timber.d("loaded plan: ${it.name}")
+            },
+            onError = {
+                Timber.d("plan loading error: ${it.message}")
+            },
+            onInfo = {
+                Timber.d("plan loading info: ${getString(it)}")
+            },
+        )
     }
 
     private fun startSignIn(successAction: () -> Unit): Boolean {
