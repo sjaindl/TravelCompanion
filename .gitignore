@@ -118,3 +118,8 @@ gradlew.bat
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# release data
+tc_release_key.jks
+app-release.aab
+keystore.properties

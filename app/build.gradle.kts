@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -16,7 +18,19 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
     compileSdk = 33
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
@@ -36,11 +50,14 @@ android {
         resourceConfigurations.addAll(listOf("en", "de"))
     }
 
+
     buildTypes {
         getByName("release") {
 
             isMinifyEnabled = false
             //proguardFiles = getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig = signingConfigs.getByName("release")
         }
         create("benchmark") {
             initWith(buildTypes.getByName("release"))
