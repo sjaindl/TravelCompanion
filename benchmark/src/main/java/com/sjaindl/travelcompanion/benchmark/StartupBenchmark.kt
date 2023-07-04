@@ -1,12 +1,9 @@
 package com.sjaindl.travelcompanion.benchmark
 
 import android.Manifest
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
-import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
@@ -49,17 +46,21 @@ class StartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    @get:Rule
-    val baselineProfileRule = BaselineProfileRule()
+    @Test
+    fun startupNoCompilation() = startup(CompilationMode.None())
 
     @Test
-    fun startupMeasure() = benchmarkRule.measureRepeated(
+    fun startupBaselineProfile() = startup(CompilationMode.Partial())
+
+    @Test
+    fun startupFullCompilation() = startup(CompilationMode.Full())
+    
+    private fun startup(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = packageName,
         metrics = listOf(StartupTimingMetric()),
-        compilationMode = CompilationMode.None(),
-        iterations = 5,
-        startupMode = StartupMode.COLD
+        compilationMode = compilationMode,
+        iterations = 10,
+        startupMode = StartupMode.COLD,
     ) {
         pressHome()
         startActivityAndWait()
