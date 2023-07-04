@@ -31,7 +31,7 @@ import org.junit.runner.RunWith
  * Check [documentation](https://d.android.com/topic/performance/benchmarking/macrobenchmark-instrumentation-args)
  * for more information about available instrumentation arguments.
  *
- * After you run the generator, you can verify the improvements running the [StartupBenchmarks] benchmark.
+ * After you run the generator, you can verify the improvements running the [com.sjaindl.travelcompanion.benchmark.StartupBenchmark] benchmark.
  **/
 @RunWith(AndroidJUnit4::class)
 @RequiresApi(Build.VERSION_CODES.P)
