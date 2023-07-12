@@ -50,7 +50,6 @@ android {
         resourceConfigurations.addAll(listOf("en", "de"))
     }
 
-
     buildTypes {
         getByName("release") {
 
@@ -168,6 +167,10 @@ dependencies {
     debugImplementation(libs.leakcanary.android)
 
     testImplementation(libs.junit)
+    testImplementation(libs.test.mockk)
+    testImplementation(libs.androidx.paging.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.truth)
 
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -175,10 +178,8 @@ dependencies {
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.mockito.android)
-    androidTestImplementation(libs.kotlinx.coroutines.test) {
-        // conflicts with mockito due to direct inclusion of byte buddy
-        // exclude group : "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
-    }
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.truth)
 
     androidTestImplementation(libs.support.annotations)
     androidTestImplementation(libs.runner)

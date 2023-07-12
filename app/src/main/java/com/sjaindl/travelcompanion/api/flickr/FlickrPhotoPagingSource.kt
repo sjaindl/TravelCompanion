@@ -17,17 +17,6 @@ class FlickrPhotoPagingSource(
     private val initialPage = 0
     private val tag = "FlickrPhotoPagingSource"
 
-    override fun getRefreshKey(state: PagingState<Int, FlickrPhoto>): Int? {
-        val pos = state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
-
-        Timber.tag(tag).d("getRefreshKey: $pos")
-
-        return pos
-    }
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FlickrPhoto> {
         val page = params.key ?: initialPage
         val limit = params.loadSize
@@ -63,6 +52,17 @@ class FlickrPhotoPagingSource(
             return LoadResult.Error(it)
         }
 
-        return LoadResult.Invalid() // should never happen
+        return LoadResult.Invalid()
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, FlickrPhoto>): Int? {
+        val position = state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(other = 1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(other = 1)
+        }
+
+        Timber.tag(tag).d("getRefreshKey: $position")
+
+        return position
     }
 }

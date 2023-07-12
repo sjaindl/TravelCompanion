@@ -7,33 +7,22 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.api.flickr.FlickrPhoto
-import com.sjaindl.travelcompanion.api.flickr.FlickrPhotoResponse
 import com.sjaindl.travelcompanion.api.flickr.FlickrRepository
 import com.sjaindl.travelcompanion.api.flickr.FlickrRepositoryImpl
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.repository.DataRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 
 class ExploreFlickrPhotosViewModel(
     dataRepository: DataRepository,
     pinId: Long,
     private val photoType: PhotoType,
-) :
-    ViewModel() {
+) : ViewModel() {
 
     companion object {
-        val tag = "ExploreFlickrPhotosViewModel"
-    }
-
-    sealed class State {
-        object Initial : State()
-        object Loading : State()
-        data class Done(val response: FlickrPhotoResponse) : State()
-        data class Error(val throwable: Throwable) : State()
+        const val tag = "ExploreFlickrPhotosViewModel"
     }
 
     private var pin: Pin? = dataRepository.singlePin(pinId)
@@ -45,9 +34,6 @@ class ExploreFlickrPhotosViewModel(
     private val flickrClient by lazy {
         TCInjector.flickrClient
     }
-
-    private var _state: MutableStateFlow<State> = MutableStateFlow(State.Initial)
-    var state = _state.asStateFlow()
 
     val place: String?
         get() = pin?.name
