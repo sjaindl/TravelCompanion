@@ -126,7 +126,6 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                     item?.let { photo ->
                         val model = ImageRequest.Builder(LocalContext.current)
                             .data(photo.url)
-                            //.size(width = photo.width!!, height = photo.height!!)
                             .size(Size.ORIGINAL)
                             .placeholder(android.R.drawable.gallery_thumb)
                             .crossfade(enable = true)
@@ -187,7 +186,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
                 )
             }
         }
