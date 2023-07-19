@@ -1,7 +1,9 @@
 package com.sjaindl.travelcompanion.benchmark
 
 import android.Manifest
+import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -37,8 +39,6 @@ class StartupBenchmark {
         GrantPermissionRule.grant(
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.INTERNET,
-            // Manifest.permission.ACCESS_COARSE_LOCATION,
-            // Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
@@ -50,17 +50,24 @@ class StartupBenchmark {
     fun startupNoCompilation() = startup(CompilationMode.None())
 
     @Test
-    fun startupBaselineProfile() = startup(CompilationMode.Partial())
+    fun startupBaselineProfile() = startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
 
     @Test
     fun startupFullCompilation() = startup(CompilationMode.Full())
-    
-    private fun startup(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
+
+    private fun startup(
+        compilationMode: CompilationMode,
+        startupMode: StartupMode = StartupMode.COLD,
+    ) = benchmarkRule.measureRepeated(
         packageName = packageName,
-        metrics = listOf(StartupTimingMetric()),
+        metrics = listOf(
+            StartupTimingMetric(),
+            // PowerMetric(PowerMetric.Type.Battery()),
+            FrameTimingMetric(),
+        ),
         compilationMode = compilationMode,
         iterations = 10,
-        startupMode = StartupMode.COLD,
+        startupMode = startupMode,
     ) {
         pressHome()
         startActivityAndWait()

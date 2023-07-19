@@ -49,14 +49,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
-    <!--
-        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    -->
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 

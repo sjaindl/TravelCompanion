@@ -90,6 +90,10 @@ android {
         jvmToolchain(17)
     }
 
+    // https://developer.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
+    experimentalProperties["android.experimental.art-profile-r8-rewriting"] = true
+    experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
+
     namespace = "com.sjaindl.travelcompanion"
 }
 

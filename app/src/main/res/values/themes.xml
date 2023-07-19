@@ -12,7 +12,7 @@
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/colorMain</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
-        <item name="windowSplashScreenAnimationDuration">5000</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/colorPrimaryDark</item>
         -->
         <!-- Optional "branding" image to be shown at the bottom of the screen:
