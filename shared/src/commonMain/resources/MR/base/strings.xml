@@ -203,4 +203,6 @@
     <string name="planAlreadyExists">Plan already exists</string>
 
     <string name="facebook_application_id" translatable="false">267588824024616</string>
+
+    <string name="permission_denied">Cannot take picture because permission was denied</string>
 </resources>

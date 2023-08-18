@@ -1,9 +1,11 @@
 package com.sjaindl.travelcompanion.remember.detail
 
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +18,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CameraAlt
 import androidx.compose.material.icons.rounded.GridOff
 import androidx.compose.material.icons.rounded.GridOn
-import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,21 +36,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.util.TCFileProvider
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 import com.sjaindl.travelcompanion.shared.R as SharedR
 
 sealed class AddMultiplePhotosState {
@@ -67,92 +69,65 @@ fun RememberDetailScreen(
         factory = RememberDetailViewModelFactory(planName = planName)
     ),
     canNavigateBack: Boolean,
+    showPermissionRationale: () -> Unit = { },
     navigateUp: () -> Unit = { },
 ) {
-    val context = LocalContext.current
+    val context = LocalContext.current as Activity
 
     var showActions by remember { mutableStateOf(true) }
     var showGrids by remember { mutableStateOf(false) }
 
     val state by viewModel.state.collectAsState()
 
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val permission = Manifest.permission.CAMERA
+    val cameraAction = "android.media.action.IMAGE_CAPTURE"
 
-    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
 
-    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickMultipleVisualMedia(),
-        onResult = { uris ->
-            val curPhotos = (state as? RememberDetailViewModel.State.LoadedPhotos)?.photos ?: emptyList()
-            viewModel.setLoading()
+    var permissionDenied by remember {
+        mutableStateOf(false)
+    }
 
-            scope.launch {
-                val result = suspendCancellableCoroutine { continuation ->
-                    val photos = mutableListOf<RememberPhoto>()
-                    uris.map { uri ->
-                        BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-                    }.forEach { bitmap ->
-                        FireStoreUtils.persistRememberPhoto(
-                            planName = planName,
-                            image = bitmap,
-                            onSuccess = {
-                                photos.add(it)
-                                if (photos.size == uris.size) {
-                                    continuation.resume(AddMultiplePhotosState.AddedPhotos(photos = photos))
-                                }
-                            },
-                            onInfo = {
-                                continuation.resume(AddMultiplePhotosState.Info(stringRes = it))
-                            },
-                            onError = {
-                                continuation.resume(AddMultiplePhotosState.Error(exception = it))
-                            },
-                        )
-                    }
-                }
+    var cameraEnabled by remember {
+        mutableStateOf(context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY))
+    }
 
-                when (result) {
-                    is AddMultiplePhotosState.Error -> {
-                        viewModel.setError(exception = result.exception)
-                    }
+    val resultLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
 
-                    is AddMultiplePhotosState.Info -> {
-                        viewModel.setInfo(stringRes = result.stringRes)
-                    }
+        val success = result.resultCode == Activity.RESULT_OK
+        val bitmap: Bitmap? = result.data?.extras?.getParcelable("data")
 
-                    is AddMultiplePhotosState.AddedPhotos -> {
-                        viewModel.addPhotos(photos = curPhotos.plus(result.photos))
-                    }
-                }
-            }
+        if (!success || bitmap == null) {
+            viewModel.setInfo(SharedR.string.imageNotSaved)
+        } else {
+            FireStoreUtils.persistRememberPhoto(
+                planName = planName,
+                image = bitmap,
+                onSuccess = {
+                    viewModel.addPhoto(photo = it)
+                },
+                onInfo = {
+                    viewModel.setInfo(stringRes = it)
+                },
+                onError = {
+                    viewModel.setError(exception = it)
+                },
+            )
         }
-    )
+    }
 
-    val cameraPicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = { success ->
-            val uri = imageUri
-            if (!success || uri == null) {
-                viewModel.setInfo(SharedR.string.imageNotSaved)
-            } else {
-                val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-
-                FireStoreUtils.persistRememberPhoto(
-                    planName = planName,
-                    image = bitmap,
-                    onSuccess = {
-                        viewModel.addPhoto(photo = it)
-                    },
-                    onInfo = {
-                        viewModel.setInfo(stringRes = it)
-                    },
-                    onError = {
-                        viewModel.setError(exception = it)
-                    },
-                )
-            }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            resultLauncher.launch(Intent(cameraAction))
+        } else {
+            cameraEnabled = false
+            permissionDenied = true
         }
-    )
+    }
 
     LaunchedEffect(Unit) {
         viewModel.loadPhotos()
@@ -160,6 +135,7 @@ fun RememberDetailScreen(
 
     TravelCompanionTheme {
         Scaffold(
+            snackbarHost = { SnackbarHost(snackBarHostState) },
             modifier = modifier,
             topBar = {
                 TCAppBar(
@@ -173,30 +149,34 @@ fun RememberDetailScreen(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        FloatingActionButton(onClick = {
-                            // https://proandroiddev.com/jetpack-compose-new-photo-picker-b280950ba934
-                            multiplePhotoPickerLauncher.launch(
-                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Photo,
-                                contentDescription = stringResource(id = SharedR.string.choose_gallery),
-                            )
-                        }
-                        FloatingActionButton(onClick = {
-                            val uri = TCFileProvider.getImageUri(context)
-                            imageUri = uri
-                            cameraPicker.launch(uri)
-                        }) {
+                        FloatingActionButton(
+                            onClick = {
+                                if (!cameraEnabled) return@FloatingActionButton
+
+                                resultLauncher.launch(Intent(cameraAction))
+                                return@FloatingActionButton
+
+                                if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+                                    resultLauncher.launch(Intent(cameraAction))
+                                } else if(ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+                                    showPermissionRationale()
+                                } else {
+                                    permissionLauncher.launch(permission)
+                                }
+                            },
+                            containerColor = if (cameraEnabled) MaterialTheme.colors.secondary else Gray,
+                        ) {
                             Icon(
                                 imageVector = Icons.Rounded.CameraAlt,
                                 contentDescription = stringResource(id = SharedR.string.choose_camera),
                             )
                         }
-                        FloatingActionButton(onClick = {
-                            showGrids = !showGrids
-                        }) {
+                        FloatingActionButton(
+                            onClick = {
+                                showGrids = !showGrids
+                            },
+                            containerColor = MaterialTheme.colors.secondary,
+                        ) {
                             Icon(
                                 imageVector = if (showGrids) Icons.Rounded.GridOn else Icons.Rounded.GridOff,
                                 contentDescription = null,
@@ -207,6 +187,16 @@ fun RememberDetailScreen(
             },
             containerColor = MaterialTheme.colors.background,
         ) { paddingValues ->
+
+            if (permissionDenied) {
+                val message = stringResource(id = SharedR.string.permission_denied)
+                LaunchedEffect(Unit) {
+                    snackBarHostState.showSnackbar(
+                        message = message
+                    )
+                }
+            }
+
             when (state) {
                 RememberDetailViewModel.State.Loading -> {
                     Column(
