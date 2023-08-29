@@ -1,5 +1,10 @@
 package com.sjaindl.travelcompanion.explore
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -10,6 +15,7 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.FloatingActionButton
@@ -30,6 +36,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
@@ -66,6 +74,7 @@ fun ExploreScreen(
     onNavigateToExploreDetails: (Long) -> Unit,
     onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
+    showPermissionRationale: () -> Unit = { },
     navigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -90,6 +99,18 @@ fun ExploreScreen(
 
     val prefs by lazy {
         MapLocationDataPrefs(context)
+    }
+
+    val permission = Manifest.permission.ACCESS_COARSE_LOCATION
+
+    var isLocationPermissionGranted by remember {
+        mutableStateOf(ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        isLocationPermissionGranted = isGranted
     }
 
     if (searchPlace) {
@@ -170,10 +191,21 @@ fun ExploreScreen(
                     .background(Color.Gray),
                 snackbarHost = { SnackbarHost(snackBarHostState) },
                 topBar = {
+                    val customActionIcon = if(!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
                     TCAppBar(
                         title = stringResource(SharedR.string.explore),
                         canNavigateBack = canNavigateBack,
                         navigateUp = navigateUp,
+                        customActionIcon = customActionIcon,
+                        onCustomAction = {
+                            if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+                                isLocationPermissionGranted = true
+                            } else if (ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, permission)) {
+                                showPermissionRationale()
+                            } else {
+                                permissionLauncher.launch(permission)
+                            }
+                        },
                     )
                 },
                 floatingActionButton = {
@@ -207,13 +239,8 @@ fun ExploreScreen(
                     googleMapOptionsFactory = {
                         GoogleMapOptions()
                     },
-                    properties = MapProperties(
-                        isBuildingEnabled = true,
-                        isIndoorEnabled = true,
-                        isMyLocationEnabled = false,
-                        isTrafficEnabled = false,
-                    ),
-                    uiSettings = MapUiSettings(),
+                    properties = MapProperties(isMyLocationEnabled = isLocationPermissionGranted),
+                    uiSettings = MapUiSettings(myLocationButtonEnabled = isLocationPermissionGranted),
                     onMapClick = { latLng ->
                         onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
                     },
