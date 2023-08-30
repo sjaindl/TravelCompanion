@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.explore
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -11,13 +12,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.FabPosition
+import androidx.compose.material3.FabPosition
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -61,6 +63,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import com.sjaindl.travelcompanion.shared.R as SharedR
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExploreScreen(
     encodedPlaces: String? = null,
@@ -80,8 +83,15 @@ fun ExploreScreen(
     val context = LocalContext.current
 
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
     val cameraPositionState = rememberCameraPositionState()
+
+    val attributionContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        context.createAttributionContext("userLocation")
+    } else {
+        context
+    }
+
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(attributionContext)
 
     var initialLocation: MapLocationData? by remember {
         mutableStateOf(null)
@@ -145,7 +155,7 @@ fun ExploreScreen(
         if (description != null) {
             val message = stringResource(id = SharedR.string.picked, description)
             LaunchedEffect(key1 = placeId) {
-                scaffoldState.snackbarHostState.showSnackbar(
+                snackBarHostState.showSnackbar(
                     message = message,
                 )
             }
@@ -155,7 +165,7 @@ fun ExploreScreen(
     if (exception != null) {
         val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.unknown_error)
         LaunchedEffect(exception) {
-            scaffoldState.snackbarHostState.showSnackbar(
+            snackBarHostState.showSnackbar(
                 message = message
             )
         }
@@ -250,6 +260,22 @@ fun ExploreScreen(
                             viewModel.addPersistedPinsToMap()
                         }
                     },
+                    onMyLocationButtonClick = {
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                            if (location.hasAccuracy()) {
+                                coroutineScope.launch {
+                                    snackBarHostState.showSnackbar(
+                                        message = context.getString(
+                                            SharedR.string.accuracy,
+                                            location.accuracy.toString(),
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        false
+                    }
                 ) {
                     val placeDetail by viewModel.placeDetails.collectAsState()
 

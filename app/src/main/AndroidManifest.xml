@@ -14,6 +14,9 @@
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
 
+    <attribution android:tag="userLocation"
+        android:label="@string/location" />
+
     <application
         android:name=".TCApplication"
         android:allowBackup="true"
