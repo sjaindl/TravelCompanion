@@ -203,4 +203,5 @@
     <string name="planAlreadyExists">Plan existiert bereits</string>
 
     <string name="accuracy">Genauigkeit: %s Meter</string>
+    <string name="data_access_rationale_location">Es wird auf deinen ungefähren Standort zugegriffen, wenn du aktiv Reisemöglichkeiten in der Nähe erkunden möchtest</string>
 </resources>
