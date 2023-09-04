@@ -202,5 +202,5 @@
     <string name="errorDeleteImage">Foto konnte nicht gelöscht werden</string>
     <string name="planAlreadyExists">Plan existiert bereits</string>
 
-    <string name="accuracy">Accuracy: %s metres</string>
+    <string name="accuracy">Genauigkeit: %s Meter</string>
 </resources>

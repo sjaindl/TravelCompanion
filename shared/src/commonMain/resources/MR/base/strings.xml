@@ -204,5 +204,5 @@
 
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 
-    <string name="accuracy">Genauigkeit: %s Meter</string>
+    <string name="accuracy">Accuracy: %s metres</string>
 </resources>

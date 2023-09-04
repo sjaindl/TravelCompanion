@@ -11,7 +11,6 @@ import com.sjaindl.travelcompanion.api.firestore.FireStoreRemoteConfig
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
-
 class TCApplication : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -29,15 +28,6 @@ class TCApplication : Application() {
     @RequiresApi(Build.VERSION_CODES.R)
     private fun setupAppOpsCallback() {
         val appOpsCallback = object : AppOpsManager.OnOpNotedCallback() {
-            private fun logPrivateDataAccess(
-                opCode: String,
-                attributionTag: String,
-                message: String? = null,
-            ) {
-                Timber.tag("TCApplication")
-                    .d("Private data accessed.\nOperation: $opCode\nAttribution Tag: $attributionTag\nMessage:${message.orEmpty()}")
-            }
-
             override fun onNoted(syncNotedAppOp: SyncNotedAppOp) {
                 logPrivateDataAccess(
                     opCode = syncNotedAppOp.op,
@@ -58,6 +48,15 @@ class TCApplication : Application() {
                     attributionTag = asyncNotedAppOp.attributionTag.orEmpty(),
                     message = asyncNotedAppOp.message,
                 )
+            }
+
+            private fun logPrivateDataAccess(
+                opCode: String,
+                attributionTag: String,
+                message: String? = null,
+            ) {
+                Timber.tag("TCApplication")
+                    .d("Private data accessed.\nOperation: $opCode\nAttribution Tag: $attributionTag\nMessage:${message.orEmpty()}")
             }
         }
 
