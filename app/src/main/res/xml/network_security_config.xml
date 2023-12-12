@@ -11,4 +11,16 @@
         </trust-anchors>
     </debug-overrides>
 
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">api.geonames.org</domain>
+
+        <!-- Certificate pinning -->
+        <pin-set expiration="2023-12-31">
+            <!-- Base64-encoded SHA-256 message digest of server's public keys -->
+            <pin digest="SHA-256">wFNeS+K3n/2TKRMFQ2v4iTFOSj+uwF7P/Lt98xrZ5Ro=</pin>
+            <!-- backup pin -->
+            <pin digest="SHA-256">XL2mf+2iSC74MvbiNoepe3yE2fY8AbqQwSEA49TJzUE=</pin>
+        </pin-set>
+    </domain-config>
+
 </network-security-config>
