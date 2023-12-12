@@ -252,4 +252,7 @@ dependencies {
     implementation(libs.firebase.ui.auth)
     // Required for Facebook login: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
     implementation(libs.facebook.login)
+
+    // Certificate transparency
+    implementation(libs.certificatetransparency)
 }
