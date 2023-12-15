@@ -4,6 +4,7 @@
 accompanistVersion = "0.30.1"
 activityComposeVersion = "1.7.2"
 appcompatVersion = "1.6.1"
+appmattusVersion = "2.5.0"
 baselineProfileVersion = "1.2.0-alpha15"
 benchmark-macro-junit4Version = "1.2.0-alpha15"
 coilVersion = "2.4.0"
@@ -22,7 +23,7 @@ firebaseCrashlyticsGradleVersion = "2.9.5"
 firebaseUIVersion = "8.0.2"
 googleMapsUtilsVersion = "2.4.0"
 googleServicesVersion = "4.3.15"
-gradle = "8.2.0-alpha07"
+gradle = "8.2.0"
 gradleVersion = "7.4.0"
 gsonVersion = "2.10.1"
 junit = "1.1.5"
@@ -100,6 +101,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomVersion" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
+certificatetransparency = { module = "com.appmattus.certificatetransparency:certificatetransparency-android", version.ref = "appmattusVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
