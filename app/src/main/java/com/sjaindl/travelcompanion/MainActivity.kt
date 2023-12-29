@@ -142,14 +142,25 @@ class MainActivity : AppCompatActivity() {
             // already signed in
             return true
         } else {
+            val googleProvider = AuthUI.IdpConfig.GoogleBuilder().setScopes(
+                listOf(
+                    "email",
+                    "profile",
+                    "https://www.googleapis.com/auth/calendar",
+                )
+            ).build()
+
+            val facebookProvider = AuthUI.IdpConfig.FacebookBuilder().build()
+            val emailProvider = AuthUI.IdpConfig.EmailBuilder().build()
+
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setTheme(R.style.AppTheme)
                 .setAvailableProviders(
                     listOf(
-                        AuthUI.IdpConfig.GoogleBuilder().build(),
-                        AuthUI.IdpConfig.FacebookBuilder().build(),
-                        AuthUI.IdpConfig.EmailBuilder().build(),
+                        googleProvider,
+                        facebookProvider,
+                        emailProvider,
                     ),
                 )
                 .build()
