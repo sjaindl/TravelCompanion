@@ -53,7 +53,9 @@
                   <entry key="Duration" value="142" />
                   <entry key="OnePlus HD1913" value="120" />
                   <entry key="Pixel_4a_API_33" value="120" />
+                  <entry key="Pixel_4a_API_34" value="120" />
                   <entry key="Pixel_6_API_33_Notifications" value="120" />
+                  <entry key="Pixel_7_Pro_API_34" value="120" />
                   <entry key="Tests" value="411" />
                   <entry key="dev31_default_arm64-v8a_Pixel_6" value="120" />
                 </map>
@@ -108,6 +110,7 @@
                 <map>
                   <entry key="13.5_Freeform_API_33" value="120" />
                   <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>

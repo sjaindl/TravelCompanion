@@ -134,7 +134,7 @@ kotlin {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     // Needed for now as workaround for issue: https://github.com/icerockdev/moko-resources/issues/353
@@ -142,7 +142,6 @@ android {
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 33
     }
     namespace = "com.sjaindl.travelcompanion.shared"
 }

@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace = "com.sjaindl.travelcompanion.benchmark"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
+        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR,DEBUGGABLE,UNLOCKED"
     }
 
     buildTypes {
