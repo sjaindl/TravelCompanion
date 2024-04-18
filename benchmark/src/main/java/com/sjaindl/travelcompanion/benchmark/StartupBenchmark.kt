@@ -1,9 +1,7 @@
 package com.sjaindl.travelcompanion.benchmark
 
 import android.Manifest
-import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
-import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -50,7 +48,8 @@ class StartupBenchmark {
     fun startupNoCompilation() = startup(CompilationMode.None())
 
     @Test
-    fun startupBaselineProfile() = startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
+    fun startupBaselineProfile() = startup(CompilationMode.DEFAULT)
+    //Partial(baselineProfileMode = BaselineProfileMode.Require))
 
     @Test
     fun startupFullCompilation() = startup(CompilationMode.Full())
@@ -63,7 +62,7 @@ class StartupBenchmark {
         metrics = listOf(
             StartupTimingMetric(),
             // PowerMetric(PowerMetric.Type.Battery()),
-            FrameTimingMetric(),
+            // FrameTimingMetric(),
         ),
         compilationMode = compilationMode,
         iterations = 10,
