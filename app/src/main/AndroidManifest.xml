@@ -3,20 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Install time permissions -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Runtime permissions -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Not needed permission from an 3rd party lib -->
-    <uses-permission
-        android:name="com.google.android.gms.permission.AD_ID"
-        tools:node="remove" />
-
-    <attribution android:tag="userLocation"
-        android:label="@string/location" />
-
     <application
         android:name=".TCApplication"
         android:allowBackup="true"
@@ -38,12 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".DataAccessRationaleActivity"
-            android:theme="@style/AppTheme"
+            android:exported="true"
             android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
-            android:exported="true">
+            android:theme="@style/AppTheme">
 
             <intent-filter>
                 <!-- show a selectable information icon on the app's permissions page in system settings -->
@@ -55,6 +40,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -82,5 +71,20 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+    <attribution
+        android:label="@string/location"
+        android:tag="userLocation" />
+
+    <!-- Runtime permissions -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Not needed permission from an 3rd party lib -->
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

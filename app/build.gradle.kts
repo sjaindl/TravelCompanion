@@ -35,7 +35,6 @@ android {
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
         minSdk = 26
-        targetSdk = 34
         versionCode = 3
         versionName = "1.0"
 
@@ -46,6 +45,9 @@ android {
 
         val facebookClientToken: String = gradleLocalProperties(rootDir).getProperty("facebookClientToken")
         manifestPlaceholders["facebookClientToken"] = facebookClientToken
+
+        val googleServerClientId: String = gradleLocalProperties(rootDir).getProperty("googleServerClientId")
+        buildConfigField(type = "String", name = "googleServerClientId", value = googleServerClientId)
 
         resourceConfigurations.addAll(listOf("en", "de"))
     }
@@ -167,6 +169,13 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
 
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials)
+
+    // needed for credentials support from play services, for devices running Android 13 and below:
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
     // https://github.com/square/leakcanary
     debugImplementation(libs.leakcanary.android)
 
@@ -190,9 +199,10 @@ dependencies {
 
     //Firebase
     implementation(platform(libs.firebase.bom))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-config-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-config")
 
     // https://github.com/Kotlin/kotlinx-datetime
     implementation(libs.kotlinx.datetime)
@@ -248,9 +258,7 @@ dependencies {
     // FirebaseUI for Cloud Storage
     implementation(libs.firebase.ui.storage)
 
-    // FirebaseUI for Firebase Auth
-    implementation(libs.firebase.ui.auth)
-    // Required for Facebook login: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
+    // Facebook login: https://github.com/facebook/facebook-android-sdk/blob/master/CHANGELOG.md
     implementation(libs.facebook.login)
 
     // Certificate transparency

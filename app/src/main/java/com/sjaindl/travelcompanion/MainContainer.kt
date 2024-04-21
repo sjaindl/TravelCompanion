@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
 fun MainContainer(
@@ -21,25 +20,23 @@ fun MainContainer(
 ) {
     val navController = rememberNavController()
 
-    TravelCompanionTheme {
-        TCNavHost(
-            navController = navController,
-            modifier = Modifier
-                .fillMaxSize(),
-            onClickedProfile = onClickedProfile,
-            openProfile = openProfile,
-            profileOpened = profileOpened,
-            onAuthenticateAndOpenPlan = onAuthenticateAndOpenPlan,
-            onAuthenticateAndOpenAddPlan = onAuthenticateAndOpenAddPlan,
-            openPlan = openPlan,
-            openAddPlan = openAddPlan,
-            onClose = {
-                navController.popBackStack()
-            },
-            openedPlan = openedPlan,
-            openedAddPlan = openedAddPlan,
-        )
-    }
+    TCNavHost(
+        navController = navController,
+        modifier = Modifier
+            .fillMaxSize(),
+        onClickedProfile = onClickedProfile,
+        openProfile = openProfile,
+        profileOpened = profileOpened,
+        onAuthenticateAndOpenPlan = onAuthenticateAndOpenPlan,
+        onAuthenticateAndOpenAddPlan = onAuthenticateAndOpenAddPlan,
+        openPlan = openPlan,
+        openAddPlan = openAddPlan,
+        onClose = {
+            navController.popBackStack()
+        },
+        openedPlan = openedPlan,
+        openedAddPlan = openedAddPlan,
+    )
 }
 
 @Preview
