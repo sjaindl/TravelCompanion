@@ -16,6 +16,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.sjaindl.travelcompanion.auth.AuthenticationViewModel
+import com.sjaindl.travelcompanion.auth.MailSignInContainer
 import com.sjaindl.travelcompanion.auth.SignInChooserScreen
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
@@ -74,40 +75,79 @@ class MainActivity : AppCompatActivity() {
                 mutableStateOf(OpenAddPlan(open = false, destination = ""))
             }
 
+            var signInWithMail by remember {
+                mutableStateOf(false)
+            }
+
             val successAction = authenticationAction
             if (successAction != null) {
                 val context = LocalContext.current
 
                 TravelCompanionTheme {
-                    SignInChooserScreen(
-                        signInWithGoogle = {
-                            authenticationViewModel.signInWithGoogle(
-                                credentialManager = credentialManager,
-                                context = context,
-                                successAction = successAction,
-                                onAuthenticated = {
-                                    authenticationAction = null
-                                },
-                                onFailure = { exception ->
-                                    handleFailure(exception = exception)
-                                },
-                            )
-                        },
-                        signInWithFacebook = {
-                            authenticationViewModel.signInWithFacebook(
-                                activityResultRegistryOwner = this,
-                                callbackManager = callbackManager,
-                                successAction = successAction,
-                                onFailure = { exception ->
-                                    handleFailure(exception = exception)
-                                },
-                                onCompleted = {
-                                    authenticationAction = null
-                                }
-                            )
-                        },
-                        signInWithMail = {},
-                    )
+
+                    if (signInWithMail) {
+                        MailSignInContainer(
+                            signInWithMail = { email, password ->
+                                authenticationViewModel.signInWithMail(
+                                    email = email,
+                                    password = password,
+                                    onFailure = { exception ->
+                                        handleFailure(exception = exception)
+                                    },
+                                    onCompleted = {
+                                        signInWithMail = false
+                                        authenticationAction = null
+                                    }
+                                )
+                            },
+                            signUpWithMail = { email, password, name ->
+                                authenticationViewModel.signUpWithMail(
+                                    email = email,
+                                    password = password,
+                                    name = name,
+                                    onFailure = { exception ->
+                                        handleFailure(exception = exception)
+                                    },
+                                    onCompleted = {
+                                        signInWithMail = false
+                                        authenticationAction = null
+                                    }
+                                )
+                            }
+                        )
+                    } else {
+                        SignInChooserScreen(
+                            signInWithGoogle = {
+                                authenticationViewModel.signInWithGoogle(
+                                    credentialManager = credentialManager,
+                                    context = context,
+                                    successAction = successAction,
+                                    onAuthenticated = {
+                                        authenticationAction = null
+                                    },
+                                    onFailure = { exception ->
+                                        handleFailure(exception = exception)
+                                    },
+                                )
+                            },
+                            signInWithFacebook = {
+                                authenticationViewModel.signInWithFacebook(
+                                    activityResultRegistryOwner = this,
+                                    callbackManager = callbackManager,
+                                    successAction = successAction,
+                                    onFailure = { exception ->
+                                        handleFailure(exception = exception)
+                                    },
+                                    onCompleted = {
+                                        authenticationAction = null
+                                    }
+                                )
+                            },
+                            signInWithMail = {
+                                signInWithMail = true
+                            },
+                        )
+                    }
                 }
             } else {
                 TravelCompanionTheme {

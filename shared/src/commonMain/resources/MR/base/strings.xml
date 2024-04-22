@@ -70,6 +70,7 @@
     <string name="accountRequired">This feature requires an account. Please login.</string>
     <string name="signOut">Sign out</string>
     <string name="signIn">Sign in</string>
+    <string name="signUp">Sign up</string>
     <string name="next">Next</string>
     <string name="searchOrigin">Search for Origin</string>
     <string name="searchDestination">Search for Destination</string>
@@ -205,5 +206,11 @@
     <string name="facebook_application_id" translatable="false">267588824024616</string>
 
     <string name="accuracy">Accuracy: %s metres</string>
-    <string name="data_access_rationale_location">Your approximate device location is accessed when you actively want to explore travel opportunities nearby your current location</string>
+    <string name="data_access_rationale_location">Your approximate device location is accessed when
+        you actively want to explore travel opportunities nearby your current location
+    </string>
+
+    <string name="enter_mail">Enter E-mail</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_name">Enter name</string>
 </resources>

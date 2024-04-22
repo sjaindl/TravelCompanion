@@ -17,13 +17,14 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.userProfileChangeRequest
 import com.sjaindl.travelcompanion.BuildConfig
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import kotlinx.coroutines.launch
@@ -80,9 +81,7 @@ class AuthenticationViewModel : ViewModel() {
         onAuthenticated: () -> Unit,
         onFailure: (Exception) -> Unit,
     ) {
-        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
-            .setServerClientId(BuildConfig.googleServerClientId)
+        val googleIdOption = GetSignInWithGoogleOption.Builder(serverClientId = BuildConfig.googleServerClientId)
             .build()
 
         val request = GetCredentialRequest.Builder()
@@ -105,6 +104,55 @@ class AuthenticationViewModel : ViewModel() {
         }
     }
 
+    fun signInWithMail(email: String, password: String, onFailure: (Exception) -> Unit, onCompleted: () -> Unit) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                Timber.tag(tag = tag).d("Signed in user ${auth.currentUser?.displayName}")
+            } else {
+                task.exception?.let { exception ->
+                    Timber.tag(tag = tag).e(t = exception, message = "signInWithCredential:failure")
+                    onFailure(exception)
+                }
+            }
+            onCompleted()
+        }
+    }
+
+    fun signUpWithMail(email: String, password: String, name: String, onFailure: (Exception) -> Unit, onCompleted: () -> Unit) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                Timber.tag(tag = tag).d("Signed up user $email")
+
+                val user = auth.currentUser
+                requireNotNull(user)
+
+                val profileUpdates = userProfileChangeRequest {
+                    displayName = name
+                }
+
+                user.updateProfile(profileUpdates).addOnCompleteListener { setDisplayNameTask ->
+                    if (setDisplayNameTask.isSuccessful) {
+                        Timber.tag(tag = tag).d("Set display name ${auth.currentUser?.displayName}")
+                    } else {
+                        setDisplayNameTask.exception?.let { exception ->
+                            Timber.tag(tag = tag).e(t = exception, message = "setDisplayNameTask:failure")
+                            onFailure(exception)
+                        }
+                    }
+                    onCompleted()
+                }
+            } else {
+                task.exception?.let { exception ->
+                    Timber.tag(tag = tag).e(t = exception, message = "signInWithCredential:failure")
+                    onFailure(exception)
+                }
+                onCompleted()
+            }
+        }
+    }
+
     fun preloadPlans() {
         FireStoreUtils.loadPlans(
             onLoaded = {
@@ -123,7 +171,7 @@ class AuthenticationViewModel : ViewModel() {
         token: AccessToken,
         successAction: () -> Unit,
         onFailure: (Exception) -> Unit,
-        completed: () -> Unit,
+        onCompleted: () -> Unit,
     ) {
         Timber.tag(tag = tag).d(message = "handleFacebookAccessToken: $token")
 
@@ -140,7 +188,7 @@ class AuthenticationViewModel : ViewModel() {
                     onFailure(exception)
                 }
             }
-            completed()
+            onCompleted()
         }
     }
 

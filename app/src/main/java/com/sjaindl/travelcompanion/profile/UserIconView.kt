@@ -48,7 +48,7 @@ class UserIconView @JvmOverloads constructor(
         FirebaseAuth.getInstance().addAuthStateListener { auth ->
             val name = auth.currentUser?.displayName
             initials = name?.split(" ")?.take(2)?.joinToString(separator = "") {
-                it.first().toString()
+                (it.firstOrNull() ?: "A").toString()
             }
         }
     }

@@ -71,6 +71,7 @@
     </string>
     <string name="signOut">Ausloggen</string>
     <string name="signIn">Einloggen</string>
+    <string name="signUp">Registrieren</string>
     <string name="next">Weiter</string>
     <string name="searchOrigin">Suche Start</string>
     <string name="searchDestination">Suche Ziel</string>
@@ -203,5 +204,11 @@
     <string name="planAlreadyExists">Plan existiert bereits</string>
 
     <string name="accuracy">Genauigkeit: %s Meter</string>
-    <string name="data_access_rationale_location">Es wird auf deinen ungefähren Standort zugegriffen, wenn du aktiv Reisemöglichkeiten in der Nähe erkunden möchtest</string>
+    <string name="data_access_rationale_location">Es wird auf deinen ungefähren Standort
+        zugegriffen, wenn du aktiv Reisemöglichkeiten in der Nähe erkunden möchtest
+    </string>
+
+    <string name="enter_mail">E-Mail eingeben</string>
+    <string name="enter_password">Passwort eingeben</string>
+    <string name="enter_name">Namen eingeben</string>
 </resources>
