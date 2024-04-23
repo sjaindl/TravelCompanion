@@ -11,4 +11,8 @@
         </trust-anchors>
     </debug-overrides>
 
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">api.geonames.org</domain>
+    </domain-config>
+
 </network-security-config>
