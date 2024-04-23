@@ -79,13 +79,13 @@ class SearchPlaceFragment : Fragment() {
                 val autocompleteResult = googleClient.autocomplete(
                     text.toString(), sessionToken
                 ).onSuccess { autocompleteResult ->
-                    val suggestions = autocompleteResult?.predictions ?: emptyList()
+                    val suggestions = autocompleteResult?.suggestions ?: emptyList()
 
                     requireActivity().runOnUiThread {
                         println(suggestions)
 
                         val viewHolders = suggestions.map {
-                            SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                            SearchPlaceViewHolderType.PlacesPredictionItem(placePrediction = it.placePrediction)
                         }
                         searchPlaceAdapter.submitList(viewHolders)
                     }
@@ -98,7 +98,7 @@ class SearchPlaceFragment : Fragment() {
     }
 
     private fun onClickItem(item: SearchPlaceViewHolderType.PlacesPredictionItem) {
-        val encodedResult = Json.encodeToString(item.placesPredictions)
+        val encodedResult = Json.encodeToString(item.placePrediction)
         setFragmentResult(PLACE_RESULT, bundleOf(PLACE_RESULT to encodedResult))
         // Alternative using nav graph backstack:
         // findNavController().currentBackStackEntry?.savedStateHandle?.set("place", item.description)

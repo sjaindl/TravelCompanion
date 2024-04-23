@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GeocodingResult
-import com.sjaindl.travelcompanion.api.google.PlacesPredictions
+import com.sjaindl.travelcompanion.api.google.PlacePrediction
 import com.sjaindl.travelcompanion.databinding.ViewholderSearchplaceItemBinding
 import kotlin.reflect.KClass
 
@@ -70,7 +70,7 @@ class SearchPlaceAdapter(private val onClick: (SearchPlaceViewHolderType) -> Uni
 }
 
 sealed class SearchPlaceViewHolderType {
-    class PlacesPredictionItem(val placesPredictions: PlacesPredictions) : SearchPlaceViewHolderType()
+    class PlacesPredictionItem(val placePrediction: PlacePrediction) : SearchPlaceViewHolderType()
 
     class PlaceItem(val geocoded: GeocodingResult) : SearchPlaceViewHolderType()
 }
@@ -82,7 +82,7 @@ class SearchPlaceDiffUtilCallback : DiffUtil.ItemCallback<SearchPlaceViewHolderT
 
     override fun areContentsTheSame(oldItem: SearchPlaceViewHolderType, newItem: SearchPlaceViewHolderType): Boolean {
         return when (oldItem) {
-            is SearchPlaceViewHolderType.PlacesPredictionItem -> newItem is SearchPlaceViewHolderType.PlacesPredictionItem && oldItem.placesPredictions == newItem.placesPredictions
+            is SearchPlaceViewHolderType.PlacesPredictionItem -> newItem is SearchPlaceViewHolderType.PlacesPredictionItem && oldItem.placePrediction == newItem.placePrediction
             is SearchPlaceViewHolderType.PlaceItem -> newItem is SearchPlaceViewHolderType.PlaceItem && oldItem.geocoded == newItem.geocoded
         }
     }
@@ -105,7 +105,9 @@ class SearchPlaceItemViewHolder(
     fun configure(item: SearchPlaceViewHolderType?) {
         when (item) {
             is SearchPlaceViewHolderType.PlaceItem -> binding.viewholderSearchplaceText.text = item.geocoded.formattedAddress
-            is SearchPlaceViewHolderType.PlacesPredictionItem -> binding.viewholderSearchplaceText.text = item.placesPredictions.description
+            is SearchPlaceViewHolderType.PlacesPredictionItem -> binding.viewholderSearchplaceText.text =
+                item.placePrediction.description?.text
+
             null -> binding.viewholderSearchplaceText.text = null
         }
 

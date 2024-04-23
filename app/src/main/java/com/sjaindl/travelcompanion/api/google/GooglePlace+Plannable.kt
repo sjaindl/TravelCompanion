@@ -45,7 +45,7 @@ fun GooglePlace.asPlannable() = object : Plannable {
     override fun imageUrl(): Uri? {
         val photoReference = photos?.firstOrNull()?.photoReference ?: return null
         val uriString =
-            "${GoogleConstants.UrlComponents.pathPhotos}?${GoogleConstants.ParameterKeys.maxWidth}=${GoogleConstants.ParameterValues.maxWidth}&${GoogleConstants.ParameterKeys.photoReference}=${photoReference}&${GoogleConstants.ParameterKeys.key}=${SecretConstants.apiKeyGooglePlaces}"
+            "${GoogleConstants.UrlComponents.PATH_PHOTOS}?${GoogleConstants.ParameterKeys.MAX_WIDTH}=${GoogleConstants.ParameterValues.MAX_WIDTH}&${GoogleConstants.ParameterKeys.PHOTO_REFERENCE}=${photoReference}&${GoogleConstants.ParameterKeys.KEY}=${SecretConstants.apiKeyGooglePlaces}"
         return Uri.parse(uriString)
     }
 

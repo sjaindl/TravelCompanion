@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.api.google.PlacesPredictions
+import com.sjaindl.travelcompanion.api.google.PlacePredictions
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.di.TCInjector
@@ -128,12 +128,12 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
         setFragmentResultListener(SearchPlaceFragment.PLACE_RESULT) { key, bundle ->
             val encodedPlaces = bundle.getString(SearchPlaceFragment.PLACE_RESULT) ?: return@setFragmentResultListener
-            val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
-            val placeId = placesPredictions.placeId ?: return@setFragmentResultListener
+            val placesPredictions = Json.decodeFromString(PlacePredictions.serializer(), encodedPlaces)
+            val placeId = placesPredictions.placePrediction.placeId ?: return@setFragmentResultListener
 
             Snackbar.make(
                 requireView(),
-                "Picked ${placesPredictions.description} via fragment result of key $key",
+                "Picked ${placesPredictions.placePrediction.description} via fragment result of key $key",
                 Snackbar.LENGTH_LONG
             ).show()
 
@@ -164,38 +164,38 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     private fun fetchPlaceDetails(placeId: String) = lifecycleScope.launch {
-        googleClient.placeDetail(placeId, sessionToken)
+        googleClient.placeDetail(placeId = placeId, token = sessionToken)
             .onSuccess { details ->
-                val location = details.result.geometry.location
+                val location = details.location
                 val marker = googleMap?.addMarker(
                     MarkerOptions()
-                        .position(LatLng(location.lat, location.lng))
-                        .title(details.result.name)
+                        .position(LatLng(location.latitude, location.longitude))
+                        .title(details.name)
                 )
 
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.lat, location.lng)))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
 
                 try {
-                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.latitude, longitude = location.longitude)
 
-                    val component = details.result.addressComponents?.firstOrNull {
+                    val component = details.addressComponents?.firstOrNull {
                         it.types.contains("country")
                     }
-                    val name = details.result.name
+                    val name = details.name
 
                     dataRepository.insertPin(
                         id = 0,
-                        address = details.result.formattedAddress,
+                        address = details.formattedAddress,
                         country = component?.longName,
                         countryCode = countryCode,
                         creationDate = Clock.System.now(),
-                        latitude = details.result.geometry.location.lat,
-                        longitude = details.result.geometry.location.lng,
+                        latitude = details.location.latitude,
+                        longitude = details.location.longitude,
                         name = name,
                         phoneNumber = null,
                         placeId = placeId,
                         rating = null,
-                        url = details.result.url,
+                        url = details.websiteUri,
                     )
 
                     if (name != null && marker != null) {

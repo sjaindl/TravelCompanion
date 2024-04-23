@@ -2,46 +2,46 @@ package com.sjaindl.travelcompanion.api.google
 
 object GoogleConstants {
     object UrlComponents {
-        const val urlProtocol = "https"
-        const val domain = "maps.googleapis.com"
-        const val pathPlace = "/maps/api/place/"
-        const val pathNearbySearch = pathPlace + "nearbysearch/json"
-        const val pathPhotos = "https://maps.googleapis.com/maps/api/place/photo"
-        const val pathAutocomplete = pathPlace + "autocomplete/json"
-        const val pathPlaceDetail = pathPlace + "details/json"
-        const val domainSearch = "google.com"
-        const val pathSearch = "/search"
-        const val pathReverseGeocode = "maps/api/geocode/json"
+        private const val PATH_PLACE = "/maps/api/place/"
+
+        const val URL_PROTOCOL = "https"
+        const val DOMAIN_PLACES = "places.googleapis.com"
+        const val PATH_PLACE_DETAILS = "v1/places"
+        const val DOMAIN_MAPS = "maps.googleapis.com"
+        const val PATH_NEARBY_SEARCH = PATH_PLACE + "nearbysearch/json"
+        const val PATH_PHOTOS = "https://maps.googleapis.com/maps/api/place/photo"
+        const val PATH_AUTOCOMPLETE = "$PATH_PLACE_DETAILS:autocomplete"
+
+        const val DOMAIN_SEARCH = "google.com"
+        const val PATH_SEARCH = "/search"
+        const val PATH_REVERSE_GEOCODE = "maps/api/geocode/json"
     }
 
     object ParameterKeys {
-        const val key = "key"
-        const val name = "name"
-        const val location = "location"
-        const val rankBy = "rankby"
-        const val radius = "radius"
-        const val placeType = "type"
-        const val strictBounds = "strictbounds"
-        const val maxWidth = "maxwidth"
-        const val photoReference = "photoreference"
-        const val sessionToken = "sessiontoken"
-        const val input = "input"
-        const val types = "types"
-        const val placeId = "placeid"
-        const val fields = "fields"
-        const val searchQuery = "q"
+        const val KEY = "key"
+        const val X_KEY = "X-Goog-Api-Key"
+        const val NAME = "name"
+        const val LOCATION = "location"
+        const val RANK_BY = "rankby"
+        const val RADIUS = "radius"
+        const val PLACE_TYPE = "type"
+        const val STRICT_BOUNDS = "strictbounds"
+        const val MAX_WIDTH = "maxwidth"
+        const val PHOTO_REFERENCE = "photoreference"
+        const val SESSION_TOKEN = "sessionToken"
+        const val FIELDS = "fields"
+        const val SEARCH_QUERY = "q"
 
-        const val latLng = "latlng"
-        const val resultType = "result_type"
+        const val LAT_LNG = "latlng"
+        const val RESULT_TYPE = "result_type"
     }
 
     object ParameterValues {
-        const val rankBy = "prominence"
-        const val strictBounds = "true"
-        const val maxWidth = "400"
-        const val autocompletePlaceType = "(regions)"
-        const val placeDetailFields =
-            "address_component,adr_address,formatted_address,geometry,icon,name,permanently_closed,photo,type,url,utc_offset,vicinity"
-        const val resultType = "country|administrative_area_level_1|administrative_area_level_2|administrative_area_level_3|locality"
+        const val RANK_BY = "prominence"
+        const val STRICT_BOUNDS = "true"
+        const val MAX_WIDTH = "400"
+        const val PLACE_DETAIL_FIELDS =
+            "id,name,displayName,addressComponents,adrFormatAddress,formattedAddress,location,iconBackgroundColor,iconMaskBaseUri,photos,primaryType,websiteUri,utcOffsetMinutes"
+        const val RESULT_TYPE = "country|administrative_area_level_1|administrative_area_level_2|administrative_area_level_3|locality"
     }
 }

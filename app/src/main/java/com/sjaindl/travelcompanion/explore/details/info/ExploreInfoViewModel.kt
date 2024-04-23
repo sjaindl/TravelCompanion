@@ -78,8 +78,8 @@ class ExploreInfoViewModel(
                         _state.value = State.NoData
                     } else {
                         val urlComponents = GoogleConstants.UrlComponents
-                        val query = "${GoogleConstants.ParameterKeys.searchQuery}=$place"
-                        val url = "${urlComponents.urlProtocol}://${urlComponents.domainSearch}${urlComponents.pathSearch}?$query"
+                        val query = "${GoogleConstants.ParameterKeys.SEARCH_QUERY}=$place"
+                        val url = "${urlComponents.URL_PROTOCOL}://${urlComponents.DOMAIN_SEARCH}${urlComponents.PATH_SEARCH}?$query"
 
                         _state.value = State.Done(url)
                     }

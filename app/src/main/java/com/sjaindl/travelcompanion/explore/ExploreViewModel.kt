@@ -74,11 +74,11 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
     }
 
     fun fetchPlaceDetails(placeId: String) = viewModelScope.launch {
-        googleClient.placeDetail(placeId, sessionToken)
+        googleClient.placeDetail(placeId = placeId, token = sessionToken)
             .onSuccess { details ->
-                val location = details.result.geometry.location
-                val name = details.result.name ?: return@launch
-                val placeDetail = PlaceDetail(latitude = location.lat, longitude = location.lng, name = name)
+                val location = details.location
+                val name = details.displayName?.text.orEmpty()
+                val placeDetail = PlaceDetail(latitude = location.latitude, longitude = location.longitude, name = name)
                 newlyAddedLocation = placeDetail
 
                 val list = placeDetails.value.toMutableList().apply {
@@ -87,25 +87,25 @@ class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel()
                 _placeDetails.value = list
 
                 try {
-                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.latitude, longitude = location.longitude)
 
-                    val component = details.result.addressComponents?.firstOrNull {
+                    val component = details.addressComponents?.firstOrNull {
                         it.types.contains("country")
                     }
 
                     dataRepository.insertPin(
                         id = 0,
-                        address = details.result.formattedAddress,
+                        address = details.formattedAddress,
                         country = component?.longName,
                         countryCode = countryCode,
                         creationDate = Clock.System.now(),
-                        latitude = details.result.geometry.location.lat,
-                        longitude = details.result.geometry.location.lng,
+                        latitude = details.location.latitude,
+                        longitude = details.location.longitude,
                         name = name,
                         phoneNumber = null,
                         placeId = placeId,
                         rating = null,
-                        url = details.result.url,
+                        url = details.websiteUri,
                     )
                 } catch (exception: Exception) {
                     _exception.value = exception

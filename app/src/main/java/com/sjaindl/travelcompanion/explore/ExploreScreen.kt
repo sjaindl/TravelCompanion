@@ -12,14 +12,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.FabPosition
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -51,7 +51,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.sjaindl.travelcompanion.api.google.GeocodingResult
-import com.sjaindl.travelcompanion.api.google.PlacesPredictions
+import com.sjaindl.travelcompanion.api.google.PlacePrediction
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
@@ -137,9 +137,9 @@ fun ExploreScreen(
         var description: String?
         var placeId: String?
         try {
-            val placesPredictions = Json.decodeFromString(PlacesPredictions.serializer(), encodedPlaces)
-            placeId = placesPredictions.placeId
-            description = placesPredictions.description
+            val placePredictions = Json.decodeFromString(PlacePrediction.serializer(), encodedPlaces)
+            placeId = placePredictions.placeId
+            description = placePredictions.description?.text
         } catch (exc: Exception) {
             val geocodingResult = Json.decodeFromString(GeocodingResult.serializer(), encodedPlaces)
             description = geocodingResult.formattedAddress
@@ -201,7 +201,7 @@ fun ExploreScreen(
                     .background(Color.Gray),
                 snackbarHost = { SnackbarHost(snackBarHostState) },
                 topBar = {
-                    val customActionIcon = if(!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
+                    val customActionIcon = if (!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
                     TCAppBar(
                         title = stringResource(SharedR.string.explore),
                         canNavigateBack = canNavigateBack,
@@ -262,13 +262,13 @@ fun ExploreScreen(
                     },
                     onMyLocationButtonClick = {
                         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                            if (location.hasAccuracy()) {
+                            if (location != null && location.hasAccuracy()) {
                                 coroutineScope.launch {
                                     snackBarHostState.showSnackbar(
                                         message = context.getString(
                                             SharedR.string.accuracy,
                                             location.accuracy.toString(),
-                                        )
+                                        ),
                                     )
                                 }
                             }

@@ -46,7 +46,7 @@ fun SearchPlaceAutocompleteScreen(
                     inputMethodManager?.hideSoftInputFromWindow(autocompleteCountry.applicationWindowToken, 0)
 
                     (item as? SearchPlaceViewHolderType.PlacesPredictionItem)?.let {
-                        val encodedResult = Json.encodeToString(item.placesPredictions)
+                        val encodedResult = Json.encodeToString(item.placePrediction)
                         onPickedPlace(encodedResult)
                     }
                 }
@@ -61,17 +61,17 @@ fun SearchPlaceAutocompleteScreen(
 
             autocompleteCountry.setAdapter(adapter)
             autocompleteCountry.doOnTextChanged { text, _, _, _ ->
-                scope.launch {
+                scope.launch(Dispatchers.IO) {
                     googleClient.autocomplete(
                         text.toString(), sessionToken
                     ).onSuccess { autocompleteResult ->
-                        val suggestions = autocompleteResult?.predictions ?: emptyList()
+                        val suggestions = autocompleteResult?.suggestions ?: emptyList()
 
                         scope.launch(Dispatchers.Main) {
                             println(suggestions)
 
                             val viewHolders = suggestions.map {
-                                SearchPlaceViewHolderType.PlacesPredictionItem(it)
+                                SearchPlaceViewHolderType.PlacesPredictionItem(placePrediction = it.placePrediction)
                             }
                             searchPlaceAdapter.submitList(viewHolders)
                         }

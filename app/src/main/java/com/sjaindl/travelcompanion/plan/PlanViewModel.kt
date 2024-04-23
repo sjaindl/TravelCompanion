@@ -10,10 +10,12 @@ import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import timber.log.Timber
 import java.util.Date
@@ -109,42 +111,47 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
         )
     }
 
-    private fun addPinIfNeeded(plan: Plan) = viewModelScope.launch {
+    private fun addPinIfNeeded(plan: Plan) = viewModelScope.launch(Dispatchers.IO) {
         if (dataRepository.singlePin(plan.pinName) == null) {
             googleClient.autocomplete(
-                plan.pinName, sessionToken
+                input = plan.pinName,
+                token = sessionToken,
             ).onSuccess { autocompleteResult ->
-                val prediction = autocompleteResult?.predictions?.firstOrNull() ?: return@launch
-                val placeId = prediction.placeId ?: return@launch
+                val prediction = autocompleteResult?.suggestions?.firstOrNull() ?: return@launch
+                val placeId = prediction.placePrediction.placeId ?: return@launch
 
-                googleClient.placeDetail(placeId, sessionToken)
+                googleClient.placeDetail(placeId = placeId, token = sessionToken)
                     .onSuccess { details ->
-                        val location = details.result.geometry.location
-                        val countryCode = geoNamesClient.fetchCountryCode(latitude = location.lat, longitude = location.lng)
+                        val location = details.location
+                        val countryCode = geoNamesClient.fetchCountryCode(latitude = location.latitude, longitude = location.longitude)
 
-                        val component = details.result.addressComponents?.firstOrNull {
+                        val component = details.addressComponents?.firstOrNull {
                             it.types.contains("country")
                         }
 
                         dataRepository.insertPin(
                             id = 0,
-                            address = details.result.formattedAddress,
+                            address = details.formattedAddress,
                             country = component?.longName,
                             countryCode = countryCode,
                             creationDate = Clock.System.now(),
-                            latitude = details.result.geometry.location.lat,
-                            longitude = details.result.geometry.location.lng,
+                            latitude = details.location.latitude,
+                            longitude = details.location.longitude,
                             name = plan.pinName,
                             phoneNumber = null,
                             placeId = placeId,
                             rating = null,
-                            url = details.result.url,
+                            url = details.websiteUri,
                         )
                     }.onFailure {
-                        _state.value = State.Error(it)
+                        withContext(Dispatchers.Main) {
+                            _state.value = State.Error(it)
+                        }
                     }
             }.onFailure {
-                _state.value = State.Error(it)
+                withContext(Dispatchers.Main) {
+                    _state.value = State.Error(it)
+                }
             }
         }
     }

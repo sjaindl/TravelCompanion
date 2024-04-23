@@ -5,21 +5,22 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PlacesAutoCompleteResponse(
-    var predictions: List<PlacesPredictions>, var status: String
+    var suggestions: List<PlacePredictions> = emptyList(),
 )
 
 @Serializable
-data class PlacesPredictions(
-    var description: String,
-    var id: String? = null,
-    @SerialName("place_id")
+data class PlacePredictions(
+    var placePrediction: PlacePrediction,
+)
+
+@Serializable
+data class PlacePrediction(
+    @SerialName("text")
+    var description: PlacesAutoCompleteText? = null,
     var placeId: String? = null,
-    var reference: String? = null,
-    var types: List<String>,
-    var terms: List<PlacesAutoCompleteTerm>
 )
 
 @Serializable
-data class PlacesAutoCompleteTerm(
-    var offset: Int, var value: String
+data class PlacesAutoCompleteText(
+    var text: String
 )

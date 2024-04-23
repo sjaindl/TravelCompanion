@@ -18,10 +18,10 @@ interface GoogleClient {
         longitude: Float,
     ): Result<GeocodingResponse>
 
-    fun buildAutoCompleteRequestParams(
+    fun buildAutoCompleteBody(
         input: String,
-        token: String
-    ): List<Pair<String, String>>
+        token: String,
+    ): AutoCompleteBody
 
     fun buildPlaceDetailRequestParams(
         placeId: String,
