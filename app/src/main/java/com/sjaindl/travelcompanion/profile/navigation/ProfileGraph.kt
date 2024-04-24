@@ -1,72 +1,63 @@
 package com.sjaindl.travelcompanion.profile.navigation
 
-import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
 import com.sjaindl.travelcompanion.profile.ProfileScreen
 
-private const val profileRoute = "profile"
-private const val personalInfoRoute = "personalInfo"
+private const val PROFILE_ROUTE = "profile"
+private const val PERSONAL_INFO_ROUTE = "personalInfo"
 
+const val PROFILE_NAVIGATION = "profileNavigation"
 
-const val profileNavigation = "profileNavigation"
-
-private val profileHome by lazy {
-    ProfileHome()
-}
-
-private val personalInfo by lazy {
-    PersonalInfo()
-}
-
-data class ProfileHome(
-    override var route: String = profileRoute,
-    override var arguments: List<NamedNavArgument> = emptyList(),
-    override var routeWithArgs: String = route,
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        return route
+private fun NavGraphBuilder.profileScreen(
+    onClose: () -> Unit = { },
+    goToPersonalInfo: () -> Unit = { },
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
+) {
+    composable(
+        route = PROFILE_ROUTE,
+    ) {
+        ProfileScreen(
+            onClose = onClose,
+            goToPersonalInfo = goToPersonalInfo,
+            canNavigateBack = canNavigateBack,
+            navigateUp = navigateUp,
+        )
     }
 }
 
-data class PersonalInfo(
-    override var route: String = personalInfoRoute,
-    override var arguments: List<NamedNavArgument> = emptyList(),
-    override var routeWithArgs: String = route,
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        return route
+private fun NavGraphBuilder.personalInfoScreen(
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {},
+) {
+    composable(
+        route = PERSONAL_INFO_ROUTE,
+    ) {
+        PersonalInfoScreen(
+            canNavigateBack = canNavigateBack,
+            navigateUp = navigateUp,
+        )
     }
 }
 
 fun NavGraphBuilder.profileGraph(navController: NavController, onClose: () -> Unit = { }) {
-    navigation(startDestination = profileHome.route, route = profileNavigation) {
-        composable(
-            route = profileHome.route,
-            arguments = emptyList(),
-        ) {
-            ProfileScreen(
-                onClose = onClose,
-                goToPersonalInfo = {
-                    navController.navigate(personalInfo.route)
-                },
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() },
-            )
-        }
+    navigation(startDestination = PROFILE_ROUTE, route = PROFILE_NAVIGATION) {
+        profileScreen(
+            onClose = onClose,
+            goToPersonalInfo = {
+                navController.navigate(route = PERSONAL_INFO_ROUTE)
+            },
+            canNavigateBack = navController.previousBackStackEntry != null,
+            navigateUp = { navController.navigateUp() },
+        )
 
-        composable(
-            route = personalInfo.route,
-            arguments = emptyList(),
-        ) {
-            PersonalInfoScreen(
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() },
-            )
-        }
+        personalInfoScreen(
+            canNavigateBack = navController.previousBackStackEntry != null,
+            navigateUp = { navController.navigateUp() },
+        )
     }
 }

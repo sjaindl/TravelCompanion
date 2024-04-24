@@ -3,10 +3,11 @@ package com.sjaindl.travelcompanion.util
 import androidx.navigation.NavHostController
 
 fun NavHostController.navigateSingleTopTo(route: String, popToRoute: String? = graph.startDestinationRoute) =
-    this.navigate(route) {
+    navigate(route = route) {
         popToRoute?.let {
-            popUpTo(it) {
+            popUpTo(route = it) {
                 saveState = true
+                inclusive = false
             }
         }
         launchSingleTop = true

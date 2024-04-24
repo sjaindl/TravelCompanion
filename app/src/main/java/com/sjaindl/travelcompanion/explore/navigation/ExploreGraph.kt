@@ -1,8 +1,8 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
-import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -15,123 +15,85 @@ import com.sjaindl.travelcompanion.explore.search.PickPlaceScreen
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceAutocompleteScreen
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 
-private const val pinArg = "pin"
-private const val placesArg = "places"
-private const val latitudeArg = "latitude"
-private const val longitudeArg = "longitude"
+private const val PLACES_ARG = "places"
 
-private val placesArgs = listOf(navArgument(placesArg) {
-    type = NavType.StringType
-    nullable = true
-})
-
-private val pinArgs = listOf(navArgument(pinArg) {
-    type = NavType.LongType
-    // defaultValue = 0
-})
-
-private val pickPlaceArgs = listOf(
-    navArgument(latitudeArg) {
-        type = NavType.FloatType
-        // defaultValue = 0
-    },
-    navArgument(longitudeArg) {
-        type = NavType.FloatType
-        //defaultValue = false
-    },
-)
-
-private const val exploreRoute = "explore"
-private const val searchPlaceRoute = "searchPlaces"
-private const val pickPlaceRoute = "pickPlace"
-private const val exploreDetailsContainerRoute = "exploreDetailsContainer"
-
-private val exploreHome by lazy {
-    ExploreHome()
+private fun NavController.navigateToExploreHome(encodedPlaces: String, navOptions: NavOptions? = null) {
+    this.navigate(route = "${ExploreHome.route}?$PLACES_ARG=$encodedPlaces", navOptions = navOptions)
 }
 
-private val searchPlace by lazy {
-    SearchPlace()
+private object ExploreHome : DestinationItem {
+    override var route = "explore"
+    override var arguments = listOf(navArgument(PLACES_ARG) {
+        type = NavType.StringType
+        nullable = true
+    })
+    override var routeWithArgs = "$route?$PLACES_ARG={$PLACES_ARG}"
 }
 
-private val pickPlace by lazy {
-    PickPlace()
+private const val PIN_ARG = "pin"
+
+private object ExploreDetailContainer : DestinationItem {
+    override var route = "exploreDetailsContainer"
+    override var arguments = listOf(navArgument(PIN_ARG) {
+        type = NavType.LongType
+    })
+    override val routeWithArgs = "$route/{$PIN_ARG}"
 }
 
-val exploreDetailContainer by lazy {
-    ExploreDetailContainer()
+fun NavController.navigateToExploreDetailContainer(pinId: Long, navOptions: NavOptions? = null) {
+    this.navigate(route = "${ExploreDetailContainer.route}/$pinId", navOptions = navOptions)
 }
 
-const val exploreNavigation = "exploreNavigation"
-
-data class ExploreHome(
-    override var route: String = exploreRoute,
-    override var arguments: List<NamedNavArgument> = placesArgs,
-    override var routeWithArgs: String = "$route?$placesArg={$placesArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val encodedPlaces = arguments.firstOrNull() as? String ?: return route
-
-        return "$route?$placesArg=$encodedPlaces"
-    }
+private object SearchPlace : DestinationItem {
+    override var route = "searchPlaces"
 }
 
-data class ExploreDetailContainer(
-    override var route: String = exploreDetailsContainerRoute,
-    override var arguments: List<NamedNavArgument> = pinArgs,
-    override var routeWithArgs: String = "$route/{$pinArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val pinId = arguments.firstOrNull() as? Long ?: return route
-
-        return "$route/$pinId"
-    }
+private fun NavController.navigateToSearchPlace(navOptions: NavOptions? = null) {
+    this.navigate(route = SearchPlace.route, navOptions = navOptions)
 }
 
-data class SearchPlace(
-    override var route: String = searchPlaceRoute,
-    override var arguments: List<NamedNavArgument> = emptyList(),
-    override var routeWithArgs: String = route,
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        return route
-    }
+private const val LATITUDE_ARG = "latitude"
+private const val LONGITUDE_ARG = "longitude"
+
+private object PickPlace : DestinationItem {
+    override var route = "pickPlace"
+    override var arguments = listOf(
+        navArgument(LATITUDE_ARG) {
+            type = NavType.FloatType
+        },
+        navArgument(LONGITUDE_ARG) {
+            type = NavType.FloatType
+        },
+    )
+    override var routeWithArgs = "$route/{$LATITUDE_ARG}/{$LONGITUDE_ARG}"
 }
 
-data class PickPlace(
-    override var route: String = pickPlaceRoute,
-    override var arguments: List<NamedNavArgument> = pickPlaceArgs,
-    override var routeWithArgs: String = "$route/{$latitudeArg}/{$longitudeArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        if (arguments.size < 2) return route
-        val latitude = arguments.firstOrNull() as? Float ?: return route
-        val longitude = arguments[1] as? Float ?: return route
-
-        return "$route/$latitude/$longitude"
-    }
+private fun NavController.navigateToPickPlace(latitude: Float, longitude: Float, navOptions: NavOptions? = null) {
+    this.navigate(route = "${PickPlace.route}/$latitude/$longitude", navOptions = navOptions)
 }
+
+const val EXPLORE_NAVIGATION = "exploreNavigation"
 
 fun NavGraphBuilder.exploreGraph(
     navController: NavController,
     onPlanTrip: (String) -> Unit,
 ) {
-    navigation(startDestination = exploreHome.routeWithArgs, route = exploreNavigation) {
+    navigation(startDestination = ExploreHome.routeWithArgs, route = EXPLORE_NAVIGATION) {
         composable(
-            route = exploreHome.routeWithArgs,
-            arguments = exploreHome.arguments,
+            route = ExploreHome.routeWithArgs,
+            arguments = ExploreHome.arguments,
         ) { navBackStackEntry ->
-            val encodedPlaces = navBackStackEntry.arguments?.getString(placesArg)
+            val encodedPlaces = navBackStackEntry.arguments?.getString(PLACES_ARG)
             ExploreScreen(
                 encodedPlaces = encodedPlaces,
                 onSearch = {
-                    navController.navigate(searchPlace.route)
+                    navController.navigateToSearchPlace()
                 },
                 onPickedLocation = { latitude, longitude ->
-                    navController.navigate(pickPlace.routeWithSetArguments(latitude, longitude))
+                    navController.navigateToPickPlace(latitude = latitude, longitude = longitude)
                 },
                 onNavigateToExploreDetails = { pinId ->
-                    navController.navigate(exploreDetailContainer.routeWithSetArguments(pinId))
+                    navController.navigateToExploreDetailContainer(pinId = pinId)
                 },
                 onPlanTrip = onPlanTrip,
                 canNavigateBack = navController.previousBackStackEntry != null,
@@ -140,43 +102,52 @@ fun NavGraphBuilder.exploreGraph(
         }
 
         composable(
-            route = searchPlace.route,
+            route = SearchPlace.route,
         ) {
             SearchPlaceAutocompleteScreen(
                 onPickedPlace = { place ->
                     navController.popBackStack()
-                    navController.navigate(route = exploreHome.routeWithSetArguments(place)) {
-                        launchSingleTop = true
-                    }
+
+                    navController.navigateToExploreHome(
+                        encodedPlaces = place,
+                        navOptions = NavOptions
+                            .Builder()
+                            .setLaunchSingleTop(singleTop = true)
+                            .build(),
+                    )
                 }
             )
         }
 
         composable(
-            route = pickPlace.routeWithArgs,
+            route = PickPlace.routeWithArgs,
         ) { navBackStackEntry ->
-            val latitude =
-                navBackStackEntry.arguments?.getString(latitudeArg)?.toFloat() ?: throw IllegalStateException("No latitude given")
-            val longitude =
-                navBackStackEntry.arguments?.getString(longitudeArg)?.toFloat() ?: throw IllegalStateException("No longitude given")
+            val args = navBackStackEntry.arguments
+            val latitude = args?.getString(LATITUDE_ARG)?.toFloat() ?: throw IllegalStateException("No latitude given")
+            val longitude = args.getString(LONGITUDE_ARG)?.toFloat() ?: throw IllegalStateException("No longitude given")
 
             PickPlaceScreen(
                 latitude = latitude,
                 longitude = longitude,
                 onPickedPlace = { place ->
                     navController.popBackStack()
-                    navController.navigate(route = exploreHome.routeWithSetArguments(place)) {
-                        launchSingleTop = true
-                    }
+
+                    navController.navigateToExploreHome(
+                        encodedPlaces = place,
+                        navOptions = NavOptions
+                            .Builder()
+                            .setLaunchSingleTop(singleTop = true)
+                            .build(),
+                    )
                 }
             )
         }
 
         composable(
-            route = exploreDetailContainer.routeWithArgs,
-            arguments = exploreDetailContainer.arguments,
+            route = ExploreDetailContainer.routeWithArgs,
+            arguments = ExploreDetailContainer.arguments,
         ) { navBackStackEntry ->
-            val pinId = navBackStackEntry.arguments?.getLong(pinArg) ?: throw IllegalStateException("No pinId given")
+            val pinId = navBackStackEntry.arguments?.getLong(PIN_ARG) ?: throw IllegalStateException("No pinId given")
             ExploreDetailContainer(pinId = pinId)
         }
 
@@ -184,10 +155,9 @@ fun NavGraphBuilder.exploreGraph(
             route = exploreDetailPhotos.routeWithArgs,
             arguments = exploreDetailPhotos.arguments,
         ) { navBackStackEntry ->
-            val argPinId =
-                navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
-            val isPickerMode =
-                navBackStackEntry.arguments?.getBoolean(BottomNavItem.pickerMode) ?: throw IllegalStateException("No pickerMode given")
+            val args = navBackStackEntry.arguments
+            val argPinId = args?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+            val isPickerMode = args.getBoolean(BottomNavItem.pickerMode)
 
             ExploreDetailPhotosMainScreen(
                 pinId = argPinId,

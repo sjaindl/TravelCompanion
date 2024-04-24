@@ -1,8 +1,9 @@
 package com.sjaindl.travelcompanion.plan.navigation
 
-import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -13,63 +14,36 @@ import com.sjaindl.travelcompanion.plan.add.AddPlanScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailHomeScreen
 import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
-private const val planRoute = "plan"
-private const val planDetailsContainerRoute = "planDetailsContainerRoute"
-private const val addPlanRoute = "addPlan"
+private const val DESTINATION_ARG = "destination"
 
-const val destinationArg = "destination"
+const val PLAN_NAVIGATION = "planNavigation"
 
-internal val addPlanArgs = listOf(navArgument(destinationArg) {
-    type = NavType.StringType
-    nullable = true
-})
-
-private val planHome by lazy {
-    PlanHome()
-}
-
-val addPlan by lazy {
-    AddPlan()
-}
-
-val planDetailsContainer by lazy {
-    PlanDetailContainer()
-}
-
-const val planNavigation = "planNavigation"
-
-data class PlanHome(
-    override var route: String = planRoute,
-    override var arguments: List<NamedNavArgument> = emptyList(),
-    override var routeWithArgs: String = route,
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        return route
-    }
+private object PlanHome : DestinationItem {
+    override var route = "plan"
 }
 
 // https://developer.android.com/jetpack/compose/navigation#optional-args
-data class AddPlan(
-    override var route: String = addPlanRoute,
-    override var arguments: List<NamedNavArgument> = addPlanArgs,
-    override var routeWithArgs: String = "$route?destination={$destinationArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val destination = arguments.firstOrNull() as? String ?: return route
-        return "$route?destination=$destination"
-    }
+private object AddPlan : DestinationItem {
+    override var route = "addPlan"
+    override var arguments = listOf(navArgument(DESTINATION_ARG) {
+        type = NavType.StringType
+        nullable = true
+    })
+    override var routeWithArgs = "$route?destination={$DESTINATION_ARG}"
 }
 
-data class PlanDetailContainer(
-    override var route: String = planDetailsContainerRoute,
-    override var arguments: List<NamedNavArgument> = planArgs,
-    override var routeWithArgs: String = "$route/{$planArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val plan = arguments.firstOrNull() as? String ?: return route
+fun NavController.navigateToAddPlan(destination: String, navOptions: NavOptions? = null) {
+    this.navigate(route = "${AddPlan.route}?destination=$destination", navOptions = navOptions)
+}
 
-        return "$route/$plan"
-    }
+private object PlanDetailContainer : DestinationItem {
+    override var route = "planDetailsContainerRoute"
+    override var arguments = planArgs
+    override var routeWithArgs: String = "$route/{$planArg}"
+}
+
+private fun NavController.navigateToPlanDetailContainer(plan: String, navOptions: NavOptions? = null) {
+    this.navigate(route = "${PlanDetailContainer.route}/$plan", navOptions = navOptions)
 }
 
 fun NavGraphBuilder.planGraph(
@@ -77,29 +51,30 @@ fun NavGraphBuilder.planGraph(
     onShowDetails: (Long) -> Unit = { },
     onChoosePlanImage: (pinId: Long) -> Unit,
 ) {
-    navigation(startDestination = planHome.route, route = planNavigation) {
+    navigation(startDestination = PlanHome.route, route = PLAN_NAVIGATION) {
         composable(
-            route = planHome.route,
+            route = PlanHome.route,
             arguments = emptyList(),
         ) {
             PlanHomeScreen(
                 onShowDetails = onShowDetails,
                 onShowPlan = { plan ->
-                    navController.navigate(planDetailsContainer.routeWithSetArguments(plan))
+                    navController.navigateToPlanDetailContainer(plan = plan)
                 },
                 onAddPlan = {
-                    navController.navigate(addPlan.route)
+                    navController.navigate(AddPlan.route)
                 },
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )
         }
 
+        // TODO: convert to dialog?
         composable(
-            route = addPlan.route,
+            route = AddPlan.route,
             arguments = emptyList()
         ) { navBackStackEntry ->
-            val destination = navBackStackEntry.arguments?.getString(destinationArg)
+            val destination = navBackStackEntry.arguments?.getString(DESTINATION_ARG)
             AddPlanScreen(
                 preselectedDestination = destination,
                 canNavigateBack = navController.previousBackStackEntry != null,
@@ -108,30 +83,31 @@ fun NavGraphBuilder.planGraph(
                 },
                 planAdded = {
                     navController.navigateUp()
-                    navController.navigateSingleTopTo(planHome.route)
+                    navController.navigateSingleTopTo(route = PlanHome.route)
                 }
             )
         }
 
+        // TODO: convert to dialog?
         composable(
-            route = addPlan.routeWithArgs,
-            arguments = addPlan.arguments,
+            route = AddPlan.routeWithArgs,
+            arguments = AddPlan.arguments,
         ) { navBackStackEntry ->
-            val destination = navBackStackEntry.arguments?.getString(destinationArg)
+            val destination = navBackStackEntry.arguments?.getString(DESTINATION_ARG)
             AddPlanScreen(
                 preselectedDestination = destination,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
                 planAdded = {
                     navController.navigateUp()
-                    navController.navigateSingleTopTo(planHome.route)
+                    navController.navigateSingleTopTo(PlanHome.route)
                 }
             )
         }
 
         composable(
-            route = planDetailsContainer.routeWithArgs,
-            arguments = planDetailsContainer.arguments,
+            route = PlanDetailContainer.routeWithArgs,
+            arguments = PlanDetailContainer.arguments,
         ) { navBackStackEntry ->
             val plan = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
             PlanDetailHomeScreen(
