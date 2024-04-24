@@ -40,13 +40,13 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val googleMapsApiKey: String = gradleLocalProperties(rootDir).getProperty("googleMapsApiKey")
+        val googleMapsApiKey: String = gradleLocalProperties(rootDir, providers).getProperty("googleMapsApiKey")
         manifestPlaceholders["googleMapsApiKey"] = googleMapsApiKey
 
-        val facebookClientToken: String = gradleLocalProperties(rootDir).getProperty("facebookClientToken")
+        val facebookClientToken: String = gradleLocalProperties(rootDir, providers).getProperty("facebookClientToken")
         manifestPlaceholders["facebookClientToken"] = facebookClientToken
 
-        val googleServerClientId: String = gradleLocalProperties(rootDir).getProperty("googleServerClientId")
+        val googleServerClientId: String = gradleLocalProperties(rootDir, providers).getProperty("googleServerClientId")
         buildConfigField(type = "String", name = "googleServerClientId", value = googleServerClientId)
 
         resourceConfigurations.addAll(listOf("en", "de"))
