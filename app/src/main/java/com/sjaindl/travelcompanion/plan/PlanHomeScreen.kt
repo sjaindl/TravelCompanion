@@ -60,6 +60,14 @@ fun PlanHomeScreen(
 ) {
     var showDialogForPlan: Plan? by remember { mutableStateOf(null) }
 
+    val upcomingTrips by viewModel.upcomingTripsFlow.collectAsState()
+    val pastTrips by viewModel.pastTripsFlow.collectAsState()
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchPlans()
+    }
+
     TravelCompanionTheme {
         Scaffold(
             containerColor = colors.background,
@@ -92,13 +100,7 @@ fun PlanHomeScreen(
                 }
             }
         ) { paddingValues ->
-            val upcomingTrips by viewModel.upcomingTripsFlow.collectAsState()
-            val pastTrips by viewModel.pastTripsFlow.collectAsState()
-            val state by viewModel.state.collectAsState()
 
-            LaunchedEffect(Unit) {
-                viewModel.fetchPlans()
-            }
 
             when (state) {
                 PlanViewModel.State.Loading -> {

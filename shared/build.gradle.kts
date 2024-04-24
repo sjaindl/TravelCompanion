@@ -103,7 +103,7 @@ kotlin {
             }
         }
 
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation(libs.junit)
@@ -156,6 +156,5 @@ allOpen {
 
 // https://github.com/icerockdev/moko-resources
 multiplatformResources {
-    multiplatformResourcesPackage = "com.sjaindl.travelcompanion"
-    disableStaticFrameworkWarning = true
+    this.resourcesPackage = "com.sjaindl.travelcompanion"
 }

@@ -35,7 +35,10 @@ const val initialPhotoTabPage = 1
 @OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = {
+        tabRowItems.size
+    })
+
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = Unit) {
@@ -80,7 +83,6 @@ fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) 
             }
 
             HorizontalPager(
-                pageCount = tabRowItems.size,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(colors.background),
