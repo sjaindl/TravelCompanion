@@ -55,7 +55,7 @@ class BaselineProfileGenerator {
 
     @Test
     fun generate() {
-        rule.collectBaselineProfile(
+        rule.collect(
             packageName = packageName,
             includeInStartupProfile = true,
         ) {
