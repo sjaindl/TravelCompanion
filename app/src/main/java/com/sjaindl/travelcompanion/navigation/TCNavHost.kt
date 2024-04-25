@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.MainScreen
+import com.sjaindl.travelcompanion.auth.AUTHENTICATION_NAVIGATION
+import com.sjaindl.travelcompanion.auth.authenticationGraph
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
 import com.sjaindl.travelcompanion.explore.navigation.EXPLORE_NAVIGATION
 import com.sjaindl.travelcompanion.explore.navigation.exploreGraph
@@ -28,7 +30,7 @@ import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 // https://developer.android.com/jetpack/compose/navigation#nested-nav
 // https://medium.com/google-developer-experts/modular-navigation-with-jetpack-compose-fda9f6b2bef7
 
-private const val TC_HOME_ROUTE = "tcHome"
+const val TC_HOME_ROUTE = "tcHome"
 
 private fun NavGraphBuilder.mainScreen(
     onNavigateToExplore: () -> Unit,
@@ -66,9 +68,15 @@ fun TCNavHost(
                 .build(),
         )
     },
+    signInWithGoogle: () -> Unit,
+    signInWithFacebook: () -> Unit,
+    signInWithMail: (email: String, password: String) -> Unit,
+    signUpWithMail: (email: String, password: String, name: String) -> Unit,
     onClickedProfile: () -> Unit = { },
     openProfile: Boolean = false,
     profileOpened: () -> Unit = { },
+    openAuthentication: Boolean = false,
+    authenticationOpened: () -> Unit = { },
     onAuthenticateAndOpenPlan: () -> Unit = { },
     onAuthenticateAndOpenAddPlan: (String) -> Unit = { },
     openPlan: Boolean = false,
@@ -76,6 +84,11 @@ fun TCNavHost(
     openedPlan: () -> Unit = { },
     openedAddPlan: () -> Unit = { },
 ) {
+    if (openAuthentication) {
+        navController.navigateSingleTopTo(route = AUTHENTICATION_NAVIGATION)
+        authenticationOpened()
+    }
+
     if (openProfile) {
         navController.navigateSingleTopTo(route = PROFILE_NAVIGATION)
         profileOpened()
@@ -117,6 +130,14 @@ fun TCNavHost(
             navigateUp = {
                 navController.navigateUp()
             },
+        )
+
+        authenticationGraph(
+            navController = navController,
+            signInWithGoogle = signInWithGoogle,
+            signInWithFacebook = signInWithFacebook,
+            signInWithMail = signInWithMail,
+            signUpWithMail = signUpWithMail,
         )
 
         profileGraph(navController = navController, onClose = onClose)

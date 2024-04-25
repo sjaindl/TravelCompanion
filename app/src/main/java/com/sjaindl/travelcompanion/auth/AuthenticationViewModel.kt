@@ -50,7 +50,7 @@ class AuthenticationViewModel : ViewModel() {
             callback = object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
                     Timber.tag(tag = tag).d(message = "facebook onSuccess: $result")
-                    handleFacebookAccessToken(result.accessToken, successAction, onFailure) {
+                    handleFacebookAccessToken(token = result.accessToken, successAction = successAction, onFailure = onFailure) {
                         onCompleted()
                     }
                 }

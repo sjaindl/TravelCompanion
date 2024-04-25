@@ -16,8 +16,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.sjaindl.travelcompanion.auth.AuthenticationViewModel
-import com.sjaindl.travelcompanion.auth.MailSignInContainer
-import com.sjaindl.travelcompanion.auth.SignInChooserScreen
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import timber.log.Timber
@@ -59,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setContent() {
         binding.composeView.setContent {
+            val context = LocalContext.current
+
             var authenticationAction: (() -> Unit)? by remember {
                 mutableStateOf(null)
             }
@@ -75,129 +75,108 @@ class MainActivity : AppCompatActivity() {
                 mutableStateOf(OpenAddPlan(open = false, destination = ""))
             }
 
-            var signInWithMail by remember {
-                mutableStateOf(false)
-            }
-
-            val successAction = authenticationAction
-            if (successAction != null) {
-                val context = LocalContext.current
-
-                TravelCompanionTheme {
-
-                    if (signInWithMail) {
-                        MailSignInContainer(
-                            signInWithMail = { email, password ->
-                                authenticationViewModel.signInWithMail(
-                                    email = email,
-                                    password = password,
-                                    onFailure = { exception ->
-                                        handleFailure(exception = exception)
-                                    },
-                                    onCompleted = {
-                                        signInWithMail = false
-                                        authenticationAction = null
-                                    }
-                                )
+            TravelCompanionTheme {
+                MainContainer(
+                    signInWithGoogle = {
+                        authenticationViewModel.signInWithGoogle(
+                            credentialManager = credentialManager,
+                            context = context,
+                            successAction = authenticationAction ?: { },
+                            onAuthenticated = {
+                                authenticationAction = null
                             },
-                            signUpWithMail = { email, password, name ->
-                                authenticationViewModel.signUpWithMail(
-                                    email = email,
-                                    password = password,
-                                    name = name,
-                                    onFailure = { exception ->
-                                        handleFailure(exception = exception)
-                                    },
-                                    onCompleted = {
-                                        signInWithMail = false
-                                        authenticationAction = null
-                                    }
-                                )
-                            }
-                        )
-                    } else {
-                        SignInChooserScreen(
-                            signInWithGoogle = {
-                                authenticationViewModel.signInWithGoogle(
-                                    credentialManager = credentialManager,
-                                    context = context,
-                                    successAction = successAction,
-                                    onAuthenticated = {
-                                        authenticationAction = null
-                                    },
-                                    onFailure = { exception ->
-                                        handleFailure(exception = exception)
-                                    },
-                                )
-                            },
-                            signInWithFacebook = {
-                                authenticationViewModel.signInWithFacebook(
-                                    activityResultRegistryOwner = this,
-                                    callbackManager = callbackManager,
-                                    successAction = successAction,
-                                    onFailure = { exception ->
-                                        handleFailure(exception = exception)
-                                    },
-                                    onCompleted = {
-                                        authenticationAction = null
-                                    }
-                                )
-                            },
-                            signInWithMail = {
-                                signInWithMail = true
+                            onFailure = { exception ->
+                                handleFailure(exception = exception)
                             },
                         )
-                    }
-                }
-            } else {
-                TravelCompanionTheme {
-                    MainContainer(
-                        onClickedProfile = {
-                            if (auth.currentUser != null) {
-                                // already signed in
-                                openProfile = true
-                            } else {
-                                authenticationAction = {
-                                    Timber.tag(tag = tag).d(message = "Successfully signed in")
-                                }
+                    },
+                    signInWithFacebook = {
+                        authenticationViewModel.signInWithFacebook(
+                            activityResultRegistryOwner = this,
+                            callbackManager = callbackManager,
+                            successAction = authenticationAction ?: { },
+                            onFailure = { exception ->
+                                handleFailure(exception = exception)
+                            },
+                            onCompleted = {
+                                authenticationAction = null
                             }
-                        },
-                        openProfile = openProfile,
-                        profileOpened = {
-                            openProfile = false
-                        },
-                        onAuthenticateAndOpenPlan = {
-                            if (auth.currentUser != null) {
-                                // already signed in
+                        )
+                    },
+                    signInWithMail = { email, password ->
+                        authenticationViewModel.signInWithMail(
+                            email = email,
+                            password = password,
+                            onFailure = { exception ->
+                                handleFailure(exception = exception)
+                            },
+                            onCompleted = {
+                                authenticationAction = null
+                            }
+                        )
+                    },
+                    signUpWithMail = { email, password, name ->
+                        authenticationViewModel.signUpWithMail(
+                            email = email,
+                            password = password,
+                            name = name,
+                            onFailure = { exception ->
+                                handleFailure(exception = exception)
+                            },
+                            onCompleted = {
+                                authenticationAction = null
+                            }
+                        )
+                    },
+                    openAuthentication = authenticationAction != null,
+                    authenticationOpened = {
+                        authenticationAction = null
+                    },
+                    onClickedProfile = {
+                        if (auth.currentUser != null) {
+                            // already signed in
+                            openProfile = true
+                        } else {
+                            authenticationAction = {
+                                Timber.tag(tag = tag).d(message = "Successfully signed in")
+                            }
+                        }
+                    },
+                    openProfile = openProfile,
+                    profileOpened = {
+                        openProfile = false
+                    },
+                    onAuthenticateAndOpenPlan = {
+                        if (auth.currentUser != null) {
+                            // already signed in
+                            openPlan = true
+                        } else {
+                            authenticationAction = {
+                                Timber.tag(tag = tag).d(message = "Successfully signed in")
                                 openPlan = true
-                            } else {
-                                authenticationAction = {
-                                    Timber.tag(tag = tag).d(message = "Successfully signed in")
-                                    openPlan = true
-                                }
                             }
-                        },
-                        onAuthenticateAndOpenAddPlan = { destination ->
-                            if (auth.currentUser != null) {
-                                // already signed in
+                        }
+                    },
+                    onAuthenticateAndOpenAddPlan = { destination ->
+                        if (auth.currentUser != null) {
+                            // already signed in
+                            openAddPlan = OpenAddPlan(open = true, destination = destination)
+                        } else {
+                            authenticationAction = {
+                                Timber.tag(tag = tag).d(message = "Successfully signed in")
                                 openAddPlan = OpenAddPlan(open = true, destination = destination)
-                            } else {
-                                authenticationAction = {
-                                    Timber.tag(tag = tag).d(message = "Successfully signed in")
-                                    openAddPlan = OpenAddPlan(open = true, destination = destination)
-                                }
                             }
-                        },
-                        openPlan = openPlan,
-                        openAddPlan = if (openAddPlan.open) openAddPlan.destination else null,
-                        openedPlan = {
-                            openPlan = false
-                        },
-                        openedAddPlan = {
-                            openAddPlan = OpenAddPlan(open = false, destination = "")
-                        },
-                    )
-                }
+                        }
+                    },
+                    openPlan = openPlan,
+                    openAddPlan = if (openAddPlan.open) openAddPlan.destination else null,
+                    openedPlan = {
+                        openPlan = false
+                    },
+                    openedAddPlan = {
+                        openAddPlan = OpenAddPlan(open = false, destination = "")
+                    },
+                )
             }
         }
     }

@@ -17,7 +17,7 @@ import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
+internal fun MainScreen(
     onNavigateToExplore: () -> Unit,
     onNavigateToPlan: () -> Unit,
     onNavigateToRemember: () -> Unit,
@@ -100,7 +100,6 @@ fun MainScreen(
 
 @Preview
 @Composable
-
 fun MainScreenPreview() {
     MainScreen(
         onNavigateToExplore = { },

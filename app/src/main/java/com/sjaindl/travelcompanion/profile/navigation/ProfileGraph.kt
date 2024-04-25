@@ -2,6 +2,7 @@ package com.sjaindl.travelcompanion.profile.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
@@ -44,12 +45,16 @@ private fun NavGraphBuilder.personalInfoScreen(
     }
 }
 
+fun NavController.navigateToPersonalInfoScreen(navOptions: NavOptions? = null) {
+    this.navigate(route = PERSONAL_INFO_ROUTE, navOptions = navOptions)
+}
+
 fun NavGraphBuilder.profileGraph(navController: NavController, onClose: () -> Unit = { }) {
     navigation(startDestination = PROFILE_ROUTE, route = PROFILE_NAVIGATION) {
         profileScreen(
             onClose = onClose,
             goToPersonalInfo = {
-                navController.navigate(route = PERSONAL_INFO_ROUTE)
+                navController.navigateToPersonalInfoScreen()
             },
             canNavigateBack = navController.previousBackStackEntry != null,
             navigateUp = { navController.navigateUp() },
