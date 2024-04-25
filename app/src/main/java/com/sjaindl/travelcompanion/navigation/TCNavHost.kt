@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.MainScreen
 import com.sjaindl.travelcompanion.auth.AUTHENTICATION_NAVIGATION
 import com.sjaindl.travelcompanion.auth.authenticationGraph
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailPhotos
 import com.sjaindl.travelcompanion.explore.navigation.EXPLORE_NAVIGATION
 import com.sjaindl.travelcompanion.explore.navigation.exploreGraph
 import com.sjaindl.travelcompanion.explore.navigation.navigateToExploreDetailContainer
@@ -157,7 +157,7 @@ fun TCNavHost(
             navController = navController,
             onShowDetails = onShowDetails,
             onChoosePlanImage = { pinId ->
-                val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
+                val route = ExploreDetailPhotos.routeWithSetArguments(pinId, true)
                 navController.navigate(route)
             }
         )

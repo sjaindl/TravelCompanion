@@ -12,6 +12,7 @@ import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.explore.ExploreScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailPhotos
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 import com.sjaindl.travelcompanion.explore.search.PickPlaceScreen
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceAutocompleteScreen
@@ -161,12 +162,12 @@ fun NavGraphBuilder.exploreGraph(
         }
 
         composable(
-            route = exploreDetailPhotos.routeWithArgs,
-            arguments = exploreDetailPhotos.arguments,
+            route = ExploreDetailPhotos.routeWithArgs,
+            arguments = ExploreDetailPhotos.arguments,
         ) { navBackStackEntry ->
             val args = navBackStackEntry.arguments
-            val argPinId = args?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
-            val isPickerMode = args.getBoolean(BottomNavItem.pickerMode)
+            val argPinId = args?.getLong(BottomNavItem.PIN_ARG) ?: throw IllegalStateException("No pinId given")
+            val isPickerMode = args.getBoolean(BottomNavItem.PICKER_MODE)
 
             ExploreDetailPhotosMainScreen(
                 pinId = argPinId,

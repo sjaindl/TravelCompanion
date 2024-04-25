@@ -4,8 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material.icons.rounded.Place
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.navigation.NamedDestinationItem
@@ -15,37 +13,20 @@ import com.sjaindl.travelcompanion.shared.R as SharedR
 
 sealed class BottomNavItem : NamedDestinationItem {
     companion object {
-        const val pinArg = "pin"
-        const val pickerMode = "pickerMode"
+        const val PIN_ARG = "pin"
+        const val PICKER_MODE = "pickerMode"
 
-        private val pinArgs = listOf(navArgument(pinArg) {
+        private val pinArgs = listOf(navArgument(PIN_ARG) {
             type = NavType.LongType
-            // defaultValue = 0
         })
-
-        private val photoDetailArgs = listOf(
-            navArgument(pinArg) {
-                type = NavType.LongType
-                // defaultValue = 0
-            },
-            navArgument(pickerMode) {
-                type = NavType.BoolType
-                defaultValue = false
-            },
-        )
-
-        private const val exploreDetailsHomeRoute = "exploreDetailsHome"
-        private const val exploreDetailsPhotosRoute = "exploreDetailsPhoto"
-        private const val exploreDetailsInfoRoute = "exploreDetailsInfo"
     }
 
-    data class ExploreDetailHome(
-        override var titleRes: Int = SharedR.string.detail,
-        override var icon: ImageVector = Icons.Rounded.Place,
-        override var route: String = exploreDetailsHomeRoute,
-        override var arguments: List<NamedNavArgument> = pinArgs,
-        override var routeWithArgs: String = "$route/{$pinArg}",
-    ) : BottomNavItem() {
+    data object ExploreDetailHome : BottomNavItem() {
+        override var titleRes = SharedR.string.detail
+        override var icon = Icons.Rounded.Place
+        override var route = "exploreDetailsHome"
+        override var arguments = pinArgs
+        override var routeWithArgs = "$route/{$PIN_ARG}"
         override fun routeWithSetArguments(vararg arguments: Any): String {
             val pinId = arguments.firstOrNull() as? Long ?: return route
 
@@ -53,13 +34,20 @@ sealed class BottomNavItem : NamedDestinationItem {
         }
     }
 
-    data class ExploreDetailPhotos(
-        override var titleRes: Int = SharedR.string.photos,
-        override var icon: ImageVector = Icons.Rounded.Photo,
-        override var route: String = exploreDetailsPhotosRoute,
-        override var arguments: List<NamedNavArgument> = photoDetailArgs,
-        override var routeWithArgs: String = "$route/{$pinArg}/{$pickerMode}",
-    ) : BottomNavItem() {
+    data object ExploreDetailPhotos : BottomNavItem() {
+        override var titleRes = SharedR.string.photos
+        override var icon = Icons.Rounded.Photo
+        override var route = "exploreDetailsPhoto"
+        override var arguments = listOf(
+            navArgument(PIN_ARG) {
+                type = NavType.LongType
+            },
+            navArgument(PICKER_MODE) {
+                type = NavType.BoolType
+                defaultValue = false
+            },
+        )
+        override var routeWithArgs = "$route/{$PIN_ARG}/{$PICKER_MODE}"
         override fun routeWithSetArguments(vararg arguments: Any): String {
             if (arguments.size < 2) return route
             val pinId = arguments.firstOrNull() as? Long ?: return route
@@ -69,13 +57,12 @@ sealed class BottomNavItem : NamedDestinationItem {
         }
     }
 
-    data class ExploreDetailInfo(
-        override var titleRes: Int = SharedR.string.info,
-        override var icon: ImageVector = Icons.Rounded.Info,
-        override var route: String = exploreDetailsInfoRoute,
-        override var arguments: List<NamedNavArgument> = pinArgs,
-        override var routeWithArgs: String = "$route/{$pinArg}",
-    ) : BottomNavItem() {
+    data object ExploreDetailInfo : BottomNavItem() {
+        override var titleRes = SharedR.string.info
+        override var icon = Icons.Rounded.Info
+        override var route = "exploreDetailsInfo"
+        override var arguments = pinArgs
+        override var routeWithArgs = "$route/{$PIN_ARG}"
         override fun routeWithSetArguments(vararg arguments: Any): String {
             val pinId = arguments.firstOrNull() as? Long ?: return route
 

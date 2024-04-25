@@ -12,8 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailPhotos
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
-import com.sjaindl.travelcompanion.explore.navigation.exploreDetailPhotos
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 import com.sjaindl.travelcompanion.plan.ChangeDateScreen
@@ -136,7 +136,7 @@ fun PlanDetailNavHost(
                     navController.navigateToAddNote(plannableId = plannableId, planName = planName, planDetailItemType = planDetailItemType)
                 },
                 onChoosePlanImage = { pinId ->
-                    val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
+                    val route = ExploreDetailPhotos.routeWithSetArguments(pinId, true)
                     navController.navigate(route)
                 }
             )
@@ -152,7 +152,6 @@ fun PlanDetailNavHost(
                 canNavigateBack = canNavigateBack,
                 navigateUp = { navigateUp() },
                 onAddPlace = { planDetailItemType, planName, mapLocationData ->
-                    val encodedLocationData = Json.encodeToString(mapLocationData)
                     navController.navigateToAddPlace(
                         planDetailItemType = planDetailItemType,
                         planName = planName,
@@ -229,13 +228,13 @@ fun PlanDetailNavHost(
         }
 
         composable(
-            route = exploreDetailPhotos.routeWithArgs,
-            arguments = exploreDetailPhotos.arguments,
+            route = ExploreDetailPhotos.routeWithArgs,
+            arguments = ExploreDetailPhotos.arguments,
         ) { navBackStackEntry ->
             val argPinId =
-                navBackStackEntry.arguments?.getLong(BottomNavItem.pinArg) ?: throw IllegalStateException("No pinId given")
+                navBackStackEntry.arguments?.getLong(BottomNavItem.PIN_ARG) ?: throw IllegalStateException("No pinId given")
             val isPickerMode =
-                navBackStackEntry.arguments?.getBoolean(BottomNavItem.pickerMode) ?: throw IllegalStateException("No pickerMode given")
+                navBackStackEntry.arguments?.getBoolean(BottomNavItem.PICKER_MODE) ?: throw IllegalStateException("No pickerMode given")
 
             ExploreDetailPhotosMainScreen(
                 pinId = argPinId,

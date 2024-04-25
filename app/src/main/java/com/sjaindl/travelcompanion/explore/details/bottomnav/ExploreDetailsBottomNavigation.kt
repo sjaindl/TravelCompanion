@@ -13,14 +13,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailHome
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailInfo
+import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailPhotos
 import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
 @Composable
 fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long) {
     val items = listOf(
-        BottomNavItem.ExploreDetailHome(),
-        BottomNavItem.ExploreDetailPhotos(),
-        BottomNavItem.ExploreDetailInfo(),
+        ExploreDetailHome,
+        ExploreDetailPhotos,
+        ExploreDetailInfo,
     )
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.colorMain),
