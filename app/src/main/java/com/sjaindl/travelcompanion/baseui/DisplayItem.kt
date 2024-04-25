@@ -28,8 +28,8 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
 fun DisplayItem(
-    title: String? = null,
     modifier: Modifier = Modifier,
+    title: String? = null,
     @DrawableRes icon: Int? = null,
     imageVector: ImageVector? = null,
     subTitle: String? = null,
@@ -114,10 +114,10 @@ private fun DisplayItemPreview() {
                 onClick = {}
             )
             DisplayItem(
+                modifier = Modifier.fillMaxWidth(),
                 icon = R.drawable.bin,
                 title = "This is an item with icon",
                 subTitle = "and a subtitle",
-                modifier = Modifier.fillMaxWidth(),
                 onClick = {}
             )
         }

@@ -14,17 +14,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MyLocation
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sjaindl.travelcompanion.databinding.ActivityDataAccessRationaleBinding
 import com.sjaindl.travelcompanion.shared.R
@@ -48,28 +50,36 @@ class DataAccessRationaleActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
             val groupName = intent.getStringExtra(EXTRA_PERMISSION_GROUP_NAME)
-            val attributionTags = intent.getStringArrayExtra(EXTRA_ATTRIBUTION_TAGS)?.mapNotNull { it }?.joinToString(separator = ",").orEmpty()
+            val attributionTags =
+                intent.getStringArrayExtra(EXTRA_ATTRIBUTION_TAGS)?.mapNotNull { it }?.joinToString(separator = ",").orEmpty()
             val startTime = intent.getLongExtra(EXTRA_START_TIME, -1)
             val endTime = intent.getLongExtra(EXTRA_END_TIME, -1)
 
-            Timber.tag(tag)
-                .d( "Show location data access rationale for group: $groupName\n" +
-                "attributionTags: $attributionTags\n" +
-                "startTime: ${convertLongToTime(time = startTime)}\n" +
-                "endTime: ${convertLongToTime(time = endTime)}"
+            Timber.tag(tag).d(
+                message = "Show location data access rationale for group: $groupName\n" +
+                        "attributionTags: $attributionTags\n" +
+                        "startTime: ${convertLongToTime(time = startTime)}\n" +
+                        "endTime: ${convertLongToTime(time = endTime)}"
             )
         }
 
         binding.composeView.setContent {
+            val scrollState = rememberScrollState()
+
             Column(
                 modifier = Modifier
-                    .padding(all = 8.dp),
-                verticalArrangement = Arrangement.SpaceAround,
+                    .padding(horizontal = 8.dp)
+                    .padding(bottom = 32.dp)
+                    .verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(
-                    imageVector = Icons.Rounded.MyLocation,
-                    contentDescription = null,
+                Text(
+                    text = stringResource(id = R.string.dataUsageInfo),
+                    modifier = Modifier.padding(top = 16.dp),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
                 )
 
                 Image(
@@ -77,6 +87,11 @@ class DataAccessRationaleActivity : AppCompatActivity() {
                     contentDescription = null,
                     modifier = Modifier.heightIn(min = 600.dp),
                     contentScale = ContentScale.FillHeight,
+                )
+
+                Image(
+                    imageVector = Icons.Rounded.MyLocation,
+                    contentDescription = null,
                 )
 
                 Text(

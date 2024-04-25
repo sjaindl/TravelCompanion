@@ -40,6 +40,7 @@ import com.sjaindl.travelcompanion.shared.R as SharedR
 fun ProfileScreen(
     onClose: () -> Unit = { },
     goToPersonalInfo: () -> Unit = { },
+    goToDataAccessRationaleInfo: () -> Unit = { },
     viewModel: ProfileViewModel = viewModel(),
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
@@ -99,6 +100,13 @@ fun ProfileScreen(
                         icon = R.drawable.ic_user,
                     ) {
                         goToPersonalInfo()
+                    }
+
+                    JumpItem(
+                        title = stringResource(id = SharedR.string.dataUsageInfo),
+                        icon = R.drawable.ic_user,
+                    ) {
+                        goToDataAccessRationaleInfo()
                     }
 
                     DisplayItem(
