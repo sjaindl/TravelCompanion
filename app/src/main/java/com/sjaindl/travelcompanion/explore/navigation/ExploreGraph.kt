@@ -1,11 +1,13 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
+import android.content.Intent
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.explore.ExploreScreen
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailContainer
@@ -73,6 +75,7 @@ private fun NavController.navigateToPickPlace(latitude: Float, longitude: Float,
 }
 
 const val EXPLORE_NAVIGATION = "exploreNavigation"
+private const val EXPLORE_HOME_DEEPLINK = "com.sjaindl.travelcompanion://explore"
 
 fun NavGraphBuilder.exploreGraph(
     navController: NavController,
@@ -82,6 +85,12 @@ fun NavGraphBuilder.exploreGraph(
         composable(
             route = ExploreHome.routeWithArgs,
             arguments = ExploreHome.arguments,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = EXPLORE_HOME_DEEPLINK
+                    action = Intent.ACTION_VIEW
+                }
+            )
         ) { navBackStackEntry ->
             val encodedPlaces = navBackStackEntry.arguments?.getString(PLACES_ARG)
             ExploreScreen(

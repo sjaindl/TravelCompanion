@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion
 
+import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ fun MainContainer(
     openAddPlan: String? = null,
     openedPlan: () -> Unit = { },
     openedAddPlan: () -> Unit = { },
+    deeplinkIntent: Intent? = null,
 ) {
     val navController = rememberNavController()
 
@@ -63,6 +65,10 @@ fun MainContainer(
         openedPlan = openedPlan,
         openedAddPlan = openedAddPlan,
     )
+
+    deeplinkIntent?.let {
+        navController.handleDeepLink(intent = it)
+    }
 }
 
 @Preview

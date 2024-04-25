@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -55,7 +56,12 @@ class MainActivity : AppCompatActivity() {
         setContent()
     }
 
-    private fun setContent() {
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setContent(deeplinkIntent = intent)
+    }
+
+    private fun setContent(deeplinkIntent: Intent? = null) {
         binding.composeView.setContent {
             val context = LocalContext.current
 
@@ -176,6 +182,7 @@ class MainActivity : AppCompatActivity() {
                     openedAddPlan = {
                         openAddPlan = OpenAddPlan(open = false, destination = "")
                     },
+                    deeplinkIntent = deeplinkIntent,
                 )
             }
         }
