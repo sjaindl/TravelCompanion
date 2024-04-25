@@ -14,9 +14,14 @@ import com.sjaindl.travelcompanion.plan.add.AddPlanScreen
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailHomeScreen
 import com.sjaindl.travelcompanion.util.navigateSingleTopTo
 
+private const val PLAN_ARG = "plan"
 private const val DESTINATION_ARG = "destination"
 
 const val PLAN_NAVIGATION = "planNavigation"
+
+private val planArgs = listOf(navArgument(name = PLAN_ARG) {
+    type = NavType.StringType
+})
 
 private object PlanHome : DestinationItem {
     override var route = "plan"
@@ -39,7 +44,7 @@ fun NavController.navigateToAddPlan(destination: String, navOptions: NavOptions?
 private object PlanDetailContainer : DestinationItem {
     override var route = "planDetailsContainerRoute"
     override var arguments = planArgs
-    override var routeWithArgs: String = "$route/{$planArg}"
+    override var routeWithArgs: String = "$route/{$PLAN_ARG}"
 }
 
 private fun NavController.navigateToPlanDetailContainer(plan: String, navOptions: NavOptions? = null) {
@@ -109,7 +114,7 @@ fun NavGraphBuilder.planGraph(
             route = PlanDetailContainer.routeWithArgs,
             arguments = PlanDetailContainer.arguments,
         ) { navBackStackEntry ->
-            val plan = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
+            val plan = navBackStackEntry.arguments?.getString(PLAN_ARG) ?: throw IllegalStateException("No plan given")
             PlanDetailHomeScreen(
                 planName = plan,
                 onChoosePlanImage = onChoosePlanImage,

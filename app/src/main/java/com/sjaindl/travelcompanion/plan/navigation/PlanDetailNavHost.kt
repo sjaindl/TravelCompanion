@@ -3,8 +3,9 @@ package com.sjaindl.travelcompanion.plan.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,110 +20,82 @@ import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailScreen
 import com.sjaindl.travelcompanion.plan.detail.addplace.AddPlaceMapScreen
 import com.sjaindl.travelcompanion.plan.detail.notes.NotesScreen
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-internal const val planArg = "plan"
-internal const val plannableIdArg = "plannableId"
-internal const val planDetailTypeArg = "planDetailType"
-internal const val locationArg = "location"
+private const val PLAN_ARG = "plan"
+private const val PLANNABLE_ID_ARG = "plannableId"
+private const val PLAN_DETAIL_TYPE_ARG = "planDetailType"
+private const val LOCATION_ARG = "location"
 
-internal val addPlaceArgs = listOf(navArgument(planDetailTypeArg) {
-    type = NavType.StringType
-}, navArgument(planArg) {
-    type = NavType.StringType
-}, navArgument(locationArg) {
+private val planArgs = listOf(navArgument(name = PLAN_ARG) {
     type = NavType.StringType
 })
 
-internal val planArgs = listOf(navArgument(planArg) {
-    type = NavType.StringType
-    // nullable = true
-})
-
-internal val addNoteArgs = listOf(navArgument(plannableIdArg) {
-    type = NavType.StringType
-}, navArgument(planArg) {
-    type = NavType.StringType
-}, navArgument(planDetailTypeArg) {
-    type = NavType.StringType
-})
-
-internal val planDetail by lazy {
-    PlanDetail()
+private object PlanDetail : DestinationItem {
+    override var route = "planDetail"
+    override var arguments = planArgs
+    override var routeWithArgs = "$route/{$PLAN_ARG}"
 }
 
-internal val addPlace by lazy {
-    AddPlace()
+private object AddPlace : DestinationItem {
+    override var route = "addPlace"
+    override var arguments = listOf(navArgument(name = PLAN_DETAIL_TYPE_ARG) {
+        type = NavType.StringType
+    }, navArgument(name = PLAN_ARG) {
+        type = NavType.StringType
+    }, navArgument(name = LOCATION_ARG) {
+        type = NavType.StringType
+    })
+    override var routeWithArgs = "$route/{$PLAN_DETAIL_TYPE_ARG}/{$PLAN_ARG}/{$LOCATION_ARG}"
 }
 
-internal val changeDate by lazy {
-    ChangeDate()
+private fun NavController.navigateToAddPlace(
+    planDetailItemType: PlanDetailItemType,
+    planName: String,
+    mapLocationData: MapLocationData,
+    navOptions: NavOptions? = null,
+) {
+    val encodedPlanDetailItemType = Json.encodeToString(planDetailItemType)
+    val encodedMapLocationData = Json.encodeToString(mapLocationData)
+
+    this.navigate(route = "${AddPlace.route}/$encodedPlanDetailItemType/$planName/$encodedMapLocationData", navOptions = navOptions)
 }
 
-internal val addNote by lazy {
-    AddNote()
+private object ChangeDate : DestinationItem {
+    override var route = "changeDate"
+    override var arguments = planArgs
+    override var routeWithArgs = "$route/{$PLAN_ARG}"
 }
 
-internal const val planDetailRoute = "planDetail"
-internal const val addPlaceRoute = "addPlace"
-internal const val changeDateRoute = "changeDate"
-internal const val addNoteRoute = "addNote"
-
-data class PlanDetail(
-    override var route: String = planDetailRoute,
-    override var arguments: List<NamedNavArgument> = planArgs,
-    override var routeWithArgs: String = "$route/{$planArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val plan = arguments.firstOrNull() as? String ?: return route
-        return "$route/{$plan}"
-    }
+private fun NavController.navigateToChangeDate(
+    planName: String,
+    navOptions: NavOptions? = null,
+) {
+    this.navigate(route = "${ChangeDate.route}/$planName", navOptions = navOptions)
 }
 
-data class AddPlace(
-    override var route: String = addPlaceRoute,
-    override var arguments: List<NamedNavArgument> = addPlaceArgs,
-    override var routeWithArgs: String = "$route/{$planDetailTypeArg}/{$planArg}/{$locationArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        if (arguments.size < 3) return route
-        val planDetailItemType = arguments.first() as? PlanDetailItemType ?: return route
-        val planName = arguments[1] as? String ?: return route
-        val mapLocationData = arguments[2] as? MapLocationData ?: return route
-
-        val encodedPlanDetailItemType = Json.encodeToString(planDetailItemType)
-        val encodedMapLocationData = Json.encodeToString(mapLocationData)
-        return "$route/$encodedPlanDetailItemType/$planName/$encodedMapLocationData"
-    }
+private object AddNote : DestinationItem {
+    override var route = "addNote"
+    override var arguments = listOf(navArgument(name = PLANNABLE_ID_ARG) {
+        type = NavType.StringType
+    }, navArgument(name = PLAN_ARG) {
+        type = NavType.StringType
+    }, navArgument(name = PLAN_DETAIL_TYPE_ARG) {
+        type = NavType.StringType
+    })
+    override var routeWithArgs = "$route/{$PLANNABLE_ID_ARG}/{$PLAN_ARG}/{$PLAN_DETAIL_TYPE_ARG}"
 }
 
-data class ChangeDate(
-    override var route: String = changeDateRoute,
-    override var arguments: List<NamedNavArgument> = planArgs,
-    override var routeWithArgs: String = "$route/{$planArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        val plan = arguments.firstOrNull() as? String ?: return route
-        return "$route/$plan"
-    }
-}
+private fun NavController.navigateToAddNote(
+    plannableId: String,
+    planName: String,
+    planDetailItemType: PlanDetailItemType,
+    navOptions: NavOptions? = null,
+) {
+    val encodedPlanDetailItemType = Json.encodeToString(planDetailItemType)
 
-data class AddNote(
-    override var route: String = addNoteRoute,
-    override var arguments: List<NamedNavArgument> = addNoteArgs,
-    override var routeWithArgs: String = "$route/{$plannableIdArg}/{$planArg}/{$planDetailTypeArg}",
-) : DestinationItem {
-    override fun routeWithSetArguments(vararg arguments: Any): String {
-        if (arguments.size < 3) return route
-        val plannableId = arguments.first() as? String ?: return route
-        val planName = arguments[1] as? String ?: return route
-        val planDetailItemType = arguments[2] as? PlanDetailItemType ?: return route
-
-        val encodedPlanDetailItemType = Json.encodeToString(planDetailItemType)
-        return "$route/$plannableId/$planName/$encodedPlanDetailItemType"
-    }
+    this.navigate(route = "${AddNote.route}/$plannableId/$planName/$encodedPlanDetailItemType", navOptions = navOptions)
 }
 
 @Composable
@@ -136,12 +109,12 @@ fun PlanDetailNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = planDetail.route,
+        startDestination = PlanDetail.route,
         modifier = modifier,
     ) {
 
         composable(
-            route = planDetail.route,
+            route = PlanDetail.route,
             arguments = emptyList(),
         ) {
             PlanDetailScreen(
@@ -149,13 +122,17 @@ fun PlanDetailNavHost(
                 canNavigateBack = canNavigateBack,
                 navigateUp = { navigateUp() },
                 onAddPlace = { planDetailItemType, planName, mapLocationData ->
-                    navController.navigate(addPlace.routeWithSetArguments(planDetailItemType, planName, mapLocationData))
+                    navController.navigateToAddPlace(
+                        planDetailItemType = planDetailItemType,
+                        planName = planName,
+                        mapLocationData = mapLocationData,
+                    )
                 },
                 onChangeDate = { planName ->
-                    navController.navigate(changeDate.routeWithSetArguments(planName))
+                    navController.navigateToChangeDate(planName = planName)
                 },
                 onAddNote = { plannableId, planName, planDetailItemType ->
-                    navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
+                    navController.navigateToAddNote(plannableId = plannableId, planName = planName, planDetailItemType = planDetailItemType)
                 },
                 onChoosePlanImage = { pinId ->
                     val route = BottomNavItem.ExploreDetailPhotos().routeWithSetArguments(pinId, true)
@@ -165,36 +142,40 @@ fun PlanDetailNavHost(
         }
 
         composable(
-            route = planDetail.routeWithArgs,
-            arguments = planArgs
+            route = PlanDetail.routeWithArgs,
+            arguments = PlanDetail.arguments,
         ) { navBackStackEntry ->
-            val planArg = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
+            val planArg = navBackStackEntry.arguments?.getString(PLAN_ARG) ?: throw IllegalStateException("No plan given")
             PlanDetailScreen(
                 planName = planArg,
                 canNavigateBack = canNavigateBack,
                 navigateUp = { navigateUp() },
                 onAddPlace = { planDetailItemType, planName, mapLocationData ->
                     val encodedLocationData = Json.encodeToString(mapLocationData)
-                    navController.navigate(addPlace.routeWithSetArguments(planDetailItemType, planName, encodedLocationData))
+                    navController.navigateToAddPlace(
+                        planDetailItemType = planDetailItemType,
+                        planName = planName,
+                        mapLocationData = mapLocationData,
+                    )
                 },
                 onChangeDate = { planName ->
-                    navController.navigate(changeDate.routeWithSetArguments(planName))
+                    navController.navigateToChangeDate(planName = planName)
                 },
                 onAddNote = { plannableId, planName, planDetailItemType ->
-                    navController.navigate(addNote.routeWithSetArguments(plannableId, planName, planDetailItemType))
+                    navController.navigateToAddNote(plannableId = plannableId, planName = planName, planDetailItemType = planDetailItemType)
                 },
                 onChoosePlanImage = onChoosePlanImage,
             )
         }
 
         composable(
-            route = addPlace.routeWithArgs,
-            arguments = addPlaceArgs,
+            route = AddPlace.routeWithArgs,
+            arguments = AddPlace.arguments,
         ) { navBackStackEntry ->
             val args = navBackStackEntry.arguments
-            val encodedPlanDetailItemType = args?.getString(planDetailTypeArg) ?: throw IllegalStateException("No placeType given")
-            val planArgument = args?.getString(planArg) ?: throw IllegalStateException("No plan given")
-            val encodedLocationData = args?.getString(locationArg) ?: throw IllegalStateException("No location given")
+            val encodedPlanDetailItemType = args?.getString(PLAN_DETAIL_TYPE_ARG) ?: throw IllegalStateException("No placeType given")
+            val planArgument = args.getString(PLAN_ARG) ?: throw IllegalStateException("No plan given")
+            val encodedLocationData = args.getString(LOCATION_ARG) ?: throw IllegalStateException("No location given")
 
             val locationData: MapLocationData = Json.decodeFromString(encodedLocationData)
             val planDetailItemType: PlanDetailItemType = Json.decodeFromString(encodedPlanDetailItemType)
@@ -212,13 +193,13 @@ fun PlanDetailNavHost(
         }
 
         composable(
-            route = addNote.routeWithArgs,
-            arguments = addNoteArgs,
+            route = AddNote.routeWithArgs,
+            arguments = AddNote.arguments,
         ) { navBackStackEntry ->
             val args = navBackStackEntry.arguments
-            val plannableIdArg = args?.getString(plannableIdArg) ?: throw IllegalStateException("No plannable given")
-            val planArgument = args?.getString(planArg) ?: throw IllegalStateException("No plan given")
-            val encodedPlanDetailItemType = args?.getString(planDetailTypeArg) ?: throw IllegalStateException("No placeType given")
+            val plannableIdArg = args?.getString(PLANNABLE_ID_ARG) ?: throw IllegalStateException("No plannable given")
+            val planArgument = args.getString(PLAN_ARG) ?: throw IllegalStateException("No plan given")
+            val encodedPlanDetailItemType = args.getString(PLAN_DETAIL_TYPE_ARG) ?: throw IllegalStateException("No placeType given")
 
             val planDetailItemType: PlanDetailItemType = Json.decodeFromString(encodedPlanDetailItemType)
 
@@ -234,10 +215,10 @@ fun PlanDetailNavHost(
         }
 
         composable(
-            route = changeDate.routeWithArgs,
+            route = ChangeDate.routeWithArgs,
             arguments = planArgs,
         ) { navBackStackEntry ->
-            val planArg = navBackStackEntry.arguments?.getString(planArg) ?: throw IllegalStateException("No plan given")
+            val planArg = navBackStackEntry.arguments?.getString(PLAN_ARG) ?: throw IllegalStateException("No plan given")
             ChangeDateScreen(
                 planName = planArg,
                 canNavigateBack = navController.previousBackStackEntry != null,
