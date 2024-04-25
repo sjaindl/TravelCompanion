@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
@@ -50,7 +49,6 @@ fun NotesScreen(
     plannableId: String,
     planDetailItemType: PlanDetailItemType,
     modifier: Modifier = Modifier,
-    canNavigateBack: Boolean,
     navigateUp: () -> Unit = { },
     viewModel: NotesViewModel = viewModel(
         factory = NotesViewModel.NotesViewModelFactory(
@@ -76,13 +74,6 @@ fun NotesScreen(
         TravelCompanionTheme {
             Scaffold(
                 snackbarHost = { SnackbarHost(snackBarHostState) },
-                topBar = {
-                    TCAppBar(
-                        title = stringResource(SharedR.string.addNote),
-                        canNavigateBack = canNavigateBack,
-                        navigateUp = navigateUp,
-                    )
-                },
             ) { paddingValues ->
                 when (state) {
                     NotesViewModel.State.Initial -> {
@@ -240,6 +231,5 @@ fun NotesScreenPreview() {
         planName = "Bled",
         plannableId = "ChIJBXUvjSyRekcR3NxF5Mbb054",
         planDetailItemType = PlanDetailItemType.HOTEL,
-        canNavigateBack = true,
     )
 }

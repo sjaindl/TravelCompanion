@@ -9,6 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
@@ -192,7 +193,7 @@ fun PlanDetailNavHost(
             )
         }
 
-        composable(
+        dialog(
             route = AddNote.routeWithArgs,
             arguments = AddNote.arguments,
         ) { navBackStackEntry ->
@@ -207,7 +208,6 @@ fun PlanDetailNavHost(
                 planName = planArgument,
                 plannableId = plannableIdArg,
                 planDetailItemType = planDetailItemType,
-                canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = {
                     navController.navigateUp()
                 },
