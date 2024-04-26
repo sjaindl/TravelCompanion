@@ -20,10 +20,6 @@ import com.sjaindl.travelcompanion.navigation.DestinationItem
 
 private const val PLACES_ARG = "places"
 
-private fun NavController.navigateToExploreHome(encodedPlaces: String, navOptions: NavOptions? = null) {
-    this.navigate(route = "${ExploreHome.route}?$PLACES_ARG=$encodedPlaces", navOptions = navOptions)
-}
-
 private object ExploreHome : DestinationItem {
     override var route = "explore"
     override var arguments = listOf(navArgument(PLACES_ARG) {
@@ -31,6 +27,10 @@ private object ExploreHome : DestinationItem {
         nullable = true
     })
     override var routeWithArgs = "$route?$PLACES_ARG={$PLACES_ARG}"
+}
+
+private fun NavController.navigateToExploreHome(encodedPlaces: String, navOptions: NavOptions? = null) {
+    this.navigate(route = "${ExploreHome.route}?$PLACES_ARG=$encodedPlaces", navOptions = navOptions)
 }
 
 private const val PIN_ARG = "pin"

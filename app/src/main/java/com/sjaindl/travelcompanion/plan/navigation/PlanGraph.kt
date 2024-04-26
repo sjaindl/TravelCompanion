@@ -67,14 +67,13 @@ fun NavGraphBuilder.planGraph(
                     navController.navigateToPlanDetailContainer(plan = plan)
                 },
                 onAddPlan = {
-                    navController.navigate(AddPlan.route)
+                    navController.navigate(route = AddPlan.route)
                 },
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )
         }
 
-        // TODO: convert to dialog?
         composable(
             route = AddPlan.route,
             arguments = emptyList()
@@ -93,7 +92,6 @@ fun NavGraphBuilder.planGraph(
             )
         }
 
-        // TODO: convert to dialog?
         composable(
             route = AddPlan.routeWithArgs,
             arguments = AddPlan.arguments,
@@ -105,7 +103,7 @@ fun NavGraphBuilder.planGraph(
                 navigateUp = { navController.navigateUp() },
                 planAdded = {
                     navController.navigateUp()
-                    navController.navigateSingleTopTo(PlanHome.route)
+                    navController.navigateSingleTopTo(route = PlanHome.route)
                 }
             )
         }

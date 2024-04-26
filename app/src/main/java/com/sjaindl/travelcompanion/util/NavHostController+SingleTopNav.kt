@@ -6,10 +6,10 @@ fun NavHostController.navigateSingleTopTo(route: String, popToRoute: String? = g
     navigate(route = route) {
         popToRoute?.let {
             popUpTo(route = it) {
-                saveState = true
                 inclusive = false
+                saveState = true
             }
         }
-        launchSingleTop = true
         restoreState = true
+        launchSingleTop = true
     }
