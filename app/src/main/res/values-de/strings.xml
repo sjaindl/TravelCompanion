@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anonymous">Anonym</string>
+    <string name="mainMenuTitle">Travel Companion</string>
+    <string name="photoDetail">Foto Detail</string>
+    <string name="remember">Festhalten</string>
+    <string name="noImageData">Keine Fotos verfügbar</string>
+    <string name="imageNotSaved">Konnte Fotos nicht speichern</string>
+    <string name="chooseAction">Wähle Aktion</string>
+    <string name="showPhoto">Zeige Foto</string>
+    <string name="delete">Löschen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="addPlace">%s hinzufügen</string>
+    <string name="offline">Es besteht keine Netzwerkverbindung.</string>
+    <string name="enterPlace">Ort eingeben</string>
+    <string name="addNote">Notiz hinzufügen</string>
+    <string name="addTransport">Füge %s hinzu</string>
+    <string name="noTransportData">Keine Transporte verfügbar</string>
+    <string name="choosePlaceType">Wähle Orttyp</string>
+    <string name="search">Suche</string>
+    <string name="attractions">Attraktionen</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="hotels">Hotels</string>
+    <string name="publicTransport">Transporte</string>
+    <string name="flights">Flüge</string>
+    <string name="flight">Flug</string>
+    <string name="upcomingTrips">Bevorstehende Reisen</string>
+    <string name="pastTrips">Vergangene Reisen</string>
+    <string name="addPlan">Plan hinzufügen</string>
+    <string name="plan">Plan</string>
+    <string name="show">Anzeigen</string>
+    <string name="numberOfTrips">%d Reisen</string>
+    <string name="km">%.1f km</string>
+    <string name="duration">%1$d Stunden, %2$d Minuten</string>
+    <string name="addPublicTransport">Transport hinzufügen</string>
+    <string name="addroute">Möchtest du die Route hinzufügen?</string>
+    <string name="addRoute">Route hinzufügen</string>
+    <string name="addstoporroute">Möchtest du den einzelnen Stop oder die gesamte Route
+        hinzufügen?
+    </string>
+    <string name="singleStop">Einzelner Stop</string>
+    <string name="wholeRoute">Gesamte Route</string>
+    <string name="flightDetail">≈%1$.2f km, %2$d Stunden, %3$d Minuten</string>
+    <string name="addFlight">Flug hinzufügen</string>
+    <string name="addflight">Möchtest du den Zwischenflug oder die gesamte Route hinzufügen?
+    </string>
+    <string name="singleFlight">Zwischenflug</string>
+    <string name="wholeLeg">Gesamte Route</string>
+    <string name="noPage">Keine Website gefunden</string>
+    <string name="noCountryPhotos">Dieser Ort ist kein Land. Keine Fotos verfügbar.</string>
+    <string name="noCountryDetails">Dieser Ort ist kein Land. Keine Länderdetails verfügbar.
+    </string>
+    <string name="errorDownloadImage">Fehler beim Herunterladen der Fotos</string>
+    <string name="waitForPhotos">Bitte warte bis das Herunterladen der Fotos fertig ist</string>
+    <string name="south">S</string>
+    <string name="north">N</string>
+    <string name="west">W</string>
+    <string name="east">O</string>
+    <string name="km2">km²</string>
+    <string name="noCountryData">Keine Länderdaten verfügbar</string>
+    <string name="explore">Erkunden</string>
+    <string name="showDetails">Details anzeigen</string>
+    <string name="planExists">Plan %s existiert. Pin kann nicht gelöscht werden.</string>
+    <string name="addTranport">Füge %s hinzu</string>
+    <string name="addedRoute">Route erfolgreich hinzugefügt</string>
+    <string name="addedPlace">Ort erfolgreich hinzugefügt</string>
+    <string name="signOutError">Ausloggen nicht erfolgreich</string>
+    <string name="loginRequired">Login erforderlich</string>
+    <string name="accountRequired">Diese Funktionalität kann nur mit einem Konto genutzt werden.
+        Bitte logge dich ein.
+    </string>
+    <string name="signOut">Ausloggen</string>
+    <string name="signIn">Einloggen</string>
+    <string name="signUp">Registrieren</string>
+    <string name="next">Weiter</string>
+    <string name="searchOrigin">Suche Start</string>
+    <string name="searchDestination">Suche Ziel</string>
+    <string name="searchPlaces">Suche Ort</string>
+    <string name="lodging">Unterkunft</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="pointOfInterest">Ort von Interesse</string>
+    <string name="amusementPark">Vergnügungspark</string>
+    <string name="aquarium">Aquarium</string>
+    <string name="artGallery">Kunstgalerie</string>
+    <string name="atm">Bankomat</string>
+    <string name="bank">Bank</string>
+    <string name="bar">Bar</string>
+    <string name="beautySalon">Schönheitssalon</string>
+    <string name="bowlingAlley">Bowlingbahn</string>
+    <string name="cafe">Cafe</string>
+    <string name="casino">Casino</string>
+    <string name="church">Kirche</string>
+    <string name="cityHall">Stadthalle</string>
+    <string name="embassy">Botschaft</string>
+    <string name="gym">Fitnessstudio</string>
+    <string name="hinduTemple">Hindutempel</string>
+    <string name="library">Bücherei</string>
+    <string name="mosque">Moschee</string>
+    <string name="movieTheater">Kino &amp; Theather</string>
+    <string name="museum">Museum</string>
+    <string name="nightClub">Nachtclub</string>
+    <string name="postOffice">Postamt</string>
+    <string name="rvPark">Campingplatz</string>
+    <string name="shoppingMall">Shopping Center</string>
+    <string name="spa">Bad</string>
+    <string name="stadium">Stadion</string>
+    <string name="synagogue">Synagoge</string>
+    <string name="travelAgency">Reiseagentur</string>
+    <string name="zoo">Zoo</string>
+    <string name="planTrip">Reise planen</string>
+    <string name="welcome">Willkommen, %s</string>
+    <string name="about">Über uns</string>
+    <string name="settings">Einstellungen</string>
+    <string name="permissions">Berechtigungen</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="profile">Profil</string>
+    <string name="createAccount">Konto erstellen</string>
+    <string name="account">Konto</string>
+    <string name="myProfile">Mein Profil</string>
+    <string name="yourPrivacyMatters">Deine Privatsphäre ist uns sehr wichtig. Bitte werfe einen
+        Blick in unsere [Datenschutzerklärung](%s), um zu sehen, wie deine Daten behandelt werden.
+    </string>
+    <string name="logout">Ausloggen</string>
+    <string name="deleteAccount">Konto löschen</string>
+    <string name="yesDelete">Ja, löschen</string>
+    <string name="pleaseWait">Bitte warten…</string>
+    <string name="accountDeleted">Konto löschen</string>
+    <string name="ok">OK</string>
+    <string name="yourAccountHasBeenDeleted">Dein Konto wurde gelöscht</string>
+    <string name="doYouReallyWantToDeleteYourAccount">Möchtest du wirklich dein Konto löschen?
+    </string>
+    <string name="personalInformation">Persönliche Information</string>
+    <string name="nameAddressBirthday">Name, E-Mail</string>
+    <string name="requestAccountDeletion">Kontolöschung beantragen</string>
+    <string name="email">E-Mail</string>
+    <string name="name">Name</string>
+    <string name="openSystemPreferences">Systemeinstellungen öffnen</string>
+    <!-- Storyboard strings -->
+    <string name="planDetail">Plane deine Reisen</string>
+    <string name="exploreDetail">Erkunde die Welt nach neuen Reisemöglichkeiten</string>
+    <string name="rememberDetail">Halte deine Erinnerungen in der Reisegalerie fest</string>
+    <string name="planning">Planen</string>
+    <string name="destination">Reiseziel:</string>
+    <string name="displayName">Displayname:</string>
+    <string name="startDate">Startdatum:</string>
+    <string name="endDate">Enddatum:</string>
+    <string name="addTrip">Reise hinzufügen</string>
+    <string name="place">Ort</string>
+    <string name="notav">nicht verfügbar</string>
+    <string name="phone">Telefon:</string>
+    <string name="url">URL:</string>
+    <string name="type">Typ:</string>
+    <string name="location">Standort</string>
+    <string name="capital">Hauptstadt:</string>
+    <string name="language">Sprache:</string>
+    <string name="currency">Währung:</string>
+    <string name="area">Fläche:</string>
+    <string name="population">Einwohner:</string>
+    <string name="timezones">Zeitzonen:</string>
+    <string name="region">Regionen:</string>
+    <string name="isoCode">ISO code:</string>
+    <string name="callingCodes">Vorwahlen:</string>
+    <string name="domains">Domains:</string>
+    <string name="native_name">Heimischer Name:</string>
+    <string name="blocks">Regionale Blöcke:</string>
+    <string name="country">Land</string>
+    <string name="changeDate">Datum ändern</string>
+    <string name="addPlaceSearch">Ort hinzufügen</string>
+    <string name="searchRadius">Suchradius:</string>
+    <string name="select">Auswählen</string>
+    <string name="distance">Entfernung:</string>
+    <string name="noRating">Keine Bewertung</string>
+    <string name="rating">Bewertung:</string>
+    <string name="ratings">Bewertungen</string>
+
+    <string name="detail">Detail</string>
+    <string name="photos">Fotos</string>
+    <string name="info">Info</string>
+
+    <string name="couldNotRetrieveData">Daten konnten nicht ermittelt werden</string>
+    <string name="loading">Wird geladen…</string>
+    <string name="around">Rund um %s</string>
+    <string name="noPhotosFor">Keine Fotos für %s</string>
+
+    <string name="wikipedia">Wikipedia</string>
+    <string name="wikivoyage">Wiki Voyage</string>
+    <string name="google">Google</string>
+    <string name="lonelyplanet">Lonely Planet</string>
+
+    <string name="sign_in_cancelled">Anmeldung abgebrochen</string>
+    <string name="unknown_error">Unbekannter Fehler</string>
+    <string name="back">Zurück</string>
+    <string name="picked">%s ausgewählt</string>
+    <string name="cancelled">Abgebrochen</string>
+    <string name="pick_date">Datum wählen</string>
+    <string name="place_details">Ortdetails</string>
+
+    <string name="notes_added">Notizen hinzugefügt</string>
+    <string name="add_notes">Notizen hinzufügen …</string>
+
+    <string name="choose_camera">Foto von Kamera auswählen</string>
+    <string name="choose_gallery">Foto von Galerie auswählen</string>
+    <string name="errorDeleteImage">Foto konnte nicht gelöscht werden</string>
+    <string name="planAlreadyExists">Plan existiert bereits</string>
+
+    <string name="dataUsageInfo">Informationen zur Datennutzung</string>
+
+    <string name="accuracy">Genauigkeit: %s Meter</string>
+    <string name="data_access_rationale_location">Es wird auf deinen ungefähren Standort
+        zugegriffen, wenn du aktiv Reisemöglichkeiten in der Nähe erkunden möchtest
+    </string>
+
+    <string name="enter_mail">E-Mail eingeben</string>
+    <string name="enter_password">Passwort eingeben</string>
+    <string name="enter_name">Namen eingeben</string>
+</resources>
