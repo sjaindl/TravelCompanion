@@ -4,20 +4,25 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.sjaindl.travelcompanion.plan.Plan
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Date
+import javax.inject.Inject
 
-class RememberViewModel : ViewModel() {
+@HiltViewModel
+class RememberViewModel @Inject constructor(
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel() {
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
 
         data class Error(val exception: Exception) : State()
 
         data class Info(val stringRes: Int) : State()
 
-        object Finished : State()
+        data object Finished : State()
     }
 
     val tag = "RememberViewModel"
@@ -32,7 +37,7 @@ class RememberViewModel : ViewModel() {
     fun fetchPlans() {
         if (!_rememberTrips.isEmpty()) return // already loaded
 
-        FireStoreUtils.loadPlans(
+        fireStoreUtils.loadPlans(
             onLoaded = {
                 addPlan(it)
                 _state.value = State.Finished
@@ -52,4 +57,6 @@ class RememberViewModel : ViewModel() {
             _rememberTrips.add(plan)
         }
     }
+
+    fun bitmapForPlan(planName: String) = fireStoreUtils.bitmapForPlan(planName = planName)
 }

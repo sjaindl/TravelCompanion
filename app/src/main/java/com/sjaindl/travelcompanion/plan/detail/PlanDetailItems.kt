@@ -20,7 +20,7 @@ import com.sjaindl.travelcompanion.plan.detail.expandable.ExpandableCard
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 // https://developer.android.com/jetpack/compose/touch-input/pointer-input/scroll
 @ExperimentalCoroutinesApi
@@ -54,7 +54,7 @@ fun PlanDetailItems(
     TravelCompanionTheme {
         PlanItemActionBottomSheet(
             show = showDialogState,
-            title = stringResource(id = SharedR.string.chooseAction),
+            title = stringResource(id = R.string.chooseAction),
             onAddNote = {
                 viewModel.onDismiss()
                 val data = bottomSheetData ?: return@PlanItemActionBottomSheet

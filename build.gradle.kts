@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.hilt) apply false
+}
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -23,9 +27,12 @@ buildscript {
         // https://github.com/icerockdev/moko-resources
         classpath(libs.resources.generator)
         classpath(libs.baseline.profile)
+
+        classpath(libs.hilt.gradlePlugin)
     }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+
+tasks.register(name = "clean", type = Delete::class) {
+    delete(rootProject.layout.buildDirectory)
 }

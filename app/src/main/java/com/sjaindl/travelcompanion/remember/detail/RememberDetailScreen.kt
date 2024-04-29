@@ -39,16 +39,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import com.sjaindl.travelcompanion.util.TCFileProvider
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 sealed class AddMultiplePhotosState {
     data class Error(val exception: Exception) : AddMultiplePhotosState()
@@ -63,8 +60,10 @@ sealed class AddMultiplePhotosState {
 fun RememberDetailScreen(
     planName: String,
     modifier: Modifier = Modifier,
-    viewModel: RememberDetailViewModel = viewModel(
-        factory = RememberDetailViewModelFactory(planName = planName)
+    viewModel: RememberDetailViewModel = hiltViewModel(
+        creationCallback = { factory: RememberDetailViewModelFactory ->
+            factory.create(planName = planName)
+        }
     ),
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = { },
@@ -87,31 +86,7 @@ fun RememberDetailScreen(
             viewModel.setLoading()
 
             scope.launch {
-                val result = suspendCancellableCoroutine { continuation ->
-                    val photos = mutableListOf<RememberPhoto>()
-                    uris.map { uri ->
-                        BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-                    }.forEach { bitmap ->
-                        FireStoreUtils.persistRememberPhoto(
-                            planName = planName,
-                            image = bitmap,
-                            onSuccess = {
-                                photos.add(it)
-                                if (photos.size == uris.size) {
-                                    continuation.resume(AddMultiplePhotosState.AddedPhotos(photos = photos))
-                                }
-                            },
-                            onInfo = {
-                                continuation.resume(AddMultiplePhotosState.Info(stringRes = it))
-                            },
-                            onError = {
-                                continuation.resume(AddMultiplePhotosState.Error(exception = it))
-                            },
-                        )
-                    }
-                }
-
-                when (result) {
+                when (val result = viewModel.persistPhotos(context, uris)) {
                     is AddMultiplePhotosState.Error -> {
                         viewModel.setError(exception = result.exception)
                     }
@@ -133,23 +108,11 @@ fun RememberDetailScreen(
         onResult = { success ->
             val uri = imageUri
             if (!success || uri == null) {
-                viewModel.setInfo(SharedR.string.imageNotSaved)
+                viewModel.setInfo(R.string.imageNotSaved)
             } else {
                 val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
 
-                FireStoreUtils.persistRememberPhoto(
-                    planName = planName,
-                    image = bitmap,
-                    onSuccess = {
-                        viewModel.addPhoto(photo = it)
-                    },
-                    onInfo = {
-                        viewModel.setInfo(stringRes = it)
-                    },
-                    onError = {
-                        viewModel.setError(exception = it)
-                    },
-                )
+                viewModel.persistRememberPhoto(bitmap = bitmap)
             }
         }
     )
@@ -163,7 +126,7 @@ fun RememberDetailScreen(
             modifier = modifier,
             topBar = {
                 TCAppBar(
-                    title = "$planName: ${stringResource(SharedR.string.remember)}",
+                    title = "$planName: ${stringResource(R.string.remember)}",
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -181,7 +144,7 @@ fun RememberDetailScreen(
                         }) {
                             Icon(
                                 imageVector = Icons.Rounded.Photo,
-                                contentDescription = stringResource(id = SharedR.string.choose_gallery),
+                                contentDescription = stringResource(id = R.string.choose_gallery),
                             )
                         }
                         FloatingActionButton(onClick = {
@@ -191,7 +154,7 @@ fun RememberDetailScreen(
                         }) {
                             Icon(
                                 imageVector = Icons.Rounded.CameraAlt,
-                                contentDescription = stringResource(id = SharedR.string.choose_camera),
+                                contentDescription = stringResource(id = R.string.choose_camera),
                             )
                         }
                         FloatingActionButton(onClick = {
@@ -226,7 +189,7 @@ fun RememberDetailScreen(
                     val exception = (state as RememberDetailViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception.localizedMessage ?: exception.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Column(
                         modifier = modifier

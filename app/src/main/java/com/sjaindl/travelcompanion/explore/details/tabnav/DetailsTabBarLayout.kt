@@ -28,7 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.launch
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 const val initialPhotoTabPage = 1
 
@@ -102,17 +102,17 @@ fun DetailsTabBarLayoutPreview() {
         tabRowItems = listOf(
             TabItem(
                 title = "Tab 1",
-                screen = { TabScreen(text = stringResource(id = SharedR.string.detail)) },
+                screen = { TabScreen(text = stringResource(id = R.string.detail)) },
                 icon = Icons.Rounded.Place,
             ),
             TabItem(
                 title = "Tab 2",
-                screen = { TabScreen(text = stringResource(id = SharedR.string.photos)) },
+                screen = { TabScreen(text = stringResource(id = R.string.photos)) },
                 icon = Icons.Rounded.Photo,
             ),
             TabItem(
                 title = "Tab 3",
-                screen = { TabScreen(text = stringResource(id = SharedR.string.info)) },
+                screen = { TabScreen(text = stringResource(id = R.string.info)) },
                 icon = Icons.Rounded.Info,
             )
         ),

@@ -29,12 +29,14 @@ googleServicesVersion = "4.4.1"
 gradle = "8.3.2"
 gradleVersion = "7.4.0"
 gsonVersion = "2.10.1"
+hiltNavigationVersion = "1.2.0"
+hiltVersion = "2.51"
 junit = "1.1.5"
 jUnitVersion = "4.13.2"
 kermitVersion = "1.2.2"
-kodeinVersion = "7.20.1"
+kodeinVersion = "7.21.2"
 kotlinVersion = "1.9.23"
-kspVersion = "1.9.21-1.0.15"
+kspVersion = "1.9.23-1.0.20"
 ktorVersion = "2.3.10"
 leakCanaryVersion = "2.9.1"
 lifecycleExtensionsVersion = "2.2.0"
@@ -116,6 +118,10 @@ firebase-ui-firestore = { module = "com.firebaseui:firebase-ui-firestore", versi
 firebase-ui-storage = { module = "com.firebaseui:firebase-ui-storage", version.ref = "firebaseUIVersion" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleidVersion" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+hilt-base = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
+hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hiltVersion" }
+hilt-navigationCompose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationVersion" }
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermitVersion" }
 kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodeinVersion" }
@@ -184,6 +190,7 @@ androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules
 firebase-crashlytics = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradleVersion" }
 google-services = { id = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle-tools = { id = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-allopen = { id = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlinVersion" }
 kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }

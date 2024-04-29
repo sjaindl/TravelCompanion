@@ -20,23 +20,24 @@ import com.facebook.login.LoginResult
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
 import com.google.firebase.auth.userProfileChangeRequest
 import com.sjaindl.travelcompanion.BuildConfig
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class AuthenticationViewModel : ViewModel() {
+@HiltViewModel
+class AuthenticationViewModel @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel() {
 
     private val tag = "AuthenticationViewModel"
-
-    private val auth by lazy {
-        Firebase.auth
-    }
 
     fun signInWithFacebook(
         activityResultRegistryOwner: ActivityResultRegistryOwner,
@@ -154,7 +155,7 @@ class AuthenticationViewModel : ViewModel() {
     }
 
     fun preloadPlans() {
-        FireStoreUtils.loadPlans(
+        fireStoreUtils.loadPlans(
             onLoaded = {
                 Timber.d(message = "loaded plan: ${it.name}")
             },

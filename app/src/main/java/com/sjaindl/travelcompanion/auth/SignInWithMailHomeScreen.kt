@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun SignInWithMailHomeScreen(
@@ -50,7 +49,7 @@ fun SignInWithMailHomeScreen(
                 email = it
             },
             modifier = Modifier.fillMaxWidth(),
-            label = { Text(stringResource(id = SharedR.string.enter_mail)) },
+            label = { Text(stringResource(id = R.string.enter_mail)) },
             isError = !email.isValidMail(),
         )
 
@@ -70,7 +69,7 @@ fun SignInWithMailHomeScreen(
                 enabled = email.isValidMail(),
                 colors = colors,
             ) {
-                Text(text = stringResource(id = SharedR.string.signIn))
+                Text(text = stringResource(id = R.string.signIn))
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -82,7 +81,7 @@ fun SignInWithMailHomeScreen(
                 enabled = email.isValidMail(),
                 colors = colors,
             ) {
-                Text(text = stringResource(id = SharedR.string.signUp))
+                Text(text = stringResource(id = R.string.signUp))
             }
 
             Spacer(modifier = Modifier.weight(1f))

@@ -1,20 +1,26 @@
 package com.sjaindl.travelcompanion.plan.add
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.Date
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import javax.inject.Inject
 
-class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel() {
+@HiltViewModel
+class AddPlanViewModel @Inject constructor(
+    private val dataRepository: DataRepository,
+    private val fireStoreUtils: FireStoreUtils,
+    private val fireStoreClient: FireStoreClient,
+) : ViewModel() {
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
 
         data class Error(val exception: Exception?) : State()
 
@@ -27,7 +33,7 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
     var state = _state.asStateFlow()
 
     private val fireStoreDbReference by lazy {
-        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
+        fireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
     }
 
     val tag = "AddPlanViewModel"
@@ -60,19 +66,19 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
                 if (exception != null) {
                     _state.value = State.Error(exception)
                 } else {
-                    _state.value = State.Info(SharedR.string.cancelled)
+                    _state.value = State.Info(R.string.cancelled)
                 }
             }
         }
     }
 
     fun addPlan(name: String, pinName: String, startDate: Date, endDate: Date, completion: () -> Unit) {
-        if (FireStoreUtils.planExists(planName = name)) {
-            _state.value = State.Info(SharedR.string.planAlreadyExists)
+        if (fireStoreUtils.planExists(planName = name)) {
+            _state.value = State.Info(R.string.planAlreadyExists)
             return
         }
 
-        FireStoreUtils.addPlan(
+        fireStoreUtils.addPlan(
             name = name,
             pinName = pinName,
             startDate = startDate,
@@ -82,15 +88,5 @@ class AddPlanViewModel(private val dataRepository: DataRepository) : ViewModel()
             },
             completion = completion,
         )
-    }
-
-    class AddPlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddPlanViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return AddPlanViewModel(dataRepository) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
-        }
     }
 }

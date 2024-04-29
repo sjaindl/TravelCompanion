@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -37,10 +38,11 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.exception.OfflineException
+import com.sjaindl.travelcompanion.explore.details.info.ExploreInfoViewModelFactory
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -49,13 +51,11 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
     photoType: PhotoType,
     pinId: Long,
     isPickerMode: Boolean,
-    viewModel: ExploreFlickrPhotosViewModel = viewModel(
+    viewModel: ExploreFlickrPhotosViewModel = hiltViewModel(
         key = photoType.toString(),
-        factory = ExploreFlickrPhotosViewModelFactory(
-            pinId = pinId,
-            photoType = photoType,
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
+        creationCallback = { factory: ExploreFlickrPhotosViewModelFactory ->
+            factory.create(pinId = pinId, photoType = photoType)
+        },
     ),
     onChoosePhoto: (url: String?) -> Unit,
 ) {
@@ -87,16 +87,16 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                 stickyHeader {
                     if (pagingData.loadState.append.endOfPaginationReached && pagingData.itemCount == 0) {
                         Text(
-                            text = stringResource(id = SharedR.string.noPhotosFor, photoType.toString().lowercase()),
+                            text = stringResource(id = R.string.noPhotosFor, photoType.toString().lowercase()),
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp
                         )
                     } else {
-                        val place = viewModel.place ?: stringResource(id = SharedR.string.place)
-                        val placeText = stringResource(id = SharedR.string.around, place)
-                        val countryText = viewModel.country ?: stringResource(id = SharedR.string.country)
+                        val place = viewModel.place ?: stringResource(id = R.string.place)
+                        val placeText = stringResource(id = R.string.around, place)
+                        val countryText = viewModel.country ?: stringResource(id = R.string.country)
                         val text = if (photoType == PhotoType.COUNTRY) countryText else placeText
 
                         Text(
@@ -178,7 +178,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                 val throwable = refreshState.error
 
                 val errorMessage =
-                    if (throwable is OfflineException) stringResource(id = SharedR.string.offline)
+                    if (throwable is OfflineException) stringResource(id = R.string.offline)
                     else (throwable.localizedMessage ?: throwable.toString())
 
                 Text(
@@ -200,7 +200,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                 val throwable = appendState.error
 
                 val errorMessage =
-                    if (throwable is OfflineException) stringResource(id = SharedR.string.offline)
+                    if (throwable is OfflineException) stringResource(id = R.string.offline)
                     else (throwable.localizedMessage ?: throwable.toString())
 
                 Text(

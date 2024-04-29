@@ -23,19 +23,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.PlanElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RememberScreen(
     modifier: Modifier = Modifier,
-    viewModel: RememberViewModel = viewModel(),
+    viewModel: RememberViewModel = hiltViewModel(),
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = { },
     onNavigateToRememberDetails: (planName: String) -> Unit = { },
@@ -45,7 +44,7 @@ fun RememberScreen(
             containerColor = MaterialTheme.colors.background,
             topBar = {
                 TCAppBar(
-                    title = stringResource(SharedR.string.remember),
+                    title = stringResource(R.string.remember),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -77,7 +76,7 @@ fun RememberScreen(
                     val exception = (state as RememberViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception.localizedMessage ?: exception.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Column(
                         modifier = Modifier
@@ -129,7 +128,7 @@ fun RememberScreen(
                                 modifier = Modifier,
                                 name = plan.name,
                                 dateString = plan.formattedDate,
-                                bitmap = FireStoreUtils.bitmapForPlan(planName = plan.name),
+                                bitmap = viewModel.bitmapForPlan(planName = plan.name),
                                 imagePath = plan.imagePath,
                                 onClick = {
                                     onNavigateToRememberDetails(plan.name)

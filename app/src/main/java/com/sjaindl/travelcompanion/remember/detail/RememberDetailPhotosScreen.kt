@@ -16,10 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun RememberDetailPhotosScreen(
@@ -29,7 +29,7 @@ fun RememberDetailPhotosScreen(
     planName: String,
     onShowActions: (Boolean) -> Unit,
     onDeleted: (String?) -> Unit,
-    viewModel: RememberDetailPhotosViewModel = viewModel(),
+    viewModel: RememberDetailPhotosViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val loadedPhotos by viewModel.loadedPhotosFlow.collectAsState()
@@ -50,7 +50,7 @@ fun RememberDetailPhotosScreen(
                     val exception = (state as RememberDetailPhotosViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Text(
                         text = errorMessage,

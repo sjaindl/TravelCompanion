@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sjaindl.travelcompanion.profile.UserIconView
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +48,7 @@ fun TCAppBar(
                     IconButton(onClick = { navigateUp() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(id = SharedR.string.back),
+                            contentDescription = stringResource(id = R.string.back),
                         )
                     }
                 }
@@ -88,7 +88,7 @@ fun TCAppBar(
 @Composable
 fun TCAppBarPreview() {
     TCAppBar(
-        title = stringResource(SharedR.string.appName),
+        title = stringResource(R.string.appName),
         canNavigateBack = true,
         navigateUp = {},
         showProfile = true,

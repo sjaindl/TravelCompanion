@@ -35,12 +35,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,12 +49,14 @@ fun NotesScreen(
     planDetailItemType: PlanDetailItemType,
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = { },
-    viewModel: NotesViewModel = viewModel(
-        factory = NotesViewModel.NotesViewModelFactory(
-            planName = planName,
-            plannableId = plannableId,
-            planDetailItemType = planDetailItemType,
-        )
+    viewModel: NotesViewModel = hiltViewModel(
+        creationCallback = { factory: NotesViewModel.NotesViewModelFactory ->
+            factory.create(
+                planName = planName,
+                plannableId = plannableId,
+                planDetailItemType = planDetailItemType,
+            )
+        },
     ),
 ) {
     val state by viewModel.state.collectAsState()
@@ -111,7 +112,7 @@ fun NotesScreen(
                                     notes = it
                                 },
                                 placeholder = {
-                                    Text(text = stringResource(id = SharedR.string.add_notes))
+                                    Text(text = stringResource(id = R.string.add_notes))
                                 }
                             )
 
@@ -137,7 +138,7 @@ fun NotesScreen(
                                     colors = buttonColors,
                                 ) {
                                     Text(
-                                        text = stringResource(id = SharedR.string.cancel)
+                                        text = stringResource(id = R.string.cancel)
                                     )
                                 }
 
@@ -156,7 +157,7 @@ fun NotesScreen(
                                     colors = buttonColors,
                                 ) {
                                     Text(
-                                        text = stringResource(id = SharedR.string.addNote)
+                                        text = stringResource(id = R.string.addNote)
                                     )
                                 }
                             }
@@ -167,7 +168,7 @@ fun NotesScreen(
                         val exception = (state as NotesViewModel.State.Error).exception
 
                         val errorMessage =
-                            exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                            exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                         Column(
                             modifier = modifier
@@ -188,7 +189,7 @@ fun NotesScreen(
                     }
 
                     NotesViewModel.State.Finished -> {
-                        val message = stringResource(id = SharedR.string.notes_added)
+                        val message = stringResource(id = R.string.notes_added)
                         LaunchedEffect(Unit) {
                             snackBarHostState.showSnackbar(
                                 message = message

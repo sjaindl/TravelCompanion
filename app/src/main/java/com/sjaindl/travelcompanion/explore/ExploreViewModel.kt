@@ -6,14 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import javax.inject.Inject
 
 data class PlaceDetail(val latitude: Double, val longitude: Double, val name: String)
 
-class ExploreViewModel(private val dataRepository: DataRepository) : ViewModel() {
+@HiltViewModel
+class ExploreViewModel @Inject constructor(
+    private val dataRepository: DataRepository,
+) : ViewModel() {
     private val _showBottomSheet = MutableStateFlow(false)
     val showBottomSheet = _showBottomSheet.asStateFlow()
 

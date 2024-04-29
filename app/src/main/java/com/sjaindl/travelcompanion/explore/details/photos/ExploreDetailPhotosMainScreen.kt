@@ -26,20 +26,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.explore.details.tabnav.DetailsTabBarLayout
 import com.sjaindl.travelcompanion.explore.details.tabnav.TabItem
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,12 +47,10 @@ fun ExploreDetailPhotosMainScreen(
     onPhotoChosen: () -> Unit,
     modifier: Modifier = Modifier,
     isChoosePlanImageMode: Boolean,
-    viewModel: ExploreDetailPhotosViewModel = viewModel(
-        factory = ExploreDetailPhotosViewModelFactory(
-            pinId = pinId,
-            isChoosePlanImageMode = isChoosePlanImageMode,
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
+    viewModel: ExploreDetailPhotosViewModel = hiltViewModel(
+        creationCallback = { factory: ExploreDetailPhotosViewModelFactory ->
+            factory.create(pinId, isChoosePlanImageMode)
+        },
     ),
 ) {
     var showGrids by remember { mutableStateOf(false) }
@@ -62,7 +58,7 @@ fun ExploreDetailPhotosMainScreen(
 
     val tabRowItems = listOf(
         TabItem(
-            title = stringResource(id = SharedR.string.country),
+            title = stringResource(id = R.string.country),
             screen = {
                 TravelCompanionTheme {
                     Scaffold(
@@ -94,7 +90,7 @@ fun ExploreDetailPhotosMainScreen(
             icon = Icons.Rounded.EmojiFlags,
         ),
         TabItem(
-            title = stringResource(id = SharedR.string.place),
+            title = stringResource(id = R.string.place),
             screen = {
                 TravelCompanionTheme {
                     Scaffold(
@@ -125,7 +121,7 @@ fun ExploreDetailPhotosMainScreen(
             icon = Icons.Rounded.Place,
         ),
         TabItem(
-            title = stringResource(id = SharedR.string.location),
+            title = stringResource(id = R.string.location),
             screen = {
                 TravelCompanionTheme {
                     Scaffold(
@@ -166,7 +162,7 @@ fun ExploreDetailPhotosMainScreen(
                     val exception = (state as ExploreDetailPhotosViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Column(
                         modifier = modifier

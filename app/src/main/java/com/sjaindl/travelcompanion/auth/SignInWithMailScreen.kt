@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun SignInWithMailScreen(
@@ -51,7 +50,7 @@ fun SignInWithMailScreen(
             onValueChange = { },
             enabled = false,
             label = {
-                Text(text = stringResource(id = SharedR.string.email))
+                Text(text = stringResource(id = R.string.email))
             },
             isError = !email.isValidMail()
         )
@@ -59,7 +58,7 @@ fun SignInWithMailScreen(
         OutlinedTextField(
             value = password,
             label = {
-                Text(text = stringResource(id = SharedR.string.enter_password))
+                Text(text = stringResource(id = R.string.enter_password))
             },
             onValueChange = {
                 password = it
@@ -79,7 +78,7 @@ fun SignInWithMailScreen(
             enabled = email.isValidMail() && password.isValidPassword(),
             colors = colors,
         ) {
-            Text(text = stringResource(id = SharedR.string.signIn))
+            Text(text = stringResource(id = R.string.signIn))
         }
     }
 }

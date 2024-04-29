@@ -24,7 +24,7 @@ import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @Composable
 fun SearchPlacesScreen(
@@ -56,7 +56,7 @@ fun SearchPlacesScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(id = SharedR.string.searchPlaces),
+                    title = stringResource(id = R.string.searchPlaces),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )

@@ -11,18 +11,23 @@ import com.sjaindl.travelcompanion.plan.PlannableUtilsFactory
 import com.sjaindl.travelcompanion.remember.detail.RememberPhoto
 import timber.log.Timber
 import java.util.Date
+import javax.inject.Inject
 import kotlin.random.Random
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
-object FireStoreUtils {
-    private const val tag = "FireStoreUtils"
+class FireStoreUtils @Inject constructor(
+    private val fireStoreClient: FireStoreClient,
+) {
+    private companion object {
+        const val tag = "FireStoreUtils"
+    }
 
     private val plans = mutableListOf<Plan>()
     private val planBitmaps = mutableMapOf<String, Bitmap>()
 
     private val fireStoreDbReferencePlans by lazy {
-        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
+        fireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
     }
 
     private val storageRef by lazy {
@@ -81,7 +86,7 @@ object FireStoreUtils {
                                 plans.add(plan)
                                 onLoaded(plan)
                             }.addOnCanceledListener {
-                                onInfo(SharedR.string.cancelled)
+                                onInfo(R.string.cancelled)
                             }.addOnFailureListener {
                                 onError(it)
                             }
@@ -93,7 +98,7 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(SharedR.string.cancelled)
+                    onInfo(R.string.cancelled)
                 }
             }
         }
@@ -145,7 +150,7 @@ object FireStoreUtils {
                                 onError = onError,
                             )
                         }.addOnCanceledListener {
-                            onInfo(SharedR.string.cancelled)
+                            onInfo(R.string.cancelled)
                         }.addOnFailureListener { exception ->
                             onError(exception)
                         }
@@ -157,11 +162,11 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(SharedR.string.cancelled)
+                    onInfo(R.string.cancelled)
                 }
             }
         }.addOnCanceledListener {
-            onInfo(SharedR.string.cancelled)
+            onInfo(R.string.cancelled)
         }.addOnFailureListener { exception ->
             onError(exception)
         }
@@ -195,11 +200,11 @@ object FireStoreUtils {
                 if (exception != null) {
                     onError(exception)
                 } else {
-                    onInfo(SharedR.string.cancelled)
+                    onInfo(R.string.cancelled)
                 }
             }
         }.addOnCanceledListener {
-            onInfo(SharedR.string.cancelled)
+            onInfo(R.string.cancelled)
         }.addOnFailureListener {
             onError(it)
         }
@@ -223,7 +228,7 @@ object FireStoreUtils {
             FireStoreConstants.Ids.Plan.endDate to endDate,
         )
 
-        FireStoreClient.updateDocumentFields(
+        fireStoreClient.updateDocumentFields(
             documentReference = planReference,
             data = data,
         ) { exception: Exception? ->
@@ -255,11 +260,11 @@ object FireStoreUtils {
                 if (bitmap != null) {
                     onLoaded(bitmap)
                 } else {
-                    onInfo(SharedR.string.noImageData)
+                    onInfo(R.string.noImageData)
                 }
             }
             .addOnCanceledListener {
-                onInfo(SharedR.string.cancelled)
+                onInfo(R.string.cancelled)
             }
             .addOnFailureListener { exception ->
                 onError(exception)
@@ -273,7 +278,7 @@ object FireStoreUtils {
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
-        val path = FireStoreClient.storageByPath(
+        val path = fireStoreClient.storageByPath(
             path = FireStoreConstants.Collections.plans,
             fileName = plan.pinName
         )
@@ -305,7 +310,7 @@ object FireStoreUtils {
         onError: (Exception) -> Unit,
     ) {
         val fileName = "$planName${Random.nextInt()}"
-        val path = FireStoreClient.storageByPath(
+        val path = fireStoreClient.storageByPath(
             path = "${FireStoreConstants.Collections.plans}/$planName/${FireStoreConstants.Collections.photos}",
             fileName = fileName,
         )
@@ -343,12 +348,12 @@ object FireStoreUtils {
             }.addOnFailureListener {
                 onError(it)
             }.addOnCanceledListener {
-                onInfo(SharedR.string.errorDeleteImage)
+                onInfo(R.string.errorDeleteImage)
             }
         }.addOnFailureListener {
             onError(it)
         }.addOnCanceledListener {
-            onInfo(SharedR.string.errorDeleteImage)
+            onInfo(R.string.errorDeleteImage)
         }
     }
 
@@ -435,7 +440,7 @@ object FireStoreUtils {
             FireStoreConstants.Ids.Plan.endDate to plan.endDate
         )
 
-        FireStoreClient.addData(collectionReference = fireStoreDbReferencePlans, documentName = plan.pinName, data = data) { exception ->
+        fireStoreClient.addData(collectionReference = fireStoreDbReferencePlans, documentName = plan.pinName, data = data) { exception ->
             if (exception != null) {
                 onError(exception)
             } else {
@@ -475,20 +480,20 @@ object FireStoreUtils {
         onInfo: (info: Int) -> Unit,
         onSuccess: (Uri) -> Unit,
     ) {
-        FireStoreClient.storePhoto(storageRef = storageRef, path = path, image = image) { metadata, exception ->
+        fireStoreClient.storePhoto(storageRef = storageRef, path = path, image = image) { metadata, exception ->
             if (exception != null) {
                 onError(exception)
             } else {
                 val storagePath = metadata?.path
                 if (storagePath == null) {
-                    onInfo(SharedR.string.imageNotSaved)
+                    onInfo(R.string.imageNotSaved)
                 } else {
                     storageRef.child(storagePath).downloadUrl.addOnSuccessListener {
                         onSuccess(it)
                     }.addOnFailureListener {
                         onError(it)
                     }.addOnCanceledListener {
-                        SharedR.string.cancelled
+                        R.string.cancelled
                     }
                 }
             }
@@ -507,7 +512,7 @@ object FireStoreUtils {
 
         val fireStoreDbReferencePhotos = fireStoreDbReferencePlans.document(planName).collection(FireStoreConstants.Collections.photos)
 
-        FireStoreClient.addData(
+        fireStoreClient.addData(
             collectionReference = fireStoreDbReferencePhotos,
             data = data,
         ) { exception, documentId ->
@@ -529,7 +534,7 @@ object FireStoreUtils {
             FireStoreConstants.Ids.Plan.imageReference to imagePath.toString(),
         )
 
-        FireStoreClient.updateDocumentFields(
+        fireStoreClient.updateDocumentFields(
             documentReference = fireStoreDbReferencePlans.document(planName),
             data = data,
         ) { exception: Exception? ->

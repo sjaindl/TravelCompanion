@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.explore.details.photos
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -12,13 +11,18 @@ import com.sjaindl.travelcompanion.api.flickr.FlickrRepositoryImpl
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.repository.DataRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-class ExploreFlickrPhotosViewModel(
+@HiltViewModel(assistedFactory = ExploreFlickrPhotosViewModelFactory::class)
+class ExploreFlickrPhotosViewModel @AssistedInject constructor(
     dataRepository: DataRepository,
-    pinId: Long,
-    private val photoType: PhotoType,
+    @Assisted pinId: Long,
+    @Assisted private val photoType: PhotoType,
 ) : ViewModel() {
 
     companion object {
@@ -59,12 +63,10 @@ class ExploreFlickrPhotosViewModel(
     }
 }
 
-class ExploreFlickrPhotosViewModelFactory(
-    private val pinId: Long,
-    private val photoType: PhotoType,
-    private val dataRepository: DataRepository,
-) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        ExploreFlickrPhotosViewModel(dataRepository = dataRepository, pinId = pinId, photoType = photoType) as T
+@AssistedFactory
+interface ExploreFlickrPhotosViewModelFactory {
+    fun create(
+        pinId: Long,
+        photoType: PhotoType,
+    ): ExploreFlickrPhotosViewModel
 }

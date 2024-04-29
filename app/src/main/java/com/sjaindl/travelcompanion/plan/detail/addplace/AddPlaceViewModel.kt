@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.plan.detail.addplace
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
@@ -12,20 +11,28 @@ import com.sjaindl.travelcompanion.api.google.asMap
 import com.sjaindl.travelcompanion.api.google.asPlannable
 import com.sjaindl.travelcompanion.plan.Plan
 import com.sjaindl.travelcompanion.plan.PlannableUtilsFactory
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
-class AddPlaceViewModel(private val planName: String) : ViewModel() {
+@HiltViewModel(assistedFactory = AddPlaceViewModel.AddPlaceViewModelFactory::class)
+class AddPlaceViewModel @AssistedInject constructor(
+    private val fireStoreClient: FireStoreClient,
+    @Assisted private val planName: String,
+) : ViewModel() {
 
     sealed class State {
-        object Initial : State()
+        data object Initial : State()
 
         data class Error(val exception: Exception?) : State()
 
         data class PlanReady(val plan: Plan) : State()
 
-        object Finished : State()
+        data object Finished : State()
     }
 
     val tag = "PlanDetailViewModel"
@@ -34,7 +41,7 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
     var state = _state.asStateFlow()
 
     private val fireStoreDbReference by lazy {
-        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(planName)
+        fireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(planName)
     }
 
     private val plannableUtils by lazy {
@@ -132,13 +139,10 @@ class AddPlaceViewModel(private val planName: String) : ViewModel() {
         }
     }
 
-    class AddPlaceViewModelFactory(private val planName: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddPlaceViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return AddPlaceViewModel(planName = planName) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
-        }
+    @AssistedFactory
+    interface AddPlaceViewModelFactory {
+        fun create(
+            planName: String,
+        ): AddPlaceViewModel
     }
 }

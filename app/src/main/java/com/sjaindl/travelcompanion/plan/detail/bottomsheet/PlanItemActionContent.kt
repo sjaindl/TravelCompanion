@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun PlanItemActionContent(
@@ -58,7 +57,7 @@ fun PlanItemActionContent(
                 onClick = {
                     onAddNote()
                 }) {
-                Text(stringResource(id = SharedR.string.addNote))
+                Text(stringResource(id = R.string.addNote))
             }
             Button(
                 modifier = modifier.fillMaxWidth(),
@@ -66,7 +65,7 @@ fun PlanItemActionContent(
                 onClick = {
                     onDelete()
                 }) {
-                Text(stringResource(id = SharedR.string.delete))
+                Text(stringResource(id = R.string.delete))
             }
             Button(
                 modifier = modifier.fillMaxWidth(),
@@ -74,7 +73,7 @@ fun PlanItemActionContent(
                 onClick = {
                     onCancel()
                 }) {
-                Text(stringResource(id = SharedR.string.cancel))
+                Text(stringResource(id = R.string.cancel))
             }
         }
     }

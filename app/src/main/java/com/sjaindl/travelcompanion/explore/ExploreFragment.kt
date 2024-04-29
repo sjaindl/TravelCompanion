@@ -44,7 +44,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private val radius: Float?
         get() = arguments?.getFloat(RADIUS)
 
-    private val sessionToken = randomStringByKotlinRandom(32)
+    private val sessionToken = randomStringByKotlinRandom(size = 32)
 
     private val dataRepository by lazy {
         AndroidPersistenceInjector(requireContext().applicationContext).shared.dataRepository

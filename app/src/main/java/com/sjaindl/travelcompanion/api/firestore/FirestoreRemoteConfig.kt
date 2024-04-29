@@ -12,7 +12,6 @@ enum class CountryApiType(private val type: Int) {
     CountryApiLocal(3),
 }
 
-
 object FireStoreRemoteConfig {
     var photoResizingHeight = Constants.RemoteConfig.LocalDefaultValues.photoResizingHeight
         private set

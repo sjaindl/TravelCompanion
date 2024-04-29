@@ -21,33 +21,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.baseui.TCAppBar
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun PlanDetailScreen(
     planName: String,
     modifier: Modifier = Modifier,
-    viewModel: PlanDetailViewModel = viewModel(
-        factory = PlanDetailViewModel.PlanDetailViewModelFactory(
-            plan = planName,
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
+    viewModel: PlanDetailViewModel = hiltViewModel(
+        creationCallback = { factory: PlanDetailViewModel.PlanDetailViewModelFactory ->
+            factory.create(planName = planName)
+        },
     ),
     onAddPlace: (PlanDetailItemType, String, MapLocationData) -> Unit,
     onChangeDate: (String) -> Unit,
@@ -82,7 +79,7 @@ fun PlanDetailScreen(
                     val exception = (state as PlanDetailViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(R.string.couldNotRetrieveData)
 
                     Box(
                         modifier = modifier

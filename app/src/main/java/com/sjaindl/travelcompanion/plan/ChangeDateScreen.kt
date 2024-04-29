@@ -33,14 +33,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.add.PickDateElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.util.Date
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,8 +48,10 @@ fun ChangeDateScreen(
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = { },
-    viewModel: ChangeDateViewModel = viewModel(
-        factory = ChangeDateViewModel.ChangeDateViewModelFactory(planName = planName)
+    viewModel: ChangeDateViewModel = hiltViewModel(
+        creationCallback = { factory: ChangeDateViewModel.ChangeDateViewModelFactory ->
+            factory.create(planName = planName)
+        },
     ),
 ) {
     var startDate: Date? by remember {
@@ -71,7 +72,7 @@ fun ChangeDateScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(SharedR.string.changeDate),
+                    title = stringResource(R.string.changeDate),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -96,7 +97,7 @@ fun ChangeDateScreen(
                     val exception = (state as ChangeDateViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Column(
                         modifier = modifier
@@ -155,7 +156,7 @@ fun ChangeDateScreen(
                     )
                     {
                         Text(
-                            text = stringResource(id = SharedR.string.startDate),
+                            text = stringResource(id = R.string.startDate),
                             fontWeight = FontWeight.Bold,
                             color = colors.background,
                             modifier = Modifier
@@ -176,7 +177,7 @@ fun ChangeDateScreen(
 
                         if (startDate != null) {
                             Text(
-                                text = stringResource(id = SharedR.string.endDate),
+                                text = stringResource(id = R.string.endDate),
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -214,7 +215,7 @@ fun ChangeDateScreen(
                                 colors = buttonColors,
                             ) {
                                 Text(
-                                    text = stringResource(id = SharedR.string.cancel)
+                                    text = stringResource(id = R.string.cancel)
                                 )
                             }
 
@@ -236,7 +237,7 @@ fun ChangeDateScreen(
                                 colors = buttonColors,
                             ) {
                                 Text(
-                                    text = stringResource(id = SharedR.string.changeDate)
+                                    text = stringResource(id = R.string.changeDate)
                                 )
                             }
                         }

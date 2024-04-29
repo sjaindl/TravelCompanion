@@ -14,8 +14,11 @@ plugins {
 
     id("androidx.baselineprofile")
 
+    alias(libs.plugins.hilt)
+
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
+    // TODO: Migrate from kapt to ksp when Hilt KSP support is stable
+    //alias(libs.plugins.ksp)
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -117,7 +120,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.profileinstaller)
     "baselineProfile"(project(mapOf("path" to ":baselineprofile")))
-    ksp(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
     testImplementation(libs.androidx.room.testing)
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -175,6 +178,11 @@ dependencies {
     // needed for credentials support from play services, for devices running Android 13 and below:
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+
+    // Hilt
+    implementation(libs.hilt.base)
+    implementation(libs.hilt.navigationCompose)
+    kapt(libs.hilt.compiler)
 
     // https://github.com/square/leakcanary
     debugImplementation(libs.leakcanary.android)

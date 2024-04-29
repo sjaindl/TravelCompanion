@@ -7,7 +7,7 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.sjaindl.travelcompanion.navigation.NamedDestinationItem
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 // https://medium.com/geekculture/bottom-navigation-in-jetpack-compose-android-9cd232a8b16
 
@@ -22,7 +22,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data object ExploreDetailHome : BottomNavItem() {
-        override var titleRes = SharedR.string.detail
+        override var titleRes = R.string.detail
         override var icon = Icons.Rounded.Place
         override var route = "exploreDetailsHome"
         override var arguments = pinArgs
@@ -35,7 +35,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data object ExploreDetailPhotos : BottomNavItem() {
-        override var titleRes = SharedR.string.photos
+        override var titleRes = R.string.photos
         override var icon = Icons.Rounded.Photo
         override var route = "exploreDetailsPhoto"
         override var arguments = listOf(
@@ -58,7 +58,7 @@ sealed class BottomNavItem : NamedDestinationItem {
     }
 
     data object ExploreDetailInfo : BottomNavItem() {
-        override var titleRes = SharedR.string.info
+        override var titleRes = R.string.info
         override var icon = Icons.Rounded.Info
         override var route = "exploreDetailsInfo"
         override var arguments = pinArgs

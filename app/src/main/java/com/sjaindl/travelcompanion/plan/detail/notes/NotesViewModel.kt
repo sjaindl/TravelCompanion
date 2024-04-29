@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.plan.detail.notes
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.api.google.Plannable
@@ -12,16 +11,23 @@ import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.RESTAURANT
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class NotesViewModel(
-    private val planName: String,
-    private val planDetailItemType: PlanDetailItemType,
-    private val plannableId: String, // = place id
+@HiltViewModel(assistedFactory = NotesViewModel.NotesViewModelFactory::class)
+class NotesViewModel @AssistedInject constructor(
+    private val fireStoreClient: FireStoreClient,
+    private val fireStoreUtils: FireStoreUtils,
+    @Assisted("planName") private val planName: String,
+    @Assisted("plannableId") private val plannableId: String, // = place id
+    @Assisted private val planDetailItemType: PlanDetailItemType,
 ) : ViewModel() {
     sealed class State {
-        object Initial : State()
+        data object Initial : State()
 
         data class Loaded(val plan: Plan, val plannable: Plannable) : State()
 
@@ -29,7 +35,7 @@ class NotesViewModel(
 
         data class Error(val exception: Exception?) : State()
 
-        object Finished : State()
+        data object Finished : State()
     }
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Initial)
@@ -40,7 +46,7 @@ class NotesViewModel(
     }
 
     fun load() {
-        FireStoreUtils.loadPlan(
+        fireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
                 plannableUtils.loadPlannables { exception ->
@@ -107,7 +113,7 @@ class NotesViewModel(
             FireStoreConstants.Ids.Plannable.notes to notes,
         )
 
-        FireStoreClient.updateDocumentFields(
+        fireStoreClient.updateDocumentFields(
             documentReference = docRef,
             data = data,
         ) { exception: Exception? ->
@@ -119,14 +125,12 @@ class NotesViewModel(
         }
     }
 
-    class NotesViewModelFactory(
-        private val planName: String,
-        private val plannableId: String,
-        private val planDetailItemType: PlanDetailItemType,
-    ) :
-        ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return NotesViewModel(planName = planName, plannableId = plannableId, planDetailItemType = planDetailItemType) as T
-        }
+    @AssistedFactory
+    interface NotesViewModelFactory {
+        fun create(
+            @Assisted("planName") planName: String,
+            @Assisted("plannableId") plannableId: String,
+            planDetailItemType: PlanDetailItemType,
+        ): NotesViewModel
     }
 }

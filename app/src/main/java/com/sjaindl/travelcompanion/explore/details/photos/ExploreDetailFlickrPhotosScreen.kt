@@ -7,10 +7,8 @@ import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
@@ -21,13 +19,15 @@ fun ExploreDetailFlickrPhotosScreen(
     pinId: Long,
     photoType: PhotoType,
     isPickerMode: Boolean,
-    viewModel: ExploreFlickrPhotosViewModel = viewModel(
+    viewModel: ExploreFlickrPhotosViewModel = hiltViewModel(
         key = photoType.toString(),
-        factory = ExploreFlickrPhotosViewModelFactory(
-            pinId = pinId,
-            photoType = photoType,
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
+        creationCallback = { factory: ExploreFlickrPhotosViewModelFactory ->
+            factory.create(
+                pinId = pinId,
+                photoType = photoType,
+            )
+
+        }
     ),
     onChoosePhoto: (url: String?) -> Unit,
 ) {

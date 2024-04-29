@@ -39,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
@@ -53,7 +53,6 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.sjaindl.travelcompanion.api.google.GeocodingResult
 import com.sjaindl.travelcompanion.api.google.PlacePrediction
 import com.sjaindl.travelcompanion.baseui.TCAppBar
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
@@ -61,17 +60,13 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExploreScreen(
     encodedPlaces: String? = null,
-    viewModel: ExploreViewModel = viewModel(
-        factory = ExploreViewModel.ExploreViewModelFactory(
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
-    ),
+    viewModel: ExploreViewModel = hiltViewModel(),
     onSearch: () -> Unit,
     onPickedLocation: (latitude: Float, longitude: Float) -> Unit,
     onNavigateToExploreDetails: (Long) -> Unit,
@@ -153,7 +148,7 @@ fun ExploreScreen(
         }
 
         if (description != null) {
-            val message = stringResource(id = SharedR.string.picked, description)
+            val message = stringResource(id = R.string.picked, description)
             LaunchedEffect(key1 = placeId) {
                 snackBarHostState.showSnackbar(
                     message = message,
@@ -163,7 +158,7 @@ fun ExploreScreen(
     }
 
     if (exception != null) {
-        val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.unknown_error)
+        val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.unknown_error)
         LaunchedEffect(exception) {
             snackBarHostState.showSnackbar(
                 message = message
@@ -203,7 +198,7 @@ fun ExploreScreen(
                 topBar = {
                     val customActionIcon = if (!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
                     TCAppBar(
-                        title = stringResource(SharedR.string.explore),
+                        title = stringResource(R.string.explore),
                         canNavigateBack = canNavigateBack,
                         navigateUp = navigateUp,
                         customActionIcon = customActionIcon,
@@ -231,11 +226,11 @@ fun ExploreScreen(
                                     .background(colors.primary)
                                     .padding(8.dp),
                             ) {
-                                Text(text = stringResource(id = SharedR.string.searchPlaces))
+                                Text(text = stringResource(id = R.string.searchPlaces))
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Image(
                                     imageVector = Icons.Rounded.Search,
-                                    contentDescription = stringResource(id = SharedR.string.search),
+                                    contentDescription = stringResource(id = R.string.search),
                                 )
                             }
                         }
@@ -266,7 +261,7 @@ fun ExploreScreen(
                                 coroutineScope.launch {
                                     snackBarHostState.showSnackbar(
                                         message = context.getString(
-                                            SharedR.string.accuracy,
+                                            R.string.accuracy,
                                             location.accuracy.toString(),
                                         ),
                                     )

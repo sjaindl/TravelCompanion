@@ -4,6 +4,7 @@ import android.app.AppOpsManager
 import android.app.Application
 import android.app.AsyncNotedAppOp
 import android.app.SyncNotedAppOp
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.appmattus.certificatetransparency.BasicAndroidCTLogger
@@ -13,12 +14,21 @@ import com.appmattus.certificatetransparency.installCertificateTransparencyProvi
 import com.appmattus.certificatetransparency.loglist.LogListDataSourceFactory
 import com.google.firebase.FirebaseApp
 import com.sjaindl.travelcompanion.api.firestore.FireStoreRemoteConfig
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
+@HiltAndroidApp
 class TCApplication : Application() {
+
+    companion object {
+        lateinit var appContext: Context
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        appContext = applicationContext
 
         FirebaseApp.initializeApp(this)
         FireStoreRemoteConfig.activateFetched()

@@ -27,13 +27,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.DisplayItem
 import com.sjaindl.travelcompanion.baseui.JumpItem
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +40,7 @@ fun ProfileScreen(
     onClose: () -> Unit = { },
     goToPersonalInfo: () -> Unit = { },
     goToDataAccessRationaleInfo: () -> Unit = { },
-    viewModel: ProfileViewModel = viewModel(),
+    viewModel: ProfileViewModel = hiltViewModel(),
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
 ) {
@@ -51,7 +50,7 @@ fun ProfileScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(SharedR.string.profile),
+                    title = stringResource(R.string.profile),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -95,29 +94,29 @@ fun ProfileScreen(
 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     JumpItem(
-                        title = stringResource(id = SharedR.string.personalInformation),
-                        subTitle = stringResource(id = SharedR.string.nameAddressBirthday),
+                        title = stringResource(id = R.string.personalInformation),
+                        subTitle = stringResource(id = R.string.nameAddressBirthday),
                         icon = R.drawable.ic_user,
                     ) {
                         goToPersonalInfo()
                     }
 
                     JumpItem(
-                        title = stringResource(id = SharedR.string.dataUsageInfo),
+                        title = stringResource(id = R.string.dataUsageInfo),
                         icon = R.drawable.ic_user,
                     ) {
                         goToDataAccessRationaleInfo()
                     }
 
                     DisplayItem(
-                        title = stringResource(id = SharedR.string.requestAccountDeletion),
+                        title = stringResource(id = R.string.requestAccountDeletion),
                         icon = android.R.drawable.ic_delete
                     ) {
                         showDeleteDialog = true
                     }
 
                     DisplayItem(
-                        title = stringResource(id = SharedR.string.signOut),
+                        title = stringResource(id = R.string.signOut),
                         icon = android.R.drawable.ic_lock_idle_lock
                     ) {
                         viewModel.logout()
@@ -137,7 +136,7 @@ fun ProfileScreen(
                             viewModel.deleteAccount()
                         }) {
                             Text(
-                                text = stringResource(id = SharedR.string.yesDelete),
+                                text = stringResource(id = R.string.yesDelete),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,
@@ -151,7 +150,7 @@ fun ProfileScreen(
                             showDeleteDialog = false
                         }) {
                             Text(
-                                text = stringResource(id = SharedR.string.cancel),
+                                text = stringResource(id = R.string.cancel),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,
@@ -162,7 +161,7 @@ fun ProfileScreen(
                     },
                     title = {
                         Text(
-                            text = stringResource(id = SharedR.string.deleteAccount),
+                            text = stringResource(id = R.string.deleteAccount),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier,
@@ -171,7 +170,7 @@ fun ProfileScreen(
                     },
                     text = {
                         Text(
-                            text = stringResource(id = SharedR.string.doYouReallyWantToDeleteYourAccount),
+                            text = stringResource(id = R.string.doYouReallyWantToDeleteYourAccount),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier,

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -33,6 +33,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlace
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.api.google.description
@@ -42,7 +43,6 @@ import com.sjaindl.travelcompanion.plan.add.PlaceTypePicker
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun AddPlaceMapScreen(
@@ -52,8 +52,10 @@ fun AddPlaceMapScreen(
     planName: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
-    viewModel: AddPlaceViewModel = viewModel(
-        factory = AddPlaceViewModel.AddPlaceViewModelFactory(planName = planName)
+    viewModel: AddPlaceViewModel = hiltViewModel(
+        creationCallback = { factory: AddPlaceViewModel.AddPlaceViewModelFactory ->
+            factory.create(planName = planName)
+        }
     ),
 ) {
     val cameraPositionState = rememberCameraPositionState()
@@ -98,7 +100,7 @@ fun AddPlaceMapScreen(
         PlaceTypePicker(
             modifier = Modifier,
             show = showPlaceTypePicker,
-            title = stringResource(id = SharedR.string.choosePlaceType),
+            title = stringResource(id = R.string.choosePlaceType),
             onPickedPlace = { type ->
                 placeType = type
                 showPlaceTypePicker = false
@@ -157,7 +159,7 @@ fun AddPlaceMapScreen(
                 Scaffold(
                     topBar = {
                         TCAppBar(
-                            title = stringResource(id = SharedR.string.addPlace, stringResource(id = it.description.resourceId)),
+                            title = stringResource(id = R.string.addPlace, stringResource(id = it.description.resourceId)),
                             canNavigateBack = canNavigateBack,
                             navigateUp = navigateUp,
                         )
@@ -234,9 +236,9 @@ fun AddPlaceMapScreen(
                                     modifier = Modifier
                                         .padding(bottom = 16.dp, start = 24.dp, end = 16.dp)
                                         .weight(1f),
-                                    text = "${stringResource(id = SharedR.string.searchRadius)} ${
+                                    text = "${stringResource(id = R.string.searchRadius)} ${
                                         stringResource(
-                                            SharedR.string.km,
+                                            R.string.km,
                                             searchDistance.value
                                         )
                                     }",

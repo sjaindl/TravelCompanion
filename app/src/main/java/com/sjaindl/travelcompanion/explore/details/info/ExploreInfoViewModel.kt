@@ -1,7 +1,6 @@
 package com.sjaindl.travelcompanion.explore.details.info
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.api.google.GoogleConstants
@@ -12,21 +11,26 @@ import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.urlProto
 import com.sjaindl.travelcompanion.api.wiki.WikiConstants.UrlComponents.wikiLinkPath
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ExploreInfoViewModel(
+@HiltViewModel(assistedFactory = ExploreInfoViewModelFactory::class)
+class ExploreInfoViewModel @AssistedInject constructor(
     dataRepository: DataRepository,
-    pinId: Long,
-    private val infoType: InfoType,
+    @Assisted pinId: Long,
+    @Assisted private val infoType: InfoType,
 ) : ViewModel() {
 
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
         data class Done(val url: String?) : State()
         data class Error(val throwable: Throwable) : State()
-        object NoData : State()
+        data object NoData : State()
     }
 
     private var pin: Pin? = dataRepository.singlePin(pinId)
@@ -101,12 +105,11 @@ class ExploreInfoViewModel(
     }
 }
 
-class ExploreInfoViewModelFactory(
-    private val pinId: Long,
-    private val infoType: InfoType,
-    private val dataRepository: DataRepository,
-) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        ExploreInfoViewModel(dataRepository = dataRepository, pinId = pinId, infoType = infoType) as T
+@AssistedFactory
+interface ExploreInfoViewModelFactory {
+    fun create(
+        pinId: Long,
+        infoType: InfoType,
+    ): ExploreInfoViewModel
 }
+

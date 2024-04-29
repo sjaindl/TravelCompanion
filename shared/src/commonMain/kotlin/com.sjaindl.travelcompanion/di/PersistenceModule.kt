@@ -10,7 +10,7 @@ import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 class PersistenceModule(driverFactory: DatabaseDriverFactory) {
-    val container = DI.Module("persistence") {
+    val container = DI.Module(name = "persistence") {
         bindProvider {
             DatabaseWrapper(driverFactory).dbQueries
         }

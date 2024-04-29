@@ -2,7 +2,6 @@ package com.sjaindl.travelcompanion.plan
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClientObserver
@@ -10,6 +9,7 @@ import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,16 +19,22 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import timber.log.Timber
 import java.util.Date
+import javax.inject.Inject
 
-class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), FireStoreClientObserver {
+@HiltViewModel
+class PlanViewModel @Inject constructor(
+    private val dataRepository: DataRepository,
+    private val fireStoreClient: FireStoreClient,
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel(), FireStoreClientObserver {
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
 
         data class Error(val exception: Throwable?) : State()
 
         data class Info(val stringRes: Int) : State()
 
-        object Finished : State()
+        data object Finished : State()
     }
 
     val tag = "PlanViewModel"
@@ -55,18 +61,18 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     }
 
     init {
-        FireStoreClient.addObserver(this)
+        fireStoreClient.addObserver(observer = this)
     }
 
     override fun onCleared() {
         super.onCleared()
-        FireStoreClient.removeObserver(this)
+        fireStoreClient.removeObserver(observer = this)
     }
 
     fun fetchPlans() {
         if (!_upcomingTrips.isEmpty() || !_pastTrips.isEmpty()) return // already loaded
 
-        FireStoreUtils.loadPlans(
+        fireStoreUtils.loadPlans(
             onLoaded = { plan ->
                 addPlan(plan = plan)
                 _state.value = State.Finished
@@ -90,6 +96,8 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
         addPinIfNeeded(plan)
     }
 
+    fun bitmapForPlan(planName: String) = fireStoreUtils.bitmapForPlan(planName = planName)
+
     fun getPinId(name: String): Long? {
         return dataRepository.singlePin(name)?.id
     }
@@ -100,7 +108,7 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
         _upcomingTrips.remove(plan)
         _pastTrips.remove(plan)
 
-        FireStoreUtils.deletePlan(
+        fireStoreUtils.deletePlan(
             plan = plan,
             onError = { exception ->
                 _state.value = State.Error(exception)
@@ -159,9 +167,9 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
     override fun didAddData(documentName: String) {
         Timber.tag(tag).d("Add new plan: $documentName")
 
-        FireStoreUtils.loadPlan(
+        fireStoreUtils.loadPlan(
             planName = documentName,
-            onLoaded = { newPlan, bitmap ->
+            onLoaded = { newPlan, _ ->
                 val upcomingTripsIndex = _upcomingTrips.indexOfFirst { it.pinName == newPlan.pinName }
                 val pastTripsIndex = _pastTrips.indexOfFirst { it.pinName == newPlan.pinName }
 
@@ -198,15 +206,5 @@ class PlanViewModel(private val dataRepository: DataRepository) : ViewModel(), F
                 _state.value = State.Info(it)
             },
         )
-    }
-
-    class PlanViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PlanViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return PlanViewModel(dataRepository) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
-        }
     }
 }

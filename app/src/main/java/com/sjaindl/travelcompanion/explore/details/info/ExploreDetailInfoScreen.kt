@@ -13,31 +13,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun ExploreDetailInfoScreen(
     infoType: InfoType,
     pinId: Long,
-    viewModel: ExploreInfoViewModel = viewModel(
+    viewModel: ExploreInfoViewModel = hiltViewModel(
         key = infoType.toString(),
-        factory = ExploreInfoViewModelFactory(
-            pinId = pinId,
-            infoType = infoType,
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
+        creationCallback = { factory: ExploreInfoViewModelFactory ->
+            factory.create(pinId = pinId, infoType = infoType)
+        },
     )
 ) {
     TravelCompanionTheme {
@@ -88,7 +84,7 @@ fun ExploreDetailInfoScreen(
 
                     } else {
                         Text(
-                            text = stringResource(id = SharedR.string.couldNotRetrieveData),
+                            text = stringResource(id = R.string.couldNotRetrieveData),
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -102,7 +98,7 @@ fun ExploreDetailInfoScreen(
                     val error = state as ExploreInfoViewModel.State.Error
 
                     val errorMessage =
-                        if (error.throwable is OfflineException) stringResource(id = SharedR.string.offline)
+                        if (error.throwable is OfflineException) stringResource(id = R.string.offline)
                         else (error.throwable.localizedMessage ?: error.throwable.toString())
 
                     Text(
@@ -116,7 +112,7 @@ fun ExploreDetailInfoScreen(
 
                 is ExploreInfoViewModel.State.NoData -> {
                     Text(
-                        text = stringResource(id = SharedR.string.couldNotRetrieveData),
+                        text = stringResource(id = R.string.couldNotRetrieveData),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         textAlign = TextAlign.Center,

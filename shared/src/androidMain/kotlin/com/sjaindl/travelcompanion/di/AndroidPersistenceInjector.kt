@@ -6,8 +6,8 @@ import com.sjaindl.travelcompanion.sqldelight.DatabaseDriverFactory
 
 class AndroidPersistenceInjector(private val context: Context) {
     private val driverFactory by lazy {
-        DatabaseDriverFactory(context)
+        DatabaseDriverFactory(context = context)
     }
 
-    val shared = PersistenceInjector(driverFactory)
+    val shared = PersistenceInjector(driverFactory = driverFactory)
 }

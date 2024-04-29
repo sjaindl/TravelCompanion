@@ -1,10 +1,11 @@
 package com.sjaindl.travelcompanion.explore.details
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sjaindl.travelcompanion.Country
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApi
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.CountryApiLocal
 import com.sjaindl.travelcompanion.api.firestore.CountryApiType.RestCountries
@@ -13,15 +14,23 @@ import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.mapper.PinAndCountryToCountryUiMapper
 import com.sjaindl.travelcompanion.model.CountryUi
 import com.sjaindl.travelcompanion.repository.DataRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
-class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataRepository) : ViewModel() {
+@HiltViewModel(assistedFactory = ExploreDetailViewModel.ExploreDetailViewModelFactory::class)
+class ExploreDetailViewModel @AssistedInject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    @Assisted pinId: Long,
+    private val dataRepository: DataRepository,
+) : ViewModel() {
 
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
         data class Done(val countryUi: CountryUi) : State()
         data class Error(val message: String? = null, @StringRes val stringRes: Int? = null) : State()
     }
@@ -55,7 +64,7 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
             val countryUi = mapper.map(pin = fetchedPin, country = country)
             _state.value = State.Done(countryUi)
         } else {
-            _state.value = State.Error(stringRes = SharedR.string.couldNotRetrieveData)
+            _state.value = State.Error(stringRes = R.string.couldNotRetrieveData)
         }
     }
 
@@ -98,8 +107,10 @@ class ExploreDetailViewModel(pinId: Long, private val dataRepository: DataReposi
         }
     }
 
-    class ExploreDetailViewModelFactory(private val pinId: Long, private val dataRepository: DataRepository) :
-        ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = ExploreDetailViewModel(pinId, dataRepository) as T
+    @AssistedFactory
+    interface ExploreDetailViewModelFactory {
+        fun create(
+            pinId: Long,
+        ): ExploreDetailViewModel
     }
 }

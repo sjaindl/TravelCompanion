@@ -2,25 +2,29 @@ package com.sjaindl.travelcompanion.explore.details.photos
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.places.api.model.PhotoMetadata
 import com.sjaindl.travelcompanion.Pin
 import com.sjaindl.travelcompanion.api.google.GooglePlacesClient
 import com.sjaindl.travelcompanion.repository.DataRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ExplorePlacesPhotosViewModel(
+@HiltViewModel(assistedFactory = ExplorePlacesPhotosViewModelFactory::class)
+class ExplorePlacesPhotosViewModel @AssistedInject constructor(
     dataRepository: DataRepository,
     private val client: GooglePlacesClient,
-    pinId: Long,
+    @Assisted pinId: Long,
 ) :
     ViewModel() {
 
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
         data class Done(val photos: MutableList<Pair<Bitmap, String>>) : State()
         data class Error(val throwable: Throwable) : State()
     }
@@ -59,11 +63,9 @@ class ExplorePlacesPhotosViewModel(
     }
 }
 
-class ExplorePlacesPhotosViewModelFactory(
-    private val dataRepository: DataRepository,
-    private val client: GooglePlacesClient,
-    private val pinId: Long,
-) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = ExplorePlacesPhotosViewModel(dataRepository, client, pinId) as T
+@AssistedFactory
+interface ExplorePlacesPhotosViewModelFactory {
+    fun create(
+        pinId: Long,
+    ): ExplorePlacesPhotosViewModel
 }

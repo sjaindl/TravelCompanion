@@ -2,15 +2,22 @@ package com.sjaindl.travelcompanion.remember.detail
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
-class RememberDetailLazyScreenViewModel(private val planName: String) : ViewModel() {
+@HiltViewModel(assistedFactory = RememberDetailLazyScreenViewModel.RememberDetailLazyScreenViewModelFactory::class)
+class RememberDetailLazyScreenViewModel @AssistedInject constructor(
+    @Assisted private val planName: String,
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel() {
     sealed class State {
-        object InitialOrDone : State()
+        data object InitialOrDone : State()
 
         data class Info(@StringRes val stringRes: Int) : State()
 
@@ -30,7 +37,7 @@ class RememberDetailLazyScreenViewModel(private val planName: String) : ViewMode
         _showDialog.value = null
 
         if (url != null && documentId != null) {
-            FireStoreUtils.deletePhoto(
+            fireStoreUtils.deletePhoto(
                 planName = planName,
                 url = url,
                 documentId = documentId,
@@ -56,13 +63,10 @@ class RememberDetailLazyScreenViewModel(private val planName: String) : ViewMode
         _showDialog.value = photo
     }
 
-    class RememberDetailLazyScreenViewModelFactory(private val planName: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(RememberDetailLazyScreenViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return RememberDetailLazyScreenViewModel(planName = planName) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
-        }
+    @AssistedFactory
+    interface RememberDetailLazyScreenViewModelFactory {
+        fun create(
+            planName: String,
+        ): RememberDetailLazyScreenViewModel
     }
 }

@@ -50,7 +50,6 @@ import com.sjaindl.travelcompanion.api.google.asPlannable
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun AddPlacePreviewScreen(
@@ -84,7 +83,7 @@ fun AddPlacePreviewScreen(
         Scaffold(
             topBar = {
                 TCAppBar(
-                    title = stringResource(id = SharedR.string.place_details),
+                    title = stringResource(id = R.string.place_details),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -175,9 +174,9 @@ fun AddPlacePreviewScreen(
                         val distanceKilometres = placeLocation.distanceTo(searchedLocation) / 1000
 
                         Text(
-                            text = "${stringResource(id = SharedR.string.distance)} ${
+                            text = "${stringResource(id = R.string.distance)} ${
                                 stringResource(
-                                    id = SharedR.string.km,
+                                    id = R.string.km,
                                     distanceKilometres
                                 )
                             }",
@@ -188,12 +187,12 @@ fun AddPlacePreviewScreen(
                     }
 
                     val rating = googlePlace.rating
-                    var ratingText = stringResource(id = SharedR.string.noRating)
+                    var ratingText = stringResource(id = R.string.noRating)
                     if (rating != null) {
-                        ratingText = "${stringResource(id = SharedR.string.rating)} $rating /5 *"
+                        ratingText = "${stringResource(id = R.string.rating)} $rating /5 *"
                         val numberOfRatings = googlePlace.userRatingsTotal
                         if (numberOfRatings != null) {
-                            ratingText += " ($numberOfRatings ${stringResource(id = SharedR.string.ratings)})"
+                            ratingText += " ($numberOfRatings ${stringResource(id = R.string.ratings)})"
                         }
                     }
 
@@ -209,7 +208,7 @@ fun AddPlacePreviewScreen(
                             onCancel()
                         }) {
                             Text(
-                                text = stringResource(id = SharedR.string.cancel),
+                                text = stringResource(id = R.string.cancel),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,
@@ -222,7 +221,7 @@ fun AddPlacePreviewScreen(
                             onAdd()
                         }) {
                             Text(
-                                text = stringResource(id = SharedR.string.select),
+                                text = stringResource(id = R.string.select),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
                                 color = colors.primary,

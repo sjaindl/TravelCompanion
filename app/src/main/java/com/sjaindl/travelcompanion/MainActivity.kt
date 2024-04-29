@@ -18,12 +18,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.sjaindl.travelcompanion.auth.AuthenticationViewModel
 import com.sjaindl.travelcompanion.databinding.ActivityMainBinding
+import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import javax.inject.Inject
+import com.sjaindl.travelcompanion.R
 
 data class OpenAddPlan(val open: Boolean, val destination: String)
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -31,13 +35,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    private val credentialManager by lazy {
-        CredentialManager.create(this)
-    }
+    @Inject
+    lateinit var credentialManager: CredentialManager
 
-    private val callbackManager by lazy {
-        CallbackManager.Factory.create()
-    }
+    @Inject
+    lateinit var callbackManager: CallbackManager
+
+    @Inject
+    lateinit var dataRepository: DataRepository
 
     private val authenticationViewModel by viewModels<AuthenticationViewModel>()
 
@@ -45,7 +50,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
+        credentialManager.toString()
+
         auth = Firebase.auth
+        dataRepository.allPins()
 
         if (auth.currentUser != null) {
             authenticationViewModel.preloadPlans()
@@ -191,7 +199,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleFailure(exception: Exception) {
         Toast.makeText(
             this,
-            exception.message ?: getString(SharedR.string.unknown_error),
+            exception.message ?: getString(R.string.unknown_error),
             Toast.LENGTH_SHORT,
         ).show()
 

@@ -2,15 +2,22 @@ package com.sjaindl.travelcompanion.plan
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Date
 
-class ChangeDateViewModel(private val planName: String) : ViewModel() {
+@HiltViewModel(assistedFactory = ChangeDateViewModel.ChangeDateViewModelFactory::class)
+class ChangeDateViewModel @AssistedInject constructor(
+    @Assisted private val planName: String,
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel() {
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
 
         data class Info(@StringRes val stringRes: Int) : State()
 
@@ -18,7 +25,7 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
 
         data class Loaded(val plan: Plan) : State()
 
-        object Done : State()
+        data object Done : State()
     }
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
@@ -27,7 +34,7 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
     val tag = "AddPlanViewModel"
 
     fun loadPlan() {
-        FireStoreUtils.loadPlan(
+        fireStoreUtils.loadPlan(
             planName = planName,
             onLoaded = { plan, _ ->
                 _state.value = State.Loaded(plan = plan)
@@ -46,7 +53,7 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
         startDate: Date,
         endDate: Date,
     ) {
-        FireStoreUtils.updatePlanDates(
+        fireStoreUtils.updatePlanDates(
             planName = planName,
             startDate = startDate,
             endDate = endDate,
@@ -59,13 +66,10 @@ class ChangeDateViewModel(private val planName: String) : ViewModel() {
         )
     }
 
-    class ChangeDateViewModelFactory(private val planName: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ChangeDateViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return ChangeDateViewModel(planName = planName) as T
-            }
-            throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
-        }
+    @AssistedFactory
+    interface ChangeDateViewModelFactory {
+        fun create(
+            planName: String
+        ): ChangeDateViewModel
     }
 }

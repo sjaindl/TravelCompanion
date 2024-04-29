@@ -20,7 +20,7 @@ import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 object ApiModule {
-    val container = DI.Module("api") {
+    val container = DI.Module(name = "api") {
         bindProvider {
             HttpClientBuilder()
                 .withJsonSerialization()

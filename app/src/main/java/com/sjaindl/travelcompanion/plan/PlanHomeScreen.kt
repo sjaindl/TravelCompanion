@@ -28,30 +28,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sjaindl.travelcompanion.baseui.TCAppBar
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.util.FireStoreUtils
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PlanHomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: PlanViewModel = viewModel(
-        factory = PlanViewModel.PlanViewModelFactory(
-            dataRepository = AndroidPersistenceInjector(LocalContext.current).shared.dataRepository,
-        )
-    ),
+    viewModel: PlanViewModel = hiltViewModel(),
     onShowDetails: (Long) -> Unit,
     onShowPlan: (String) -> Unit,
     onAddPlan: () -> Unit,
@@ -73,7 +66,7 @@ fun PlanHomeScreen(
             containerColor = colors.background,
             topBar = {
                 TCAppBar(
-                    title = stringResource(SharedR.string.plan),
+                    title = stringResource(R.string.plan),
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
@@ -93,7 +86,7 @@ fun PlanHomeScreen(
                         ) {
                             Image(
                                 imageVector = Icons.Rounded.Add,
-                                contentDescription = stringResource(id = SharedR.string.addPlan),
+                                contentDescription = stringResource(id = R.string.addPlan),
                             )
                         }
                     }
@@ -121,7 +114,7 @@ fun PlanHomeScreen(
                     val exception = (state as PlanViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Column(
                         modifier = Modifier
@@ -166,7 +159,7 @@ fun PlanHomeScreen(
                     LazyColumn(modifier = modifier.padding(paddingValues)) {
                         stickyHeader {
                             Text(
-                                text = stringResource(id = SharedR.string.upcomingTrips) + " (${upcomingTrips.size})",
+                                text = stringResource(id = R.string.upcomingTrips) + " (${upcomingTrips.size})",
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -186,7 +179,7 @@ fun PlanHomeScreen(
                                 modifier = Modifier,
                                 name = it.name,
                                 dateString = it.formattedDate,
-                                bitmap = FireStoreUtils.bitmapForPlan(planName = it.name),
+                                bitmap = viewModel.bitmapForPlan(planName = it.name),
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it
@@ -196,7 +189,7 @@ fun PlanHomeScreen(
 
                         stickyHeader {
                             Text(
-                                text = stringResource(id = SharedR.string.pastTrips) + " (${pastTrips.size})",
+                                text = stringResource(id = R.string.pastTrips) + " (${pastTrips.size})",
                                 fontWeight = FontWeight.Bold,
                                 color = colors.background,
                                 modifier = Modifier
@@ -216,7 +209,7 @@ fun PlanHomeScreen(
                                 modifier = Modifier,
                                 name = it.name,
                                 dateString = it.formattedDate,
-                                bitmap = FireStoreUtils.bitmapForPlan(planName = it.name),
+                                bitmap = viewModel.bitmapForPlan(planName = it.name),
                                 imagePath = it.imagePath,
                                 onClick = {
                                     showDialogForPlan = it
@@ -232,7 +225,7 @@ fun PlanHomeScreen(
 
     PlanActionBottomSheet(
         show = showDialogForPlan != null,
-        title = stringResource(id = SharedR.string.chooseAction),
+        title = stringResource(id = R.string.chooseAction),
         onShow = {
             showDialogForPlan?.let {
                 onShowPlan(it.name)

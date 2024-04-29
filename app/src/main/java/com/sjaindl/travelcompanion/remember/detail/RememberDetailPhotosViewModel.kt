@@ -4,20 +4,25 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.sjaindl.travelcompanion.util.FireStoreUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class RememberDetailPhotosViewModel : ViewModel() {
+@HiltViewModel
+class RememberDetailPhotosViewModel @Inject constructor(
+    private val fireStoreUtils: FireStoreUtils,
+) : ViewModel() {
 
     sealed class State {
-        object Loading : State()
+        data object Loading : State()
 
         data class Info(@StringRes val stringRes: Int) : State()
 
         data class Error(val exception: Exception?) : State()
 
-        object Loaded : State()
+        data object Loaded : State()
     }
 
     private var _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
@@ -38,7 +43,7 @@ class RememberDetailPhotosViewModel : ViewModel() {
         _loadedPhotos.clear()
 
         photos.forEach { photo ->
-            FireStoreUtils.loadImageIfAvailable(
+            fireStoreUtils.loadImageIfAvailable(
                 imagePath = photo.url,
                 onLoaded = { bitmap ->
                     _loadedPhotos.add(

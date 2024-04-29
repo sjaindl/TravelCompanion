@@ -39,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
@@ -47,7 +47,6 @@ import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
 import com.sjaindl.travelcompanion.remember.detail.bottomsheet.RememberItemActionBottomSheet
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -57,10 +56,10 @@ fun RememberDetailLazyGridScreen(
     planName: String,
     onShowActions: (Boolean) -> Unit,
     onDeleted: (String?) -> Unit,
-    viewModel: RememberDetailLazyScreenViewModel = viewModel(
-        factory = RememberDetailLazyScreenViewModel.RememberDetailLazyScreenViewModelFactory(
-            planName = planName,
-        )
+    viewModel: RememberDetailLazyScreenViewModel = hiltViewModel(
+        creationCallback = { factory: RememberDetailLazyScreenViewModel.RememberDetailLazyScreenViewModelFactory ->
+            factory.create(planName = planName)
+        }
     ),
 ) {
     val state by viewModel.state.collectAsState()
@@ -74,7 +73,7 @@ fun RememberDetailLazyGridScreen(
     TravelCompanionTheme {
         RememberItemActionBottomSheet(
             show = showDialogState != null,
-            title = stringResource(id = SharedR.string.chooseAction),
+            title = stringResource(id = R.string.chooseAction),
             onFullScreen = {
                 onShowActions(true)
                 fullScreenImage = viewModel.showDialog.value?.bitmap
@@ -95,7 +94,7 @@ fun RememberDetailLazyGridScreen(
                     val exception = (state as RememberDetailLazyScreenViewModel.State.Error).exception
 
                     val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = SharedR.string.couldNotRetrieveData)
+                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
 
                     Box(
                         modifier = modifier
@@ -149,7 +148,7 @@ fun RememberDetailLazyGridScreen(
                                     contentAlignment = Alignment.Center,
                                 ) {
                                     Text(
-                                        text = stringResource(id = SharedR.string.noImageData),
+                                        text = stringResource(id = R.string.noImageData),
                                         fontWeight = FontWeight.Bold,
                                         color = Color.White,
                                         textAlign = TextAlign.Center,

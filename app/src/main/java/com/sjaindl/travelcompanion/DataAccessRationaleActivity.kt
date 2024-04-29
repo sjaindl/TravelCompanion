@@ -29,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sjaindl.travelcompanion.databinding.ActivityDataAccessRationaleBinding
-import com.sjaindl.travelcompanion.shared.R
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date

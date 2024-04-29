@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.plan
 
+import android.content.Context
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.FirebaseStorage
 import com.sjaindl.travelcompanion.Constants
@@ -10,15 +11,31 @@ import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.ATTRACTION
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.HOTEL
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType.RESTAURANT
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import timber.log.Timber
+import javax.inject.Inject
 
-class PlannableUtils(private val planName: String) {
+class PlannableUtils @Inject constructor(private val planName: String) {
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface PlannableUtilsEntryPoint {
+        fun fireStoreClient(): FireStoreClient
+    }
+
+    @Inject
+    lateinit var fireStoreClient: FireStoreClient
+
+
     var hotels: MutableList<Plannable> = mutableListOf()
     var restaurants: MutableList<Plannable> = mutableListOf()
     var attractions: MutableList<Plannable> = mutableListOf()
 
     private val planCollectionReference by lazy {
-        FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
+        fireStoreClient.userReference().collection(FireStoreConstants.Collections.plans)
     }
 
     var fireStoreHotelDbReference: CollectionReference? = null
@@ -29,7 +46,10 @@ class PlannableUtils(private val planName: String) {
 
     private val tag = "Plan"
 
-    init {
+    fun initialize(context: Context) {
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(context, PlannableUtilsEntryPoint::class.java)
+        fireStoreClient = hiltEntryPoint.fireStoreClient()
+
         configureDatabase()
     }
 
@@ -165,7 +185,7 @@ class PlannableUtils(private val planName: String) {
     }
 
     private fun configureDatabase() {
-        val planReference = FireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(planName)
+        val planReference = fireStoreClient.userReference().collection(FireStoreConstants.Collections.plans).document(planName)
 
         fireStoreHotelDbReference = planReference.collection(FireStoreConstants.Collections.hotels)
         fireStoreRestaurantDbReference = planReference.collection(FireStoreConstants.Collections.restaurants)

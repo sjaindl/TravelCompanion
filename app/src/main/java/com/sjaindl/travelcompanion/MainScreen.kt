@@ -13,7 +13,7 @@ import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.databinding.FragmentMainBinding
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.shared.R as SharedR
+import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +26,7 @@ internal fun MainScreen(
     navigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
-    val title = stringResource(SharedR.string.appName)
+    val title = stringResource(R.string.appName)
 
     TravelCompanionTheme {
         Scaffold(
@@ -45,20 +45,20 @@ internal fun MainScreen(
                 factory = FragmentMainBinding::inflate,
             ) {
                 this.exploreItem = MainMenuItem(
-                    context.getString(SharedR.string.explore),
-                    context.getString(SharedR.string.exploreDetail),
+                    context.getString(R.string.explore),
+                    context.getString(R.string.exploreDetail),
                     AppCompatResources.getDrawable(context, R.drawable.explore)
                 )
 
                 this.planItem = MainMenuItem(
-                    context.getString(SharedR.string.plan),
-                    context.getString(SharedR.string.planDetail),
+                    context.getString(R.string.plan),
+                    context.getString(R.string.planDetail),
                     AppCompatResources.getDrawable(context, R.drawable.plan)
                 )
 
                 this.rememberItem = MainMenuItem(
-                    context.getString(SharedR.string.remember),
-                    context.getString(SharedR.string.rememberDetail),
+                    context.getString(R.string.remember),
+                    context.getString(R.string.rememberDetail),
                     AppCompatResources.getDrawable(context, R.drawable.remember)
                 )
 

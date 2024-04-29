@@ -26,7 +26,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
-import com.sjaindl.travelcompanion.shared.R as SharedR
 
 @Composable
 fun PickDateElement(
@@ -109,7 +108,7 @@ fun PickDateElement(
                 colors = buttonColors,
             ) {
                 Text(
-                    text = stringResource(id = SharedR.string.pick_date)
+                    text = stringResource(id = R.string.pick_date)
                 )
             }
         }

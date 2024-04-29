@@ -25,6 +25,7 @@ fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long
         ExploreDetailPhotos,
         ExploreDetailInfo,
     )
+
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.colorMain),
         contentColor = Color.Black,
