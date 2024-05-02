@@ -142,6 +142,7 @@ android {
 
     defaultConfig {
         minSdk = 26
+        targetSdk = 34
     }
     namespace = "com.sjaindl.travelcompanion.shared"
 }

@@ -38,8 +38,9 @@ android {
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
         minSdk = 26
-        versionCode = 3
-        versionName = "1.0"
+        targetSdk = 34
+        versionCode = 4
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
