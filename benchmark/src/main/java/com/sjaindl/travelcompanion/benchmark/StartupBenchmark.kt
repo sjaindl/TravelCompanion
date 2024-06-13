@@ -1,15 +1,10 @@
 package com.sjaindl.travelcompanion.benchmark
 
-import android.Manifest
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.GrantPermissionRule
-import androidx.test.uiautomator.By
-import androidx.test.uiautomator.UiObject2
-import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,17 +24,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class StartupBenchmark {
     companion object {
-        const val packageName = "com.sjaindl.travelcompanion"
+        const val PACKAGE_NAME = "com.sjaindl.travelcompanion"
     }
-
-    @get:Rule
-    val grantPermissionRule: GrantPermissionRule =
-        GrantPermissionRule.grant(
-            Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.INTERNET,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        )
 
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
@@ -48,30 +34,25 @@ class StartupBenchmark {
     fun startupNoCompilation() = startup(CompilationMode.None())
 
     @Test
-    fun startupBaselineProfile() = startup(CompilationMode.DEFAULT)
-    //Partial(baselineProfileMode = BaselineProfileMode.Require))
+    fun startupFullCompilation() = startup(CompilationMode.Full())
 
     @Test
-    fun startupFullCompilation() = startup(CompilationMode.Full())
+    fun startupBaselineProfile() = startup(CompilationMode.DEFAULT)
 
     private fun startup(
         compilationMode: CompilationMode,
+        iterations: Int = 10,
         startupMode: StartupMode = StartupMode.COLD,
     ) = benchmarkRule.measureRepeated(
-        packageName = packageName,
+        packageName = PACKAGE_NAME,
         metrics = listOf(
             StartupTimingMetric(),
-            // PowerMetric(PowerMetric.Type.Battery()),
-            // FrameTimingMetric(),
         ),
         compilationMode = compilationMode,
-        iterations = 10,
+        iterations = iterations,
         startupMode = startupMode,
     ) {
         pressHome()
         startActivityAndWait()
-
-        val explore: UiObject2 = device.findObject(By.text("Explore"))
-        explore.clickAndWait(Until.newWindow(), 3000)
     }
 }

@@ -1,4 +1,4 @@
-package com.sjaindl.travelcompanion.profile
+package com.sjaindl.travelcompanion.profile.usericon
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -12,11 +12,12 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
-import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.R
 
 class UserIconView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     private val backgroundPaint by lazy {
@@ -36,24 +37,22 @@ class UserIconView @JvmOverloads constructor(
     }
 
     var initials: String? = null
-        set(value) {
-            if (field == value) return
-            field = value
-            updateView()
-        }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        FirebaseAuth.getInstance().addAuthStateListener { auth ->
-            val name = auth.currentUser?.displayName
-            initials = name?.split(" ")?.take(2)?.joinToString(separator = "") {
-                (it.firstOrNull() ?: "A").toString()
+    fun updateView(initialsBitmap: Bitmap?) {
+        if (initialsBitmap != null) {
+            if (measuredWidth != 0 && measuredHeight != 0) {
+                val resizedBitmap = Bitmap.createScaledBitmap(initialsBitmap, measuredWidth, measuredHeight, true)
+                setImageBitmap(resizedBitmap)
+            } else {
+                val resizedBitmap = Bitmap.createScaledBitmap(initialsBitmap, 100, 180, true)
+                setImageBitmap(resizedBitmap)
             }
+        } else {
+            setImageResource(R.drawable.ic_user_placeholder)
         }
     }
 
-    private fun updateView() {
+    fun updateView(initials: String?) {
         val initialsBitmap = initials?.takeIf { it.isNotEmpty() }?.let { bitmapFromText(it.uppercase()) }
         if (initialsBitmap != null) {
             setImageBitmap(initialsBitmap)
@@ -64,7 +63,8 @@ class UserIconView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        updateView()
+
+        updateView(initials = initials)
     }
 
     private fun bitmapFromText(text: String): Bitmap? {
