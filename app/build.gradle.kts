@@ -17,6 +17,9 @@ plugins {
     alias(libs.plugins.hilt)
 
     alias(libs.plugins.kotlin.serialization)
+
+    alias(libs.plugins.compose.compiler)
+
     // TODO: Migrate from kapt to ksp when Hilt KSP support is stable
     //alias(libs.plugins.ksp)
 }
@@ -37,7 +40,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 34
         versionCode = 4
         versionName = "1.1"
@@ -80,10 +83,6 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12"
     }
 
     java {
@@ -226,25 +225,25 @@ dependencies {
     implementation(libs.places)
 
     // Jetpack Compose:
-    val composeBom = platform("androidx.compose:compose-bom:2022.12.00")
+    val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.material3)
     // Android Studio Preview support
 
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
     // Optional - Add full set of material icons
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation(libs.androidx.runtime.livedata)
 
     implementation(libs.androidx.compose.ui)
 

@@ -31,6 +31,22 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1864897012">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Pixel_4a_API_33" value="120" />
+                  <entry key="Pixel_4a_API_34" value="120" />
+                  <entry key="Pixel_7_Pro_API_34" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1453494538">
           <value>
             <AndroidTestResultsTableState>
@@ -50,13 +66,14 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="13.5_Freeform_API_33" value="171" />
-                  <entry key="Duration" value="142" />
+                  <entry key="Duration" value="191" />
                   <entry key="OnePlus HD1913" value="120" />
                   <entry key="Pixel_4a_API_33" value="120" />
                   <entry key="Pixel_4a_API_34" value="120" />
                   <entry key="Pixel_6_API_33_Notifications" value="120" />
-                  <entry key="Pixel_7_Pro_API_34" value="120" />
-                  <entry key="Tests" value="411" />
+                  <entry key="Pixel_7_Pro_API_34" value="170" />
+                  <entry key="Pixel_XL_API_34" value="120" />
+                  <entry key="Tests" value="461" />
                   <entry key="dev31_default_arm64-v8a_Pixel_6" value="120" />
                 </map>
               </option>
@@ -76,6 +93,22 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-237903876">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="13.5_Freeform_API_33" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Pixel_7_Pro_API_34" value="120" />
+                  <entry key="Pixel_XL_API_34" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="79703478">
           <value>
             <AndroidTestResultsTableState>
@@ -83,6 +116,19 @@
                 <map>
                   <entry key="13.5_Freeform_API_33" value="120" />
                   <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="139268974">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_7_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -103,6 +149,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="617263835">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="13.5_Freeform_API_33" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="2013066682">
           <value>
             <AndroidTestResultsTableState>
@@ -111,6 +170,23 @@
                   <entry key="13.5_Freeform_API_33" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="2054329578">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus HD1913" value="120" />
+                  <entry key="Pixel_4a_API_33" value="120" />
+                  <entry key="Pixel_4a_API_34" value="120" />
+                  <entry key="Pixel_6_API_33_Notifications" value="120" />
+                  <entry key="Pixel_7_Pro_API_34" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
