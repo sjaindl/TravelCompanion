@@ -196,6 +196,7 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.mockito.android)
@@ -271,4 +272,6 @@ dependencies {
 
     // Certificate transparency
     implementation(libs.certificatetransparency)
+
+    implementation(libs.androidx.runtime.tracing)
 }

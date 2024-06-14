@@ -1,10 +1,14 @@
 package com.sjaindl.travelcompanion.benchmark
 
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.ExperimentalMetricApi
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
+import androidx.benchmark.macro.TraceSectionMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +25,7 @@ import org.junit.runner.RunWith
  * Run this benchmark from Studio to see startup measurements, and captured system traces
  * for investigating your app's performance.
  */
+@OptIn(ExperimentalMetricApi::class)
 @RunWith(AndroidJUnit4::class)
 class StartupBenchmark {
     companion object {
@@ -47,6 +52,12 @@ class StartupBenchmark {
         packageName = PACKAGE_NAME,
         metrics = listOf(
             StartupTimingMetric(),
+            TraceSectionMetric(
+                sectionName = "JIT Compiling %",
+                mode = TraceSectionMetric.Mode.Sum,
+            ),
+            TraceSectionMetric(sectionName = "UserIconContainer"),
+            TraceSectionMetric(sectionName = "LoadProfileBitmap"),
         ),
         compilationMode = compilationMode,
         iterations = iterations,
@@ -54,5 +65,7 @@ class StartupBenchmark {
     ) {
         pressHome()
         startActivityAndWait()
+
+        device.wait(Until.hasObject(By.res("fullyDrawn")), 10_000)
     }
 }

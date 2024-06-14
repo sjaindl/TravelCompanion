@@ -15,6 +15,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR,DEBUGGABLE,UNLOCKED"
+
+        testInstrumentationRunnerArguments["androidx.benchmark.fullTracing.enable"] = "true"
     }
 
     buildTypes {
@@ -50,6 +52,13 @@ dependencies {
     implementation(libs.uiautomator)
     implementation(libs.benchmark.macro.junit4)
     implementation(libs.androidx.rules)
+
+    implementation(libs.androidx.tracing.perfetto)
+    implementation(libs.androidx.tracing.perfetto.binary)
+
+    implementation(libs.androidx.espresso.core.v340)
+    implementation(libs.androidx.runner.v140)
+    implementation(libs.androidx.rules.v140)
 }
 
 androidComponents {
@@ -62,17 +71,17 @@ androidComponents {
 // comments. In this example, you use the GMD added earlier and disable
 // connected devices.
 /*
-baselineProfile {
+BASELINEPROFILE {
 
-    // This specifies the managed devices to use that you run the tests on. The
-    // default is none.
-    managedDevices += "pixel6Api31"
+    // THIS SPECIFIES THE MANAGED DEVICES TO USE THAT YOU RUN THE TESTS ON. THE
+    // DEFAULT IS NONE.
+    MANAGEDDEVICES += "PIXEL6API31"
 
-    // This enables using connected devices to generate profiles. The default is
-    // true. When using connected devices, they must be rooted or API 33 and
-    // higher.
-    useConnectedDevices = false
+    // THIS ENABLES USING CONNECTED DEVICES TO GENERATE PROFILES. THE DEFAULT IS
+    // TRUE. WHEN USING CONNECTED DEVICES, THEY MUST BE ROOTED OR API 33 AND
+    // HIGHER.
+    USECONNECTEDDEVICES = FALSE
 
-    saveInSrc = true
+    SAVEINSRC = TRUE
 }
  */
