@@ -25,8 +25,8 @@ class ExploreViewModel @Inject constructor(
     private val _dialogTitle = MutableStateFlow("")
     var dialogTitle = _dialogTitle.asStateFlow()
 
-    private val _onShowDetails = MutableStateFlow(0L)
-    var onShowDetails = _onShowDetails.asStateFlow()
+    private val _showDetails = MutableStateFlow(0L)
+    var showDetails = _showDetails.asStateFlow()
 
     private val _exception: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     var exception = _exception.asStateFlow()
@@ -51,7 +51,7 @@ class ExploreViewModel @Inject constructor(
 
         val pin = dataRepository.singlePin(name = dialogTitle.value) ?: return
 
-        _onShowDetails.value = pin.id
+        _showDetails.value = pin.id
     }
 
     fun onDelete() {
@@ -75,7 +75,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun clickedOnDetails() {
-        _onShowDetails.value = 0L
+        _showDetails.value = 0L
     }
 
     fun fetchPlaceDetails(placeId: String) = viewModelScope.launch {

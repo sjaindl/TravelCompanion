@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         credentialManager.toString()
 
         auth = Firebase.auth
-        dataRepository.allPins()
 
         if (auth.currentUser != null) {
             authenticationViewModel.preloadPlans()

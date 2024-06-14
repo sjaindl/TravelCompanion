@@ -94,6 +94,7 @@ fun NavGraphBuilder.exploreGraph(
             )
         ) { navBackStackEntry ->
             val encodedPlaces = navBackStackEntry.arguments?.getString(PLACES_ARG)
+
             ExploreScreen(
                 encodedPlaces = encodedPlaces,
                 onSearch = {
@@ -107,7 +108,7 @@ fun NavGraphBuilder.exploreGraph(
                 },
                 onPlanTrip = onPlanTrip,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                navigateUp = { navController.navigateUp() },
             )
         }
 

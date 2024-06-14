@@ -24,7 +24,7 @@ import com.sjaindl.travelcompanion.databinding.FragmentExploreBinding
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceFragment
-import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
+import com.sjaindl.travelcompanion.prefs.MapLocationDataPreferences
 import com.sjaindl.travelcompanion.util.GoogleMapsUtil
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
 import kotlinx.coroutines.launch
@@ -61,7 +61,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private val viewModel by viewModels<ExploreViewModel>(factoryProducer = { ExploreViewModel.ExploreViewModelFactory(dataRepository) })
 
     private val prefs by lazy {
-        MapLocationDataPrefs(requireContext())
+        MapLocationDataPreferences(requireContext())
     }
 
     private var cameraMoveInProgress = false
@@ -148,7 +148,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     private fun setObservers() {
         lifecycleScope.launch {
             //repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.onShowDetails.collect { pinId ->
+            viewModel.showDetails.collect { pinId ->
                 if (pinId > 0) {
                     viewModel.clickedOnDetails()
 

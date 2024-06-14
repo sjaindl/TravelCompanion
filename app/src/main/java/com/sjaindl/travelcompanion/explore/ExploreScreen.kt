@@ -12,13 +12,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -37,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.trace
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,19 +50,18 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GeocodingResult
 import com.sjaindl.travelcompanion.api.google.PlacePrediction
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.model.MapLocationData
-import com.sjaindl.travelcompanion.prefs.MapLocationDataPrefs
+import com.sjaindl.travelcompanion.prefs.MapLocationDataPreferences
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import com.sjaindl.travelcompanion.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExploreScreen(
     encodedPlaces: String? = null,
@@ -73,8 +72,68 @@ fun ExploreScreen(
     onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
     showPermissionRationale: () -> Unit = { },
-    navigateUp: () -> Unit = {},
+    fetchPlaceDetails: (String?) -> Unit = { },
+    navigateUp: () -> Unit,
 ) {
+    val showBottomSheetState by viewModel.showBottomSheet.collectAsState()
+    val title by viewModel.dialogTitle.collectAsState()
+    val showDetails by viewModel.showDetails.collectAsState()
+    val exception by viewModel.exception.collectAsState()
+    val placeDetails by viewModel.placeDetails.collectAsState()
+
+    ExploreScreenContent(
+        showBottomSheet = showBottomSheetState,
+        title = title,
+        exception = exception,
+        showDetails = showDetails,
+        canNavigateBack = canNavigateBack,
+        encodedPlaces = encodedPlaces,
+        newlyAddedLocation = viewModel.newlyAddedLocation,
+        placeDetails = placeDetails,
+        onSearch = onSearch,
+        onPickedLocation = onPickedLocation,
+        onNavigateToExploreDetails = onNavigateToExploreDetails,
+        onPlanTrip = onPlanTrip,
+        showPermissionRationale = remember { showPermissionRationale },
+        clickedOnDetails = viewModel::clickedOnDetails,
+        fetchPlaceDetails = remember { fetchPlaceDetails },
+        onDelete = { viewModel.onDelete() },
+        onDismiss = viewModel::onDismiss,
+        addPersistedPinsToMap = viewModel::addPersistedPinsToMap,
+        onClickedPlace = viewModel::clickedOnPlace,
+        onShowDetails = viewModel::onShowDetails,
+        setNewlyAddedLocation = {
+            viewModel.newlyAddedLocation = it
+        },
+        navigateUp = navigateUp,
+    )
+}
+
+@Composable
+fun ExploreScreenContent(
+    showBottomSheet: Boolean,
+    title: String,
+    exception: Throwable?,
+    showDetails: Long,
+    canNavigateBack: Boolean,
+    encodedPlaces: String? = null,
+    newlyAddedLocation: PlaceDetail? = null,
+    placeDetails: List<PlaceDetail> = emptyList(),
+    onSearch: () -> Unit,
+    onPickedLocation: (latitude: Float, longitude: Float) -> Unit,
+    onNavigateToExploreDetails: (Long) -> Unit,
+    onPlanTrip: (String) -> Unit,
+    showPermissionRationale: () -> Unit,
+    clickedOnDetails: () -> Unit,
+    fetchPlaceDetails: (String) -> Unit,
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit,
+    onShowDetails: () -> Unit,
+    addPersistedPinsToMap: suspend () -> Unit,
+    onClickedPlace: (String?) -> Unit,
+    setNewlyAddedLocation: (PlaceDetail?) -> Unit,
+    navigateUp: () -> Unit,
+) = trace(sectionName = "ExploreScreenContent") {
     val context = LocalContext.current
 
     val coroutineScope = rememberCoroutineScope()
@@ -96,14 +155,10 @@ fun ExploreScreen(
         mutableStateOf(false)
     }
 
-    val showBottomSheetState by viewModel.showBottomSheet.collectAsState()
-    val title by viewModel.dialogTitle.collectAsState()
-    val onShowDetailsPinId by viewModel.onShowDetails.collectAsState()
-    val exception by viewModel.exception.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    val prefs by lazy {
-        MapLocationDataPrefs(context)
+    val preferences by lazy {
+        MapLocationDataPreferences(context = context)
     }
 
     val permission = Manifest.permission.ACCESS_COARSE_LOCATION
@@ -123,9 +178,9 @@ fun ExploreScreen(
         searchPlace = false
     }
 
-    if (onShowDetailsPinId > 0) {
-        onNavigateToExploreDetails(onShowDetailsPinId)
-        viewModel.clickedOnDetails()
+    if (showDetails > 0) {
+        onNavigateToExploreDetails(showDetails)
+        clickedOnDetails()
     }
 
     if (encodedPlaces != null) {
@@ -143,7 +198,7 @@ fun ExploreScreen(
 
         if (placeId != null) {
             LaunchedEffect(key1 = placeId) {
-                viewModel.fetchPlaceDetails(placeId = placeId)
+                fetchPlaceDetails(placeId)
             }
         }
 
@@ -158,7 +213,7 @@ fun ExploreScreen(
     }
 
     if (exception != null) {
-        val message = exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.unknown_error)
+        val message = exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.unknown_error)
         LaunchedEffect(exception) {
             snackBarHostState.showSnackbar(
                 message = message
@@ -175,21 +230,21 @@ fun ExploreScreen(
     LaunchedEffect(cameraPositionState.isMoving) {
         if (!cameraPositionState.isMoving && initialLocation != null) {
             val location = cameraPositionState.position.target
-            prefs.updateLastLocation(location.latitude.toFloat(), location.longitude.toFloat(), cameraPositionState.position.zoom)
+            preferences.updateLastLocation(location.latitude.toFloat(), location.longitude.toFloat(), cameraPositionState.position.zoom)
         }
     }
 
     TravelCompanionTheme {
         PlaceActionBottomSheet(
-            show = showBottomSheetState,
+            show = showBottomSheet,
             title = title,
-            onShowDetails = viewModel::onShowDetails,
+            onShowDetails = onShowDetails,
             onPlanTrip = {
-                viewModel.onDismiss()
+                onDismiss()
                 onPlanTrip(title)
             },
-            onDelete = viewModel::onDelete,
-            onCancel = viewModel::onDismiss,
+            onDelete = onDelete,
+            onCancel = onDismiss,
         ) {
             Scaffold(
                 modifier = Modifier
@@ -215,94 +270,99 @@ fun ExploreScreen(
                 },
                 floatingActionButton = {
                     TravelCompanionTheme {
-                        FloatingActionButton(
-                            onClick = {
-                                searchPlace = true
-                            },
-                            containerColor = colors.primary,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .background(colors.primary)
-                                    .padding(8.dp),
+                        if (initialLocation != null) {
+                            FloatingActionButton(
+                                onClick = {
+                                    searchPlace = true
+                                },
+                                containerColor = colorScheme.primary,
                             ) {
-                                Text(text = stringResource(id = R.string.searchPlaces))
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Image(
-                                    imageVector = Icons.Rounded.Search,
-                                    contentDescription = stringResource(id = R.string.search),
-                                )
+                                Row(
+                                    modifier = Modifier
+                                        .background(colorScheme.primary)
+                                        .padding(8.dp),
+                                ) {
+                                    Text(text = stringResource(id = R.string.searchPlaces))
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Image(
+                                        imageVector = Icons.Rounded.Search,
+                                        contentDescription = stringResource(id = R.string.search),
+                                    )
+                                }
                             }
                         }
                     }
                 },
                 floatingActionButtonPosition = FabPosition.Center,
             ) { paddingValues ->
-                GoogleMap(
-                    modifier = Modifier.padding(paddingValues),
-                    cameraPositionState = cameraPositionState,
-                    googleMapOptionsFactory = {
-                        GoogleMapOptions()
-                    },
-                    properties = MapProperties(isMyLocationEnabled = isLocationPermissionGranted),
-                    uiSettings = MapUiSettings(myLocationButtonEnabled = isLocationPermissionGranted),
-                    onMapClick = { latLng ->
-                        onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
-                    },
-                    onMapLoaded = {
-                        coroutineScope.launch {
-                            initialLocation = prefs.lastLocationFlow.first()
-                            viewModel.addPersistedPinsToMap()
-                        }
-                    },
-                    onMyLocationButtonClick = {
-                        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                            if (location != null && location.hasAccuracy()) {
-                                coroutineScope.launch {
-                                    snackBarHostState.showSnackbar(
-                                        message = context.getString(
-                                            R.string.accuracy,
-                                            location.accuracy.toString(),
-                                        ),
-                                    )
+                trace(sectionName = "GoogleMap") {
+                    GoogleMap(
+                        modifier = Modifier
+                            .padding(paddingValues),
+                        cameraPositionState = cameraPositionState,
+                        googleMapOptionsFactory = {
+                            GoogleMapOptions()
+                        },
+                        properties = MapProperties(isMyLocationEnabled = isLocationPermissionGranted),
+                        uiSettings = MapUiSettings(myLocationButtonEnabled = isLocationPermissionGranted),
+                        onMapClick = { latLng ->
+                            onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
+                        },
+                        onMapLoaded = {
+                            coroutineScope.launch {
+                                trace(sectionName = "onMapLoaded") {
+                                    addPersistedPinsToMap()
+                                    initialLocation = preferences.lastLocationFlow.firstOrNull() ?: MapLocationData.default
                                 }
                             }
+                        },
+                        onMyLocationButtonClick = {
+                            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                                if (location != null && location.hasAccuracy()) {
+                                    coroutineScope.launch {
+                                        snackBarHostState.showSnackbar(
+                                            message = context.getString(
+                                                R.string.accuracy,
+                                                location.accuracy.toString(),
+                                            ),
+                                        )
+                                    }
+                                }
+                            }
+
+                            false
                         }
-
-                        false
-                    }
-                ) {
-                    val placeDetail by viewModel.placeDetails.collectAsState()
-
-                    placeDetail.forEach {
-                        Marker(
-                            state = MarkerState(position = LatLng(it.latitude, it.longitude)),
-                            tag = it.name,
-                            title = it.name,
-                            onClick = { marker ->
-                                viewModel.clickedOnPlace(marker.title)
-                                true
-                            },
-                        )
-                    }
-
-                    viewModel.newlyAddedLocation?.let {
-                        cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                            LatLng(it.latitude, it.longitude),
-                            cameraPositionState.position.zoom
-                        )
-
-                        coroutineScope.launch {
-                            prefs.updateLastLocation(
-                                latitude = it.latitude.toFloat(),
-                                longitude = it.longitude.toFloat(),
-                                radius = cameraPositionState.position.zoom,
+                    ) {
+                        placeDetails.forEach {
+                            Marker(
+                                state = MarkerState(position = LatLng(it.latitude, it.longitude)),
+                                tag = it.name,
+                                title = it.name,
+                                onClick = { marker ->
+                                    onClickedPlace(marker.title)
+                                    true
+                                },
                             )
                         }
 
-                        viewModel.clickedOnPlace(viewModel.newlyAddedLocation?.name)
+                        newlyAddedLocation?.let {
+                            cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                                LatLng(it.latitude, it.longitude),
+                                cameraPositionState.position.zoom
+                            )
 
-                        viewModel.newlyAddedLocation = null
+                            coroutineScope.launch {
+                                preferences.updateLastLocation(
+                                    latitude = it.latitude.toFloat(),
+                                    longitude = it.longitude.toFloat(),
+                                    radius = cameraPositionState.position.zoom,
+                                )
+                            }
+
+                            onClickedPlace(newlyAddedLocation.name)
+
+                            setNewlyAddedLocation(null)
+                        }
                     }
                 }
             }
@@ -332,5 +392,6 @@ fun ExploreScreenPreview() {
         onNavigateToExploreDetails = { },
         onPlanTrip = { },
         canNavigateBack = true,
+        navigateUp = { }
     )
 }

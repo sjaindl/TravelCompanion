@@ -52,12 +52,17 @@ class StartupBenchmark {
         packageName = PACKAGE_NAME,
         metrics = listOf(
             StartupTimingMetric(),
+
             TraceSectionMetric(
                 sectionName = "JIT Compiling %",
                 mode = TraceSectionMetric.Mode.Sum,
             ),
             TraceSectionMetric(sectionName = "UserIconContainer"),
             TraceSectionMetric(sectionName = "LoadProfileBitmap"),
+
+            //PowerMetric(PowerMetric.Power(mapOf(PowerCategory.CPU to PowerCategoryDisplayLevel.TOTAL))),
+            //PowerMetric(PowerMetric.Battery()),
+            //PowerMetric(PowerMetric.Energy()),
         ),
         compilationMode = compilationMode,
         iterations = iterations,
