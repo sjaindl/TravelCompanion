@@ -109,6 +109,28 @@ fun NavGraphBuilder.exploreGraph(
                 onPlanTrip = onPlanTrip,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
+
+                /*
+                Stable without strong skipping mode enabled:
+                onSearch = remember(navController) {
+                    {
+                        navController.navigateToSearchPlace()
+                    }
+                },
+                onPickedLocation = remember(navController) {
+                    { latitude, longitude ->
+                        navController.navigateToPickPlace(latitude = latitude, longitude = longitude)
+                    }
+                },
+                onNavigateToExploreDetails = remember(navController) {
+                    { pinId ->
+                        navController.navigateToExploreDetailContainer(pinId = pinId)
+                    }
+                },
+                onPlanTrip = onPlanTrip,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = navController::navigateUp,
+             */
             )
         }
 

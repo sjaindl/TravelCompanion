@@ -9,6 +9,7 @@ import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -85,6 +86,7 @@ fun UserIconContainer(
                 AndroidView(
                     modifier = Modifier
                         .padding(end = 8.dp)
+                        .wrapContentSize()
                         .clickable {
                             onClickedProfile()
                         },

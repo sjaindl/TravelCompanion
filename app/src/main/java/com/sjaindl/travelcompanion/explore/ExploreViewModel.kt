@@ -3,6 +3,7 @@ package com.sjaindl.travelcompanion.explore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.common.collect.ImmutableList
 import com.sjaindl.travelcompanion.di.TCInjector
 import com.sjaindl.travelcompanion.repository.DataRepository
 import com.sjaindl.travelcompanion.util.randomStringByKotlinRandom
@@ -31,7 +32,7 @@ class ExploreViewModel @Inject constructor(
     private val _exception: MutableStateFlow<Throwable?> = MutableStateFlow(null)
     var exception = _exception.asStateFlow()
 
-    private val _placeDetails = MutableStateFlow<List<PlaceDetail>>(emptyList())
+    private val _placeDetails = MutableStateFlow<ImmutableList<PlaceDetail>>(ImmutableList.of())
     val placeDetails = _placeDetails.asStateFlow()
 
     private val googleClient by lazy {
@@ -78,46 +79,48 @@ class ExploreViewModel @Inject constructor(
         _showDetails.value = 0L
     }
 
-    fun fetchPlaceDetails(placeId: String) = viewModelScope.launch {
-        googleClient.placeDetail(placeId = placeId, token = sessionToken)
-            .onSuccess { details ->
-                val location = details.location
-                val name = details.displayName?.text.orEmpty()
-                val placeDetail = PlaceDetail(latitude = location.latitude, longitude = location.longitude, name = name)
-                newlyAddedLocation = placeDetail
+    fun fetchPlaceDetails(placeId: String) {
+        viewModelScope.launch {
+            googleClient.placeDetail(placeId = placeId, token = sessionToken)
+                .onSuccess { details ->
+                    val location = details.location
+                    val name = details.displayName?.text.orEmpty()
+                    val placeDetail = PlaceDetail(latitude = location.latitude, longitude = location.longitude, name = name)
+                    newlyAddedLocation = placeDetail
 
-                val list = placeDetails.value.toMutableList().apply {
-                    add(placeDetail)
-                }
-                _placeDetails.value = list
-
-                try {
-                    val countryCode = geoNamesClient.fetchCountryCode(latitude = location.latitude, longitude = location.longitude)
-
-                    val component = details.addressComponents?.firstOrNull {
-                        it.types.contains("country")
+                    val list = placeDetails.value.toMutableList().apply {
+                        add(placeDetail)
                     }
+                    _placeDetails.value = ImmutableList.copyOf(list)
 
-                    dataRepository.insertPin(
-                        id = 0,
-                        address = details.formattedAddress,
-                        country = component?.longName,
-                        countryCode = countryCode,
-                        creationDate = Clock.System.now(),
-                        latitude = details.location.latitude,
-                        longitude = details.location.longitude,
-                        name = name,
-                        phoneNumber = null,
-                        placeId = placeId,
-                        rating = null,
-                        url = details.websiteUri,
-                    )
-                } catch (exception: Exception) {
-                    _exception.value = exception
+                    try {
+                        val countryCode = geoNamesClient.fetchCountryCode(latitude = location.latitude, longitude = location.longitude)
+
+                        val component = details.addressComponents?.firstOrNull {
+                            it.types.contains("country")
+                        }
+
+                        dataRepository.insertPin(
+                            id = 0,
+                            address = details.formattedAddress,
+                            country = component?.longName,
+                            countryCode = countryCode,
+                            creationDate = Clock.System.now(),
+                            latitude = details.location.latitude,
+                            longitude = details.location.longitude,
+                            name = name,
+                            phoneNumber = null,
+                            placeId = placeId,
+                            rating = null,
+                            url = details.websiteUri,
+                        )
+                    } catch (exception: Exception) {
+                        _exception.value = exception
+                    }
+                }.onFailure {
+                    _exception.value = it
                 }
-            }.onFailure {
-                _exception.value = it
-            }
+        }
     }
 
     fun addPersistedPinsToMap() {
@@ -131,7 +134,7 @@ class ExploreViewModel @Inject constructor(
             list.add(detail)
         }
 
-        _placeDetails.value = list
+        _placeDetails.value = ImmutableList.copyOf(list)
     }
 
     class ExploreViewModelFactory(private val dataRepository: DataRepository) : ViewModelProvider.Factory {

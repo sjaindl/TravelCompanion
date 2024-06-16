@@ -85,6 +85,10 @@ android {
         viewBinding = true
     }
 
+    composeCompiler {
+        enableStrongSkippingMode = true
+    }
+
     java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(17))
@@ -183,6 +187,8 @@ dependencies {
     implementation(libs.hilt.base)
     implementation(libs.hilt.navigationCompose)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.rebugger)
 
     // https://github.com/square/leakcanary
     debugImplementation(libs.leakcanary.android)

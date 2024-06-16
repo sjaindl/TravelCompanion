@@ -6,13 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Slider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -77,7 +78,7 @@ fun AddPlaceMapScreen(
     }
 
     val searchDistance = remember {
-        mutableStateOf((viewModel.maxDistanceKm - viewModel.minDistanceKm + 1) / 2f)
+        mutableDoubleStateOf((viewModel.maxDistanceKm - viewModel.minDistanceKm + 1) / 2f)
     }
 
     val state by viewModel.state.collectAsState()

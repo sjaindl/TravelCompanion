@@ -44,6 +44,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.common.collect.ImmutableList
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
@@ -58,6 +59,7 @@ import com.sjaindl.travelcompanion.explore.search.PlaceActionBottomSheet
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.prefs.MapLocationDataPreferences
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
+import com.theapache64.rebugger.Rebugger
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -84,12 +86,15 @@ fun ExploreScreen(
     ExploreScreenContent(
         showBottomSheet = showBottomSheetState,
         title = title,
-        exception = exception,
+        //exception = exception, // unstable!
+        errorMessage = if (exception != null) {
+            exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.unknown_error)
+        } else null,
         showDetails = showDetails,
         canNavigateBack = canNavigateBack,
         encodedPlaces = encodedPlaces,
         newlyAddedLocation = viewModel.newlyAddedLocation,
-        placeDetails = placeDetails,
+        placeDetails = placeDetails, // Stable: kotlinx.ImmutableList
         onSearch = onSearch,
         onPickedLocation = onPickedLocation,
         onNavigateToExploreDetails = onNavigateToExploreDetails,
@@ -97,7 +102,7 @@ fun ExploreScreen(
         showPermissionRationale = remember { showPermissionRationale },
         clickedOnDetails = viewModel::clickedOnDetails,
         fetchPlaceDetails = remember { fetchPlaceDetails },
-        onDelete = { viewModel.onDelete() },
+        onDelete = viewModel::onDelete,
         onDismiss = viewModel::onDismiss,
         addPersistedPinsToMap = viewModel::addPersistedPinsToMap,
         onClickedPlace = viewModel::clickedOnPlace,
@@ -113,12 +118,14 @@ fun ExploreScreen(
 fun ExploreScreenContent(
     showBottomSheet: Boolean,
     title: String,
-    exception: Throwable?,
+    //exception: Throwable? // unstable
+    errorMessage: String?, // stable
     showDetails: Long,
     canNavigateBack: Boolean,
     encodedPlaces: String? = null,
     newlyAddedLocation: PlaceDetail? = null,
-    placeDetails: List<PlaceDetail> = emptyList(),
+    placeDetails: ImmutableList<PlaceDetail> = ImmutableList.of(), // stable
+    //placeDetails: List<PlaceDetail> = emptyList(), // unstable
     onSearch: () -> Unit,
     onPickedLocation: (latitude: Float, longitude: Float) -> Unit,
     onNavigateToExploreDetails: (Long) -> Unit,
@@ -129,7 +136,7 @@ fun ExploreScreenContent(
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
     onShowDetails: () -> Unit,
-    addPersistedPinsToMap: suspend () -> Unit,
+    addPersistedPinsToMap: () -> Unit,
     onClickedPlace: (String?) -> Unit,
     setNewlyAddedLocation: (PlaceDetail?) -> Unit,
     navigateUp: () -> Unit,
@@ -145,7 +152,9 @@ fun ExploreScreenContent(
         context
     }
 
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(attributionContext)
+    val fusedLocationClient = remember {
+        LocationServices.getFusedLocationProviderClient(attributionContext)
+    }
 
     var initialLocation: MapLocationData? by remember {
         mutableStateOf(null)
@@ -172,6 +181,43 @@ fun ExploreScreenContent(
     ) { isGranted: Boolean ->
         isLocationPermissionGranted = isGranted
     }
+
+    Rebugger(
+        trackMap = mapOf(
+            "showBottomSheet" to showBottomSheet,
+            "title" to title,
+            "errorMessage" to errorMessage,
+            "showDetails" to showDetails,
+            "canNavigateBack" to canNavigateBack,
+            "encodedPlaces" to encodedPlaces,
+            "newlyAddedLocation" to newlyAddedLocation,
+            "placeDetails" to placeDetails,
+            "errorMessage" to errorMessage,
+            "initialLocation" to initialLocation,
+            "searchPlace" to searchPlace,
+            "isLocationPermissionGranted" to isLocationPermissionGranted,
+            "snackBarHostState" to snackBarHostState,
+
+            "cameraPositionState" to cameraPositionState,
+            "coroutineScope" to coroutineScope,
+            "permissionLauncher" to permissionLauncher,
+
+            "onSearch" to onSearch,
+            "onPickedLocation" to onPickedLocation,
+            "onNavigateToExploreDetails" to onNavigateToExploreDetails,
+            "onPlanTrip" to onPlanTrip,
+            "showPermissionRationale" to showPermissionRationale,
+            "clickedOnDetails" to clickedOnDetails,
+            "fetchPlaceDetails" to fetchPlaceDetails,
+            "onDelete" to onDelete,
+            "onDismiss" to onDismiss,
+            "onShowDetails" to onShowDetails,
+            "addPersistedPinsToMap" to addPersistedPinsToMap,
+            "onClickedPlace" to onClickedPlace,
+            "setNewlyAddedLocation" to setNewlyAddedLocation,
+            "navigateUp" to navigateUp,
+        ),
+    )
 
     if (searchPlace) {
         onSearch()
@@ -212,11 +258,20 @@ fun ExploreScreenContent(
         }
     }
 
-    if (exception != null) {
-        val message = exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.unknown_error)
-        LaunchedEffect(exception) {
+    /*
+        if (exception != null) {
+            val message = exception.localizedMessage ?: exception.message ?: stringResource(id = R.string.unknown_error)
+            LaunchedEffect(exception) {
+                snackBarHostState.showSnackbar(
+                    message = message
+                )
+            }
+        }
+     */
+    if (errorMessage != null) {
+        LaunchedEffect(errorMessage) {
             snackBarHostState.showSnackbar(
-                message = message
+                message = errorMessage
             )
         }
     }
@@ -384,7 +439,6 @@ fun ExploreScreenContent(
 
 @Preview
 @Composable
-
 fun ExploreScreenPreview() {
     ExploreScreen(
         onSearch = { },

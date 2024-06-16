@@ -40,13 +40,8 @@ class UserIconView @JvmOverloads constructor(
 
     fun updateView(initialsBitmap: Bitmap?) {
         if (initialsBitmap != null) {
-            if (measuredWidth != 0 && measuredHeight != 0) {
-                val resizedBitmap = Bitmap.createScaledBitmap(initialsBitmap, measuredWidth, measuredHeight, true)
-                setImageBitmap(resizedBitmap)
-            } else {
-                val resizedBitmap = Bitmap.createScaledBitmap(initialsBitmap, 100, 180, true)
-                setImageBitmap(resizedBitmap)
-            }
+            val resizedBitmap = Bitmap.createScaledBitmap(initialsBitmap, 100, 180, true)
+            setImageBitmap(resizedBitmap)
         } else {
             setImageResource(R.drawable.ic_user_placeholder)
         }
@@ -55,7 +50,7 @@ class UserIconView @JvmOverloads constructor(
     fun updateView(initials: String?) {
         val initialsBitmap = initials?.takeIf { it.isNotEmpty() }?.let { bitmapFromText(it.uppercase()) }
         if (initialsBitmap != null) {
-            setImageBitmap(initialsBitmap)
+            // setImageBitmap(initialsBitmap)
         } else {
             setImageResource(R.drawable.ic_user_placeholder)
         }
