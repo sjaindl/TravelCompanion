@@ -17,7 +17,6 @@ import androidx.compose.material.icons.rounded.CameraAlt
 import androidx.compose.material.icons.rounded.GridOff
 import androidx.compose.material.icons.rounded.GridOn
 import androidx.compose.material.icons.rounded.Photo
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -40,12 +39,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import com.sjaindl.travelcompanion.util.TCFileProvider
 import kotlinx.coroutines.launch
-import com.sjaindl.travelcompanion.R
 
 sealed class AddMultiplePhotosState {
     data class Error(val exception: Exception) : AddMultiplePhotosState()
@@ -55,7 +54,6 @@ sealed class AddMultiplePhotosState {
     data class AddedPhotos(val photos: List<RememberPhoto>) : AddMultiplePhotosState()
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RememberDetailScreen(
     planName: String,

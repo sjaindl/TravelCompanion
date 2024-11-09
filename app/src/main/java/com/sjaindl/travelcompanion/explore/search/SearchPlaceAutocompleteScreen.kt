@@ -63,7 +63,8 @@ fun SearchPlaceAutocompleteScreen(
             autocompleteCountry.doOnTextChanged { text, _, _, _ ->
                 scope.launch(Dispatchers.IO) {
                     googleClient.autocomplete(
-                        text.toString(), sessionToken
+                        input = text.toString(),
+                        token = sessionToken,
                     ).onSuccess { autocompleteResult ->
                         val suggestions = autocompleteResult?.suggestions ?: emptyList()
 

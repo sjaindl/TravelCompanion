@@ -13,18 +13,15 @@ import com.sjaindl.travelcompanion.baseui.TCBottomSheet
 @Composable
 fun PlaceActionBottomSheet(
     modifier: Modifier = Modifier,
-    show: Boolean,
     title: String,
     onShowDetails: () -> Unit,
     onPlanTrip: () -> Unit,
     onDelete: () -> Unit,
     onCancel: () -> Unit,
-    content: @Composable () -> Unit = { },
 ) {
     TCBottomSheet(
-        show = show,
         onCancel = onCancel,
-        sheetContent = {
+        content = {
             PlaceActionContent(
                 modifier = modifier
                     .fillMaxWidth()
@@ -37,7 +34,6 @@ fun PlaceActionBottomSheet(
                 onCancel = onCancel,
             )
         },
-        content = content,
     )
 }
 
@@ -45,7 +41,6 @@ fun PlaceActionBottomSheet(
 @Composable
 fun PlaceActionBottomSheetPreview() {
     PlaceActionBottomSheet(
-        show = true,
         title = "Test Location",
         onShowDetails = { },
         onPlanTrip = { },

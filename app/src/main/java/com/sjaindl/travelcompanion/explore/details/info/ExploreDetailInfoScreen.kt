@@ -1,25 +1,26 @@
 package com.sjaindl.travelcompanion.explore.details.info
 
+import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.rememberWebViewState
 import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.exception.OfflineException
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
@@ -40,7 +41,7 @@ fun ExploreDetailInfoScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.background)
+                .background(colorScheme.background)
                 .wrapContentSize(Alignment.Center)
         ) {
             val state by viewModel.state.collectAsState()
@@ -54,34 +55,19 @@ fun ExploreDetailInfoScreen(
                     val url = (state as ExploreInfoViewModel.State.Done).url
 
                     if (url != null) {
-                        val webViewState = rememberWebViewState(url = url)
-
-                        WebView(
-                            state = webViewState,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .alpha(0.99F),
-                            onCreated = {
-                                it.settings.javaScriptEnabled = true
-                            },
-                        )
-
-                        /*
-                        // Alternative:
-                        AndroidView(factory = {
-                            WebView(it).apply {
-                                layoutParams = ViewGroup.LayoutParams(
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.MATCH_PARENT
-                                )
-                                webViewClient = WebViewClient()
-                                loadUrl(url)
+                        AndroidView(
+                            factory = { context ->
+                                WebView(context).apply {
+                                    layoutParams = ViewGroup.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.MATCH_PARENT
+                                    )
+                                    webViewClient = WebViewClient()
+                                }
+                            }, update = {
+                                it.loadUrl(url)
                             }
-                        }, update = {
-                            it.loadUrl(url)
-                        })
-                         */
-
+                        )
                     } else {
                         Text(
                             text = stringResource(id = R.string.couldNotRetrieveData),

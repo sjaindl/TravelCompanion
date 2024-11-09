@@ -35,6 +35,7 @@
                 <data android:scheme="com.sjaindl.travelcompanion" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".DataAccessRationaleActivity"
             android:exported="true"

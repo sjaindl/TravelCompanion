@@ -12,18 +12,15 @@ import com.sjaindl.travelcompanion.baseui.TCBottomSheet
 // https://proandroiddev.com/bottom-sheet-in-jetpack-compose-d7e106422606
 @Composable
 fun PlanItemActionBottomSheet(
-    modifier: Modifier = Modifier,
-    show: Boolean,
     title: String,
     onAddNote: () -> Unit,
     onDelete: () -> Unit,
     onCancel: () -> Unit,
-    content: @Composable () -> Unit = { },
+    modifier: Modifier = Modifier,
 ) {
     TCBottomSheet(
-        show = show,
         onCancel = onCancel,
-        sheetContent = {
+        content = {
             PlanItemActionContent(
                 modifier = modifier
                     .fillMaxWidth()
@@ -35,7 +32,6 @@ fun PlanItemActionBottomSheet(
                 onCancel = onCancel,
             )
         },
-        content = content,
     )
 }
 
@@ -43,7 +39,6 @@ fun PlanItemActionBottomSheet(
 @Composable
 fun PlanItemActionBottomSheetPreview() {
     PlanItemActionBottomSheet(
-        show = true,
         title = "Plan item actions",
         onAddNote = { },
         onDelete = { },

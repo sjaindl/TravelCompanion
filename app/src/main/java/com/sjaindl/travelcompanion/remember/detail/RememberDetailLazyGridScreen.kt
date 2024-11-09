@@ -3,7 +3,6 @@ package com.sjaindl.travelcompanion.remember.detail
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,9 +16,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,7 +46,6 @@ import com.sjaindl.travelcompanion.explore.details.photos.PhotoFullScreen
 import com.sjaindl.travelcompanion.remember.detail.bottomsheet.RememberItemActionBottomSheet
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RememberDetailLazyGridScreen(
     modifier: Modifier = Modifier,
@@ -71,123 +68,124 @@ fun RememberDetailLazyGridScreen(
     }
 
     TravelCompanionTheme {
-        RememberItemActionBottomSheet(
-            show = showDialogState != null,
-            title = stringResource(id = R.string.chooseAction),
-            onFullScreen = {
-                onShowActions(true)
-                fullScreenImage = viewModel.showDialog.value?.bitmap
-                viewModel.onDismiss()
-            },
-            onDelete = {
-                onShowActions(true)
-                onDeleted(showDialogState?.documentId)
-                viewModel.onDelete()
-            },
-            onCancel = {
-                onShowActions(true)
-                viewModel.onDismiss()
+        if (showDialogState != null) {
+            RememberItemActionBottomSheet(
+                title = stringResource(id = R.string.chooseAction),
+                onFullScreen = {
+                    onShowActions(true)
+                    fullScreenImage = viewModel.showDialog.value?.bitmap
+                    viewModel.onDismiss()
+                },
+                onDelete = {
+                    onShowActions(true)
+                    onDeleted(showDialogState?.documentId)
+                    viewModel.onDelete()
+                },
+                onCancel = {
+                    onShowActions(true)
+                    viewModel.onDismiss()
+                }
+            )
+        }
+
+        when (state) {
+            is RememberDetailLazyScreenViewModel.State.Error -> {
+                val exception = (state as RememberDetailLazyScreenViewModel.State.Error).exception
+
+                val errorMessage =
+                    exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(colorScheme.background),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = errorMessage,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                    )
+                }
             }
-        ) {
-            when (state) {
-                is RememberDetailLazyScreenViewModel.State.Error -> {
-                    val exception = (state as RememberDetailLazyScreenViewModel.State.Error).exception
 
-                    val errorMessage =
-                        exception?.localizedMessage ?: exception?.message ?: stringResource(id = R.string.couldNotRetrieveData)
+            is RememberDetailLazyScreenViewModel.State.Info -> {
+                val info = (state as RememberDetailLazyScreenViewModel.State.Info)
 
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .background(colors.background),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = errorMessage,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.align(Alignment.Center),
-                            fontSize = 20.sp,
-                        )
-                    }
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(colorScheme.background),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(id = info.stringRes),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                    )
                 }
+            }
 
-                is RememberDetailLazyScreenViewModel.State.Info -> {
-                    val info = (state as RememberDetailLazyScreenViewModel.State.Info)
-
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .background(colors.background),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = stringResource(id = info.stringRes),
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.align(Alignment.Center),
-                            fontSize = 20.sp,
-                        )
-                    }
-                }
-
-                RememberDetailLazyScreenViewModel.State.InitialOrDone -> {
-                    if (fullScreenImage != null) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            PhotoFullScreen(bitmap = fullScreenImage?.asImageBitmap(), url = null, title = "") {
-                                fullScreenImage = null
-                            }
+            RememberDetailLazyScreenViewModel.State.InitialOrDone -> {
+                if (fullScreenImage != null) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        PhotoFullScreen(bitmap = fullScreenImage?.asImageBitmap(), url = null, title = "") {
+                            fullScreenImage = null
                         }
-                    } else {
-                        Column {
-                            if (loadedPhotos.isEmpty()) {
-                                Box(
-                                    modifier = modifier
-                                        .fillMaxSize()
-                                        .background(MaterialTheme.colors.background),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.noImageData),
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color.White,
-                                        textAlign = TextAlign.Center,
-                                        fontSize = 20.sp,
-                                    )
-                                }
-                            } else {
-                                LazyVerticalStaggeredGrid(
-                                    columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
-                                    modifier = modifier
-                                        .fillMaxSize()
-                                        .background(colors.background),
-                                    state = gridState,
-                                    verticalItemSpacing = 4.dp,
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                ) {
-                                    items(loadedPhotos) { photo ->
-                                        val model = ImageRequest.Builder(LocalContext.current)
-                                            .data(photo.bitmap)
-                                            .size(Size.ORIGINAL)
-                                            .placeholder(android.R.drawable.gallery_thumb)
-                                            .crossfade(true)
-                                            .build()
-                                        val painter = rememberAsyncImagePainter(model)
+                    }
+                } else {
+                    Column {
+                        if (loadedPhotos.isEmpty()) {
+                            Box(
+                                modifier = modifier
+                                    .fillMaxSize()
+                                    .background(colorScheme.background),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.noImageData),
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 20.sp,
+                                )
+                            }
+                        } else {
+                            LazyVerticalStaggeredGrid(
+                                columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+                                modifier = modifier
+                                    .fillMaxSize()
+                                    .background(colorScheme.background),
+                                state = gridState,
+                                verticalItemSpacing = 4.dp,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            ) {
+                                items(loadedPhotos) { photo ->
+                                    val model = ImageRequest.Builder(LocalContext.current)
+                                        .data(photo.bitmap)
+                                        .size(Size.ORIGINAL)
+                                        .placeholder(android.R.drawable.gallery_thumb)
+                                        .crossfade(true)
+                                        .build()
+                                    val painter = rememberAsyncImagePainter(model)
 
-                                        Image(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(bottom = 12.dp)
-                                                .clickable {
-                                                    onShowActions(false)
-                                                    viewModel.clickedOnImage(photo)
-                                                },
-                                            painter = painter,
-                                            contentDescription = null,
-                                            alignment = Alignment.Center,
-                                            contentScale = ContentScale.FillWidth,
-                                        )
-                                    }
+                                    Image(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(bottom = 12.dp)
+                                            .clickable {
+                                                onShowActions(false)
+                                                viewModel.clickedOnImage(photo)
+                                            },
+                                        painter = painter,
+                                        contentDescription = null,
+                                        alignment = Alignment.Center,
+                                        contentScale = ContentScale.FillWidth,
+                                    )
                                 }
                             }
                         }

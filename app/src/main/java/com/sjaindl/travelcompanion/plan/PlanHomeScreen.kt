@@ -223,33 +223,34 @@ fun PlanHomeScreen(
         }
     }
 
-    PlanActionBottomSheet(
-        show = showDialogForPlan != null,
-        title = stringResource(id = R.string.chooseAction),
-        onShow = {
-            showDialogForPlan?.let {
-                onShowPlan(it.name)
-            }
-            showDialogForPlan = null
-        },
-        onShowDetails = {
-            showDialogForPlan?.let {
-                viewModel.getPinId(it.pinName)?.let { pinId ->
-                    onShowDetails(pinId)
+    if (showDialogForPlan != null) {
+        PlanActionBottomSheet(
+            title = stringResource(id = R.string.chooseAction),
+            onShow = {
+                showDialogForPlan?.let {
+                    onShowPlan(it.name)
                 }
+                showDialogForPlan = null
+            },
+            onShowDetails = {
+                showDialogForPlan?.let {
+                    viewModel.getPinId(it.pinName)?.let { pinId ->
+                        onShowDetails(pinId)
+                    }
+                }
+                showDialogForPlan = null
+            },
+            onDelete = {
+                showDialogForPlan?.let {
+                    viewModel.onDelete(plan = it)
+                }
+                showDialogForPlan = null
+            },
+            onCancel = {
+                showDialogForPlan = null
             }
-            showDialogForPlan = null
-        },
-        onDelete = {
-            showDialogForPlan?.let {
-                viewModel.onDelete(plan = it)
-            }
-            showDialogForPlan = null
-        },
-        onCancel = {
-            showDialogForPlan = null
-        }
-    )
+        )
+    }
 }
 
 @Composable

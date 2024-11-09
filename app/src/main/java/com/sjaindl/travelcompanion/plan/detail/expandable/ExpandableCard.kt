@@ -6,8 +6,8 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -29,11 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItem
 import com.sjaindl.travelcompanion.plan.detail.PlanDetailItemType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import com.sjaindl.travelcompanion.R
-
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
@@ -50,7 +49,7 @@ fun ExpandableCard(
             targetState = !expanded
         }
     }
-    val transition = updateTransition(transitionState, label = "transition")
+    val transition = rememberTransition(transitionState, label = "transition")
 
     val cardBgColor by transition.animateColor({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)

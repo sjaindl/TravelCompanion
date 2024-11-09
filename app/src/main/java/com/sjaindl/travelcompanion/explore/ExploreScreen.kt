@@ -290,139 +290,139 @@ fun ExploreScreenContent(
     }
 
     TravelCompanionTheme {
-        PlaceActionBottomSheet(
-            show = showBottomSheet,
-            title = title,
-            onShowDetails = onShowDetails,
-            onPlanTrip = {
-                onDismiss()
-                onPlanTrip(title)
-            },
-            onDelete = onDelete,
-            onCancel = onDismiss,
-        ) {
-            Scaffold(
-                modifier = Modifier
-                    .background(Color.Gray),
-                snackbarHost = { SnackbarHost(snackBarHostState) },
-                topBar = {
-                    val customActionIcon = if (!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
-                    TCAppBar(
-                        title = stringResource(R.string.explore),
-                        canNavigateBack = canNavigateBack,
-                        navigateUp = navigateUp,
-                        customActionIcon = customActionIcon,
-                        onCustomAction = {
-                            if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
-                                isLocationPermissionGranted = true
-                            } else if (ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, permission)) {
-                                showPermissionRationale()
-                            } else {
-                                permissionLauncher.launch(permission)
-                            }
-                        },
-                    )
+        if (showBottomSheet) {
+            PlaceActionBottomSheet(
+                title = title,
+                onShowDetails = onShowDetails,
+                onPlanTrip = {
+                    onDismiss()
+                    onPlanTrip(title)
                 },
-                floatingActionButton = {
-                    TravelCompanionTheme {
-                        if (initialLocation != null) {
-                            FloatingActionButton(
-                                onClick = {
-                                    searchPlace = true
-                                },
-                                containerColor = colorScheme.primary,
+                onDelete = onDelete,
+                onCancel = onDismiss,
+            )
+        }
+
+        Scaffold(
+            modifier = Modifier
+                .background(Color.Gray),
+            snackbarHost = { SnackbarHost(snackBarHostState) },
+            topBar = {
+                val customActionIcon = if (!isLocationPermissionGranted) Icons.Rounded.MyLocation else null
+                TCAppBar(
+                    title = stringResource(R.string.explore),
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
+                    customActionIcon = customActionIcon,
+                    onCustomAction = {
+                        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+                            isLocationPermissionGranted = true
+                        } else if (ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, permission)) {
+                            showPermissionRationale()
+                        } else {
+                            permissionLauncher.launch(permission)
+                        }
+                    },
+                )
+            },
+            floatingActionButton = {
+                TravelCompanionTheme {
+                    if (initialLocation != null) {
+                        FloatingActionButton(
+                            onClick = {
+                                searchPlace = true
+                            },
+                            containerColor = colorScheme.primary,
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .background(colorScheme.primary)
+                                    .padding(8.dp),
                             ) {
-                                Row(
-                                    modifier = Modifier
-                                        .background(colorScheme.primary)
-                                        .padding(8.dp),
-                                ) {
-                                    Text(text = stringResource(id = R.string.searchPlaces))
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Image(
-                                        imageVector = Icons.Rounded.Search,
-                                        contentDescription = stringResource(id = R.string.search),
+                                Text(text = stringResource(id = R.string.searchPlaces))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Image(
+                                    imageVector = Icons.Rounded.Search,
+                                    contentDescription = stringResource(id = R.string.search),
+                                )
+                            }
+                        }
+                    }
+                }
+            },
+            floatingActionButtonPosition = FabPosition.Center,
+        ) { paddingValues ->
+            trace(sectionName = "GoogleMap") {
+                GoogleMap(
+                    modifier = Modifier
+                        .padding(paddingValues),
+                    cameraPositionState = cameraPositionState,
+                    googleMapOptionsFactory = {
+                        GoogleMapOptions()
+                    },
+                    properties = MapProperties(isMyLocationEnabled = isLocationPermissionGranted),
+                    uiSettings = MapUiSettings(myLocationButtonEnabled = isLocationPermissionGranted),
+                    onMapClick = { latLng ->
+                        onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
+                    },
+                    onMapLoaded = {
+                        coroutineScope.launch {
+                            trace(sectionName = "onMapLoaded") {
+                                addPersistedPinsToMap()
+                                initialLocation = preferences.lastLocationFlow.firstOrNull() ?: MapLocationData.default
+                            }
+                        }
+                    },
+                    onMyLocationButtonClick = {
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                            if (location != null && location.hasAccuracy()) {
+                                coroutineScope.launch {
+                                    snackBarHostState.showSnackbar(
+                                        message = context.getString(
+                                            R.string.accuracy,
+                                            location.accuracy.toString(),
+                                        ),
                                     )
                                 }
                             }
                         }
+
+                        false
                     }
-                },
-                floatingActionButtonPosition = FabPosition.Center,
-            ) { paddingValues ->
-                trace(sectionName = "GoogleMap") {
-                    GoogleMap(
-                        modifier = Modifier
-                            .padding(paddingValues),
-                        cameraPositionState = cameraPositionState,
-                        googleMapOptionsFactory = {
-                            GoogleMapOptions()
-                        },
-                        properties = MapProperties(isMyLocationEnabled = isLocationPermissionGranted),
-                        uiSettings = MapUiSettings(myLocationButtonEnabled = isLocationPermissionGranted),
-                        onMapClick = { latLng ->
-                            onPickedLocation(latLng.latitude.toFloat(), latLng.longitude.toFloat())
-                        },
-                        onMapLoaded = {
-                            coroutineScope.launch {
-                                trace(sectionName = "onMapLoaded") {
-                                    addPersistedPinsToMap()
-                                    initialLocation = preferences.lastLocationFlow.firstOrNull() ?: MapLocationData.default
-                                }
-                            }
-                        },
-                        onMyLocationButtonClick = {
-                            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                                if (location != null && location.hasAccuracy()) {
-                                    coroutineScope.launch {
-                                        snackBarHostState.showSnackbar(
-                                            message = context.getString(
-                                                R.string.accuracy,
-                                                location.accuracy.toString(),
-                                            ),
-                                        )
-                                    }
-                                }
-                            }
+                ) {
+                    placeDetails.forEach {
+                        Marker(
+                            state = MarkerState(position = LatLng(it.latitude, it.longitude)),
+                            tag = it.name,
+                            title = it.name,
+                            onClick = { marker ->
+                                onClickedPlace(marker.title)
+                                true
+                            },
+                        )
+                    }
 
-                            false
-                        }
-                    ) {
-                        placeDetails.forEach {
-                            Marker(
-                                state = MarkerState(position = LatLng(it.latitude, it.longitude)),
-                                tag = it.name,
-                                title = it.name,
-                                onClick = { marker ->
-                                    onClickedPlace(marker.title)
-                                    true
-                                },
+                    newlyAddedLocation?.let {
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                            LatLng(it.latitude, it.longitude),
+                            cameraPositionState.position.zoom
+                        )
+
+                        coroutineScope.launch {
+                            preferences.updateLastLocation(
+                                latitude = it.latitude.toFloat(),
+                                longitude = it.longitude.toFloat(),
+                                radius = cameraPositionState.position.zoom,
                             )
                         }
 
-                        newlyAddedLocation?.let {
-                            cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                                LatLng(it.latitude, it.longitude),
-                                cameraPositionState.position.zoom
-                            )
+                        onClickedPlace(newlyAddedLocation.name)
 
-                            coroutineScope.launch {
-                                preferences.updateLastLocation(
-                                    latitude = it.latitude.toFloat(),
-                                    longitude = it.longitude.toFloat(),
-                                    radius = cameraPositionState.position.zoom,
-                                )
-                            }
-
-                            onClickedPlace(newlyAddedLocation.name)
-
-                            setNewlyAddedLocation(null)
-                        }
+                        setNewlyAddedLocation(null)
                     }
                 }
             }
         }
-
 
         /*
         PlaceActionDialog(

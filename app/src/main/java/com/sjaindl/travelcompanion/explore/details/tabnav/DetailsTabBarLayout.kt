@@ -1,21 +1,20 @@
 package com.sjaindl.travelcompanion.explore.details.tabnav
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,15 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.launch
-import com.sjaindl.travelcompanion.R
 
 const val initialPhotoTabPage = 1
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) {
     val pagerState = rememberPagerState(pageCount = {
@@ -47,15 +44,7 @@ fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) 
 
     TravelCompanionTheme {
         Column {
-            TabRow(
-                selectedTabIndex = pagerState.currentPage,
-                indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
-                        color = colors.secondary
-                    )
-                },
-            ) {
+            PrimaryTabRow(selectedTabIndex = pagerState.currentPage) {
                 tabRowItems.forEachIndexed { index, item ->
                     Tab(
                         selected = pagerState.currentPage == index,
@@ -85,7 +74,7 @@ fun DetailsTabBarLayout(tabRowItems: List<TabItem>, userScrollEnabled: Boolean) 
             HorizontalPager(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colors.background),
+                    .background(colorScheme.background),
                 state = pagerState,
                 userScrollEnabled = userScrollEnabled,
             ) {

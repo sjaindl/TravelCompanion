@@ -13,17 +13,14 @@ import com.sjaindl.travelcompanion.baseui.TCBottomSheet
 @Composable
 fun RememberItemActionBottomSheet(
     modifier: Modifier = Modifier,
-    show: Boolean,
     title: String,
     onFullScreen: () -> Unit,
     onDelete: () -> Unit,
     onCancel: () -> Unit,
-    content: @Composable () -> Unit = { },
 ) {
     TCBottomSheet(
-        show = show,
         onCancel = onCancel,
-        sheetContent = {
+        content = {
             RememberItemActionContent(
                 modifier = modifier
                     .fillMaxWidth()
@@ -35,7 +32,6 @@ fun RememberItemActionBottomSheet(
                 onCancel = onCancel,
             )
         },
-        content = content,
     )
 }
 
@@ -43,7 +39,6 @@ fun RememberItemActionBottomSheet(
 @Composable
 fun RememberItemActionBottomSheetPreview() {
     RememberItemActionBottomSheet(
-        show = true,
         title = "Choose action",
         onFullScreen = { },
         onDelete = { },

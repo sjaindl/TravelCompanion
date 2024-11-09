@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.plan.detail.bottomsheet.PlanItemActionBottomSheet
 import com.sjaindl.travelcompanion.plan.detail.expandable.CardsViewModel
 import com.sjaindl.travelcompanion.plan.detail.expandable.ExpandableCard
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
-import com.sjaindl.travelcompanion.R
 
 // https://developer.android.com/jetpack/compose/touch-input/pointer-input/scroll
 @ExperimentalCoroutinesApi
@@ -52,51 +52,53 @@ fun PlanDetailItems(
     }
 
     TravelCompanionTheme {
-        PlanItemActionBottomSheet(
-            show = showDialogState,
-            title = stringResource(id = R.string.chooseAction),
-            onAddNote = {
-                viewModel.onDismiss()
-                val data = bottomSheetData ?: return@PlanItemActionBottomSheet
-                onAddNote(data.plannableId, data.planName, data.planDetailItemType)
-            },
-            onDelete = {
-                viewModel.onDismiss()
-                val data = bottomSheetData ?: return@PlanItemActionBottomSheet
-                viewModel.onDelete(plannableId = data.plannableId, planDetailItemType = data.planDetailItemType)
-            },
-            onCancel = viewModel::onDismiss,
-        ) {
-            Scaffold(
-                backgroundColor = colors.background,
-            ) { paddingValues ->
-                Column(
-                    modifier = Modifier
-                        .padding(paddingValues = paddingValues)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    //items(cards.value) { card ->
-                    cards.value.forEach { card ->
-                        val items = when (card.type) {
-                            PlanDetailItemType.HOTEL -> hotels
-                            PlanDetailItemType.RESTAURANT -> restaurants
-                            PlanDetailItemType.ATTRACTION -> attractions
-                        }
 
-                        ExpandableCard(
-                            card = card,
-                            planDetailItems = items,
-                            onCardArrowClick = { viewModel.onCardArrowClicked(card.id) },
-                            onAdd = {
-                                Timber.d(tag, "Add ${card.type} to plan")
-                                onAddPlace(card.type)
-                            },
-                            expanded = expandedCardIds.value.contains(card.id),
-                            onClick = { plannableId ->
-                                viewModel.clickedOnItem(plannableId, planName, card.type)
-                            }
-                        )
+        if (showDialogState) {
+            PlanItemActionBottomSheet(
+                title = stringResource(id = R.string.chooseAction),
+                onAddNote = {
+                    viewModel.onDismiss()
+                    val data = bottomSheetData ?: return@PlanItemActionBottomSheet
+                    onAddNote(data.plannableId, data.planName, data.planDetailItemType)
+                },
+                onDelete = {
+                    viewModel.onDismiss()
+                    val data = bottomSheetData ?: return@PlanItemActionBottomSheet
+                    viewModel.onDelete(plannableId = data.plannableId, planDetailItemType = data.planDetailItemType)
+                },
+                onCancel = viewModel::onDismiss,
+            )
+        }
+
+        Scaffold(
+            backgroundColor = colors.background,
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues = paddingValues)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                //items(cards.value) { card ->
+                cards.value.forEach { card ->
+                    val items = when (card.type) {
+                        PlanDetailItemType.HOTEL -> hotels
+                        PlanDetailItemType.RESTAURANT -> restaurants
+                        PlanDetailItemType.ATTRACTION -> attractions
                     }
+
+                    ExpandableCard(
+                        card = card,
+                        planDetailItems = items,
+                        onCardArrowClick = { viewModel.onCardArrowClicked(card.id) },
+                        onAdd = {
+                            Timber.d(tag, "Add ${card.type} to plan")
+                            onAddPlace(card.type)
+                        },
+                        expanded = expandedCardIds.value.contains(card.id),
+                        onClick = { plannableId ->
+                            viewModel.clickedOnItem(plannableId, planName, card.type)
+                        }
+                    )
                 }
             }
         }

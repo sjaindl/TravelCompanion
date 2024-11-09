@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -84,7 +84,7 @@ fun ChangeDateScreen(
                         modifier = modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -103,7 +103,7 @@ fun ChangeDateScreen(
                         modifier = modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -124,7 +124,7 @@ fun ChangeDateScreen(
                         modifier = modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -158,9 +158,9 @@ fun ChangeDateScreen(
                         Text(
                             text = stringResource(id = R.string.startDate),
                             fontWeight = FontWeight.Bold,
-                            color = colors.background,
+                            color = colorScheme.background,
                             modifier = Modifier
-                                .background(colors.onBackground)
+                                .background(colorScheme.onBackground)
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp),
                             textAlign = TextAlign.Center,
@@ -179,9 +179,9 @@ fun ChangeDateScreen(
                             Text(
                                 text = stringResource(id = R.string.endDate),
                                 fontWeight = FontWeight.Bold,
-                                color = colors.background,
+                                color = colorScheme.background,
                                 modifier = Modifier
-                                    .background(colors.onBackground)
+                                    .background(colorScheme.onBackground)
                                     .fillMaxWidth()
                                     .padding(vertical = 16.dp),
                                 textAlign = TextAlign.Center,
@@ -197,7 +197,7 @@ fun ChangeDateScreen(
                             )
                         }
 
-                        Divider()
+                        HorizontalDivider()
 
                         val buttonColors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.colorMain),

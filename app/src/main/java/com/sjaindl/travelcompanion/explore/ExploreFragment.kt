@@ -89,14 +89,15 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
 
             binding?.fab?.visibility = if (showDialogState.value) View.GONE else View.VISIBLE
 
-            PlaceActionBottomSheet(
-                show = showDialogState.value,
-                title = title.value,
-                onShowDetails = viewModel::onShowDetails,
-                onPlanTrip = viewModel::onDismiss,
-                onDelete = viewModel::onDelete,
-                onCancel = viewModel::onDismiss,
-            )
+            if (showDialogState.value) {
+                PlaceActionBottomSheet(
+                    title = title.value,
+                    onShowDetails = viewModel::onShowDetails,
+                    onPlanTrip = viewModel::onDismiss,
+                    onDelete = viewModel::onDelete,
+                    onCancel = viewModel::onDismiss,
+                )
+            }
 
             /*
             PlaceActionDialog(

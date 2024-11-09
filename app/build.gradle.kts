@@ -37,7 +37,8 @@ android {
             storePassword = keystoreProperties["storePassword"] as String
         }
     }
-    compileSdk = 34
+    
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
         minSdk = 30

@@ -1,66 +1,39 @@
 package com.sjaindl.travelcompanion.baseui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
-import kotlinx.coroutines.launch
 
-// https://proandroiddev.com/bottom-sheet-in-jetpack-compose-d7e106422606
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun TCBottomSheet(
-    show: Boolean,
     onCancel: () -> Unit,
-    sheetContent: @Composable () -> Unit,
-    content: @Composable () -> Unit = { },
+    modifier: Modifier = Modifier,
+    containerColor: Color = BottomSheetDefaults.ContainerColor,
+    contentColor: Color = contentColorFor(containerColor),
+    scrimColor: Color = BottomSheetDefaults.ScrimColor,
+    content: @Composable () -> Unit,
 ) {
-    TravelCompanionTheme {
-        val coroutineScope = rememberCoroutineScope()
-        val modalSheetState = rememberModalBottomSheetState(
-            initialValue = ModalBottomSheetValue.Hidden,
-            confirmStateChange = {
-                if (it == ModalBottomSheetValue.Hidden) {
-                    onCancel()
-                }
-                true
-            },
-            skipHalfExpanded = false,
-        )
-
-        LaunchedEffect(key1 = !show) {
-            coroutineScope.launch {
-                if (!show) {
-                    modalSheetState.hide()
-                } else {
-                    modalSheetState.show()
-                }
-            }
-        }
-
-        ModalBottomSheetLayout(
-            sheetState = modalSheetState,
-            sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-            sheetContent = {
-                sheetContent()
-            }
-        ) {
+    ModalBottomSheet(
+        onDismissRequest = onCancel,
+        modifier = modifier,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = containerColor,
+        scrimColor = scrimColor,
+        contentColor = contentColor,
+    ) {
+        TravelCompanionTheme {
             content()
-        }
-
-        BackHandler(modalSheetState.isVisible) {
-            coroutineScope.launch { modalSheetState.hide() }
         }
     }
 }
@@ -69,13 +42,12 @@ fun TCBottomSheet(
 @Composable
 fun TCBottomSheetPreview() {
     TCBottomSheet(
-        show = true,
         onCancel = { },
-        sheetContent = {
+        content = {
             Text(
                 modifier = Modifier.padding(vertical = 16.dp),
                 text = "Just some test content"
             )
-        }
+        },
     )
 }

@@ -10,14 +10,14 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -102,10 +102,13 @@ fun NotesScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .weight(9f),
-                                colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    unfocusedBorderColor = colors.primary,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedContainerColor = Color.White,
+                                    unfocusedContainerColor = Color.White,
+                                    disabledContainerColor = Color.White,
+                                    errorContainerColor = Color.Transparent,
                                     focusedBorderColor = colors.primary,
-                                    containerColor = Color.White,
+                                    unfocusedBorderColor = colors.primary,
                                 ),
                                 value = notes.orEmpty(),
                                 onValueChange = {
@@ -116,7 +119,7 @@ fun NotesScreen(
                                 }
                             )
 
-                            Divider()
+                            HorizontalDivider()
 
                             val buttonColors = ButtonDefaults.buttonColors(
                                 containerColor = colorResource(id = R.color.colorMain),

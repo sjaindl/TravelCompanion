@@ -56,9 +56,9 @@ dependencies {
     implementation(libs.androidx.tracing.perfetto)
     implementation(libs.androidx.tracing.perfetto.binary)
 
-    implementation(libs.androidx.espresso.core.v340)
-    implementation(libs.androidx.runner.v140)
-    implementation(libs.androidx.rules.v140)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.runner)
+    implementation(libs.androidx.rules)
 }
 
 androidComponents {
