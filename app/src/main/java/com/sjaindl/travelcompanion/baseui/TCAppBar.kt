@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.TCAnimationScreen
+import com.sjaindl.travelcompanion.TCAnimationScreenWithoutRecompositions
 import com.sjaindl.travelcompanion.profile.usericon.UserIconContainer
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
@@ -91,7 +91,7 @@ fun TCAppBar(
     )
 
     if (showAnimationScreen) {
-        TCAnimationScreen(
+        TCAnimationScreenWithoutRecompositions(
             onDismiss = {
                 showAnimationScreen = false
             }
