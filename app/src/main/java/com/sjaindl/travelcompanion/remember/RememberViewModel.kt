@@ -53,7 +53,7 @@ class RememberViewModel @Inject constructor(
 
     private fun addPlan(plan: Plan) {
         //remember photos should be storeable from the beginning of the trip
-        if (plan.startDate >= Date()) {
+        if (Date() >= plan.startDate) {
             _rememberTrips.add(plan)
         }
     }
