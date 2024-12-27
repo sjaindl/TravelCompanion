@@ -23,7 +23,7 @@ sqldelight {
 }
 
 kotlin {
-    android()
+    androidTarget()
 
     jvmToolchain(17)
 
@@ -134,15 +134,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    // Needed for now as workaround for issue: https://github.com/icerockdev/moko-resources/issues/353
-    sourceSets.getByName("main").res.srcDir(File(buildDir, "generated/moko/androidMain/res"))
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 34
     }
     namespace = "com.sjaindl.travelcompanion.shared"
 }
