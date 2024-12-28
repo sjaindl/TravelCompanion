@@ -95,7 +95,7 @@ class ExploreInfoViewModel @AssistedInject constructor(
                     } else {
                         val urlComponents = LonelyPlanetConstants.UrlComponents
                         val query = "${LonelyPlanetConstants.ParameterKeys.searchQuery}=$place"
-                        val url = "${urlComponents.urlProtocol}://www.${urlComponents.domain}${urlComponents.pathSearch}?$query"
+                        val url = "${urlComponents.urlProtocol}://www.${urlComponents.domain}/${urlComponents.pathSearch}?$query"
 
                         _state.value = State.Done(url)
                     }

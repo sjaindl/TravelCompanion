@@ -4,7 +4,7 @@ class CountryApiConstants {
     object UrlComponents {
         const val urlProtocol = "https"
         const val domain = "countryapi.io"
-        const val path = "/api/all"
+        const val path = "api/all"
     }
 
     object RequestKeys {
