@@ -8,6 +8,7 @@
 
 import CodableFirebase
 import Firebase
+import FirebaseAuth
 import FirebaseStorage
 import Foundation
 

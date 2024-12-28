@@ -6,7 +6,7 @@
 //  Copyright © 2022 Stefan Jaindl. All rights reserved.
 //
 
-import Firebase
+import FirebaseAuth
 import UIKit
 
 public final class UserHeaderTableViewCell: UITableViewCell, XibLoadable {

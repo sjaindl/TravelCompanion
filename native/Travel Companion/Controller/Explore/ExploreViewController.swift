@@ -8,8 +8,9 @@
 
 import CoreData
 import CoreLocation
-import Firebase
+import FirebaseAuth
 import FirebaseAuthUI
+import FirebaseFirestore
 import GoogleMaps
 import UIKit
 import shared

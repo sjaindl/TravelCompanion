@@ -26,17 +26,24 @@ class GoogleClient {
         
         let sharedClient = TCInjector.shared.googleClient
         
-        let queryItems = sharedClient.buildAutoCompleteRequestParams(input: input, token: token)
         let urlComponents = GoogleConstants.UrlComponents()
+        let jsonObject: [String: Any] = [
+            "input": input,
+            "sessionToken": token
+        ]
+        let body = try! JSONSerialization.data(withJSONObject: jsonObject, options: [])
         
-        let url = WebClient.sharedInstance.createUrlWithKotlinQueryItems(
-            forScheme: urlComponents.urlProtocol,
-            forHost: urlComponents.domain,
-            forMethod: urlComponents.pathAutocomplete,
+        let queryItems: [String: String] = [GoogleConstants.ParameterKeys().X_KEY: SecretConstants.apiKeyGooglePlaces]
+        
+        let url: URL = WebClient.sharedInstance.createUrl(
+            forScheme: urlComponents.URL_PROTOCOL,
+            forHost: urlComponents.DOMAIN_PLACES,
+            forMethod: "/\(urlComponents.PATH_AUTOCOMPLETE)",
             withQueryItems: queryItems
         )
         
-        let request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpGet)
+        var request = WebClient.sharedInstance.buildRequest(withUrl: url, withHttpMethod: WebConstants.ParameterKeys.httpPost)
+        request.httpBody = body
         
         return WebClient.sharedInstance.taskForRxDataPlacesPredictionsWebRequest(with: request) { (data) in
             do {
@@ -64,10 +71,10 @@ class GoogleClient {
         let urlComponents = GoogleConstants.UrlComponents()
         
         let url = WebClient.sharedInstance.createUrlWithKotlinQueryItems(
-            forScheme: urlComponents.urlProtocol,
-            forHost: urlComponents.domain,
+            forScheme: urlComponents.URL_PROTOCOL,
+            forHost: urlComponents.DOMAIN_PLACES,
             forMethod:
-            urlComponents.pathPlaceDetail,
+            urlComponents.PATH_PLACE_DETAILS,
             withQueryItems: queryItems
         )
         

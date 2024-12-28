@@ -128,7 +128,7 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
         }
         
         currentSearchText = searchText
-        
+
         TCInjector.shared.googleClient.searchPlaces(
             text: searchText,
             latitude: KotlinDouble(value: self.coordinate.latitude),
@@ -139,12 +139,14 @@ extension GooglePlacesAutocompleteContainer: UISearchResultsUpdating {
             guard let self = self else {
                 return
             }
-            
+
+            let placesNearbySearchResponse = response as? PlacesNearbySearchResponse
+
             DispatchQueue.main.async {
                 if let error {
                     UiUtils.showError(error.localizedDescription, controller: self)
-                } else if let response {
-                    self.places = response.results.map {
+                } else if let placesNearbySearchResponse {
+                    self.places = placesNearbySearchResponse.results.map {
                         GooglePlace(placeId: $0.placeId, name: $0.name, reference: $0.reference, scope: $0.scope, vicinity: $0.vicinity)
                     }
                 }

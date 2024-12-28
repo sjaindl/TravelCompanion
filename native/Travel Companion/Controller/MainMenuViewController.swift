@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 import FirebaseAuthUI
 import FirebaseEmailAuthUI
 import FirebaseFacebookAuthUI
@@ -65,7 +65,7 @@ class MainMenuViewController: UIViewController {
         navigationItem.title = "mainMenuTitle".localized()
         navigationController?.navigationBar.backgroundColor = UIColor.gray
         
-        self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
+        //self.navigationItem.title = CommonKt.createApplicationScreenMessage() //just for testing kotlin
         
         addUserProfileNavigationItem()
     }

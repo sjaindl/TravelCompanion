@@ -21,7 +21,7 @@ class GooglePlace: NSObject, Plannable {
     var scope: String
     var types: [String]?
     var userRatingsTotal: Int?
-    var vicinity: String
+    var vicinity: String?
     var geometry: Geometry?
     var photos: [Photo]?
     var plusCode: PlusCode?
@@ -50,7 +50,7 @@ class GooglePlace: NSObject, Plannable {
         case notes
     }
     
-    init(placeId: String, name: String, reference: String, scope: String, vicinity: String) {
+    init(placeId: String, name: String, reference: String, scope: String, vicinity: String?) {
         self.placeId = placeId
         self.name = name
         self.placeId = placeId
@@ -68,7 +68,7 @@ class GooglePlace: NSObject, Plannable {
     }
     
     func details() -> NSMutableAttributedString {
-        var details = NSMutableAttributedString(string: vicinity)
+        var details = NSMutableAttributedString(string: vicinity ?? "")
         
         if let rating = rating {
             details = NSMutableAttributedString(string: "\(details.string). \(rating)/5*")
@@ -99,7 +99,7 @@ class GooglePlace: NSObject, Plannable {
     
     func imageUrl() -> String? {
         if let photos = photos, photos.count > 0, let photoReference = photos[0].photoReference {
-            return "\(GoogleConstants.UrlComponents().pathPhotos)?\(GoogleConstants.ParameterKeys().maxWidth)=\(GoogleConstants.ParameterValues().maxWidth)&\(GoogleConstants.ParameterKeys().photoReference)=\(photoReference)&\(GoogleConstants.ParameterKeys().key)=\(SecretConstants.apiKeyGooglePlaces)"
+            return "\(GoogleConstants.UrlComponents().PATH_PHOTOS)?\(GoogleConstants.ParameterKeys().MAX_WIDTH)=\(GoogleConstants.ParameterValues().MAX_WIDTH)&\(GoogleConstants.ParameterKeys().PHOTO_REFERENCE)=\(photoReference)&\(GoogleConstants.ParameterKeys().KEY)=\(SecretConstants.apiKeyGooglePlaces)"
         }
         return ""
     }

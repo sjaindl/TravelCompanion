@@ -107,13 +107,13 @@ class ExploreInfoViewController: UIViewController, WKUIDelegate {
     
     @IBAction func openGoogle(_ sender: Any) {
         let urlComponents = GoogleConstants.UrlComponents()
-        let domain = urlComponents.domainSearch
-        let queryItems: [String: String] = [GoogleConstants.ParameterKeys().searchQuery: placeName]
+        let domain = urlComponents.DOMAIN_SEARCH
+        let queryItems: [String: String] = [GoogleConstants.ParameterKeys().SEARCH_QUERY: placeName]
         
         let url = WebClient.sharedInstance.createUrl(
-            forScheme: urlComponents.urlProtocol,
+            forScheme: urlComponents.URL_PROTOCOL,
             forHost: domain,
-            forMethod: urlComponents.pathSearch,
+            forMethod: urlComponents.PATH_SEARCH,
             withQueryItems: queryItems
         )
         

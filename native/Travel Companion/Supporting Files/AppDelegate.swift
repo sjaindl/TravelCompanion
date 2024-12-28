@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initApis() {
         GMSServices.provideAPIKey(SecretConstants.apiKeyGoogleMaps) //Google Maps
         GMSPlacesClient.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google Places
-        GMSServices.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google PlacePicker
+        //GMSServices.provideAPIKey(SecretConstants.apiKeyGooglePlaces) //Google PlacePicker
         FirebaseApp.configure() //Firebase
     }
     
