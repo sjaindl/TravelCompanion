@@ -62,6 +62,11 @@ fun ExploreDetailInfoScreen(
                                         ViewGroup.LayoutParams.MATCH_PARENT,
                                         ViewGroup.LayoutParams.MATCH_PARENT
                                     )
+                                    with(settings) {
+                                        javaScriptEnabled = true
+                                        domStorageEnabled = true
+                                    }
+                                    clearHistory()
                                     webViewClient = WebViewClient()
                                 }
                             }, update = {

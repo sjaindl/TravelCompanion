@@ -4,10 +4,10 @@ object LonelyPlanetConstants {
     object UrlComponents {
         const val urlProtocol = "https"
         const val domain = "lonelyplanet.com"
-        const val pathSearch = "/search"
+        const val pathSearch = "search"
     }
 
     object ParameterKeys {
-        const val searchQuery = "q"
+        const val searchQuery = "places[query]"
     }
 }
