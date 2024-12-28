@@ -3,7 +3,6 @@ package com.sjaindl.travelcompanion.explore
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -74,7 +73,6 @@ fun ExploreScreen(
     onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
     showPermissionRationale: () -> Unit = { },
-    fetchPlaceDetails: (String?) -> Unit = { },
     navigateUp: () -> Unit,
 ) {
     val showBottomSheetState by viewModel.showBottomSheet.collectAsState()
@@ -101,7 +99,7 @@ fun ExploreScreen(
         onPlanTrip = onPlanTrip,
         showPermissionRationale = remember { showPermissionRationale },
         clickedOnDetails = viewModel::clickedOnDetails,
-        fetchPlaceDetails = remember { fetchPlaceDetails },
+        fetchPlaceDetails = viewModel::fetchPlaceDetails,
         onDelete = viewModel::onDelete,
         onDismiss = viewModel::onDismiss,
         addPersistedPinsToMap = viewModel::addPersistedPinsToMap,
@@ -146,11 +144,7 @@ fun ExploreScreenContent(
     val coroutineScope = rememberCoroutineScope()
     val cameraPositionState = rememberCameraPositionState()
 
-    val attributionContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        context.createAttributionContext("userLocation")
-    } else {
-        context
-    }
+    val attributionContext = context.createAttributionContext("userLocation")
 
     val fusedLocationClient = remember {
         LocationServices.getFusedLocationProviderClient(attributionContext)
@@ -446,6 +440,6 @@ fun ExploreScreenPreview() {
         onNavigateToExploreDetails = { },
         onPlanTrip = { },
         canNavigateBack = true,
-        navigateUp = { }
+        navigateUp = { },
     )
 }

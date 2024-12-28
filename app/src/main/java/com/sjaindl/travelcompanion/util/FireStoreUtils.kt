@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import com.google.firebase.storage.FirebaseStorage
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.firestore.FireStoreClient
 import com.sjaindl.travelcompanion.api.firestore.FireStoreConstants
 import com.sjaindl.travelcompanion.plan.Plan
@@ -13,7 +14,6 @@ import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 import kotlin.random.Random
-import com.sjaindl.travelcompanion.R
 
 // https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en#java
 class FireStoreUtils @Inject constructor(
@@ -35,7 +35,7 @@ class FireStoreUtils @Inject constructor(
     }
 
     fun loadPlans(
-        onLoaded: (plan: Plan) -> Unit,
+        onLoaded: (plan: Plan?) -> Unit,
         onInfo: (info: Int) -> Unit,
         onError: (Exception) -> Unit,
     ) {
@@ -49,46 +49,53 @@ class FireStoreUtils @Inject constructor(
 
         fireStoreDbReferencePlans.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                task.result.forEach { document ->
-                    Timber.d(tag, "${document.id} => {$document.data}")
 
-                    val name = document.getString(FireStoreConstants.Ids.Plan.name)
-                    val pinName = document.getString(FireStoreConstants.Ids.Plan.pinName)
-                    val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
-                    val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
+                val snapshot = task.result
 
-                    val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
-                    val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
-                    val downloadFromUrlTask = storageImageRef?.downloadUrl
+                if (snapshot.isEmpty) {
+                    onLoaded(null)
+                } else {
+                    snapshot.forEach { document ->
+                        Timber.d(tag, "${document.id} => {$document.data}")
 
-                    if (name != null && pinName != null && startDate != null && endDate != null) {
-                        if (downloadFromUrlTask == null) {
-                            Timber.tag(tag).d("Add plan without image: $name")
-                            val plan = Plan(
-                                name = name,
-                                pinName = pinName,
-                                startDate = startDate,
-                                endDate = endDate,
-                                imagePath = null,
-                            )
-                            plans.add(plan)
-                            onLoaded(plan)
-                        } else {
-                            downloadFromUrlTask.addOnSuccessListener { imagePath ->
-                                Timber.tag(tag).d("fetched imagePath: $imagePath for $name")
+                        val name = document.getString(FireStoreConstants.Ids.Plan.name)
+                        val pinName = document.getString(FireStoreConstants.Ids.Plan.pinName)
+                        val startDate = document.getTimestamp(FireStoreConstants.Ids.Plan.startDate)?.toDate()
+                        val endDate = document.getTimestamp(FireStoreConstants.Ids.Plan.endDate)?.toDate()
+
+                        val imageRef = document.getString(FireStoreConstants.Ids.Plan.imageReference)
+                        val storageImageRef = imageRef?.let { FirebaseStorage.getInstance().getReferenceFromUrl(it) }
+                        val downloadFromUrlTask = storageImageRef?.downloadUrl
+
+                        if (name != null && pinName != null && startDate != null && endDate != null) {
+                            if (downloadFromUrlTask == null) {
+                                Timber.tag(tag).d("Add plan without image: $name")
                                 val plan = Plan(
                                     name = name,
                                     pinName = pinName,
                                     startDate = startDate,
                                     endDate = endDate,
-                                    imagePath = imagePath,
+                                    imagePath = null,
                                 )
                                 plans.add(plan)
                                 onLoaded(plan)
-                            }.addOnCanceledListener {
-                                onInfo(R.string.cancelled)
-                            }.addOnFailureListener {
-                                onError(it)
+                            } else {
+                                downloadFromUrlTask.addOnSuccessListener { imagePath ->
+                                    Timber.tag(tag).d("fetched imagePath: $imagePath for $name")
+                                    val plan = Plan(
+                                        name = name,
+                                        pinName = pinName,
+                                        startDate = startDate,
+                                        endDate = endDate,
+                                        imagePath = imagePath,
+                                    )
+                                    plans.add(plan)
+                                    onLoaded(plan)
+                                }.addOnCanceledListener {
+                                    onInfo(R.string.cancelled)
+                                }.addOnFailureListener {
+                                    onError(it)
+                                }
                             }
                         }
                     }
