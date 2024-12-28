@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.EmojiFlags
 import androidx.compose.material.icons.rounded.GridOff
@@ -15,6 +14,7 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -167,7 +167,7 @@ fun ExploreDetailPhotosMainScreen(
                     Column(
                         modifier = modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -187,7 +187,7 @@ fun ExploreDetailPhotosMainScreen(
                     Column(
                         modifier = modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -209,7 +209,7 @@ fun ExploreDetailPhotosMainScreen(
                     Column(
                         modifier = modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,

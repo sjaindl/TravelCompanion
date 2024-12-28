@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,11 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.plan.PlanElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +41,7 @@ fun RememberScreen(
 ) {
     TravelCompanionTheme {
         Scaffold(
-            containerColor = MaterialTheme.colors.background,
+            containerColor = colorScheme.background,
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.remember),
@@ -63,7 +63,7 @@ fun RememberScreen(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -82,7 +82,7 @@ fun RememberScreen(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -103,7 +103,7 @@ fun RememberScreen(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {

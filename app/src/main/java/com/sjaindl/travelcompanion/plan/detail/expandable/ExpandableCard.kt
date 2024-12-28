@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,13 +56,13 @@ fun ExpandableCard(
     val cardBgColor by transition.animateColor({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "bgColorTransition") {
-        if (expanded) colors.onPrimary else colors.secondaryVariant
+        if (expanded) colorScheme.onPrimary else colorScheme.secondaryContainer
     }
 
     val cardContentColor by transition.animateColor({
         tween(durationMillis = EXPAND_ANIMATION_DURATION)
     }, label = "bgColorTransition") {
-        if (expanded) colors.secondaryVariant else colors.onPrimary
+        if (expanded) colorScheme.secondaryContainer else colorScheme.onPrimary
     }
 
     val cardPaddingHorizontal by transition.animateDp({
@@ -93,9 +95,15 @@ fun ExpandableCard(
     val interactionSource = remember { MutableInteractionSource() }
 
     Card(
-        backgroundColor = cardBgColor,
-        contentColor = cardContentColor,
-        elevation = cardElevation,
+        colors = CardColors(
+            containerColor = cardBgColor,
+            contentColor = cardContentColor,
+            disabledContainerColor = cardBgColor.copy(alpha = 0.4f),
+            disabledContentColor = cardContentColor.copy(alpha = 0.4f),
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = cardElevation,
+        ),
         shape = RoundedCornerShape(cardRoundedCorners),
         modifier = Modifier
             .fillMaxWidth()

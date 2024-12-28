@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -137,7 +137,7 @@ fun AddPlaceMapScreen(
                         placeType = placeType,
                         latitude = placeCoordinates.latitude,
                         longitude = placeCoordinates.longitude,
-                        radius = searchDistance.value * 1000,
+                        radius = searchDistance.doubleValue * 1000,
                         canNavigateBack = true,
                         navigateUp = {
                             selectedPlaceCoordinatesOnMap = null
@@ -173,7 +173,7 @@ fun AddPlaceMapScreen(
                                 modifier = Modifier
                                     .padding(paddingValues)
                                     .fillMaxSize()
-                                    .background(colors.background)
+                                    .background(colorScheme.background)
                                     .padding(all = 16.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center,
@@ -225,9 +225,9 @@ fun AddPlaceMapScreen(
                                     modifier = Modifier
                                         .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                                         .weight(1f),
-                                    value = searchDistance.value.toFloat(),
+                                    value = searchDistance.doubleValue.toFloat(),
                                     onValueChange = { sliderValue ->
-                                        searchDistance.value = sliderValue.toDouble()
+                                        searchDistance.doubleValue = sliderValue.toDouble()
                                     },
                                     valueRange = 1f..50f,
                                     steps = viewModel.steps,
@@ -240,10 +240,10 @@ fun AddPlaceMapScreen(
                                     text = "${stringResource(id = R.string.searchRadius)} ${
                                         stringResource(
                                             R.string.km,
-                                            searchDistance.value
+                                            searchDistance.doubleValue
                                         )
                                     }",
-                                    color = colors.primary,
+                                    color = colorScheme.primary,
                                 )
                             }
                         }

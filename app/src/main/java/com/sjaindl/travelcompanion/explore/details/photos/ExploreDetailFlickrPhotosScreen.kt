@@ -3,7 +3,7 @@ package com.sjaindl.travelcompanion.explore.details.photos
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +35,7 @@ fun ExploreDetailFlickrPhotosScreen(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(colors.background),
+                .background(colorScheme.background),
             contentAlignment = Alignment.Center,
         ) {
             if (showGrids) {

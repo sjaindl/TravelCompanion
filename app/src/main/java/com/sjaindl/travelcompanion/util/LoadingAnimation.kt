@@ -7,7 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,7 +55,7 @@ fun LoadingAnimation(
                 .scale(scale = circleScaleAnimate.value)
                 .border(
                     width = 4.dp,
-                    color = colors.primary.copy(alpha = 1 - circleScaleAnimate.value),
+                    color = colorScheme.primary.copy(alpha = 1 - circleScaleAnimate.value),
                     shape = CircleShape
                 )
         )

@@ -1,9 +1,10 @@
 package com.sjaindl.travelcompanion.explore.details.bottomnav
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -26,14 +27,14 @@ fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long
         ExploreDetailInfo,
     )
 
-    BottomNavigation(
-        backgroundColor = colorResource(id = R.color.colorMain),
+    NavigationBar(
+        containerColor = colorResource(id = R.color.colorMain),
         contentColor = Color.Black,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = {
                     Icon(imageVector = item.icon, contentDescription = "")
                 },
@@ -43,8 +44,10 @@ fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long
                         fontSize = 9.sp,
                     )
                 },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                colors = NavigationBarItemDefaults.colors(
+                    selectedTextColor = Color.Black,
+                    unselectedTextColor = Color.Black.copy(0.4f),
+                ),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.routeWithArgs,
                 onClick = {

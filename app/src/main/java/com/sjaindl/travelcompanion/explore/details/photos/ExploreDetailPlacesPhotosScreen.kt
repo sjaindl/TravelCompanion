@@ -17,8 +17,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -68,7 +68,7 @@ fun ExploreDetailPlacesPhotosScreen(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(colors.background),
+                .background(colorScheme.background),
             contentAlignment = Alignment.Center,
         ) {
             if (fullScreenImage != null) {
@@ -106,7 +106,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                         fontWeight = FontWeight.Bold,
                                         color = Color.White,
                                         modifier = Modifier
-                                            .background(colors.background)
+                                            .background(colorScheme.background)
                                             .fillMaxWidth()
                                             .padding(vertical = 16.dp),
                                         textAlign = TextAlign.Center,
@@ -117,7 +117,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                         columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .background(colors.background),
+                                            .background(colorScheme.background),
                                         state = gridState,
                                         verticalItemSpacing = 4.dp,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -149,7 +149,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                 LazyColumn(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .background(colors.background)
+                                        .background(colorScheme.background)
                                         .fillMaxWidth(),
                                     state = listState,
                                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -161,7 +161,7 @@ fun ExploreDetailPlacesPhotosScreen(
                                             fontWeight = FontWeight.Bold,
                                             color = Color.White,
                                             modifier = Modifier
-                                                .background(colors.background)
+                                                .background(colorScheme.background)
                                                 .fillMaxWidth()
                                                 .padding(vertical = 16.dp),
                                             textAlign = TextAlign.Center,

@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MyLocation
+import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -82,7 +82,7 @@ class DataAccessRationaleActivity : AppCompatActivity() {
                 )
 
                 Image(
-                    painter = painterResource(id = com.sjaindl.travelcompanion.R.drawable.data_access),
+                    painter = painterResource(id = R.drawable.data_access),
                     contentDescription = null,
                     modifier = Modifier.heightIn(min = 600.dp),
                     contentScale = ContentScale.FillHeight,

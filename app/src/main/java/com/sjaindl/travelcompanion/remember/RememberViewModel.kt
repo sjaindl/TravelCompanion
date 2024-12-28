@@ -38,8 +38,10 @@ class RememberViewModel @Inject constructor(
         if (!_rememberTrips.isEmpty()) return // already loaded
 
         fireStoreUtils.loadPlans(
-            onLoaded = {
-                addPlan(it)
+            onLoaded = { plan ->
+                plan?.let {
+                    addPlan(plan = it)
+                }
                 _state.value = State.Finished
             },
             onError = {

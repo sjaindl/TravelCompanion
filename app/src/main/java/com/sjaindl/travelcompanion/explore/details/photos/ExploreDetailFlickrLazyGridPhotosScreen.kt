@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -95,7 +95,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         modifier = Modifier
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .fillMaxWidth()
                             .padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
@@ -107,7 +107,7 @@ fun ExploreDetailFlickrLazyGridPhotosScreen(
                     columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
                     modifier = modifier
                         .fillMaxSize()
-                        .background(colors.background),
+                        .background(colorScheme.background),
                     state = gridState,
                     verticalItemSpacing = 4.dp,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),

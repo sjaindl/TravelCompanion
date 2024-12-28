@@ -3,7 +3,7 @@ package com.sjaindl.travelcompanion.remember.detail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,7 +42,7 @@ fun RememberDetailPhotosScreen(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(colors.background),
+                .background(colorScheme.background),
             contentAlignment = Alignment.Center,
         ) {
             when (state) {

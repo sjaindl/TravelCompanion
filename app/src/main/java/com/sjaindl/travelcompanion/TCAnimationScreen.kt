@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,8 +50,8 @@ fun TCAnimationScreen(
     val infiniteTransition = rememberInfiniteTransition(label = "TCInfiniteTransition")
 
     val color by infiniteTransition.animateColor(
-        initialValue = colors.primary,
-        targetValue = colors.background,
+        initialValue = colorScheme.primary,
+        targetValue = colorScheme.background,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse,
@@ -117,8 +117,8 @@ fun TCAnimationScreenWithoutRecompositions(
     val infiniteTransition = rememberInfiniteTransition(label = "TCInfiniteTransition")
 
     val color by infiniteTransition.animateColor(
-        initialValue = colors.primary,
-        targetValue = colors.background,
+        initialValue = colorScheme.primary,
+        targetValue = colorScheme.background,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse,

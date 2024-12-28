@@ -1,6 +1,11 @@
 package com.sjaindl.travelcompanion.baseui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -26,14 +31,21 @@ fun TCBottomSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onCancel,
-        modifier = modifier,
+        modifier = modifier
+            .padding(bottom = 8.dp),
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = containerColor,
         scrimColor = scrimColor,
         contentColor = contentColor,
+        windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom),
     ) {
         TravelCompanionTheme {
-            content()
+            Column(
+                modifier = Modifier
+                    .padding(bottom = 8.dp),
+            ) {
+                content()
+            }
         }
     }
 }

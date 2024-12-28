@@ -1,5 +1,6 @@
 package com.sjaindl.travelcompanion.profile.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -9,6 +10,7 @@ import androidx.navigation.navigation
 import com.sjaindl.travelcompanion.DataAccessRationaleActivity
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
 import com.sjaindl.travelcompanion.profile.ProfileScreen
+import com.sjaindl.travelcompanion.profile.ProfileViewModel
 
 private const val PROFILE_ROUTE = "profile"
 private const val PERSONAL_INFO_ROUTE = "personalInfo"
@@ -24,7 +26,13 @@ private fun NavGraphBuilder.profileScreen(
     navigateUp: () -> Unit = {},
 ) {
     composable(route = PROFILE_ROUTE) {
+        val viewModel = hiltViewModel<ProfileViewModel>()
+
         ProfileScreen(
+            initials = viewModel.initials,
+            userName = viewModel.userName,
+            logout = viewModel::logout,
+            deleteAccount = viewModel::deleteAccount,
             onClose = onClose,
             goToPersonalInfo = goToPersonalInfo,
             goToDataAccessRationaleInfo = goToDataAccessRationaleInfo,

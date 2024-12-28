@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,7 +43,7 @@ fun PersonalInfoScreen(
                 Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
-                    .background(colors.background)
+                    .background(colorScheme.background)
                     .padding(start = 16.dp, end = 16.dp, top = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(32.dp)
             ) {

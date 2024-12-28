@@ -11,13 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,12 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.R
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlanHomeScreen(
     modifier: Modifier = Modifier,
@@ -63,7 +62,7 @@ fun PlanHomeScreen(
 
     TravelCompanionTheme {
         Scaffold(
-            containerColor = colors.background,
+            containerColor = colorScheme.background,
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.plan),
@@ -77,11 +76,11 @@ fun PlanHomeScreen(
                         onClick = {
                             onAddPlan()
                         },
-                        containerColor = colors.primary,
+                        containerColor = colorScheme.primary,
                     ) {
                         Row(
                             modifier = Modifier
-                                .background(colors.primary)
+                                .background(colorScheme.primary)
                                 .padding(8.dp),
                         ) {
                             Image(
@@ -94,14 +93,13 @@ fun PlanHomeScreen(
             }
         ) { paddingValues ->
 
-
             when (state) {
                 PlanViewModel.State.Loading -> {
                     Column(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -120,7 +118,7 @@ fun PlanHomeScreen(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -141,7 +139,7 @@ fun PlanHomeScreen(
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
-                            .background(colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -161,9 +159,9 @@ fun PlanHomeScreen(
                             Text(
                                 text = stringResource(id = R.string.upcomingTrips) + " (${upcomingTrips.size})",
                                 fontWeight = FontWeight.Bold,
-                                color = colors.background,
+                                color = colorScheme.background,
                                 modifier = Modifier
-                                    .background(colors.onBackground)
+                                    .background(colorScheme.onBackground)
                                     .fillMaxWidth()
                                     .padding(vertical = 16.dp),
                                 textAlign = TextAlign.Center,
@@ -191,9 +189,9 @@ fun PlanHomeScreen(
                             Text(
                                 text = stringResource(id = R.string.pastTrips) + " (${pastTrips.size})",
                                 fontWeight = FontWeight.Bold,
-                                color = colors.background,
+                                color = colorScheme.background,
                                 modifier = Modifier
-                                    .background(colors.onBackground)
+                                    .background(colorScheme.onBackground)
                                     .fillMaxWidth()
                                     .padding(vertical = 16.dp),
                                 textAlign = TextAlign.Center,

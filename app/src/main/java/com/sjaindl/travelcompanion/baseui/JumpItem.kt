@@ -14,13 +14,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,14 +40,16 @@ fun JumpItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
+                modifier = Modifier.fillMaxWidth(),
+                color = colorScheme.background,
                 fontSize = 20.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
             )
             if (subTitle != null) {
                 Text(
                     text = subTitle,
+                    color = colorScheme.background,
                     fontSize = 16.sp,
                     modifier = Modifier
                         .padding(top = 8.dp)
@@ -72,7 +73,7 @@ fun JumpItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .background(
-                    color = Color.White,
+                    color = colorScheme.onBackground,
                     shape = RoundedCornerShape(8.dp),
                 )
                 .clip(RoundedCornerShape(8.dp))
@@ -87,9 +88,8 @@ fun JumpItem(
             }
             content()
             Icon(
-                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.background,
             )
         }
     }

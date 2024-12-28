@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -81,7 +81,7 @@ fun NotesScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(colors.background)
+                                .background(colorScheme.background)
                                 .wrapContentSize(Alignment.Center)
                         ) {
                             LoadingAnimation()
@@ -107,8 +107,8 @@ fun NotesScreen(
                                     unfocusedContainerColor = Color.White,
                                     disabledContainerColor = Color.White,
                                     errorContainerColor = Color.Transparent,
-                                    focusedBorderColor = colors.primary,
-                                    unfocusedBorderColor = colors.primary,
+                                    focusedBorderColor = colorScheme.primary,
+                                    unfocusedBorderColor = colorScheme.primary,
                                 ),
                                 value = notes.orEmpty(),
                                 onValueChange = {
@@ -177,7 +177,7 @@ fun NotesScreen(
                             modifier = modifier
                                 .padding(paddingValues)
                                 .fillMaxSize()
-                                .background(colors.background)
+                                .background(colorScheme.background)
                                 .padding(all = 16.dp),
                             verticalArrangement = Arrangement.Center,
                         ) {
@@ -209,7 +209,7 @@ fun NotesScreen(
                             modifier = modifier
                                 .padding(paddingValues)
                                 .fillMaxSize()
-                                .background(colors.background)
+                                .background(colorScheme.background)
                                 .padding(all = 16.dp),
                             verticalArrangement = Arrangement.Center,
                         ) {

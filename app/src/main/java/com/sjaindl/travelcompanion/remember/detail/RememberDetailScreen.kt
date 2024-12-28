@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CameraAlt
 import androidx.compose.material.icons.rounded.GridOff
@@ -19,6 +18,7 @@ import androidx.compose.material.icons.rounded.GridOn
 import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -166,7 +166,7 @@ fun RememberDetailScreen(
                     }
                 }
             },
-            containerColor = MaterialTheme.colors.background,
+            containerColor = colorScheme.background,
         ) { paddingValues ->
             when (state) {
                 RememberDetailViewModel.State.Loading -> {
@@ -174,7 +174,7 @@ fun RememberDetailScreen(
                         modifier = modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -193,7 +193,7 @@ fun RememberDetailScreen(
                         modifier = modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {
@@ -214,7 +214,7 @@ fun RememberDetailScreen(
                         modifier = modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .background(MaterialTheme.colors.background)
+                            .background(colorScheme.background)
                             .padding(all = 16.dp),
                         verticalArrangement = Arrangement.Center,
                     ) {

@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +31,7 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 fun PlanDetailElement(imagePath: Uri?, title: String, details: String, attribution: String) {
     TravelCompanionTheme {
         Row(
-            modifier = Modifier.background(colors.background),
+            modifier = Modifier.background(colorScheme.background),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val data = imagePath ?: Icons.Default.Place
@@ -64,9 +63,9 @@ fun PlanDetailElement(imagePath: Uri?, title: String, details: String, attributi
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
-                    color = colors.primary,
+                    color = colorScheme.primary,
                     modifier = Modifier
-                        .background(colors.background)
+                        .background(colorScheme.background)
                         .fillMaxWidth()
                         .padding(top = 4.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,
@@ -75,9 +74,9 @@ fun PlanDetailElement(imagePath: Uri?, title: String, details: String, attributi
 
                 Text(
                     text = details,
-                    color = colors.primary,
+                    color = colorScheme.primary,
                     modifier = Modifier
-                        .background(MaterialTheme.colors.background)
+                        .background(colorScheme.background)
                         .fillMaxWidth()
                         .padding(top = 4.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,
@@ -86,9 +85,9 @@ fun PlanDetailElement(imagePath: Uri?, title: String, details: String, attributi
 
                 Text(
                     text = attribution,
-                    color = colors.primary,
+                    color = colorScheme.primary,
                     modifier = Modifier
-                        .background(colors.background)
+                        .background(colorScheme.background)
                         .fillMaxWidth()
                         .padding(top = 4.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,

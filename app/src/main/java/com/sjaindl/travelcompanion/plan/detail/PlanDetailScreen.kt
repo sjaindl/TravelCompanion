@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.EditCalendar
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -131,12 +131,13 @@ fun PlanDetailScreen(
                     ) {
                         Box(
                             modifier = Modifier
+                                .padding(paddingValues)
                                 .fillMaxWidth()
                                 .padding(horizontal = 64.dp)
                                 .clip(CircleShape)
                                 .border(
                                     width = 4.dp,
-                                    color = colors.onBackground,
+                                    color = colorScheme.onBackground,
                                     shape = CircleShape
                                 )
                                 .clickable {
@@ -159,7 +160,7 @@ fun PlanDetailScreen(
                         Text(
                             text = plan.formattedDate,
                             fontWeight = FontWeight.Bold,
-                            color = colors.primary,
+                            color = colorScheme.primary,
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally),
                             textAlign = TextAlign.Center,

@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +33,7 @@ fun PlanElement(
     TravelCompanionTheme {
         Row(
             modifier = modifier
-                .background(colors.background)
+                .background(colorScheme.background)
                 .padding(vertical = 4.dp)
                 .clickable {
                     onClick()
@@ -58,9 +58,9 @@ fun PlanElement(
                 Text(
                     text = name,
                     fontWeight = FontWeight.Bold,
-                    color = colors.primary,
+                    color = colorScheme.primary,
                     modifier = Modifier
-                        .background(colors.background)
+                        .background(colorScheme.background)
                         .fillMaxWidth()
                         .padding(top = 16.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,
@@ -69,9 +69,9 @@ fun PlanElement(
 
                 Text(
                     text = dateString,
-                    color = colors.primary,
+                    color = colorScheme.primary,
                     modifier = Modifier
-                        .background(colors.background)
+                        .background(colorScheme.background)
                         .fillMaxWidth()
                         .padding(top = 8.dp, bottom = 16.dp, start = 4.dp, end = 4.dp),
                     textAlign = TextAlign.Start,

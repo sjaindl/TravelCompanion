@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -97,7 +97,7 @@ fun RememberDetailLazyColScreen(
                 Box(
                     modifier = modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colors.background),
+                        .background(colorScheme.background),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -116,7 +116,7 @@ fun RememberDetailLazyColScreen(
                 Box(
                     modifier = modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colors.background),
+                        .background(colorScheme.background),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -141,7 +141,7 @@ fun RememberDetailLazyColScreen(
                         Box(
                             modifier = modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colors.background),
+                                .background(colorScheme.background),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(
@@ -156,7 +156,7 @@ fun RememberDetailLazyColScreen(
                         LazyColumn(
                             modifier = modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colors.background),
+                                .background(colorScheme.background),
                             state = listState,
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Top,

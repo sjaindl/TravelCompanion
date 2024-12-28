@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,13 +30,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCLink
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailEntry
 import com.sjaindl.travelcompanion.explore.details.ExploreDetailViewModel
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import java.text.NumberFormat
-import com.sjaindl.travelcompanion.R
 
 @Composable
 fun ExploreDetailHomeScreen(
@@ -52,7 +52,7 @@ fun ExploreDetailHomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(state = rememberScrollState())
-                .background(colors.background)
+                .background(colorScheme.background)
                 .padding(all = 16.dp),
             verticalArrangement = Arrangement.Center,
         ) {

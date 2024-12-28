@@ -4,12 +4,11 @@ import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +16,7 @@ import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.api.google.GooglePlace
 import com.sjaindl.travelcompanion.api.google.GooglePlaceType
 import com.sjaindl.travelcompanion.baseui.TCAppBar
@@ -24,7 +24,6 @@ import com.sjaindl.travelcompanion.databinding.FragmentSearchPlaceBinding
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.CustomDividerItemDecoration
-import com.sjaindl.travelcompanion.R
 
 @Composable
 fun SearchPlacesScreen(
@@ -61,7 +60,6 @@ fun SearchPlacesScreen(
                     navigateUp = navigateUp,
                 )
             },
-            backgroundColor = Color.White,
         ) { paddingValues ->
             AndroidViewBinding(
                 modifier = modifier.padding(paddingValues),

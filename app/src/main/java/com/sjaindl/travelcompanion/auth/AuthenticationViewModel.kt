@@ -157,7 +157,7 @@ class AuthenticationViewModel @Inject constructor(
     fun preloadPlans() {
         fireStoreUtils.loadPlans(
             onLoaded = {
-                Timber.d(message = "loaded plan: ${it.name}")
+                Timber.d(message = "loaded plan: ${it?.name}")
             },
             onError = {
                 Timber.d(message = "plan loading error: ${it.message}")

@@ -17,27 +17,27 @@
 package com.sjaindl.travelcompanion.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColors = lightColors(
+private val LightColors = lightColorScheme(
     primary = Cyan700,
-    primaryVariant = Cyan900,
+    primaryContainer = Cyan900,
     onPrimary = Color.White,
     secondary = Cyan700,
-    secondaryVariant = Cyan900,
+    secondaryContainer = Cyan900,
     onSecondary = Color.White,
     error = Color.Red,
     background = Color(0xFF555555),
     onBackground = Color(0xFFDDD7D7)
 )
 
-private val DarkColors = darkColors(
+private val DarkColors = darkColorScheme(
     primary = Cyan300,
-    primaryVariant = Cyan700,
+    primaryContainer = Cyan700,
     onPrimary = Color.Black,
     secondary = Cyan300,
     onSecondary = Color.Black,
@@ -52,7 +52,7 @@ fun TravelCompanionTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = if (darkTheme) DarkColors else LightColors,
+        colorScheme = if (darkTheme) DarkColors else LightColors,
         typography = TCTypography,
         shapes = TCShapes,
         content = content

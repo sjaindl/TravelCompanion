@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,19 +30,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.sjaindl.travelcompanion.com.sjaindl.travelcompanion.di.AndroidPersistenceInjector
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.exception.OfflineException
-import com.sjaindl.travelcompanion.explore.details.info.ExploreInfoViewModelFactory
 import com.sjaindl.travelcompanion.explore.details.photos.model.PhotoType
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
-import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -78,7 +75,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
             LazyColumn(
                 modifier = modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
+                    .background(colorScheme.background),
                 state = state,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
@@ -104,7 +101,7 @@ fun ExploreDetailFlickrLazyColPhotosScreen(
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                             modifier = Modifier
-                                .background(MaterialTheme.colors.background)
+                                .background(colorScheme.background)
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp),
                             textAlign = TextAlign.Center,

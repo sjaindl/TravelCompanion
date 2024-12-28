@@ -4,8 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,9 +69,7 @@ fun PlanDetailItems(
             )
         }
 
-        Scaffold(
-            backgroundColor = colors.background,
-        ) { paddingValues ->
+        Scaffold { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues = paddingValues)

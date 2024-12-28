@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -93,7 +93,7 @@ fun AddPlacePreviewScreen(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                color = colors.background,
+                color = colorScheme.background,
             ) {
                 Column(
                     modifier = Modifier
@@ -104,14 +104,14 @@ fun AddPlacePreviewScreen(
                     Text(
                         text = googlePlace.name,
                         fontWeight = FontWeight.Bold,
-                        color = colors.primary,
+                        color = colorScheme.primary,
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp
                     )
 
                     Text(
                         text = googlePlace.vicinity.orEmpty(),
-                        color = colors.primary,
+                        color = colorScheme.primary,
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp
                     )
@@ -180,7 +180,7 @@ fun AddPlacePreviewScreen(
                                     distanceKilometres
                                 )
                             }",
-                            color = colors.primary,
+                            color = colorScheme.primary,
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp
                         )
@@ -198,7 +198,7 @@ fun AddPlacePreviewScreen(
 
                     Text(
                         text = ratingText,
-                        color = colors.primary,
+                        color = colorScheme.primary,
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp
                     )
@@ -211,7 +211,7 @@ fun AddPlacePreviewScreen(
                                 text = stringResource(id = R.string.cancel),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
-                                color = colors.primary,
+                                color = colorScheme.primary,
                                 modifier = Modifier,
                                 fontSize = 20.sp,
                             )
@@ -224,7 +224,7 @@ fun AddPlacePreviewScreen(
                                 text = stringResource(id = R.string.select),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
-                                color = colors.primary,
+                                color = colorScheme.primary,
                                 modifier = Modifier,
                                 fontSize = 20.sp,
                             )

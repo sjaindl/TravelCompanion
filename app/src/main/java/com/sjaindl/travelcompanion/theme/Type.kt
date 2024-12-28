@@ -16,7 +16,7 @@
 
 package com.sjaindl.travelcompanion.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -42,53 +42,53 @@ private val Domine = FontFamily(
 )
 
 val TCTypography = Typography(
-    h4 = TextStyle(
+    headlineMedium = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W600,
-        fontSize = 30.sp
+        fontSize = 30.sp,
     ),
-    h5 = TextStyle(
+    headlineSmall = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W600,
-        fontSize = 24.sp
+        fontSize = 24.sp,
     ),
-    h6 = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W600,
-        fontSize = 20.sp
+        fontSize = 20.sp,
     ),
-    subtitle1 = TextStyle(
+    titleMedium = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W600,
-        fontSize = 16.sp
+        fontSize = 16.sp,
     ),
-    subtitle2 = TextStyle(
+    titleSmall = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontSize = 14.sp,
     ),
-    body1 = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = Domine,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
     ),
-    body2 = TextStyle(
+    bodyMedium = TextStyle(
         fontFamily = Montserrat,
-        fontSize = 14.sp
+        fontSize = 14.sp,
     ),
-    button = TextStyle(
+    labelLarge = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontSize = 14.sp,
     ),
-    caption = TextStyle(
+    bodySmall = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 12.sp,
     ),
-    overline = TextStyle(
+    labelSmall = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight.W500,
-        fontSize = 12.sp
+        fontSize = 12.sp,
     )
 )

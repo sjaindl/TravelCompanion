@@ -4,9 +4,9 @@ import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -94,7 +94,7 @@ fun PickDateElement(
                 modifier = Modifier
                     .padding(all = 8.dp)
                     .weight(1f),
-                color = MaterialTheme.colors.primary,
+                color = colorScheme.primary,
                 text = selectedDateText
             )
 

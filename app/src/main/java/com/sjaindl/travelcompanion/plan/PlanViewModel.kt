@@ -74,7 +74,10 @@ class PlanViewModel @Inject constructor(
 
         fireStoreUtils.loadPlans(
             onLoaded = { plan ->
-                addPlan(plan = plan)
+                plan?.let {
+                    addPlan(plan = it)
+                }
+
                 _state.value = State.Finished
             },
             onError = {
