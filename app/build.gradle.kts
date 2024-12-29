@@ -37,7 +37,7 @@ android {
             storePassword = keystoreProperties["storePassword"] as String
         }
     }
-    
+
     compileSdk = 35
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
@@ -84,10 +84,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
-    }
-
-    composeCompiler {
-        enableStrongSkippingMode = true
+        buildConfig = true
     }
 
     java {
