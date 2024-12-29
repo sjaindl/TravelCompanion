@@ -13,6 +13,11 @@
 
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">api.geonames.org</domain>
+
+        <domain includeSubdomains="true">0.0.0.0</domain>
+        <domain includeSubdomains="true">192.168.68.105</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain> <!-- Emulator -->
+        <domain includeSubdomains="true">localhost</domain>
     </domain-config>
 
 </network-security-config>

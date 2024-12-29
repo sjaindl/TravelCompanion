@@ -12,6 +12,7 @@ import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClientImpl
 import com.sjaindl.travelcompanion.api.google.GoogleClient
 import com.sjaindl.travelcompanion.api.google.GoogleClientImpl
+import com.sjaindl.travelcompanion.api.google.SecureRequestClient
 import com.sjaindl.travelcompanion.api.wiki.WikiClient
 import com.sjaindl.travelcompanion.api.wiki.WikiClientImpl
 import org.kodein.di.DI
@@ -36,5 +37,6 @@ object ApiModule {
         bindSingleton<GeoNamesClient> { GeoNamesClientImpl(instance()) }
         bindSingleton<GoogleClient> { GoogleClientImpl(instance()) }
         bindSingleton<CountryApiClient> { CountryApiClientImpl(instance()) }
+        bindSingleton<SecureRequestClient> { SecureRequestClient() }
     }
 }

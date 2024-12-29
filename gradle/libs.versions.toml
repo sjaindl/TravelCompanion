@@ -31,6 +31,7 @@ gradleVersion = "7.4.0"
 gsonVersion = "2.11.0"
 hiltNavigationVersion = "1.2.0"
 hiltVersion = "2.52"
+integrityVersion = "1.4.0"
 junit = "1.2.1"
 jUnitVersion = "4.13.2"
 kermitVersion = "1.2.2"
@@ -136,6 +137,7 @@ hilt-base = { group = "com.google.dagger", name = "hilt-android", version.ref = 
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hiltVersion" }
 hilt-navigationCompose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationVersion" }
+integrity = { module = "com.google.android.play:integrity", version.ref = "integrityVersion" }
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermitVersion" }
 kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodeinVersion" }

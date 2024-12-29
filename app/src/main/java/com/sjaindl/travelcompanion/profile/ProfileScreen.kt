@@ -11,9 +11,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +40,7 @@ import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 fun ProfileScreen(
     initials: String,
     userName: String,
+    requestState: SecureRequestViewModel.State,
     logout: () -> Unit,
     deleteAccount: () -> Unit,
     onClose: () -> Unit = { },
@@ -44,8 +48,31 @@ fun ProfileScreen(
     goToDataAccessRationaleInfo: () -> Unit = { },
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
+    triggerSecureRequest: () -> Unit = {},
 ) {
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember {
+        mutableStateOf(false)
+    }
+
+    val snackBarHostState = remember {
+        SnackbarHostState()
+    }
+
+    LaunchedEffect(requestState) {
+        when (requestState) {
+            is SecureRequestViewModel.State.Error -> {
+                snackBarHostState.showSnackbar(message = requestState.exception.message ?: "Request failed")
+            }
+
+            is SecureRequestViewModel.State.Finished -> {
+                snackBarHostState.showSnackbar(message = requestState.response)
+            }
+
+            SecureRequestViewModel.State.Initial -> {
+                // no op
+            }
+        }
+    }
 
     TravelCompanionTheme {
         Scaffold(
@@ -55,6 +82,9 @@ fun ProfileScreen(
                     canNavigateBack = canNavigateBack,
                     navigateUp = navigateUp,
                 )
+            },
+            snackbarHost = {
+                SnackbarHost(snackBarHostState)
             },
         ) { paddingValues ->
             Column(
@@ -122,6 +152,13 @@ fun ProfileScreen(
                     ) {
                         logout()
                         onClose()
+                    }
+
+                    DisplayItem(
+                        title = "Trigger secure request",
+                        icon = android.R.drawable.ic_secure
+                    ) {
+                        triggerSecureRequest()
                     }
                 }
             }
@@ -191,6 +228,7 @@ fun ProfileScreenPreview() {
         ProfileScreen(
             initials = "TC",
             userName = "Travel Companion",
+            requestState = SecureRequestViewModel.State.Initial,
             logout = {},
             deleteAccount = {},
             onClose = {},

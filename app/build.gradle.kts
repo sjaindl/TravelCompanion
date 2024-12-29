@@ -97,6 +97,17 @@ android {
         jvmToolchain(17)
     }
 
+    packaging {
+        resources {
+            excludes.addAll(
+                listOf(
+                    "META-INF/INDEX.LIST",
+                    "META-INF/DEPENDENCIES",
+                )
+            )
+        }
+    }
+
     // https://developer.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
     experimentalProperties["android.experimental.art-profile-r8-rewriting"] = true
     experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
@@ -187,6 +198,9 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.rebugger)
+
+    // Play Integrity API
+    implementation(libs.integrity)
 
     // https://github.com/square/leakcanary
     debugImplementation(libs.leakcanary.android)

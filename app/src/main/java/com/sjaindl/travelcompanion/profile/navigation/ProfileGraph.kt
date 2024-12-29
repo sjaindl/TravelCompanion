@@ -1,5 +1,7 @@
 package com.sjaindl.travelcompanion.profile.navigation
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -11,6 +13,7 @@ import com.sjaindl.travelcompanion.DataAccessRationaleActivity
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
 import com.sjaindl.travelcompanion.profile.ProfileScreen
 import com.sjaindl.travelcompanion.profile.ProfileViewModel
+import com.sjaindl.travelcompanion.profile.SecureRequestViewModel
 
 private const val PROFILE_ROUTE = "profile"
 private const val PERSONAL_INFO_ROUTE = "personalInfo"
@@ -26,18 +29,23 @@ private fun NavGraphBuilder.profileScreen(
     navigateUp: () -> Unit = {},
 ) {
     composable(route = PROFILE_ROUTE) {
-        val viewModel = hiltViewModel<ProfileViewModel>()
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val secureRequestViewModel = hiltViewModel<SecureRequestViewModel>()
+
+        val requestState by secureRequestViewModel.state.collectAsState()
 
         ProfileScreen(
-            initials = viewModel.initials,
-            userName = viewModel.userName,
-            logout = viewModel::logout,
-            deleteAccount = viewModel::deleteAccount,
+            initials = profileViewModel.initials,
+            userName = profileViewModel.userName,
+            requestState = requestState,
+            logout = profileViewModel::logout,
+            deleteAccount = profileViewModel::deleteAccount,
             onClose = onClose,
             goToPersonalInfo = goToPersonalInfo,
             goToDataAccessRationaleInfo = goToDataAccessRationaleInfo,
             canNavigateBack = canNavigateBack,
             navigateUp = navigateUp,
+            triggerSecureRequest = secureRequestViewModel::performSecureRequest,
         )
     }
 }

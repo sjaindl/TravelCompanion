@@ -5,6 +5,7 @@ import com.sjaindl.travelcompanion.api.country.restcountries.RestCountriesClient
 import com.sjaindl.travelcompanion.api.flickr.FlickrClient
 import com.sjaindl.travelcompanion.api.geonames.GeoNamesClient
 import com.sjaindl.travelcompanion.api.google.GoogleClient
+import com.sjaindl.travelcompanion.api.google.SecureRequestClient
 import com.sjaindl.travelcompanion.api.wiki.WikiClient
 import org.kodein.di.DI
 import org.kodein.di.direct
@@ -23,4 +24,5 @@ object TCInjector {
     val wikiClient = container.direct.instance<WikiClient>()
     val geoNamesClient = container.direct.instance<GeoNamesClient>()
     val googleClient = container.direct.instance<GoogleClient>()
+    val secureRequestClient = container.direct.instance<SecureRequestClient>()
 }
