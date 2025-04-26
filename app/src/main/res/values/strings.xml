@@ -14,6 +14,7 @@
     <string name="chooseAction">Choose action</string>
     <string name="showPhoto">Show photo</string>
     <string name="delete">Delete</string>
+    <string name="showInGoogleEarth">Show in Google Earth</string>
     <string name="cancel">Cancel</string>
     <string name="addPlace">Add %s Place</string>
     <string name="offline">The Internet connection appears to be offline.</string>

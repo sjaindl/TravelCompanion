@@ -124,61 +124,61 @@ fun ProfileScreen(
                         onClose()
                     }
                 }
-            }
 
-            if (showDeleteDialog) {
-                AlertDialog(
-                    onDismissRequest = {
-                        showDeleteDialog = false
-                    },
-                    confirmButton = {
-                        TextButton(onClick = {
+                if (showDeleteDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
                             showDeleteDialog = false
-                            deleteAccount()
-                        }) {
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                showDeleteDialog = false
+                                deleteAccount()
+                            }) {
+                                Text(
+                                    text = stringResource(id = R.string.yesDelete),
+                                    textAlign = TextAlign.Center,
+                                    fontWeight = FontWeight.Bold,
+                                    color = colorScheme.primary,
+                                    modifier = Modifier,
+                                    fontSize = 16.sp,
+                                )
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = {
+                                showDeleteDialog = false
+                            }) {
+                                Text(
+                                    text = stringResource(id = R.string.cancel),
+                                    textAlign = TextAlign.Center,
+                                    fontWeight = FontWeight.Bold,
+                                    color = colorScheme.primary,
+                                    modifier = Modifier,
+                                    fontSize = 16.sp,
+                                )
+                            }
+                        },
+                        title = {
                             Text(
-                                text = stringResource(id = R.string.yesDelete),
+                                text = stringResource(id = R.string.deleteAccount),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
-                                color = colorScheme.primary,
                                 modifier = Modifier,
-                                fontSize = 16.sp,
+                                fontSize = 24.sp,
                             )
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = {
-                            showDeleteDialog = false
-                        }) {
+                        },
+                        text = {
                             Text(
-                                text = stringResource(id = R.string.cancel),
+                                text = stringResource(id = R.string.doYouReallyWantToDeleteYourAccount),
                                 textAlign = TextAlign.Center,
                                 fontWeight = FontWeight.Bold,
-                                color = colorScheme.primary,
                                 modifier = Modifier,
-                                fontSize = 16.sp,
+                                fontSize = 18.sp,
                             )
                         }
-                    },
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.deleteAccount),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier,
-                            fontSize = 24.sp,
-                        )
-                    },
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.doYouReallyWantToDeleteYourAccount),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier,
-                            fontSize = 18.sp,
-                        )
-                    }
-                )
+                    )
+                }
             }
         }
     }

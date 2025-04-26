@@ -1,6 +1,7 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
 import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -16,6 +17,7 @@ import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.Explo
 import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMainScreen
 import com.sjaindl.travelcompanion.explore.search.PickPlaceScreen
 import com.sjaindl.travelcompanion.explore.search.SearchPlaceAutocompleteScreen
+import com.sjaindl.travelcompanion.extensions.launchInGoogleEarth
 import com.sjaindl.travelcompanion.navigation.DestinationItem
 
 private const val PLACES_ARG = "places"
@@ -94,6 +96,7 @@ fun NavGraphBuilder.exploreGraph(
             )
         ) { navBackStackEntry ->
             val encodedPlaces = navBackStackEntry.arguments?.getString(PLACES_ARG)
+            val context = LocalContext.current
 
             ExploreScreen(
                 encodedPlaces = encodedPlaces,
@@ -108,29 +111,10 @@ fun NavGraphBuilder.exploreGraph(
                 },
                 onPlanTrip = onPlanTrip,
                 canNavigateBack = navController.previousBackStackEntry != null,
+                onShowInGoogleEarth = { latitude, longitude ->
+                    context.launchInGoogleEarth(latitude = latitude, longitude = longitude)
+                },
                 navigateUp = { navController.navigateUp() },
-
-                /*
-                Stable without strong skipping mode enabled:
-                onSearch = remember(navController) {
-                    {
-                        navController.navigateToSearchPlace()
-                    }
-                },
-                onPickedLocation = remember(navController) {
-                    { latitude, longitude ->
-                        navController.navigateToPickPlace(latitude = latitude, longitude = longitude)
-                    }
-                },
-                onNavigateToExploreDetails = remember(navController) {
-                    { pinId ->
-                        navController.navigateToExploreDetailContainer(pinId = pinId)
-                    }
-                },
-                onPlanTrip = onPlanTrip,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = navController::navigateUp,
-             */
             )
         }
 

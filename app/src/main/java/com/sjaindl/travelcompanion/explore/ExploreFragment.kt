@@ -95,6 +95,8 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
                     onShowDetails = viewModel::onShowDetails,
                     onPlanTrip = viewModel::onDismiss,
                     onDelete = viewModel::onDelete,
+                    onShowInGoogleEarth = {
+                    },
                     onCancel = viewModel::onDismiss,
                 )
             }
@@ -260,7 +262,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickL
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        viewModel.clickedOnPlace(marker.title)
+        viewModel.clickedOnPlace(marker.title, 0.0, 0.0)
         return true
     }
 

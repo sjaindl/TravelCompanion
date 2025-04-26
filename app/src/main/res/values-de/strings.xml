@@ -9,6 +9,7 @@
     <string name="chooseAction">Wähle Aktion</string>
     <string name="showPhoto">Zeige Foto</string>
     <string name="delete">Löschen</string>
+    <string name="showInGoogleEarth">In Google Earth öffnen</string>
     <string name="cancel">Abbrechen</string>
     <string name="addPlace">%s hinzufügen</string>
     <string name="offline">Es besteht keine Netzwerkverbindung.</string>

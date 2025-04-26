@@ -72,6 +72,7 @@ fun ExploreScreen(
     onNavigateToExploreDetails: (Long) -> Unit,
     onPlanTrip: (String) -> Unit,
     canNavigateBack: Boolean,
+    onShowInGoogleEarth: (Double, Double) -> Unit,
     showPermissionRationale: () -> Unit = { },
     navigateUp: () -> Unit,
 ) {
@@ -108,6 +109,10 @@ fun ExploreScreen(
         setNewlyAddedLocation = {
             viewModel.newlyAddedLocation = it
         },
+        onShowInGoogleEarth = {
+            val coords = viewModel.curLatLon.value!!
+            onShowInGoogleEarth(coords.first, coords.second)
+        },
         navigateUp = navigateUp,
     )
 }
@@ -135,9 +140,10 @@ fun ExploreScreenContent(
     onDismiss: () -> Unit,
     onShowDetails: () -> Unit,
     addPersistedPinsToMap: () -> Unit,
-    onClickedPlace: (String?) -> Unit,
+    onClickedPlace: (String?, Double, Double) -> Unit,
     setNewlyAddedLocation: (PlaceDetail?) -> Unit,
     navigateUp: () -> Unit,
+    onShowInGoogleEarth: () -> Unit,
 ) = trace(sectionName = "ExploreScreenContent") {
     val context = LocalContext.current
 
@@ -293,6 +299,7 @@ fun ExploreScreenContent(
                     onPlanTrip(title)
                 },
                 onDelete = onDelete,
+                onShowInGoogleEarth = onShowInGoogleEarth,
                 onCancel = onDismiss,
             )
         }
@@ -390,7 +397,7 @@ fun ExploreScreenContent(
                             tag = it.name,
                             title = it.name,
                             onClick = { marker ->
-                                onClickedPlace(marker.title)
+                                onClickedPlace(marker.title, it.latitude, it.longitude)
                                 true
                             },
                         )
@@ -410,7 +417,7 @@ fun ExploreScreenContent(
                             )
                         }
 
-                        onClickedPlace(newlyAddedLocation.name)
+                        onClickedPlace(newlyAddedLocation.name, newlyAddedLocation.latitude, newlyAddedLocation.longitude)
 
                         setNewlyAddedLocation(null)
                     }
@@ -439,6 +446,7 @@ fun ExploreScreenPreview() {
         onPickedLocation = { _, _ -> },
         onNavigateToExploreDetails = { },
         onPlanTrip = { },
+        onShowInGoogleEarth = { _, _ -> },
         canNavigateBack = true,
         navigateUp = { },
     )

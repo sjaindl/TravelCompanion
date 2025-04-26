@@ -16,6 +16,7 @@ fun PlaceActionDialog(
     onShowDetails: () -> Unit,
     onPlanTrip: () -> Unit,
     onDelete: () -> Unit,
+    onShowInGoogleEarth: () -> Unit,
     onCancel: () -> Unit,
 ) {
     TravelCompanionTheme {
@@ -36,6 +37,7 @@ fun PlaceActionDialog(
                     onShowDetails = onShowDetails,
                     onPlanTrip = onPlanTrip,
                     onDelete = onDelete,
+                    onShowInGoogleEarth = onShowInGoogleEarth,
                     onCancel = onCancel,
                 )
             }
@@ -52,6 +54,7 @@ fun PlaceActionDialogPreview() {
         onShowDetails = { },
         onPlanTrip = { },
         onDelete = { },
+        onShowInGoogleEarth = { },
         onCancel = { },
     )
 }

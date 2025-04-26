@@ -17,6 +17,7 @@ fun PlaceActionBottomSheet(
     onShowDetails: () -> Unit,
     onPlanTrip: () -> Unit,
     onDelete: () -> Unit,
+    onShowInGoogleEarth: () -> Unit,
     onCancel: () -> Unit,
 ) {
     TCBottomSheet(
@@ -31,6 +32,7 @@ fun PlaceActionBottomSheet(
                 onShowDetails = onShowDetails,
                 onPlanTrip = onPlanTrip,
                 onDelete = onDelete,
+                onShowInGoogleEarth = onShowInGoogleEarth,
                 onCancel = onCancel,
             )
         },
@@ -45,6 +47,7 @@ fun PlaceActionBottomSheetPreview() {
         onShowDetails = { },
         onPlanTrip = { },
         onDelete = { },
+        onShowInGoogleEarth = { },
         onCancel = { },
     )
 }

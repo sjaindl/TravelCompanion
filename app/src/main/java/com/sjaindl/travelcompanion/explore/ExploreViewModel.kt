@@ -26,6 +26,9 @@ class ExploreViewModel @Inject constructor(
     private val _dialogTitle = MutableStateFlow("")
     var dialogTitle = _dialogTitle.asStateFlow()
 
+    private val _curLatLon: MutableStateFlow<Pair<Double, Double>?> = MutableStateFlow(null)
+    var curLatLon = _curLatLon.asStateFlow()
+
     private val _showDetails = MutableStateFlow(0L)
     var showDetails = _showDetails.asStateFlow()
 
@@ -68,10 +71,11 @@ class ExploreViewModel @Inject constructor(
         _showBottomSheet.value = false
     }
 
-    fun clickedOnPlace(name: String?) {
+    fun clickedOnPlace(name: String?, latitude: Double, longitude: Double) {
         if (name == null) return
 
         _dialogTitle.value = name
+        _curLatLon.value = Pair(first = latitude, second = longitude)
         _showBottomSheet.value = true
     }
 

@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sjaindl.travelcompanion.R
+import com.sjaindl.travelcompanion.extensions.isGoogleEarthInstalled
 
 @Composable
 fun PlaceActionContent(
@@ -29,8 +31,11 @@ fun PlaceActionContent(
     onShowDetails: () -> Unit,
     onPlanTrip: () -> Unit,
     onDelete: () -> Unit,
+    onShowInGoogleEarth: () -> Unit,
     onCancel: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     val buttonColors = ButtonDefaults.buttonColors(
         containerColor = colorResource(id = R.color.colorMain),
         contentColor = colorResource(id = R.color.textLight),
@@ -53,17 +58,15 @@ fun PlaceActionContent(
             Button(
                 modifier = modifier.fillMaxWidth(),
                 colors = buttonColors,
-                onClick = {
-                    onShowDetails()
-                }) {
+                onClick = onShowDetails,
+            ) {
                 Text(stringResource(id = R.string.showDetails))
             }
             Button(
                 modifier = modifier.fillMaxWidth(),
                 colors = buttonColors,
-                onClick = {
-                    onPlanTrip()
-                }) {
+                onClick = onPlanTrip,
+            ) {
                 Text(stringResource(id = R.string.planTrip))
             }
             Button(
@@ -74,6 +77,17 @@ fun PlaceActionContent(
                 }) {
                 Text(stringResource(id = R.string.delete))
             }
+
+            if (context.isGoogleEarthInstalled()) {
+                Button(
+                    modifier = modifier.fillMaxWidth(),
+                    colors = buttonColors,
+                    onClick = onShowInGoogleEarth,
+                ) {
+                    Text(stringResource(id = R.string.showInGoogleEarth))
+                }
+            }
+
             Button(
                 modifier = modifier.fillMaxWidth(),
                 colors = buttonColors,
@@ -95,6 +109,7 @@ fun PlaceActionContentPreview() {
         onShowDetails = { },
         onPlanTrip = { },
         onDelete = { },
+        onShowInGoogleEarth = { },
         onCancel = { },
     )
 }
