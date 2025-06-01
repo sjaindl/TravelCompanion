@@ -37,7 +37,9 @@ fun TCBottomSheet(
         containerColor = containerColor,
         scrimColor = scrimColor,
         contentColor = contentColor,
-        windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom),
+        contentWindowInsets = {
+            WindowInsets.systemBars.only(WindowInsetsSides.Bottom)
+        },
     ) {
         TravelCompanionTheme {
             Column(

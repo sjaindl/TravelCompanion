@@ -38,11 +38,11 @@ android {
         }
     }
 
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.sjaindl.travelcompanion"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 4
         versionName = "1.1"
 
@@ -207,7 +207,6 @@ dependencies {
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.truth)
 
-    androidTestImplementation(libs.support.annotations)
     androidTestImplementation(libs.runner)
 
     //Firebase

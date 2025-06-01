@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.sjaindl.travelcompanion.baselineprofile"
-    compileSdk = 34
+    compileSdk = 36
 
     java {
         toolchain {
@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
