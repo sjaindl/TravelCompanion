@@ -1,13 +1,32 @@
 package com.sjaindl.travelcompanion
 
 import android.content.Intent
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.sjaindl.travelcompanion.navigation.TCNavHost
-import com.sjaindl.travelcompanion.navigation.TC_HOME_ROUTE
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entry
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
+import com.google.firebase.auth.FirebaseAuth
+import com.sjaindl.travelcompanion.auth.AuthNavigation
+import com.sjaindl.travelcompanion.auth.SignInChooser
+import com.sjaindl.travelcompanion.explore.navigation.ExploreDetail
+import com.sjaindl.travelcompanion.explore.navigation.ExploreHome
+import com.sjaindl.travelcompanion.explore.navigation.ExploreNavigation
+import com.sjaindl.travelcompanion.plan.navigation.AddPlan
+import com.sjaindl.travelcompanion.plan.navigation.PlanHome
+import com.sjaindl.travelcompanion.plan.navigation.PlanNavigation
+import com.sjaindl.travelcompanion.profile.navigation.Profile
+import com.sjaindl.travelcompanion.profile.navigation.ProfileNavigation
+import com.sjaindl.travelcompanion.remember.navigation.RememberHome
+import com.sjaindl.travelcompanion.remember.navigation.RememberNavigation
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object Main : NavKey
 
 @Composable
 fun MainContainer(
@@ -27,47 +46,126 @@ fun MainContainer(
     openedPlan: () -> Unit = { },
     openedAddPlan: () -> Unit = { },
     deeplinkIntent: Intent? = null,
+    onNavigateToDataAccessRationaleActivity: () -> Unit,
 ) {
-    val navController = rememberNavController()
+    val backStack = remember {
+        mutableStateListOf<Any>(Main)
+    }
 
-    TCNavHost(
-        navController = navController,
-        modifier = Modifier
-            .fillMaxSize(),
-        signInWithGoogle = {
-            signInWithGoogle()
-            navController.popBackStack(route = TC_HOME_ROUTE, inclusive = false)
-        },
-        signInWithFacebook = {
-            signInWithFacebook()
-            navController.popBackStack(route = TC_HOME_ROUTE, inclusive = false)
-        },
-        signInWithMail = { email, password ->
-            signInWithMail(email, password)
-            navController.popBackStack(route = TC_HOME_ROUTE, inclusive = false)
-        },
-        signUpWithMail = { email, password, name ->
-            signUpWithMail(email, password, name)
-            navController.popBackStack(route = TC_HOME_ROUTE, inclusive = false)
-        },
-        onClickedProfile = onClickedProfile,
-        openAuthentication = openAuthentication,
-        authenticationOpened = authenticationOpened,
-        openProfile = openProfile,
-        profileOpened = profileOpened,
-        onAuthenticateAndOpenPlan = onAuthenticateAndOpenPlan,
-        onAuthenticateAndOpenAddPlan = onAuthenticateAndOpenAddPlan,
-        openPlan = openPlan,
-        openAddPlan = openAddPlan,
-        onClose = {
-            navController.popBackStack()
-        },
-        openedPlan = openedPlan,
-        openedAddPlan = openedAddPlan,
+    if (openAuthentication) {
+        backStack.add(SignInChooser)
+        authenticationOpened()
+    }
+
+    if (openProfile) {
+        onClickedProfile()
+        profileOpened()
+    }
+
+    if (openPlan) {
+        backStack.add(PlanHome)
+        openedPlan()
+    }
+
+    openAddPlan?.let { destination ->
+        backStack.add(AddPlan(destination = destination))
+        openedAddPlan()
+    }
+
+    NavDisplay(
+        backStack = backStack,
+        entryProvider = entryProvider {
+            entry<Main> {
+                MainScreen(
+                    onNavigateToExplore = {
+                        backStack.add(ExploreHome(encodedPlaces = null))
+                    },
+                    onNavigateToPlan = {
+                        if (FirebaseAuth.getInstance().currentUser != null) {
+                            backStack.add(PlanHome)
+                        } else {
+                            onAuthenticateAndOpenPlan()
+                        }
+                    },
+                    onNavigateToRemember = {
+                        backStack.add(RememberHome)
+                    },
+                    onNavigateToProfile = {
+                        backStack.add(Profile)
+                    },
+                    canNavigateBack = false,
+                    navigateUp = {
+                        backStack.removeAt(backStack.size - 1)
+                    },
+                )
+            }
+
+            ExploreNavigation(
+                backStack = backStack,
+                onPlanTrip = {
+                    if (FirebaseAuth.getInstance().currentUser != null) {
+                        backStack.add(AddPlan(destination = it))
+                    } else {
+                        onAuthenticateAndOpenAddPlan(it)
+                    }
+                }
+            )
+
+            PlanNavigation(
+                backStack = backStack,
+                onShowDetails = {
+                    backStack.add(ExploreDetail(pinId = it, isChoosePlanImageMode = false))
+                },
+                onChoosePlanImage = {
+                    backStack.add(ExploreDetail(pinId = it, isChoosePlanImageMode = true))
+                },
+            )
+
+            RememberNavigation(
+                backStack = backStack,
+            )
+
+            AuthNavigation(
+                backStack,
+                signInWithGoogle = {
+                    signInWithGoogle()
+                    navigateBackAfterSignIn(backStack = backStack)
+                },
+                signInWithFacebook = {
+                    signInWithFacebook()
+                    navigateBackAfterSignIn(backStack = backStack)
+                },
+                signInWithMail = { email, password ->
+                    signInWithMail(email, password)
+                    navigateBackAfterSignIn(backStack = backStack)
+                },
+                signUpWithMail = { email, password, name ->
+                    signUpWithMail(email, password, name)
+                    navigateBackAfterSignIn(backStack = backStack)
+                },
+            )
+
+            ProfileNavigation(
+                backStack = backStack,
+                onNavigateToDataAccessRationaleActivity = onNavigateToDataAccessRationaleActivity,
+            )
+        }
     )
 
+    // Deeplinks not yet supported in Navigation 3
+    /*
     deeplinkIntent?.let {
         navController.handleDeepLink(intent = it)
+    }
+     */
+}
+
+private fun navigateBackAfterSignIn(backStack: SnapshotStateList<Any>) {
+    val index = backStack.indexOf(SignInChooser)
+    if (index != -1) {
+        backStack.removeRange(index, backStack.size - 1)
+    } else {
+        backStack.removeAt(backStack.size - 1)
     }
 }
 
@@ -86,5 +184,6 @@ fun MainContainerPreview() {
         profileOpened = { },
         onAuthenticateAndOpenPlan = { },
         openPlan = false,
+        onNavigateToDataAccessRationaleActivity = { },
     )
 }

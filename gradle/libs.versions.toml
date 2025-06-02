@@ -41,15 +41,16 @@ ktorVersion = "3.1.3"
 leakCanaryVersion = "2.14"
 lifecycleExtensionsVersion = "2.2.0"
 lifecycleVersion = "2.9.0"
+lifecycleViewmodelNav3 = "1.0.0-alpha01"
 mapsComposeVersion = "6.6.0"
 mapsVersion = "19.2.0"
+nav3Core = "1.0.0-alpha04"
 profileinstallerVersion = "1.4.1"
 materialVersion = "1.12.0"
 mockitoAndroidVersion = "5.18.0"
 mockitoKotlinVersion = "2.2.0"
 mockitoVersion = "5.18.0"
 mockk = "1.14.2"
-navigationVersion = "2.8.5"
 okhttpVersion = "4.12.0"
 okioVersion = "3.12.0"
 pagingVersion = "3.3.6"
@@ -97,12 +98,11 @@ androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-lived
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleVersion" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-material3 = { module = "androidx.compose.material3:material3" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationVersion" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationVersion" }
-androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationVersion" }
-androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationVersion" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingVersion" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingVersion" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingVersion" }
@@ -180,6 +180,7 @@ splashScreen = { module = "androidx.core:core-splashscreen", version.ref = "spla
 sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelightVersion" }
 sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqlDelightVersion" }
 sqldelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelightVersion" }
+#support-annotations = { module = "com.android.support:support-annotations", version.ref = "supportAnnotationsVersion" }
 test_mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 truth = { module = "com.google.truth:truth", version.ref = "truthVersion" }
@@ -206,7 +207,6 @@ gradle-tools = { id = "com.android.tools.build:gradle", version.ref = "gradleVer
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
-navigation-safe-args = { id = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationVersion" }
 resources-generator = { id = "dev.icerock.moko:resources-generator", version.ref = "resourcesGeneratorVersion" }
 secrets-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
 sqlDelight = { id = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelightVersion" }

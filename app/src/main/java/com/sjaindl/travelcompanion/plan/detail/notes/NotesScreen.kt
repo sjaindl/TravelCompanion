@@ -67,8 +67,18 @@ fun NotesScreen(
 
     val snackBarHostState = remember { SnackbarHostState() }
 
+    val doneMessage = stringResource(id = R.string.notes_added)
+
     LaunchedEffect(Unit) {
         viewModel.load()
+    }
+
+    LaunchedEffect(state) {
+        snackBarHostState.showSnackbar(
+            message = doneMessage
+        )
+
+        navigateUp()
     }
 
     TravelCompanionTheme {
@@ -192,14 +202,7 @@ fun NotesScreen(
                     }
 
                     NotesViewModel.State.Finished -> {
-                        val message = stringResource(id = R.string.notes_added)
-                        LaunchedEffect(Unit) {
-                            snackBarHostState.showSnackbar(
-                                message = message
-                            )
-                        }
 
-                        navigateUp()
                     }
 
                     is NotesViewModel.State.Info -> {

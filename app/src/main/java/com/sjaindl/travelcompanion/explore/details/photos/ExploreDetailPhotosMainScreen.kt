@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -157,6 +158,12 @@ fun ExploreDetailPhotosMainScreen(
         if (!isChoosePlanImageMode) {
             DetailsTabBarLayout(tabRowItems = tabRowItems, userScrollEnabled = true)
         } else {
+            LaunchedEffect(state) {
+                if (state is ExploreDetailPhotosViewModel.State.PhotoChosen) {
+                    onPhotoChosen()
+                }
+            }
+
             when (state) {
                 is ExploreDetailPhotosViewModel.State.Error -> {
                     val exception = (state as ExploreDetailPhotosViewModel.State.Error).exception
@@ -219,7 +226,6 @@ fun ExploreDetailPhotosMainScreen(
                 }
 
                 is ExploreDetailPhotosViewModel.State.PhotoChosen -> {
-                    onPhotoChosen()
                 }
             }
         }

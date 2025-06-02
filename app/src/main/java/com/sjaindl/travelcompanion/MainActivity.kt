@@ -3,8 +3,8 @@ package com.sjaindl.travelcompanion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +32,7 @@ import javax.inject.Inject
 data class OpenAddPlan(val open: Boolean, val destination: String)
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val tag = "MainActivity"
@@ -201,6 +201,12 @@ class MainActivity : AppCompatActivity() {
                             openAddPlan = OpenAddPlan(open = false, destination = "")
                         },
                         deeplinkIntent = deeplinkIntent,
+                        // Activity targets not yet supported in Navigation 3
+                        onNavigateToDataAccessRationaleActivity = {
+                            context.startActivity(
+                                Intent(context, DataAccessRationaleActivity::class.java)
+                            )
+                        }
                     )
                 }
             }

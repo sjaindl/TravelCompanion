@@ -2,24 +2,28 @@ package com.sjaindl.travelcompanion.plan.detail
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.sjaindl.travelcompanion.plan.navigation.PlanDetailNavHost
+import com.sjaindl.travelcompanion.plan.navigation.PlanDetail
+import com.sjaindl.travelcompanion.plan.navigation.PlanDetailNavDisplay
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 
 @Composable
 fun PlanDetailHomeScreen(
     planName: String,
+    canNavigateBack: () -> Boolean,
+    navigateUp: () -> Unit = {},
     onChoosePlanImage: (pinId: Long) -> Unit,
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit = { },
 ) {
-    val navController = rememberNavController()
+    val backStack = remember {
+        mutableStateListOf<Any>(PlanDetail(planName = planName))
+    }
 
     TravelCompanionTheme {
-        PlanDetailNavHost(
-            navController = navController,
+        PlanDetailNavDisplay(
+            backStack = backStack,
             modifier = Modifier
                 .fillMaxSize(),
             plan = planName,
@@ -35,7 +39,8 @@ fun PlanDetailHomeScreen(
 fun PlanDetailContainerPreview() {
     PlanDetailHomeScreen(
         planName = "Graz",
+        canNavigateBack = { true },
+        navigateUp = { },
         onChoosePlanImage = { },
-        canNavigateBack = false,
     )
 }

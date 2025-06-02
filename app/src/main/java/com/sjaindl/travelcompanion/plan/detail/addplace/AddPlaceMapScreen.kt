@@ -51,7 +51,7 @@ fun AddPlaceMapScreen(
     planDetailItemType: PlanDetailItemType,
     initialLocation: MapLocationData,
     planName: String,
-    canNavigateBack: Boolean,
+    canNavigateBack: () -> Boolean,
     navigateUp: () -> Unit = {},
     viewModel: AddPlaceViewModel = hiltViewModel(
         creationCallback = { factory: AddPlaceViewModel.AddPlaceViewModelFactory ->
@@ -161,7 +161,7 @@ fun AddPlaceMapScreen(
                     topBar = {
                         TCAppBar(
                             title = stringResource(id = R.string.addPlace, stringResource(id = it.description.resourceId)),
-                            canNavigateBack = canNavigateBack,
+                            canNavigateBack = canNavigateBack(),
                             navigateUp = navigateUp,
                         )
                     },
@@ -262,6 +262,6 @@ fun AddPlaceMapScreenPreview() {
         planDetailItemType = PlanDetailItemType.ATTRACTION,
         initialLocation = MapLocationData.default,
         planName = "Bled",
-        canNavigateBack = true,
+        canNavigateBack = { true },
     )
 }

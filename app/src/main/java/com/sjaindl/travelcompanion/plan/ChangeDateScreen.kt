@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,7 +46,7 @@ import java.util.Date
 fun ChangeDateScreen(
     planName: String,
     modifier: Modifier = Modifier,
-    canNavigateBack: Boolean,
+    canNavigateBack: () -> Boolean,
     navigateUp: () -> Unit = { },
     viewModel: ChangeDateViewModel = hiltViewModel(
         creationCallback = { factory: ChangeDateViewModel.ChangeDateViewModelFactory ->
@@ -64,6 +64,12 @@ fun ChangeDateScreen(
 
     val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(state) {
+        if (state == ChangeDateViewModel.State.Done) {
+            navigateUp()
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.loadPlan()
     }
@@ -73,7 +79,7 @@ fun ChangeDateScreen(
             topBar = {
                 TCAppBar(
                     title = stringResource(R.string.changeDate),
-                    canNavigateBack = canNavigateBack,
+                    canNavigateBack = canNavigateBack(),
                     navigateUp = navigateUp,
                 )
             },
@@ -245,7 +251,7 @@ fun ChangeDateScreen(
                 }
 
                 ChangeDateViewModel.State.Done -> {
-                    navigateUp()
+
                 }
             }
         }
@@ -257,6 +263,6 @@ fun ChangeDateScreen(
 fun ChangeDateScreenPreview() {
     ChangeDateScreen(
         planName = "Bled",
-        canNavigateBack = true,
+        canNavigateBack = { true },
     )
 }

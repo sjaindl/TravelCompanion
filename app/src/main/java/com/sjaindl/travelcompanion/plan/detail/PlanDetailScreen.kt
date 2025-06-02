@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.EditCalendar
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,13 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sjaindl.travelcompanion.R
 import com.sjaindl.travelcompanion.baseui.TCAppBar
 import com.sjaindl.travelcompanion.model.MapLocationData
 import com.sjaindl.travelcompanion.plan.PlanImageElement
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
 import com.sjaindl.travelcompanion.util.LoadingAnimation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import com.sjaindl.travelcompanion.R
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
@@ -50,7 +50,7 @@ fun PlanDetailScreen(
     onChangeDate: (String) -> Unit,
     onAddNote: (plannableId: String, planName: String, planDetailItemType: PlanDetailItemType) -> Unit,
     onChoosePlanImage: (pinId: Long) -> Unit,
-    canNavigateBack: Boolean,
+    canNavigateBack: () -> Boolean,
     navigateUp: () -> Unit = { },
 ) {
     val state by viewModel.state.collectAsState()
@@ -64,7 +64,7 @@ fun PlanDetailScreen(
             topBar = {
                 TCAppBar(
                     title = planName,
-                    canNavigateBack = canNavigateBack,
+                    canNavigateBack = canNavigateBack(),
                     navigateUp = navigateUp,
                     customActionIcon = if (state is PlanDetailViewModel.State.Loaded) Icons.Rounded.EditCalendar else null,
                     onCustomAction = {
@@ -198,7 +198,7 @@ fun PlanDetailScreenPreview() {
     PlanDetailScreen(
         planName = "Bled",
         onAddPlace = { _, _, _ -> },
-        canNavigateBack = true,
+        canNavigateBack = { true },
         onChangeDate = { },
         onAddNote = { _, _, _ -> },
         onChoosePlanImage = { },

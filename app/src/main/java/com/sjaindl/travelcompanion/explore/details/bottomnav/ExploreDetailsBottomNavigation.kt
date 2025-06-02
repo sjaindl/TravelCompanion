@@ -6,37 +6,32 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sjaindl.travelcompanion.R
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailHome
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailInfo
-import com.sjaindl.travelcompanion.explore.details.bottomnav.BottomNavItem.ExploreDetailPhotos
-import com.sjaindl.travelcompanion.util.navigateSingleTopTo
+import com.sjaindl.travelcompanion.explore.navigation.NamedDestinationItem
 
 @Composable
-fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long) {
-    val items = listOf(
-        ExploreDetailHome,
-        ExploreDetailPhotos,
-        ExploreDetailInfo,
+fun ExploreDetailsBottomNavigation(backStack: SnapshotStateList<Any>, pinId: Long) {
+    val items: List<NamedDestinationItem> = listOf(
+        ExploreDetailHome(pinId),
+        ExploreDetailPhotos(pinId, false),
+        ExploreDetailInfo(pinId),
     )
 
     NavigationBar(
         containerColor = colorResource(id = R.color.colorMain),
         contentColor = Color.Black,
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+        val currentRoute = backStack.getOrNull(backStack.size - 1)
+
         items.forEach { item ->
             NavigationBarItem(
                 icon = {
-                    Icon(imageVector = item.icon, contentDescription = "")
+                    Icon(imageVector = item.destination.icon(), contentDescription = "")
                 },
                 label = {
                     Text(
@@ -49,9 +44,9 @@ fun ExploreDetailsBottomNavigation(navController: NavHostController, pinId: Long
                     unselectedTextColor = Color.Black.copy(0.4f),
                 ),
                 alwaysShowLabel = true,
-                selected = currentRoute == item.routeWithArgs,
+                selected = currentRoute == item,
                 onClick = {
-                    navController.navigateSingleTopTo(route = item.routeWithSetArguments(pinId, false))
+                    backStack.add(item)
                 }
             )
         }

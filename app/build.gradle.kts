@@ -7,7 +7,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
 
-    id("androidx.navigation.safeargs.kotlin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -131,10 +130,6 @@ dependencies {
     // https://material.io/develop/android/docs/getting-started/
     implementation(libs.material)
 
-    // https://developer.android.com/jetpack/androidx/releases/navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
     //https://developer.android.com/jetpack/androidx/releases/constraintlayout
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.constraintlayoutCompose)
@@ -251,7 +246,9 @@ dependencies {
 
     implementation(libs.androidx.compose.ui)
 
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
