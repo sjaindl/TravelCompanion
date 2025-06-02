@@ -1,8 +1,8 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -15,8 +15,8 @@ import com.sjaindl.travelcompanion.explore.details.photos.ExploreDetailPhotosMai
 
 @Composable
 fun ExploreDetailNavDisplay(
-    backStack: SnapshotStateList<Any>,
-    rootBackStack: SnapshotStateList<Any>,
+    backStack: NavBackStack,
+    rootBackStack: NavBackStack,
     modifier: Modifier = Modifier,
     pinId: Long,
 ) {

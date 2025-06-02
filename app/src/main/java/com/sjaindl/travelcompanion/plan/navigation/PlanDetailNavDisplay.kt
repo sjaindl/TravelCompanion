@@ -2,8 +2,8 @@ package com.sjaindl.travelcompanion.plan.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -38,10 +38,10 @@ data class AddNote(
 
 @Composable
 fun PlanDetailNavDisplay(
-    backStack: SnapshotStateList<Any>,
+    backStack: NavBackStack,
     modifier: Modifier = Modifier,
     plan: String,
-    onChoosePlanImage: (pinId: Long) -> Unit,
+    onChoosePlanImage: (Long) -> Unit,
     canNavigateBack: () -> Boolean,
     navigateUp: () -> Unit = {},
 ) {

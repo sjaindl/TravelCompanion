@@ -1,9 +1,9 @@
 package com.sjaindl.travelcompanion.profile.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation3.runtime.EntryProviderBuilder
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import com.sjaindl.travelcompanion.profile.PersonalInfoScreen
@@ -18,8 +18,8 @@ data object Profile : NavKey
 data object PersonalInfo : NavKey
 
 @Composable
-fun EntryProviderBuilder<Any>.ProfileNavigation(
-    backStack: SnapshotStateList<Any>,
+fun EntryProviderBuilder<NavKey>.ProfileNavigation(
+    backStack: NavBackStack,
     onNavigateToDataAccessRationaleActivity: () -> Unit,
 ) {
     entry<Profile> {
@@ -31,7 +31,7 @@ fun EntryProviderBuilder<Any>.ProfileNavigation(
             logout = viewModel::logout,
             deleteAccount = viewModel::deleteAccount,
             onClose = {
-                backStack.remove(backStack.size - 1)
+                backStack.removeAt(backStack.size - 1)
             },
             goToPersonalInfo = {
                 backStack.add(PersonalInfo)

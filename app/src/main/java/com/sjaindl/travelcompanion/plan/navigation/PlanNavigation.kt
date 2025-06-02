@@ -1,8 +1,8 @@
 package com.sjaindl.travelcompanion.plan.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderBuilder
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import com.sjaindl.travelcompanion.plan.PlanHomeScreen
@@ -20,8 +20,8 @@ data class AddPlan(val destination: String?) : NavKey
 data class PlanDetailContainer(val plan: String) : NavKey
 
 @Composable
-fun EntryProviderBuilder<Any>.PlanNavigation(
-    backStack: SnapshotStateList<Any>,
+fun EntryProviderBuilder<NavKey>.PlanNavigation(
+    backStack: NavBackStack,
     onShowDetails: (Long) -> Unit = { },
     onChoosePlanImage: (pinId: Long) -> Unit,
 ) {

@@ -1,8 +1,8 @@
 package com.sjaindl.travelcompanion.auth
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderBuilder
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import kotlinx.serialization.Serializable
@@ -20,8 +20,8 @@ data class MailSignIn(val email: String) : NavKey
 data class MailSignUp(val email: String) : NavKey
 
 @Composable
-fun EntryProviderBuilder<Any>.AuthNavigation(
-    backStack: SnapshotStateList<Any>,
+fun EntryProviderBuilder<NavKey>.AuthNavigation(
+    backStack: NavBackStack,
     signInWithGoogle: () -> Unit,
     signInWithFacebook: () -> Unit,
     signInWithMail: (email: String, password: String) -> Unit,

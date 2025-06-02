@@ -1,9 +1,9 @@
 package com.sjaindl.travelcompanion.explore.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation3.runtime.EntryProviderBuilder
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import com.sjaindl.travelcompanion.explore.ExploreScreen
@@ -28,8 +28,8 @@ data class PickPlace(val latitude: Float, val longitude: Float) : NavKey
 const val EXPLORE_HOME_DEEPLINK = "com.sjaindl.travelcompanion://explore"
 
 @Composable
-fun EntryProviderBuilder<Any>.ExploreNavigation(
-    backStack: SnapshotStateList<Any>,
+fun EntryProviderBuilder<NavKey>.ExploreNavigation(
+    backStack: NavBackStack,
     onPlanTrip: (String) -> Unit,
 ) {
     val context = LocalContext.current
@@ -82,6 +82,6 @@ fun EntryProviderBuilder<Any>.ExploreNavigation(
     }
 
     entry<ExploreDetail> {
-        ExploreDetailContainer(pinId = it.pinId, isChoosePlanImageMode = it.isChoosePlanImageMode, backStack)
+        ExploreDetailContainer(pinId = it.pinId, isChoosePlanImageMode = it.isChoosePlanImageMode, rootBackStack = backStack)
     }
 }

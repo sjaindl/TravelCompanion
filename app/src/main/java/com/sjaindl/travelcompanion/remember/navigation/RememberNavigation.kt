@@ -1,17 +1,13 @@
 package com.sjaindl.travelcompanion.remember.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderBuilder
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import com.sjaindl.travelcompanion.remember.RememberScreen
 import com.sjaindl.travelcompanion.remember.detail.RememberDetailScreen
 import kotlinx.serialization.Serializable
-
-private const val planArg = "plan"
-
-const val rememberNavigation = "rememberNavigation"
 
 @Serializable
 data object RememberHome : NavKey
@@ -20,8 +16,8 @@ data object RememberHome : NavKey
 data class RememberDetail(val planName: String) : NavKey
 
 @Composable
-fun EntryProviderBuilder<Any>.RememberNavigation(
-    backStack: SnapshotStateList<Any>,
+fun EntryProviderBuilder<NavKey>.RememberNavigation(
+    backStack: NavBackStack,
 ) {
     entry<RememberHome> {
         RememberScreen(

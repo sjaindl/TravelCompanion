@@ -2,10 +2,9 @@ package com.sjaindl.travelcompanion.plan.detail
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation3.runtime.rememberNavBackStack
 import com.sjaindl.travelcompanion.plan.navigation.PlanDetail
 import com.sjaindl.travelcompanion.plan.navigation.PlanDetailNavDisplay
 import com.sjaindl.travelcompanion.theme.TravelCompanionTheme
@@ -17,9 +16,7 @@ fun PlanDetailHomeScreen(
     navigateUp: () -> Unit = {},
     onChoosePlanImage: (pinId: Long) -> Unit,
 ) {
-    val backStack = remember {
-        mutableStateListOf<Any>(PlanDetail(planName = planName))
-    }
+    val backStack = rememberNavBackStack(PlanDetail(planName = planName))
 
     TravelCompanionTheme {
         PlanDetailNavDisplay(

@@ -2,13 +2,12 @@ package com.sjaindl.travelcompanion
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.google.firebase.auth.FirebaseAuth
 import com.sjaindl.travelcompanion.auth.AuthNavigation
@@ -48,9 +47,7 @@ fun MainContainer(
     deeplinkIntent: Intent? = null,
     onNavigateToDataAccessRationaleActivity: () -> Unit,
 ) {
-    val backStack = remember {
-        mutableStateListOf<Any>(Main)
-    }
+    val backStack = rememberNavBackStack(Main)
 
     if (openAuthentication) {
         backStack.add(SignInChooser)
@@ -160,7 +157,7 @@ fun MainContainer(
      */
 }
 
-private fun navigateBackAfterSignIn(backStack: SnapshotStateList<Any>) {
+private fun navigateBackAfterSignIn(backStack: NavBackStack) {
     val index = backStack.indexOf(SignInChooser)
     if (index != -1) {
         backStack.removeRange(index, backStack.size - 1)
