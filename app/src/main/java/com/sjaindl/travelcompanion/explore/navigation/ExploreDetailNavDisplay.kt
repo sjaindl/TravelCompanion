@@ -2,10 +2,13 @@ package com.sjaindl.travelcompanion.explore.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.sjaindl.travelcompanion.explore.details.bottomnav.ExploreDetailHome
 import com.sjaindl.travelcompanion.explore.details.bottomnav.ExploreDetailInfo
 import com.sjaindl.travelcompanion.explore.details.bottomnav.ExploreDetailPhotos
@@ -22,6 +25,13 @@ fun ExploreDetailNavDisplay(
 ) {
 
     NavDisplay(
+        entryDecorators = listOf(
+            // Default decorators for managing scenes and saving state
+            rememberSceneSetupNavEntryDecorator(),
+            rememberSavedStateNavEntryDecorator(),
+            // View model store decorator
+            rememberViewModelStoreNavEntryDecorator()
+        ),
         backStack = backStack,
         modifier = modifier,
         entryProvider = entryProvider {
