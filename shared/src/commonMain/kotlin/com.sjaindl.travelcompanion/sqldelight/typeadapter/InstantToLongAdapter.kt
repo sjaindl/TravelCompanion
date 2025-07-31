@@ -1,7 +1,7 @@
 package com.sjaindl.travelcompanion.sqldelight.typeadapter
 
 import com.squareup.sqldelight.ColumnAdapter
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 class InstantToLongAdapter : ColumnAdapter<Instant, Long> {
     override fun decode(databaseValue: Long): Instant {

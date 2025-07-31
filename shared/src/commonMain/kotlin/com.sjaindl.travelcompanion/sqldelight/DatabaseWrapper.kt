@@ -2,7 +2,14 @@ package com.sjaindl.travelcompanion.sqldelight
 
 import com.sjaindl.travelcompanion.Country
 import com.sjaindl.travelcompanion.Pin
-import com.sjaindl.travelcompanion.sqldelight.typeadapter.*
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.CurrencyListToStringAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.DoubleToStringListAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.FlagToStringAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.InstantToLongAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.LanguageListToStringAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.RegionalBlockListToStringAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.StringMapAdapter
+import com.sjaindl.travelcompanion.sqldelight.typeadapter.StringToStringListAdapter
 
 class DatabaseWrapper(databaseDriverFactory: DatabaseDriverFactory) {
     private val database =

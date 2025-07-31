@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
 import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
+import kotlin.time.Clock
 
 @HiltViewModel
 class PlanViewModel @Inject constructor(

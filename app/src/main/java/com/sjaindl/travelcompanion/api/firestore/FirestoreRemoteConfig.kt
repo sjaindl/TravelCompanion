@@ -1,7 +1,7 @@
 package com.sjaindl.travelcompanion.api.firestore
 
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.Firebase
+import com.google.firebase.remoteconfig.remoteConfig
 import com.sjaindl.travelcompanion.Constants
 import timber.log.Timber
 

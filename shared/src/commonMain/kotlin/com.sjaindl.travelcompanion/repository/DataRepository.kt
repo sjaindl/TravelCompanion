@@ -9,7 +9,7 @@ import com.sjaindl.travelcompanion.model.Flag
 import com.sjaindl.travelcompanion.model.Language
 import com.sjaindl.travelcompanion.model.RegionalBlock
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 interface DataRepository {
     fun singlePin(id: Long): Pin?

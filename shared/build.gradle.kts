@@ -27,6 +27,12 @@ kotlin {
 
     jvmToolchain(17)
 
+    sourceSets.all {
+        languageSettings {
+            optIn("kotlin.time.ExperimentalTime")
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),

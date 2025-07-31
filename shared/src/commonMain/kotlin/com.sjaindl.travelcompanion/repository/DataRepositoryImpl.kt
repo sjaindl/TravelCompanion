@@ -12,8 +12,8 @@ import com.sjaindl.travelcompanion.model.RegionalBlock
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 open class DataRepositoryImpl(private val dbQueries: TravelCompanionDatabaseQueries) : DataRepository {
     override fun singlePin(id: Long): Pin? {

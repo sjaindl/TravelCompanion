@@ -56,7 +56,7 @@ android {
         val googleServerClientId: String = gradleLocalProperties(rootDir, providers).getProperty("googleServerClientId")
         buildConfigField(type = "String", name = "googleServerClientId", value = googleServerClientId)
 
-        resourceConfigurations.addAll(listOf("en", "de"))
+        androidResources.localeFilters.addAll(listOf("en", "de"))
     }
 
     buildTypes {
@@ -94,6 +94,12 @@ android {
 
     kotlin {
         jvmToolchain(17)
+
+        sourceSets.all {
+            languageSettings {
+                optIn("kotlin.time.ExperimentalTime")
+            }
+        }
     }
 
     // https://developer.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
